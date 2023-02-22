@@ -11,7 +11,6 @@ Projeto de painel administrativo para gerenciar as demandas da empresa Teto Sola
 * [Executando localmente](#executando-localmente)
 * [Status](#status)
 * [Contribuição](#contribuição)
-* [Autoria](#autoria)
 * [Licença](#licença)
 
 <!--te-->
@@ -62,13 +61,6 @@ Para contribuir, por favor faça o seguinte:
 * Acrescente pelo menos um membro da equipe como revisor.
 
 * Envie a solicitação pull para a branch `main`.
-
-## Autoria
-
-**Equipe principal de Front-end**
-
-* [Alexandre Rocha](https://github.com/alexandresobral2004)
-* [Danilo de Sousa](https://github.com/danilocdesousa/)
 
 ## Licença
 
