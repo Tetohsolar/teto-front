@@ -1,3 +1,38 @@
 .home {
     background-color: #F4F9FC;
 }
+
+.card-content-title {
+    color: #6E6E6E;
+}
+
+.card-content-home {
+    min-height: 256px;
+}
+
+.card-content-home-sm {
+    min-height: 89.5px;
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+.wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+@media (min-width: 768px) {
+    .wrapper.toggled #sidebar-wrapper {
+        margin-left: -232px;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
