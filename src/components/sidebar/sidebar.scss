@@ -1,0 +1,17 @@
+$header-total-height: 65px;
+
+.sidebar {
+    width: 232px;
+    min-height: calc(100vh - $header-total-height);
+}
+
+#sidebar-wrapper {
+    margin-left: -232px;
+    transition: margin 0.25s ease-out;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+}
