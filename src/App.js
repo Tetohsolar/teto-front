@@ -1,9 +1,9 @@
-import Home from './pages/home/Home';
+import RoutesApp from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <Home />
+    <div className="app">
+      <RoutesApp />
     </div>
   );
 }
