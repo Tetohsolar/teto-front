@@ -8,7 +8,7 @@ const Navbar = () => {
   const {dispatch} = useContext(SidebarWrapperContext)
 
   return (
-    <div>
+    <div className="bg-white">
       <header className="sticky-top">
         <nav className="navbar navbar-expand-lg border-bottom">
           <div className="container-fluid">
