@@ -4,11 +4,14 @@ import 'bootstrap';
 import './scss/custom.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SidebarWrapperContextProvider } from './context/SidebarWrapperContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <SidebarWrapperContextProvider>
+      <App />
+    </SidebarWrapperContextProvider>
   </React.StrictMode>
 );
 
