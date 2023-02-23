@@ -1,2 +1,7 @@
 // Colors
 $primary: #1B6B9D;
+
+// Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
+$navbar-toggler-focus-width:        none;
+$navbar-toggler-transition:         box-shadow .15s ease-in-out !default;
+$navbar-light-toggler-border-color: none;
