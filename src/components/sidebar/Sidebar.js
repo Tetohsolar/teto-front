@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="d-flex flex-nowrap" id="sidebar-wrapper">
+    <div className="d-flex flex-nowrap bg-white" id="sidebar-wrapper">
         <div className="d-flex flex-column flex-shrink-0 px-3 pt-4 sidebar border-end">
           <ul className="nav nav-pills flex-column mb-auto list-g">
             <li className="nav-item">
