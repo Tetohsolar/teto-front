@@ -1,6 +1,5 @@
 import './navbar.scss'
 import logo from './teto-solar.svg'
-import avatar from './default-avatar.png'
 import { useContext } from 'react';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 
@@ -18,7 +17,7 @@ const Navbar = () => {
                   <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg>
               </div>
-              <a className="navbar-brand d-flex" href="https://getbootstrap.com/">
+              <a className="navbar-brand d-flex" href="https://beta.reactjs.org/">
                 <img src={logo} alt="Bootstrap" width="auto" height="16" />
               </a>
             </div>
@@ -30,9 +29,9 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="https://getbootstrap.com/" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img className='header-avatar' src={avatar} alt="Bootstrap" /></a>
+                  <a className="nav-link dropdown-toggle" href="https://beta.reactjs.org/" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img className='header-avatar' src={'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy'} alt="Bootstrap" /></a>
                   <ul className="dropdown-menu dropdown-menu-end">
-                    <li><a className="dropdown-item fw-bold" href="https://getbootstrap.com/">{'Ana Silva'}</a></li>
+                    <li><a className="dropdown-item fw-bold" href="https://beta.reactjs.org/">{'Ana Silva'}</a></li>
                     <li><hr className="dropdown-divider" /></li>
                     <li className='dropdown-item d-flex align-items-center justify-content-between'>Dark mode
                       <div className="form-check form-switch">
@@ -40,11 +39,11 @@ const Navbar = () => {
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault"></label>
                       </div>
                     </li>
-                    <li><a className="dropdown-item" href="https://getbootstrap.com/">Novo projeto</a></li>
-                    <li><a className="dropdown-item" href="https://getbootstrap.com/">Perfil</a></li>
-                    <li><a className="dropdown-item" href="https://getbootstrap.com/">Aparência</a></li>
-                    <li><a className="dropdown-item" href="https://getbootstrap.com/">Configurações</a></li>
-                    <li><a className="dropdown-item" href="https://getbootstrap.com/">Sair</a></li>
+                    <li><a className="dropdown-item" href="https://beta.reactjs.org/">Novo projeto</a></li>
+                    <li><a className="dropdown-item" href="https://beta.reactjs.org/">Perfil</a></li>
+                    <li><a className="dropdown-item" href="https://beta.reactjs.org/">Aparência</a></li>
+                    <li><a className="dropdown-item" href="https://beta.reactjs.org/">Configurações</a></li>
+                    <li><a className="dropdown-item" href="https://beta.reactjs.org/">Sair</a></li>
                   </ul>
                 </li>
               </ul>

@@ -15,7 +15,7 @@ const Home = () => {
       <div
         className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}
       >
-        <Sidebar />
+        <Sidebar activeButtonHome='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <div className="row">
               <div className="col-lg-6">
