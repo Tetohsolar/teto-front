@@ -29,7 +29,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="https://beta.reactjs.org/" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img className='header-avatar' src={'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy'} alt="Bootstrap" /></a>
+                  <a className="nav-link dropdown-toggle" href="https://beta.reactjs.org/" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img className='navbar-avatar' src={'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy'} alt="Bootstrap" /></a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li><a className="dropdown-item fw-bold" href="https://beta.reactjs.org/">{'Ana Silva'}</a></li>
                     <li><hr className="dropdown-divider" /></li>
