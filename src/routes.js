@@ -5,6 +5,8 @@ import Login from './pages/login/Login';
 import New from './pages/new/New';
 import Signup from './pages/signup/Signup';
 import Single from './pages/single/Single';
+import NewUSer from './pages/users/new';
+
 
 const RoutesApp = () => {
   return (
@@ -43,7 +45,7 @@ const RoutesApp = () => {
             <Route path="users">
               <Route index element={<List />} />
               <Route path=":userId" element={<Single />} />
-              <Route path="new" element={<New />} />
+              <Route path="new" element={<NewUSer />} />
             </Route>
 
             <Route path="settings">
