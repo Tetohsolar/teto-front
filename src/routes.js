@@ -3,6 +3,7 @@ import Home from './pages/home/Home';
 import List from './pages/list/List';
 import Login from './pages/login/Login';
 import New from './pages/new/New';
+import Signup from './pages/signup/Signup';
 import Single from './pages/single/Single';
 
 const RoutesApp = () => {
@@ -13,6 +14,7 @@ const RoutesApp = () => {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
 
             <Route path="clients">
               <Route index element={<List />} />
