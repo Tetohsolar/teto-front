@@ -12,9 +12,11 @@ const AccessNavbar = () => {
                 <img src={logo} alt="Bootstrap" width="auto" height="16" />
               </a>
             </div>
-            <button className="btn btn-primary text-light" type="submit">
-              Acessar
-            </button>
+            <div className=' py-1'>
+              <button className="btn btn-sm btn-primary" type="submit">
+                Criar conta
+              </button>
+            </div>
           </div>
         </nav>
       </header>
