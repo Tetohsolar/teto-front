@@ -5,7 +5,7 @@ const administrator = [
   {
     id: 1,
     img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
-    firstName: "Anna Silva",
+    firstName: "Ana Silva",
     email: "anna@domain.com",
     userType: "Admin",
   },
