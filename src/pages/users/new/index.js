@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
-import ProfileForm from '../../../components/profileform/ProfileForm';
 import '../../pages.scss';
 import './new.scss';
+import ProfileForm from '../../../components/profileform/ProfileForm';
 
-const NewUSer = () => {
+const NewUSer = (props) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Informações do usuário";
   return (

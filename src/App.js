@@ -1,9 +1,19 @@
-import RoutesApp from './routes';
+import RoutesApp from '../src/routes/';
+import AuthProvider from './context/AuthContext';
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
   return (
     <div className="app">
-      <RoutesApp />
+      <AuthProvider>
+        <BrowserRouter>
+          <RoutesApp />
+        </BrowserRouter>
+      </AuthProvider>
+
+
+
+
 
     </div>
   );
