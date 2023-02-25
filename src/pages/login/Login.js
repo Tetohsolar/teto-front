@@ -1,10 +1,10 @@
-import Navbar from '../../components/navbar/Navbar';
+import AccessNavbar from '../../components/accessnavbar/AccessNavbar';
 import './login.scss';
 
 const Login = () => {
   return (
     <body className="login">
-      <Navbar />    
+      <AccessNavbar />    
       <main className="form-signin w-100 h-100">
         <div className="bg-form">
           <form className="form-access m-auto">
