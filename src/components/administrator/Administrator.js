@@ -23,7 +23,7 @@ const DataTable = (props) => {
                 return (
                   <tr key={row.id}>
                     <td className="td-img">
-                      <img className="header-avatar" src={row.img} alt="Avatar"
+                      <img className="admin-avatar" src={row.img} alt="Avatar"
                       />
                     </td>
                     <td>{row.firstName}</td>

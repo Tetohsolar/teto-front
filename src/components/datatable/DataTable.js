@@ -47,7 +47,7 @@ const DataTable = (props) => {
                 return (
                   <tr key={user.id}>
                     <td className="td-img">
-                      <img className="header-avatar" src={user.img} alt="Avatar" />
+                      <img className="table-avatar" src={user.img} alt="Avatar" />
                     </td>
                     <td>{user.firstName}</td>
                     <td>{user.email}</td>
