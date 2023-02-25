@@ -7,6 +7,7 @@ import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 
 
 const Home = () => {
+  const userName = 'Ana'
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
 
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       >
         <Sidebar activeButtonHome='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
+          <h5 className='pb-3'>{`Olá, ${userName}!`}</h5>
           <div className="row">
               <div className="col-lg-6">
                 <Card cardContentHome='card-content-home' cardTitle ='Março' />
