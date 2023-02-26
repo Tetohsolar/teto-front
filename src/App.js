@@ -10,11 +10,6 @@ function App() {
           <RoutesApp />
         </BrowserRouter>
       </AuthProvider>
-
-
-
-
-
     </div>
   );
 }

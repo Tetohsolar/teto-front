@@ -84,7 +84,7 @@ function AuthProvider({ children }) {
 
     }).then((response) => {
       console.log(response)
-      // toast.message()
+
     })
 
 

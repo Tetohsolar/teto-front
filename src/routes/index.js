@@ -17,13 +17,10 @@ const RoutesApp = () => {
     <div>
 
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={Home}  />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/users" component={NewUSer} />
-        <Route exact path="/" component={Single} />
-        <Route exact path="/" component={Signup} />
-        <Route exact path="/" component={New} />
-        <Route exact path="/" component={List} />
+        <Route exact path="/signup" component={Signup} />
         {/* <Route path="/">
           <Route index component={<Home />} />
           <Route path="login" component={<Login />} />

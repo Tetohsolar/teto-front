@@ -1,10 +1,25 @@
 import AccessNavbar from '../../components/accessnavbar/AccessNavbar';
+// import { useState, useContext } from 'react'
+// import { AuthContext } from '../../context/AuthContext';
 import './signup.scss';
 
 const Signup = () => {
+
+
+
+
+  // const [name, setName] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [phone, setPhone] = useState('')
+  // const [confirmPassword, setConfirmPassword] = useState('')
+  // const [password, setPassword] = useState('')
+  // const { signUp, loadingAuth, ToastContainer, token } = useContext(AuthContext)
+
+
+
   return (
     <body className="login">
-      <AccessNavbar />    
+      <AccessNavbar />
       <main className="form-signin w-100 h-100">
         <div className="bg-form">
           <form className="form-access m-auto">

@@ -1,4 +1,4 @@
-import { Route, redirect } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 export default function RouteWrapper({
   component: Component,
@@ -18,12 +18,12 @@ export default function RouteWrapper({
   //se n estiver logado e tentou acessar uma págiana privada 
   // é redirecionado pro login
   // if (!signed && isPrivate) {
-  //   return redirect("/login")
+  //   return <Redirect to="/login" />
   // }
 
   //está logado e tentou acessar uma rota n privada, vai pro dashboard
   // if (signed && !isPrivate) {
-  //   return redirect("/")
+  //   return <Redirect to="/" />
   // }
 
 
