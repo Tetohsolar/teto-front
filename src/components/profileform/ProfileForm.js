@@ -19,6 +19,7 @@ const ProfileForm = (props) => {
   const { signUp, loadingAuth, token } = useContext(AuthContext)
 
 
+
   function limpaCampos() {
     setName('')
     setEmail('')
@@ -59,10 +60,6 @@ const ProfileForm = (props) => {
       // setUpdateUsers(true)
       console.log(tipo)
       limpaCampos()
-      console.log('Salvou')
-
-      // setLoading(true)
-
 
     }
 

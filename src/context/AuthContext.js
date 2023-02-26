@@ -1,12 +1,13 @@
-import { useState, useContext, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../api'
+import { Navigate } from 'react-router-dom';
 
 export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState('')
+
   const [users, setUsers] = useState([])
 
 
@@ -35,17 +36,6 @@ function AuthProvider({ children }) {
   }, [])
 
 
-
-  const configToken = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
-
-  const bodyParameters = {
-    key: "value"
-  };
-
-
-
   //add new User
   async function signIn(email, password) {
     await api.post('/user/login', {
@@ -56,12 +46,12 @@ function AuthProvider({ children }) {
       let newUser = {
         id: response.data.userId,
         token: response.data.token,
-        message: response.data.messagen
+        message: response.data.message
       }
+
       setStorageUserLocal(newUser)
       setMessage(newUser.message)
       setToken(newUser.token)
-      console.log(newUser.token)
       toast.success(message)
       setLoading(false)
 
@@ -72,6 +62,7 @@ function AuthProvider({ children }) {
   //SignUp User
   async function signUp(name, phone, email, password, confirmpassword, tipo) {
     setLoading(true)
+    console.log(tipo)
     await api.post('/user/create', {
       name: name,
       phone: phone,
@@ -85,18 +76,19 @@ function AuthProvider({ children }) {
       }
 
     }).then((response) => {
-      console.log(response)
+      toast.success(message)
 
     })
-
-
-
-
   }
 
   //Save user locally
   function setStorageUserLocal(data) {
     localStorage.setItem('cliente', JSON.stringify(data))
+  }
+
+  function signOut() {
+    localStorage.removeItem("cliente")
+
   }
 
 
@@ -108,11 +100,11 @@ function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
-        user,
+
         signUp,
         signIn,
+        signOut,
         loadingAuth,
-        setUser,
         users,
         ToastContainer,
         token

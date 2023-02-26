@@ -3,12 +3,10 @@ import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
 
 
-const ProtectedRoute = ({ children }) => {
-  const { token } = useContext(AuthContext)
+const ProtectedRoute = ({ isSigned, children }) => {
 
-  const auth = token;
-  console.log(auth)
-  if (auth === '') {
+
+  if (!isSigned) {
     return <Navigate to="/login" replace />;
   }
   return children;

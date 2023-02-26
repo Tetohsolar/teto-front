@@ -6,9 +6,7 @@ function App() {
   return (
     <div className="app">
       <AuthProvider>
-
         <RoutesApp />
-
       </AuthProvider>
     </div>
   );

@@ -1,31 +1,93 @@
 import './datatable.scss'
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import api from '../../api';
 
-const users = [
-  {
-    id: 2,
-    img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
-    firstName: "John Doe",
-    email: "john@domain.com",
-    userType: "Pode ver",
-  },
-  {
-    id: 3,
-    img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
-    firstName: "Jane Doe",
-    email: "jane@domain.com",
-    userType: "Pode ver",
-  },
-  {
-    id: 4,
-    img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
-    firstName: "Junior DOe",
-    email: "junior@domain.com",
-    userType: "Pode editar",
-  },
-];
+
+// const users = [
+//   {
+//     id: 2,
+//     img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
+//     firstName: "John Doe",
+//     email: "john@domain.com",
+//     userType: "Pode ver",
+//   },
+//   {
+//     id: 3,
+//     img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
+//     firstName: "Jane Doe",
+//     email: "jane@domain.com",
+//     userType: "Pode ver",
+//   },
+//   {
+//     id: 4,
+//     img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
+//     firstName: "Junior DOe",
+//     email: "junior@domain.com",
+//     userType: "Pode editar",
+//   },
+// ];
 
 const DataTable = (props) => {
+  const [users, setUsers] = useState([])
+
+  const [updateUsers, setUpdateUsers] = useState(false)
+
+  async function updateStateUser(response) {
+    let lista = [];
+    const isCollectionEmpty = response.size == 0;
+    if (!isCollectionEmpty) {
+
+      let arr = Object.entries(response.users)
+      arr.forEach((([key, value]) => (
+        lista.push({
+          id: value.id,
+          name: value.name,
+          imagem: value.imagem,
+          email: value.email,
+
+        }))
+
+      ))
+    }
+    setUsers(users => [...lista])
+  }
+
+  useEffect(() => {
+
+    const storageUser = localStorage.getItem('cliente')
+
+
+    async function listaUsers() {
+      await api.get('/user/all', {
+        headers: {
+          'Authorization': `token ${storageUser.token}`
+        }
+      })
+        .then((response) => {
+
+          updateStateUser(response.data)
+
+        }).catch((err) => {
+          console.log(err)
+        })
+
+
+    }
+    listaUsers();
+    setUpdateUsers(false)
+
+    return () => { }
+
+
+  }, [updateUsers])
+
+
+
+
+
+
+
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
