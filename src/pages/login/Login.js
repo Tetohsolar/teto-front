@@ -2,7 +2,10 @@ import AccessNavbar from '../../components/accessnavbar/AccessNavbar';
 import { AuthContext } from '../../context/AuthContext';
 import './login.scss';
 import { useState, useContext } from "react"
-import { Link, useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -10,8 +13,9 @@ const Login = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const history = useHistory();
+
   const { signIn } = useContext(AuthContext)
+  const navigate = useNavigate();
 
 
   async function handleLogin(e) {
@@ -20,25 +24,29 @@ const Login = () => {
 
       signIn(email, password)
         .then(() => {
-          history.push('/')
+          navigate("/")
+
+
         })
 
     }
   }
 
   return (
-    <body className="login">
+    <div id='body' className="login">
       <AccessNavbar />
       <main className="form-signin w-100 h-100">
+
+
         <div className="bg-form">
           <form className="form-access m-auto" onSubmit={handleLogin} >
             <h1 className="h3 mb-3 fw-normal text-center text-light">Acesse sua conta</h1>
             <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label text-light">Email</label>
+              <label htmlFor="exampleInputEmail1" className="form-label text-light">Email</label>
               <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Digite seu e-mail" />
             </div>
             <div className="mb-3">
-              <label for="exampleInputPassword1" className="form-label text-light">Sua senha</label>
+              <label htmlFor="exampleInputPassword1" className="form-label text-light">Sua senha</label>
               <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Digite sua senha" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <button className="w-100 btn btn-primary" type="submit">Entrar</button>
@@ -48,9 +56,10 @@ const Login = () => {
             </div>
             <p className="m-5 text-center text-secondary">&copy; 2023 Teto Solar</p>
           </form>
+          <ToastContainer />
         </div>
       </main>
-    </body>
+    </div>
 
   );
 

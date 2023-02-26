@@ -7,8 +7,11 @@ import './new.scss';
 import ProfileForm from '../../../components/profileform/ProfileForm';
 
 const NewUSer = (props) => {
+  
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Informações do usuário";
+  
+  
   return (
     <div>
       <Navbar />

@@ -6,9 +6,9 @@ function App() {
   return (
     <div className="app">
       <AuthProvider>
-        <BrowserRouter>
-          <RoutesApp />
-        </BrowserRouter>
+
+        <RoutesApp />
+
       </AuthProvider>
     </div>
   );

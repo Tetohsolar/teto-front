@@ -1,5 +1,4 @@
-import { Routes, Switch } from 'react-router-dom';
-import Route from './Route'
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import List from '../pages/list/List';
 import Login from '../pages/login/Login';
@@ -7,6 +6,7 @@ import New from '../pages/new/New';
 import Signup from '../pages/signup/Signup';
 import Single from '../pages/single/Single';
 import NewUSer from '../pages/users/new';
+import ProtectedRoute from "./protectedRoute";
 
 
 
@@ -16,56 +16,61 @@ const RoutesApp = () => {
   return (
     <div>
 
-      <Switch>
-        <Route exact path="/" component={Home}  />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/users" component={NewUSer} />
-        <Route exact path="/signup" component={Signup} />
-        {/* <Route path="/">
-          <Route index component={<Home />} />
-          <Route path="login" component={<Login />} />
-          <Route path="signup" component={<Signup />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
 
 
-          <Route path="clients">
-            <Route index component={<List />} />
-            <Route path=":clientId" component={<Single />} />
-            <Route path="new" component={<New />} />
+            } />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+
+
+
+            <Route path="clients">
+              <Route index element={<List />} />
+              <Route path=":clientId" element={<Single />} />
+              <Route path="new" element={<New />} />
+            </Route>
+
+            <Route path="projects">
+              <Route index element={<List />} />
+              <Route path=":projectId" element={<Single />} />
+              <Route path="new" element={<New />} />
+            </Route>
+
+            <Route path="sizing">
+              <Route index element={<List />} />
+              <Route path=":sizingId" element={<Single />} />
+              <Route path="new" element={<New />} />
+            </Route>
+
+            <Route path="products">
+              <Route index element={<List />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="new" element={<New />} />
+            </Route>
+
+            <Route path="users">
+              <Route index element={<List />} />
+              <Route path=":userId" element={<Single />} />
+              <Route path="new" element={<NewUSer />} />
+            </Route>
+
+            <Route path="settings">
+              <Route index element={<List />} />
+            </Route>
+
           </Route>
-
-          <Route path="projects">
-            <Route index component={<List />} />
-            <Route path=":projectId" component={<Single />} />
-            <Route path="new" component={<New />} />
-          </Route>
-
-          <Route path="sizing">
-            <Route index component={<List />} />
-            <Route path=":sizingId" component={<Single />} />
-            <Route path="new" component={<New />} />
-          </Route>
-
-          <Route path="products">
-            <Route index component={<List />} />
-            <Route path=":productId" component={<Single />} />
-            <Route path="new" component={<New />} />
-          </Route>
-
-          <Route path="users">
-            <Route index component={<List />} />
-            <Route path=":userId" component={<Single />} />
-            <Route path="new" component={<NewUSer />} />
-          </Route>
-
-          <Route path="settings">
-            <Route index component={<List />} />
-          </Route>
-
-        </Route> */}
-      </Switch>
+        </Routes>
+      </BrowserRouter>
 
 
-    </div>
+    </div >
   );
 };
 

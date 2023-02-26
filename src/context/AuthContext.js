@@ -45,6 +45,8 @@ function AuthProvider({ children }) {
   };
 
 
+
+  //add new User
   async function signIn(email, password) {
     await api.post('/user/login', {
       email: email,
@@ -67,7 +69,7 @@ function AuthProvider({ children }) {
       console.log(err)
     })
   }
-
+  //SignUp User
   async function signUp(name, phone, email, password, confirmpassword, tipo) {
     setLoading(true)
     await api.post('/user/create', {
@@ -92,7 +94,7 @@ function AuthProvider({ children }) {
 
   }
 
-
+  //Save user locally
   function setStorageUserLocal(data) {
     localStorage.setItem('cliente', JSON.stringify(data))
   }
