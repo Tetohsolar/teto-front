@@ -1,15 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
+import EditProFileForm from '../../../components/editProfileForm'
 import '../../pages.scss';
 import './new.scss';
-import ProfileForm from '../../../components/profileform/ProfileForm';
+import { AuthContext } from '../../../context/AuthContext';
 
-const NewUSer = ({ childToParent }) => {
 
+const EditUser = (props) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Informações do usuário";
+  const [UserId, setUserEdit] = useState()
+
+  const { userId } = useParams();
+
 
 
   return (
@@ -19,11 +25,14 @@ const NewUSer = ({ childToParent }) => {
         <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-          <ProfileForm listTitle="Novo Usuário" />
+
+          <EditProFileForm listTitle="Editar perfil do usuário" userId={userId} />
+
+
         </div>
       </div>
     </div>
   );
 };
 
-export default NewUSer;
+export default EditUser;

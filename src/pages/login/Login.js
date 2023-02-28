@@ -51,7 +51,7 @@ const Login = () => {
             </div>
             <button className="w-100 btn btn-primary" type="submit">Entrar</button>
             <div className="m-3">
-              <p className="mb-2 text-center text-light">Não tem uma conta? <a href="google.com">Cadastre-se</a></p>
+              <p className="mb-2 text-center text-light">Não tem uma conta? <a href="/signup">Cadastre-se</a></p>
               <p className="mb-2 text-center text-light">Esqueceu sua senha? <a href="google.com">Recuperar senha</a></p>
             </div>
             <p className="m-5 text-center text-secondary">&copy; 2023 Teto Solar</p>

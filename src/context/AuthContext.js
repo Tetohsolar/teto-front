@@ -2,19 +2,20 @@ import { useState, useEffect, createContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../api'
-import { Navigate } from 'react-router-dom';
+
 
 export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
 
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([''])
 
 
   const [loadingAuth, setLoadingAuth] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState()
-  const [token, setToken] = useState()
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const [token, setToken] = useState('')
+  const [userEdit, setUserEdit] = useState('')
 
 
 
@@ -25,15 +26,16 @@ function AuthProvider({ children }) {
 
       if (storageUser) {// se tiver usuário no localstorage, ele será salvo no state user
         setToken(JSON.parse(storageUser))
-        setLoading(false)
-        setToken(storageUser)
+
+
       }
-      setLoading(false)
+      setLoading(true)
+
     }
 
     loadStorage()
 
-  }, [])
+  }, [loading])
 
 
   //add new User
@@ -58,11 +60,11 @@ function AuthProvider({ children }) {
     }).catch((err) => {
       console.log(err)
     })
+    setMessage('')
   }
   //SignUp User
   async function signUp(name, phone, email, password, confirmpassword, tipo) {
     setLoading(true)
-    console.log(tipo)
     await api.post('/user/create', {
       name: name,
       phone: phone,
@@ -76,10 +78,59 @@ function AuthProvider({ children }) {
       }
 
     }).then((response) => {
-      toast.success(message)
+      toast.success(response.data.message)
 
     })
+    setMessage('')
   }
+
+
+  //SignUp User
+
+  //id, name, phone, email, password, confirmPassword, tipo
+  async function updateUser(id, name, phone, email, password) {
+    console.log('update')
+    setLoading(true)
+    await api.patch(`/user/update/${id}`, {
+      name: name,
+      phone: phone,
+      email: email,
+      password: password,
+      confirmpassword: password,
+      tipoR: 'Admin'
+
+
+    }, {
+      headers: {
+        'Authorization': `Basic ${token.token}`
+      }
+
+    }).then((response) => {
+      toast.success(response.data.message)
+      setLoading(false)
+
+    })
+    setMessage('')
+  }
+
+  async function deleteUser(id) {
+    setLoading(true)
+    await api.delete(`/user/delete/${id}`, {
+      headers: {
+        'Authorization': `Basic ${token.token}`
+      }
+    })
+      .then((response) => {
+
+        toast.success(response.data.message)
+
+      })
+    setLoading(false)
+    setMessage('')
+  }
+
+
+
 
   //Save user locally
   function setStorageUserLocal(data) {
@@ -96,7 +147,6 @@ function AuthProvider({ children }) {
 
 
 
-
   return (
     <AuthContext.Provider
       value={{
@@ -104,6 +154,9 @@ function AuthProvider({ children }) {
         signUp,
         signIn,
         signOut,
+        updateUser,
+        deleteUser,
+        userEdit,
         loadingAuth,
         users,
         ToastContainer,
