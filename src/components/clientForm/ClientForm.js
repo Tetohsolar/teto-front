@@ -1,13 +1,14 @@
 import { AuthContext } from '../../context/AuthContext';
-import './profileform.scss';
-import { useState, useContext, useEffect } from 'react'
+import './clientform.scss';
+import { useState, useContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const ProfileForm = (props) => {
+const ClientForm = (props) => {
 
   const [name, setName] = useState('')
+
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -15,10 +16,7 @@ const ProfileForm = (props) => {
   const [tipo, setTipo] = useState('')
 
 
-
-
-  const { signUp } = useContext(AuthContext)
-
+  const { signUp, loadingAuth, token } = useContext(AuthContext)
 
 
 
@@ -32,9 +30,7 @@ const ProfileForm = (props) => {
   }
 
 
-
   function validaCampos(name, email, phone, password, confirmPassword, tipo) {
-
     if (name !== '' && email !== '' && phone !== '') {
       return true
     }
@@ -48,12 +44,17 @@ const ProfileForm = (props) => {
   }
 
 
+  //chama para trocar assunto
+  function handleTipoUser(e) {
+    setTipo(e.target.value)
 
+
+  }
 
   async function handleSaveUser(e) {
 
     e.preventDefault();
-    console.log('create')
+
     if (validaCampos) {
       signUp(name, phone, email, password, confirmPassword, tipo)
       // setUpdateUsers(true)
@@ -66,14 +67,11 @@ const ProfileForm = (props) => {
 
 
 
-
-
-
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-      <p>Crie novos usuários para acessar sua conta.</p>
+
       <hr className="my-4" />
       <div className="d-flex gap-3">
         <div>
@@ -92,7 +90,7 @@ const ProfileForm = (props) => {
           <label htmlFor="inputFirstName" className="form-label">
             Nome
           </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
+          <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
 
@@ -100,29 +98,29 @@ const ProfileForm = (props) => {
           <label htmlFor="inputEmail" className="form-label">
             Email
           </label>
-          <input type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputPassword4" className="form-label">
             Senha
           </label>
-          <input type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" className="form-control" id="inputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputPassword4" className="form-label">
             Confirmar senha
           </label>
-          <input type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <input type="password" className="form-control" id="inputPassword2" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Tipo de usuário
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={handleTipoUser}>
             <option value="">Selecionar...</option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-
+            <option value="admin">Admin</option>
+            <option value="can-edit">Pode editar</option>
+            <option value="can-view">Pode ver</option>
           </select>
         </div>
 
@@ -131,11 +129,21 @@ const ProfileForm = (props) => {
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
-          <input type="text" className="form-control" id="inputPhoneNumber" placeholder="(88) 99999-9999" value={phone || ''} onChange={(e) => setPhone(e.target.value)} />
+          <input type="text" className="form-control" id="inputPhoneNumber" placeholder="(88) 99999-9999" value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
-
+        {/* <div className="col-md-6">
+          <label htmlFor="inputUserType" className="form-label">
+            Tipo de usuário
+          </label>
+          <select name="pets" id="input-partner" className="form-select">
+            <option value="">Selecionar...</option>
+            <option value="partnerX">Parceiro X</option>
+            <option value="partnerY">Parceiro Y</option>
+            <option value="partnerZ">Parceiro Z</option>
+          </select>
+        </div> */}
         <div className="d-grid gap-2 d-md-block col-12">
-          <button className="btn btn-primary text-light" type="submit" >
+          <button className="btn btn-primary text-light" type="submit">
             Salvar
           </button>
         </div>
@@ -144,6 +152,6 @@ const ProfileForm = (props) => {
   );
 };
 
-export default ProfileForm;
+export default ClientForm;
 
 

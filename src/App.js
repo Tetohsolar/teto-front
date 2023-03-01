@@ -1,9 +1,16 @@
-import RoutesApp from './routes';
+import RoutesApp from '../src/routes/';
+import AuthProvider from './context/AuthContext';
+import { BrowserRouter } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="app">
-      <RoutesApp />
+      <AuthProvider>
+        <ToastContainer />
+        <RoutesApp />
+      </AuthProvider>
     </div>
   );
 }
