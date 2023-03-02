@@ -1,13 +1,13 @@
-import './projects-data-table.scss'
+import './sizing-data-table.scss'
 import { Link } from 'react-router-dom';
 
-const projects = [
-  { id: 1, projectName: 'Cacilds vidis litro abertis'},
-  { id: 2, projectName: 'Casamentiss faiz malandris se pirulitá'},
-  { id: 3, projectName: 'Leite de capivaris'},
+const sizings = [
+  { id: 1, sizingName: 'Paisis, filhis, espiritis santis'},
+  { id: 2, sizingName: 'Vide electram sadipscing et per'},
+  { id: 3, sizingName: 'Detraxit consequat et quo num tendi nada'},
 ];
 
-const ProjectsDataTable = (props) => {
+const SizingDataTable = (props) => {
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
@@ -24,10 +24,10 @@ const ProjectsDataTable = (props) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
-            {projects.map((project) => {
+            {sizings.map((sizing) => {
               return (
-                <tr key={project.id}>
-                  <td>{project.projectName}</td>
+                <tr key={sizing.id}>
+                  <td>{sizing.sizingName}</td>
                   <td>
                     <div className="d-flex gap-2 justify-content-end">
                       <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center">
@@ -49,9 +49,9 @@ const ProjectsDataTable = (props) => {
         </table>
         </div>
       </div>
-      <Link to={"/projects/new"} className="btn btn-primary text-light">Criar novo projeto</Link>
+      <Link to={"/sizing/new"} className="btn btn-primary text-light">Criar novo projeto</Link>
     </div>
   );
 };
 
-export default ProjectsDataTable;
+export default SizingDataTable;

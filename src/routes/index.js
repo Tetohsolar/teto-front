@@ -12,6 +12,7 @@ import NewClient from '../pages/customers/new';
 import EditUser from '../pages/users/edit';
 import CustomerList from '../pages/customers/list';
 import ProjectsList from '../pages/projects/list';
+import SizingList from '../pages/sizings/list';
 
 
 
@@ -46,8 +47,8 @@ const RoutesApp = () => {
               <Route path="new" element={<New />} />
             </Route>
 
-            <Route path="sizing">
-              <Route index element={<List />} />
+            <Route path="sizings">
+              <Route index element={<SizingList />} />
               <Route path=":sizingId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
