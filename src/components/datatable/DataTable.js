@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from 'react'
 import api from '../../api';
 import NewUSer from '../../pages/users/new';
 import { AuthContext } from '../../context/AuthContext';
+import Avatar from "boring-avatars";
+
 
 
 
@@ -110,7 +112,7 @@ const DataTable = (props) => {
                 return (
                   <tr key={user.id}>
                     <td className="td-img">
-                      <img className="table-avatar" src={user.img} alt="Avatar" />
+                    <Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#146A7C", "#F0AB3D", "#C5C5C5", "#C20D90"]} />
                     </td>
                     <td>{user.firstName}</td>
                     <td>{user.email}</td>
