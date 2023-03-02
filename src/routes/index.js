@@ -11,6 +11,7 @@ import { AuthContext } from '../context/AuthContext';
 import NewClient from '../pages/customers/new';
 import EditUser from '../pages/users/edit';
 import CustomerList from '../pages/customers/list';
+import ProjectsList from '../pages/projects/list';
 
 
 
@@ -33,8 +34,6 @@ const RoutesApp = () => {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
 
-
-
             <Route path="customers">
               <Route index element={<CustomerList />} />
               <Route path=":clientId" element={<Single />} />
@@ -42,7 +41,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="projects">
-              <Route index element={<List />} />
+              <Route index element={<ProjectsList />} />
               <Route path=":projectId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
