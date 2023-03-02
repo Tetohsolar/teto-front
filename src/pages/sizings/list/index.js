@@ -3,7 +3,7 @@ import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
-import SizingDataTable from '../../../components/sizing-data-table/SizingDataTable';
+import SizingDataTable from '../../../components/sizings-data-table/SizingsDataTable';
 
 const SizingList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);

@@ -1,4 +1,4 @@
-import './sizing-data-table.scss'
+import './sizings-data-table.scss'
 import { Link } from 'react-router-dom';
 
 const sizings = [
