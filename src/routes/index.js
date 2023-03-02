@@ -9,7 +9,7 @@ import NewUSer from '../pages/users/new';
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
 import NewClient from '../pages/clients/new';
-import EditUser from '../pages/users/edit ';
+import EditUser from '../pages/users/edit';
 
 
 
@@ -31,8 +31,6 @@ const RoutesApp = () => {
             <Route index element={token ? <Home /> : <Navigate to="/login" />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-
-
 
             <Route path="clients">
               <Route index element={<List />} />
@@ -56,6 +54,12 @@ const RoutesApp = () => {
               <Route index element={<List />} />
               <Route path=":productId" element={<Single />} />
               <Route path="new" element={<New />} />
+            </Route>
+
+            <Route path="clients">
+              <Route index element={<List />} />
+              <Route path=":clientId" element={<Single />} />
+              <Route path="new" element={<NewClient />} />
             </Route>
 
             <Route path="users">
