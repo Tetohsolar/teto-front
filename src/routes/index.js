@@ -13,6 +13,7 @@ import EditUser from '../pages/users/edit';
 import CustomerList from '../pages/customers/list';
 import ProjectsList from '../pages/projects/list';
 import SizingList from '../pages/sizings/list';
+import ProductList from '../pages/products/list';
 
 
 
@@ -54,7 +55,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="products">
-              <Route index element={<List />} />
+              <Route index element={<ProductList />} />
               <Route path=":productId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
