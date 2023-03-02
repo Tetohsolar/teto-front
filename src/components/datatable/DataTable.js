@@ -111,10 +111,8 @@ const DataTable = (props) => {
               {users && users.map((user) => {
                 return (
                   <tr key={user.id}>
-                    <td className="td-img">
-                    <Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#146A7C", "#F0AB3D", "#C5C5C5", "#C20D90"]} />
-                    </td>
-                    <td>{user.firstName}</td>
+                    <td className="td-img"><Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#C5C5C5"]} /></td>
+                    <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
                       <span className="badge bg-light text-secondary">

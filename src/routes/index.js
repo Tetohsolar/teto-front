@@ -8,8 +8,9 @@ import Single from '../pages/single/Single';
 import NewUSer from '../pages/users/new';
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
-import NewClient from '../pages/clients/new';
+import NewClient from '../pages/customers/new';
 import EditUser from '../pages/users/edit';
+import CustomerList from '../pages/customers/list';
 
 
 
@@ -34,8 +35,8 @@ const RoutesApp = () => {
 
 
 
-            <Route path="clients">
-              <Route index element={<List />} />
+            <Route path="customers">
+              <Route index element={<CustomerList />} />
               <Route path=":clientId" element={<Single />} />
               <Route path="new" element={<NewClient />} />
             </Route>

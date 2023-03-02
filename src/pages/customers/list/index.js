@@ -3,29 +3,23 @@ import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
-import './new.scss';
-import ProfileForm from '../../../components/profileform/ProfileForm';
-import ClientForm from '../../../components/clientForm/ClientForm';
+import CustomerDataTable from '../../../components/customer-data-table/CustomerDataTable';
 
-
-const NewClient = ({ childToParent }) => {
-
+const CustomerList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle = "Cadastro de Cliente";
-
-
+  const pageTitle= 'Clientes';
   return (
     <div>
       <Navbar />
       <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
-        <Sidebar activeButtonProfile="active" />
+        <Sidebar activeButtonCustomers='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
-          <h5 className="pb-3">{pageTitle}</h5>
-          <ClientForm listTitle="Novo Cliente" />
+          <h5 className='pb-3'>{pageTitle}</h5>
+          <CustomerDataTable listTitle="Dados dos clientes" />
         </div>
       </div>
     </div>
   );
 };
 
-export default NewClient;
+export default CustomerList;
