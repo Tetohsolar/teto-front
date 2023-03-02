@@ -9,7 +9,7 @@ import './list.scss';
 
 const List = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Perfil';
+  const pageTitle= 'Usuários';
   return (
     <div>
       <Navbar />

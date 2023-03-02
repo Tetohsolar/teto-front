@@ -9,7 +9,7 @@ import NewUSer from '../pages/users/new';
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
 import NewClient from '../pages/clients/new';
-import EditUser from '../pages/users/edit ';
+import EditUser from '../pages/users/edit';
 
 
 
