@@ -14,6 +14,7 @@ import CustomerList from '../pages/customers/list';
 import ProjectsList from '../pages/projects/list';
 import SizingList from '../pages/sizings/list';
 import ProductList from '../pages/products/list';
+import Settings from '../pages/settings';
 
 
 
@@ -74,7 +75,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="settings">
-              <Route index element={<List />} />
+              <Route index element={<Settings />} />
             </Route>
 
 
