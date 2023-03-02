@@ -28,7 +28,7 @@ const CustomerDataTable = (props) => {
             {users.map((user) => {
               return (
                 <tr key={user.id}>
-                  <td><Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#C5C5C5"]} /></td>
+                  <td className="td-img"><Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#C5C5C5"]} /></td>
                   <td>{user.firstName}</td>
                   <td>{user.email}</td>
                   <td><span className="badge bg-light text-secondary">{user.userType}</span></td>
