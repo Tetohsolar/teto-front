@@ -1,8 +1,9 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
-import { useState, useContext, useEffect } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { useState, useContext } from 'react'
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import InputMask from 'react-input-mask';
 
 
 const ProfileForm = (props) => {
@@ -53,11 +54,10 @@ const ProfileForm = (props) => {
   async function handleSaveUser(e) {
 
     e.preventDefault();
-    console.log('create')
     if (validaCampos) {
       signUp(name, phone, email, password, confirmPassword, tipo)
-      // setUpdateUsers(true)
-      console.log(tipo)
+
+
       limpaCampos()
 
     }
@@ -72,6 +72,7 @@ const ProfileForm = (props) => {
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
+
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Crie novos usuários para acessar sua conta.</p>
       <hr className="my-4" />
@@ -131,7 +132,13 @@ const ProfileForm = (props) => {
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
-          <input type="text" className="form-control" id="inputPhoneNumber" placeholder="(88) 99999-9999" value={phone || ''} onChange={(e) => setPhone(e.target.value)} />
+
+          <InputMask
+            className="form-control" id="inputPhoneNumber"
+            onChange={(e) => setPhone(e.target.value)}
+            mask='(99)9999-9999'
+            value={phone || ''}>
+          </InputMask>
         </div>
 
         <div className="d-grid gap-2 d-md-block col-12">

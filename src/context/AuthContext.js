@@ -8,14 +8,11 @@ export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
 
-  const [users, setUsers] = useState([''])
-
-
-  const [loadingAuth, setLoadingAuth] = useState(false)
+  // const [users, setUsers] = useState([''])
+  // const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
   const [token, setToken] = useState('')
-  const [userEdit, setUserEdit] = useState('')
+
 
 
 
@@ -52,16 +49,17 @@ function AuthProvider({ children }) {
       }
 
       setStorageUserLocal(newUser)
-      setMessage(newUser.message)
       setToken(newUser.token)
-      toast.success(message)
+      toast.success(response.data.message)
       setLoading(false)
 
     }).catch((err) => {
       console.log(err)
+      toast.error(err)
     })
-    setMessage('')
+
   }
+
   //SignUp User
   async function signUp(name, phone, email, password, confirmpassword, tipo) {
     setLoading(true)
@@ -81,15 +79,18 @@ function AuthProvider({ children }) {
       toast.success(response.data.message)
 
     })
-    setMessage('')
+      .catch((err) => {
+        toast.error(err)
+      })
+
   }
 
 
-  //SignUp User
+  
 
   //id, name, phone, email, password, confirmPassword, tipo
   async function updateUser(id, name, phone, email, password) {
-    console.log('update')
+
     setLoading(true)
     await api.patch(`/user/update/${id}`, {
       name: name,
@@ -98,8 +99,6 @@ function AuthProvider({ children }) {
       password: password,
       confirmpassword: password,
       tipoR: 'Admin'
-
-
     }, {
       headers: {
         'Authorization': `Basic ${token.token}`
@@ -110,7 +109,10 @@ function AuthProvider({ children }) {
       setLoading(false)
 
     })
-    setMessage('')
+      .catch((err) => {
+        toast.error(err)
+      })
+
   }
 
   async function deleteUser(id) {
@@ -125,8 +127,11 @@ function AuthProvider({ children }) {
         toast.success(response.data.message)
 
       })
+      .catch((err) => {
+        toast.error(err)
+      })
     setLoading(false)
-    setMessage('')
+
   }
 
 
@@ -156,9 +161,6 @@ function AuthProvider({ children }) {
         signOut,
         updateUser,
         deleteUser,
-        userEdit,
-        loadingAuth,
-        users,
         ToastContainer,
         token
       }}>

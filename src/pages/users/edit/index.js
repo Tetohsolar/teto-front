@@ -1,17 +1,21 @@
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
+import EditProFileForm from '../../../components/editProfileForm'
 import '../../pages.scss';
 import './new.scss';
-import ProfileForm from '../../../components/profileform/ProfileForm';
-import ClientForm from '../../../components/clientForm/ClientForm';
 
 
-const NewClient = ({ childToParent }) => {
 
+const EditUser = (props) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle = "Cadastro de Cliente";
+  const pageTitle = "Informações do usuário";
+
+
+  const { userId } = useParams();
+
 
 
   return (
@@ -21,11 +25,14 @@ const NewClient = ({ childToParent }) => {
         <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-          <ClientForm listTitle="Novo Cliente" />
+
+          <EditProFileForm listTitle="Editar perfil do usuário" userId={userId} />
+
+
         </div>
       </div>
     </div>
   );
 };
 
-export default NewClient;
+export default EditUser;
