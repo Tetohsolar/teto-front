@@ -8,7 +8,14 @@ import Single from '../pages/single/Single';
 import NewUSer from '../pages/users/new';
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
+
+import NewClient from '../pages/customers/new';
 import EditUser from '../pages/users/edit';
+import CustomerList from '../pages/customers/list';
+import ProjectsList from '../pages/projects/list';
+import SizingList from '../pages/sizings/list';
+import ProductList from '../pages/products/list';
+import Settings from '../pages/settings';
 
 
 
@@ -31,28 +38,26 @@ const RoutesApp = () => {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
 
-
-
-            <Route path="clients">
-              <Route index element={<List />} />
+            <Route path="customers">
+              <Route index element={<CustomerList />} />
               <Route path=":clientId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
 
             <Route path="projects">
-              <Route index element={<List />} />
+              <Route index element={<ProjectsList />} />
               <Route path=":projectId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
 
-            <Route path="sizing">
-              <Route index element={<List />} />
+            <Route path="sizings">
+              <Route index element={<SizingList />} />
               <Route path=":sizingId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
 
             <Route path="products">
-              <Route index element={<List />} />
+              <Route index element={<ProductList />} />
               <Route path=":productId" element={<Single />} />
               <Route path="new" element={<New />} />
             </Route>
@@ -71,7 +76,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="settings">
-              <Route index element={<List />} />
+              <Route index element={<Settings />} />
             </Route>
 
 

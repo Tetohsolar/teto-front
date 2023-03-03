@@ -9,12 +9,12 @@ import './list.scss';
 
 const List = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Perfil';
+  const pageTitle= 'Usuários';
   return (
     <div>
       <Navbar />
       <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
-        <Sidebar activeButtonProfile='active' />
+        <Sidebar activeButtonUsers='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className='pb-3'>{pageTitle}</h5>
           <Administrator listTitle="Minha conta" />
