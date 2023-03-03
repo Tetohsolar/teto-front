@@ -2,23 +2,21 @@ import './datatable.scss'
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react'
 import api from '../../api';
-import NewUSer from '../../pages/users/new';
 import { AuthContext } from '../../context/AuthContext';
+import MyModal from './ModalDelete'
 import Avatar from "boring-avatars";
-
 
 
 
 const DataTable = (props) => {
 
 
-  const { signUp, updateUser, token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
 
   const [users, setUsers] = useState([])
+  const [userDel, setUserDel] = useState([])
 
   const [updateUsers, setUpdateUsers] = useState(false)
-  const [data, setData] = useState()
-  const [userEdit, setUserEdit] = useState()
 
   const { deleteUser } = useContext(AuthContext)
 
@@ -73,19 +71,26 @@ const DataTable = (props) => {
   }, [updateUsers])
 
 
+  // async function handleDeleteUser(user) {
+  //   deleteUser(user.id)
+  //   console.log(user)
+  //   setUpdateUsers(true)
+
+  // }
 
 
-  //Save user locally
-  function setStorageUserLocal(data) {
-
-    localStorage.setItem('userEdit', JSON.stringify(data))
-  }
-
-  async function handleDeleteUser(user) {
-    deleteUser(user.id)
-    console.log(user)
-    setUpdateUsers(true)
-
+  //set user to modal and update user list after 2 seconds
+  function updateListUser(user) {
+    setUpdateUsers(false)
+    let myUser = {
+      id: user.id,
+      name: user.name
+    }
+    setUserDel(myUser)
+    setTimeout((e) => {
+      setUpdateUsers(true)
+    }, 2000)
+    setUpdateUsers(false)
   }
 
 
@@ -93,6 +98,7 @@ const DataTable = (props) => {
 
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
+
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Crie novos usuários para acessar sua conta.</p>
       <hr className="my-4" />
@@ -111,6 +117,9 @@ const DataTable = (props) => {
               {users && users.map((user) => {
                 return (
                   <tr key={user.id}>
+                    <td className="td-img">
+                      <img className="table-avatar" src={"https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy"} alt="Avatar" />
+                    </td>
                     <td className="td-img"><Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#C5C5C5"]} /></td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
@@ -121,6 +130,10 @@ const DataTable = (props) => {
                     </td>
 
                     <td>
+
+                      <div className="d-flex gap-2">
+                        <Link to={`/users/edit/${user.id}`}>
+                          <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center">
                       <div className="d-flex gap-2 justify-content-end">
 
                         {/* <Link to={`/users/edit/`}>
@@ -139,12 +152,23 @@ const DataTable = (props) => {
                             </svg>
                           </button>
                         </Link>
+                        <button type="button" class="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => updateListUser(user)}>
 
-                        <button type="button" onClick={() => handleDeleteUser(user)} className="btn btn-light btn-sm text-danger d-flex align-items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
                             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                           </svg>
                         </button>
+                        <MyModal userId={userDel.id} />
+
+                        {/* <button type="button" onClick={() => handleDeleteUser(user)} className="btn btn-light btn-sm text-danger d-flex align-items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                          </svg>
+                        </button> */}
+
+
+
+
                       </div>
                     </td>
                   </tr>
@@ -157,6 +181,9 @@ const DataTable = (props) => {
       <Link to={"/users/new"} className="btn btn-primary text-light">
         Criar novo usuário
       </Link>
+
+
+
     </div>
   );
 };

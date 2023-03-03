@@ -8,12 +8,7 @@ const Signup = () => {
 
 
 
-  // const [name, setName] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [phone, setPhone] = useState('')
-  // const [confirmPassword, setConfirmPassword] = useState('')
-  // const [password, setPassword] = useState('')
-  // const { signUp, loadingAuth, ToastContainer, token } = useContext(AuthContext)
+
 
 
 

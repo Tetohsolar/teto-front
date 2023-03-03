@@ -1,9 +1,9 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
 import { useState, useContext, useEffect } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 
 const EditProfileForm = (props) => {
@@ -15,7 +15,6 @@ const EditProfileForm = (props) => {
   const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
   const [id, setId] = useState('')
-  const [userEdit, setUserEdit] = useState()
   const [reloadPage, setReloadPage] = useState(false)
 
 
@@ -28,7 +27,7 @@ const EditProfileForm = (props) => {
     findUserById()
   }, [reloadPage])
 
-  var myUser = {}
+
   async function findUserById() {
     await api.get(`/user/get/${props.userId}`, {
       headers: {
@@ -95,18 +94,7 @@ const EditProfileForm = (props) => {
           </label>
           <input type="email" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        {/* <div className="col-md-4">
-          <label htmlFor="inputPassword4" className="form-label">
-            Senha
-          </label>
-          <input type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <div className="col-md-4">
-          <label htmlFor="inputPassword4" className="form-label">
-            Confirmar senha
-          </label>
-          <input type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
-        </div> */}
+
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Tipo de usuário
