@@ -8,16 +8,16 @@ import { cnpjMask } from './cnpjmask'
 import InputMask from 'react-input-mask';
 import api from '../../api';
 
-import cep from "cep-promise";
-
 import SelectEstado from '../estadosbr';
+import { json } from 'react-router-dom';
 function PhoneInput(props) {
   return (
     <InputMask 
       mask='(99) 99999-9999' 
       value={props.value} 
       onChange={props.onChange}
-       className="form-control">
+       className="form-control" required={props.required} placeholder={props.placeholder}
+       type={props.type} name={props.name} id={props.id} >
     </InputMask>
   );
 }
@@ -28,7 +28,8 @@ function CepInput(props) {
       mask='99999-999' 
       value={props.value} 
       onChange={props.onChange}
-       className="form-control" onKeyDown={props.onKeyDown} onBlur={props.onBlur}>
+       className="form-control" onKeyDown={props.onKeyDown} onBlur={props.onBlur} placeholder={props.placeholder}
+       type={props.type} name={props.name}>
     </InputMask>
   );
 }
@@ -54,8 +55,8 @@ const ClientForm = (props) => {
   const [exibeCorporateName, setExibeCorporateName] = useState('')
   const [tipoPessoa, setTipoPessoa] = useState('')
   const [corporateName, setCorporateName] = useState('')
-  const [document, setDocument] = useState('')
- 
+  const [doc, setDoc] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [cepData, setCepData] = useState('')
   const [zap, setZap] = useState('')
@@ -71,8 +72,6 @@ const ClientForm = (props) => {
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
-
-  
   
 
   function limpaCampos() {
@@ -81,35 +80,57 @@ const ClientForm = (props) => {
     setPhone('')
     setTipoPessoa('F')
     setLbFantasia("Nome")
-    setDocument('')
+    setDoc('')
     setLbDocument("CPF")
     setZap('')
     setInformacoesAdicionais('')
+    setCepData("")
+    setEstado("AC")
+    setCidade("") 
+    setRua("")
+    setBairro("")
+    setCidades("")
+    handleEstadoValue("")
   }
 
 
-  function validaCampos(name, email, phone, password, confirmPassword, tipo) {
-    if (name !== '' && email !== '' && phone !== '') {
-      return true
+  function validaCampos(name, phone, doc) {
+    
+    if (name===""){
+      toast.error( "Nome É obrigatório",{
+        autoClose: 1000,
+      })
+      return false;
+    }
+    if (phone===""){
+        toast.error( "Telefone É obrigatório",{
+        autoClose: 1000,
+      })
+      return false;
+    }
+    
+    return true;
+    
+   /* if (name !== '' && email !== '' && phone !== '') {
+      
     }
     if (password === confirmPassword && tipo !== '') {
       return true
     }
     else {
       return false
-    }
+    }*/
 
   }
-
 
   function handleMask(e){
    // alert(tipoPessoa)
     if (tipoPessoa==="F"||tipoPessoa==="" ) {
-       const formatado =  cpfMask(document);
-       setDocument(formatado);
+       const formatado =  cpfMask(doc);
+       setDoc(formatado);
     }else{
-      const formatado =  cnpjMask(document);
-       setDocument(formatado);
+      const formatado =  cnpjMask(doc);
+       setDoc(formatado);
     }
   
   }
@@ -148,6 +169,7 @@ const ClientForm = (props) => {
  
   setEstado(value)
   }
+
   async function handleEstado(e){
    handleEstadoValue(e.target.value)
   }
@@ -167,19 +189,64 @@ const ClientForm = (props) => {
   };
 
 
+    async function create(tipoPesoa, name, corpName, documento, phone, zap, cep,estado,cidade,logradouro, bairro, inform, email ) {
+
+      const json = {fantasy: name,
+        corporatename: corpName,
+        phone: phone,
+        document: documento,
+        email: email,
+        tipo: tipoPesoa,
+        zap:zap,
+        addInformation:inform,
+        Addresses:[
+          {
+            street:logradouro,
+            postcode:cep,
+            city:cidade,
+            state:estado,
+            neighborhood:bairro
+          }
+        ]
+      }
+      const t = JSON.stringify(json);
+      console.log(t);
+      const saida = JSON.parse(t);
+      
+    await api.post('/client/create', saida
+      , {
+      headers: {
+        'Authorization': `Basic ${token.token}`
+      }
+
+    }).then((response) => {
+      console.log(response.data.message)
+      toast.success(response.data.message).then(limpaCampos())
+    }).catch(
+      (response) => {
+        toast.error(response.response.data.message)
+  
+      }
+    )
+    
+  }
+
   async function handleSaveUser(e) {
 
     e.preventDefault();
 
-    if (validaCampos) {
+    if (validaCampos(name,phone,doc)) {
+      create(tipoPessoa,name,corporateName,doc,phone,zap,cepData, estado,cidade,bairro,informacoesAdicionais,email)
+      
     //  signUp(name, phone, email, password, confirmPassword, tipo)
       // setUpdateUsers(true)
      // console.log(tipo)
-      limpaCampos()
+     // 
 
     }
 
   }
+
 
   
   return (
@@ -203,7 +270,7 @@ const ClientForm = (props) => {
             {lbFantasia===""?"Nome":lbFantasia}
             
           </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text"  className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
         <div className="col-md-4"  >
@@ -211,14 +278,14 @@ const ClientForm = (props) => {
           {lbDocument===""?"CPF":lbDocument}
           </label>
          
-          <input type="text" className="form-control" id="inputDocumento" value={document} onKeyUp={(e)=>{handleMask(e)}}  onChange={(e) => setDocument(e.target.value)} />
+          <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e)=>{handleMask(e)}}  onChange={(e) => setDoc(e.target.value)} />
         </div>
 
         <div className="col-md-5" id={exibeCorporateName===""?"divRazaoEscondida":"divRazaoVisvel"} >
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
-          <input type="email" className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
+          <input type="text" className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
         
         
@@ -226,7 +293,7 @@ const ClientForm = (props) => {
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
-          <PhoneInput  className="form-control" id="inputPhoneNumber"  value={phone}     onChange={handleInput}>  </PhoneInput>
+          <PhoneInput  className="form-control" id="inputPhoneNumber"  value={phone}    onChange={handleInput}> </PhoneInput>
         </div>
 
         
@@ -279,7 +346,6 @@ const ClientForm = (props) => {
           <input type="text" className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
        
-        
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit">
             Salvar
