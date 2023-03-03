@@ -41,7 +41,7 @@ const RoutesApp = () => {
             <Route path="customers">
               <Route index element={<CustomerList />} />
               <Route path=":clientId" element={<Single />} />
-              <Route path="new" element={<New />} />
+              <Route path="new" element={<NewClient />} />
             </Route>
 
             <Route path="projects">
