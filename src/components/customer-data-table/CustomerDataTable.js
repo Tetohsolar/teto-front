@@ -81,7 +81,7 @@ const CustomerDataTable = (props) => {
   }
   function handleMask(e){
     listaUsers(name)
-    //e.preventDefault()
+    e.preventDefault()
   }
 
   
