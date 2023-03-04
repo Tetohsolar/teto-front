@@ -5,9 +5,7 @@ import { useEffect, useState, useContext } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 
-
 const CustomerDataTable = (props) => {
-  
   
   const [clientes, setClientes] = useState([])
   const [name, setName] = useState([])
