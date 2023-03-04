@@ -50,7 +50,7 @@ const CustomerDataTable = (props) => {
       }
     })
       .then((response) => {
-        setClientes(response.data.tutorials)
+        setClientes(response.data.clients)
 
       }).catch((err) => {
         console.log(err)
