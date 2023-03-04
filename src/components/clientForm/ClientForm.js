@@ -68,6 +68,7 @@ const ClientForm = (props) => {
   const [cidade, setCidade] = useState('')
   const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
+  const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
 
   const { signUp, loadingAuth, token } = useContext(AuthContext)
@@ -80,9 +81,9 @@ const ClientForm = (props) => {
 
 
     const storageUser = localStorage.getItem('cliente')
-
+    if (clientId){
     loadClienById(clientId)
-
+    }
 
     return () => { }
 
@@ -102,6 +103,7 @@ const ClientForm = (props) => {
         setName(response.data.fantasy)
         setDoc(response.data.document)
         setCorporateName(response.data.corporatename)
+        
         response.data.tipo === "Fisico" ? setTipoPessoa("F") : setTipoPessoa("J")
         let olha = response.data.tipo ==="Fisico"?"F":"J"
         handleTipoPessoaValue(olha)
@@ -114,13 +116,13 @@ const ClientForm = (props) => {
         setCidade(response.data.Addresses[0].city)
         setRua(response.data.Addresses[0].street)
         setBairro(response.data.Addresses[0].neighborhood)
+        setIdAdd(response.data.Addresses[0].id)
         setInformacoesAdicionais(response.data.addInformation)
         setId(response.data.id)
+        setEmail(response.data.email)
 
       }).catch((error) => {
-        //console.log(error.response.data.message)
         toast.error(error.response.data.message)
-
       });
 
     } catch (err) {
@@ -129,6 +131,7 @@ const ClientForm = (props) => {
 
 
   }
+ 
 
   function limpaCampos() {
     setName('')
@@ -182,7 +185,7 @@ const ClientForm = (props) => {
   //chama para trocar assunto
   function handleTipoPessoa(e) {
 
-    setTipoPessoa(e.target.value)
+    //setTipoPessoa(e.target.value)
     handleTipoPessoaValue(e.target.value)
 
   }
@@ -245,7 +248,7 @@ const ClientForm = (props) => {
   const navigate = useNavigate();
   
   
-  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email,id) {
+  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email,id,idAdd) {
 
     const json = {
       fantasy: name,
@@ -253,11 +256,12 @@ const ClientForm = (props) => {
       phone: phone,
       document: documento,
       email: email,
-      tipo: tipoPesoa===""?"F":"J",
+      tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
       Addresses: [
         {
+          id:idAdd?idAdd:undefined,
           street: logradouro,
           postcode: cep,
           city: cidade,
@@ -277,13 +281,12 @@ const ClientForm = (props) => {
         }
 
       }).then((response) => {
-        console.log(response.data.message)
-        toast.success(response.data.message).then(limpaCampos())
-        
-        
+       // console.log(response.data.message)
+       //toast.success(response.data.message).then(limpaCampos())
       }).catch(
         (response) => {
           toast.error(response.response.data.message)
+          throw new Error() 
 
         }
       );
@@ -297,12 +300,12 @@ const ClientForm = (props) => {
         }
 
       }).then((response) => {
-        console.log(response.data.message)
-        toast.success(response.data.message).then(limpaCampos())
+        //console.log(response.data.message)
+        //toast.success(response.data.message).then(limpaCampos())
       }).catch(
         (response) => {
           toast.error(response.response.data.message)
-
+          throw new Error() 
         }
       )
     }
@@ -315,8 +318,17 @@ const ClientForm = (props) => {
     e.preventDefault();
 
     if (validaCampos(name, phone, doc)) {
-      save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email,id)
-      navigate("/customers")
+      try {
+         await save(tipoPessoa,name,corporateName,doc,phone,zap,cepData,estado,cidade, rua,bairro,informacoesAdicionais,email,id,idAdd)
+         navigate("/customers");
+         toast.success("Operação realizada com sucesso!",{
+          autoClose: 1000,
+        })
+      
+        }catch(error){
+         ///console.log(error);
+      }
+      
     }
 
   }
@@ -333,8 +345,8 @@ const ClientForm = (props) => {
             Tipo
           </label>
           <select className='form-select' value={tipoPessoa} onChange={handleTipoPessoa}>
-            <option value="F"> Física</option>
-            <option value="J"> Jurídica</option>
+            <option value="F">Física</option>
+            <option value="J">Jurídica</option>
           </select>
 
         </div>
@@ -418,6 +430,13 @@ const ClientForm = (props) => {
             Informações Adicionais
           </label>
           <input type="text" className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+        </div>
+
+        <div className="col-md-5"  >
+          <label htmlFor="email" className="form-label ">
+            Email
+          </label>
+          <input type="text" className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
 
         <div className="d-grid gap-2 d-md-block col-12">
