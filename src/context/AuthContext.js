@@ -140,10 +140,13 @@ function AuthProvider({ children }) {
   //Save user locally
   function setStorageUserLocal(data) {
     localStorage.setItem('cliente', JSON.stringify(data))
+    localStorage.setItem('token', data.token)
+
   }
 
   function signOut() {
     localStorage.removeItem("cliente")
+    localStorage.removeItem("token")
 
   }
 
