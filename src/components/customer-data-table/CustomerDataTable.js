@@ -41,9 +41,9 @@ const CustomerDataTable = (props) => {
     }
     //console.log(localStorage.getItem("token"))
     const filtro = {
-      fantasy:"%"+name+"%",
-      corporatename:"%",
-      document:"%",
+      fantasy:name,
+      corporatename:"",
+      document:"",
       page:0,
       pageSize:50
 
@@ -72,22 +72,17 @@ const CustomerDataTable = (props) => {
     })
       .then((response) => {
         listaUsers(name)
-        toast.success( response.data.message,{
+        toast.success("Operação realizada com sucesso!",{
           autoClose: 1000,
         })
-
-
       }).catch((err) => {
         console.log(err)
       })
-
-   
-   console.log(idSelected) 
   }
   function handleMask(e){
     listaUsers(name)
-  
-   }
+    //e.preventDefault()
+  }
 
   
   return (
