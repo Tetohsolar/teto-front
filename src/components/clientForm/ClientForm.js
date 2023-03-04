@@ -110,17 +110,6 @@ const ClientForm = (props) => {
     }
     
     return true;
-    
-   /* if (name !== '' && email !== '' && phone !== '') {
-      
-    }
-    if (password === confirmPassword && tipo !== '') {
-      return true
-    }
-    else {
-      return false
-    }*/
-
   }
 
   function handleMask(e){
@@ -210,7 +199,6 @@ const ClientForm = (props) => {
         ]
       }
       const t = JSON.stringify(json);
-      console.log(t);
       const saida = JSON.parse(t);
       
     await api.post('/client/create', saida

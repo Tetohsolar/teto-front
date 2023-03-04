@@ -1,21 +1,79 @@
 import './customer-data-table.scss'
 import { Link } from 'react-router-dom';
 import Avatar from "boring-avatars";
+import { useEffect, useState, useContext } from 'react';
+import api from '../../api';
+import { AuthContext } from '../../context/AuthContext';
 
-const users = [
-  { id: 2, img:'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy', firstName: 'John Doe', email: 'john@domain.com', userType: 'Pode ver' },
-  { id: 3, img:'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy', firstName: 'Jane Doe', email: 'jane@domain.com', userType: 'Pode ver' },
-  { id: 4, img:'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy', firstName: 'Junior Doe', email: 'junior@domain.com', userType: 'Pode editar' },
-];
 
 const CustomerDataTable = (props) => {
+  
+  
+  const [clientes, setClientes] = useState([])
+  const [name, setName] = useState([])
+  const [cpfCnpj, setCpfCnpj] = useState([])
+  const [tk, setTk] = useState([])
+  
+  const { token } = useContext(AuthContext)
+
+
+  useEffect(() => {
+
+    const storageUser = localStorage.getItem('cliente')
+
+
+    listaUsers("%");
+   // setUpdateUsers(false)
+
+    return () => { }
+
+
+  }, [])
+
+  async function listaUsers(name) {
+      
+    if (token.token){
+      localStorage.setItem("token",token.token)
+      
+    }
+    console.log(localStorage.getItem("token"))
+    const filtro = {
+      fantasy:"%"+name+"%",
+      corporatename:"%",
+      document:"%",
+      page:0,
+      pageSize:50
+
+    }
+    
+    await api.post('/client/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    })
+      .then((response) => {
+        setClientes(response.data.tutorials)
+
+      }).catch((err) => {
+        console.log(err)
+      })
+      
+  }
+
+  function handleMask(e){
+    listaUsers(name)
+  
+   }
+
+  
   return (
+    <form onSubmit={handleMask}> 
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className='my-4' />
       <div className="input-group mb-3 search-w">
-        <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" />
-        <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2">
+        <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+        <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
@@ -25,12 +83,11 @@ const CustomerDataTable = (props) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
-            {users.map((user) => {
+            {clientes.map((user) => {
               return (
                 <tr key={user.id}>
-                  <td className="td-img"><Avatar size={32} name="Mary Baker" variant="beam" colors={["#8B8B8B", "#C5C5C5"]} /></td>
-                  <td>{user.firstName}</td>
-                  <td>{user.email}</td>
+                  <td>{user.fantasy}</td>
+                  <td>{user.phone}</td>
                   <td><span className="badge bg-light text-secondary">{user.userType}</span></td>
                   <td>
                     <div className="d-flex gap-2 justify-content-end">
@@ -53,8 +110,9 @@ const CustomerDataTable = (props) => {
         </table>
         </div>
       </div>
-      <Link to={"/users/new"} className="btn btn-primary text-light">Criar novo usuário</Link>
+      <Link to={"/customers/new"} className="btn btn-primary text-light">Criar novo Cliente</Link>
     </div>
+    </form>
   );
 };
 
