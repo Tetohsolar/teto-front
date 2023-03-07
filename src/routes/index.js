@@ -17,8 +17,8 @@ import SizingList from '../pages/sizings/list';
 import ProductList from '../pages/products/list';
 import Settings from '../pages/settings';
 import EditClient from '../pages/customers/edit';
-
-
+import AfflitedList from '../pages/afflited/list';
+import NewAfflited from '../pages/afflited/new';
 
 
 const RoutesApp = () => {
@@ -81,6 +81,11 @@ const RoutesApp = () => {
               <Route index element={<Settings />} />
             </Route>
 
+            <Route path="affliteds">
+              <Route index element={<AfflitedList />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="new" element={<NewAfflited />} />
+            </Route>
 
           </Route>
         </Routes>
