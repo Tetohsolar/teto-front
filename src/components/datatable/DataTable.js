@@ -8,6 +8,7 @@ import MyModal from './ModalDelete'
 
 
 
+
 const DataTable = (props) => {
 
 
@@ -15,10 +16,8 @@ const DataTable = (props) => {
 
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
-
+  const [userFind, setUserFind] = useState('')
   const [updateUsers, setUpdateUsers] = useState(false)
-
-  const { deleteUser } = useContext(AuthContext)
 
 
   async function updateStateUser(response) {
@@ -40,6 +39,33 @@ const DataTable = (props) => {
     }
     setUsers(users => [...lista])
   }
+
+  async function handleSearchUser() {
+    let lista = []
+    let filtro = {
+      "name": "%" + userFind + "%",
+      "email": "%",
+      "page": 0,
+      "pageSize": 5
+    }
+    await api.post('/user/byparam', filtro, {
+      headers: {
+        'Authorization': `token ${token.token}`
+      }
+    })
+      .then((response) => {
+        console.log(response.data.users)
+
+        setUsers(response.data.users)
+
+      }).catch((err) => {
+        console.log(err)
+      })
+
+
+  }
+
+
 
   useEffect(() => {
 
@@ -71,12 +97,7 @@ const DataTable = (props) => {
   }, [updateUsers])
 
 
-  // async function handleDeleteUser(user) {
-  //   deleteUser(user.id)
-  //   console.log(user)
-  //   setUpdateUsers(true)
 
-  // }
 
 
   //set user to modal and update user list after 2 seconds
@@ -96,6 +117,7 @@ const DataTable = (props) => {
 
 
 
+
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
 
@@ -103,8 +125,14 @@ const DataTable = (props) => {
       <p>Crie novos usuários para acessar sua conta.</p>
       <hr className="my-4" />
       <div className="input-group mb-3 search-w">
-        <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" />
-        <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2">
+        <input type="text" className="form-control"
+          onChange={(e) => setUserFind(e.target.value)}
+          placeholder="Buscar..." aria-label="Recipient's username"
+          aria-describedby="button-addon2" />
+
+        <button className="btn btn-primary text-light d-flex align-items-center"
+          onClick={(e) => { handleSearchUser(e) }}
+          type="button" id="button-addon2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
@@ -116,6 +144,7 @@ const DataTable = (props) => {
             <tbody>
               {users && users.map((user) => {
                 return (
+
                   <tr key={user.id}>
                     <td className="td-img">
                       <img className="table-avatar" src={"https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy"} alt="Avatar" />
@@ -144,20 +173,13 @@ const DataTable = (props) => {
                           </svg>
                         </button>
                         <MyModal userId={userDel.id} />
-
-                        {/* <button type="button" onClick={() => handleDeleteUser(user)} className="btn btn-light btn-sm text-danger d-flex align-items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
-                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                          </svg>
-                        </button> */}
-
-
-
-
                       </div>
                     </td>
                   </tr>
+
+
                 );
+
               })}
             </tbody>
           </table>
