@@ -2,24 +2,25 @@ import { useContext } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
-import '../../pages.scss';
-import ProducstDataTable from '../../../components/products-data-table/ProductsDataTable';
 
-const ProductList = () => {
+import ProductForm from '../../../components/productForm/productForm';
+import './index.scss';
+
+const NewProduct = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Produtos';
+  const pageTitle = "Informações do produto";
   return (
     <div>
       <Navbar />
       <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
-        <Sidebar activeButtonProducts='active' />
+        <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
-          <h5 className='pb-3'>{pageTitle}</h5>
-          <ProducstDataTable listTitle="Lista de produtos"/>
+          <h5 className="pb-3">{pageTitle}</h5>
+          <ProductForm listTitle="Editar produto" />
         </div>
       </div>
     </div>
   );
 };
 
-export default ProductList;
+export default NewProduct;
