@@ -7,7 +7,21 @@ import InputMask from 'react-input-mask';
 import { redirect, useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import api from '../../api';
+import {NumericFormat} from 'react-number-format';
 
+
+function NumberInput(props) {
+  return (
+    <InputMask
+    maskChar={null}
+      mask= '9999999999.99'
+      value={props.value}
+      onChange={props.onChange}
+      className="form-control" required={props.required} placeholder={props.placeholder}
+      type={props.type} name={props.name} id={props.id} >
+    </InputMask>
+  );
+}
 
 const ProductForm = (props) => {
 
@@ -21,6 +35,7 @@ const ProductForm = (props) => {
   const [fornecedor, setFornecedor] = useState('')
   const [preco, setPreco] = useState('')
   const [peso, setPeso] = useState('')
+  const [dimensao, setDimensao] = useState('')
   const {Id} = useParams();
   const [idSelected,setIdSelected] = useState('')
 
@@ -50,7 +65,9 @@ const ProductForm = (props) => {
         setFornecedor(response.data.supplier)
         setPreco(response.data.price)
         setPeso(response.data.weight)
+        setDimensao(response.data.dimenssion)
         setIdSelected(response.data.id)
+        
 
         
       }).catch((error) => {
@@ -87,9 +104,10 @@ const ProductForm = (props) => {
     setFornecedor('')
     setPreco('')
     setPeso('')
+    setDimensao('')
   }
   async function saveProduct(codef,brand,category,description,descriptionTec,
-  descriptionFriendly,garantia,fornecedor,preco,peso,idSelected){
+  descriptionFriendly,garantia,fornecedor,preco,peso,dimensao,idSelected){
     const json = {codef: codef,
       description: description,
       brand: brand,
@@ -100,6 +118,7 @@ const ProductForm = (props) => {
       supplier:fornecedor,
       weight:peso,
       price:preco,
+      dimenssion:dimensao, 
     }
 
    
@@ -151,7 +170,7 @@ const ProductForm = (props) => {
     if (true) {
       try {
          await saveProduct(codigo,marca,categoria,descricao,descricaoTec,
-          descricaoAmigavel,garantia,fornecedor,preco,peso,idSelected)
+          descricaoAmigavel,garantia,fornecedor,preco,peso,dimensao,idSelected)
          navigate("/products");
          toast.success("Operação realizada com sucesso!",{
           autoClose: 1000,
@@ -198,7 +217,7 @@ const ProductForm = (props) => {
           <label htmlFor="inputCodigo" className="form-label">
            Código
           </label>
-          <input type="text" className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
+          <input type="text" className="form-control number" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputMarca" className="form-label">
@@ -230,17 +249,24 @@ const ProductForm = (props) => {
           </label>
           <input type="text" className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label htmlFor="inputPreco" className="form-label">
            Preço
           </label>
-          <input type="text" className="form-control" id="inputPreco" value={preco|| ''} onChange={(e) => setPreco(e.target.value)} />
+          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={preco| ''} onChange={(e) => setPreco(e.target.value)}/>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
-           Peso
+           Peso (Kg)
           </label>
-          <input type="text" className="form-control" id="inputPeso" value={peso|| ''} onChange={(e) => setPeso(e.target.value)} />
+          
+          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={peso|| ''} onChange={(e) => setPeso(e.target.value)}/>
+        </div>
+        <div className="col-md-4">
+          <label htmlFor="inputDimensao" className="form-label">
+            Dimensão
+          </label>
+          <input type="dimensao" className="form-control" id="inputDimensao" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)} />
         </div>
         <div className="col-md-12">
         <label htmlFor="inputDescricaoTec" className="form-label">
