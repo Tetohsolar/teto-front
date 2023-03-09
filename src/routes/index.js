@@ -19,6 +19,7 @@ import Settings from '../pages/settings';
 import EditClient from '../pages/customers/edit';
 import AfflitedList from '../pages/afflited/list';
 import NewAfflited from '../pages/afflited/new';
+import EditAfflited from '../pages/afflited/edit';
 
 
 const RoutesApp = () => {
@@ -85,6 +86,7 @@ const RoutesApp = () => {
               <Route index element={<AfflitedList />} />
               <Route path=":productId" element={<Single />} />
               <Route path="new" element={<NewAfflited />} />
+              <Route path="edit/:clientId" element={<EditAfflited />} />
             </Route>
 
           </Route>

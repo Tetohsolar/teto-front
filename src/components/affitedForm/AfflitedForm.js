@@ -74,8 +74,34 @@ const AfflitedForm = (props) => {
   const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
+  
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
 
+  const [ kitM, setKitmicro] = useState('')
+
+  const [complementCostM, setcustoComplementarm] = useState('')
+  
+  const[projectCostM, setProjetom] = useState('')
+  
+  const[taxM, setTaxam] = useState('')
+  
+  const[assemblyCostM, setMontagemm] = useState('')
+      
+
+
+  const[kitI, setKitinv] = useState('')
+  const[complementCostI, setcustoComplementari] = useState('')
+  const[projectCostI, setProjetoinv] = useState('')
+  const[taxI, setTaxainv] = useState('')
+  const[assemblyCostI, setMontagemi] = useState('')
+ 
+
+
+
+
+
+
+      
   const { signUp, loadingAuth, token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -98,8 +124,9 @@ const AfflitedForm = (props) => {
 
     try {
       const storageUser = localStorage.getItem('token')
+      console.log(storageUser)
 
-      await api.get('/client/get/' + id, {
+      await api.get('/afflited/get/' + id, {
         headers: {
           'Authorization': `Basic ${storageUser}`
         }
@@ -125,7 +152,11 @@ const AfflitedForm = (props) => {
         setInformacoesAdicionais(response.data.addInformation)
         setId(response.data.id)
         setEmail(response.data.email)
-
+        setKitinv(response.data.kitI)
+        setcustoComplementari(response.data.complementCostI)
+        setProjetoinv(response.data.projectCostI)
+        setTaxainv(response.data.taxI)
+        setMontagemi(response.data.assemblyCostI)
       }).catch((error) => {
         toast.error(error.response.data.message)
       });
@@ -253,7 +284,17 @@ const AfflitedForm = (props) => {
   const navigate = useNavigate();
   
   
-  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email,id,idAdd) {
+  async function save(tipoPesoa, name, corpName, documento, phone, zap,
+     cep, estado, cidade, logradouro, bairro, 
+     inform, email,id,idAdd,kitM,
+     complementCostM,
+     projectCostM,
+     taxM,
+     assemblyCostM, kitI,
+     complementCostI,
+     projectCostI,
+     taxI,
+     assemblyCostI,) {
 
     const json = {
       fantasy: name,
@@ -264,6 +305,18 @@ const AfflitedForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
+      kitM:kitM,
+      complementCostM:complementCostM,
+      projectCostM:projectCostM,
+      taxM:taxM,
+      assemblyCostM: assemblyCostM,
+      
+      kitI:kitI,
+      complementCostI:complementCostI,
+      projectCostI: projectCostI,
+      taxI:taxI,
+      assemblyCostI: assemblyCostI,
+      
       Addresses: [
         {
           id:idAdd?idAdd:undefined,
@@ -274,12 +327,18 @@ const AfflitedForm = (props) => {
           neighborhood: bairro
         }
       ]
+      
+      
+      
+
+
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
+    console.log(saida);
     
     if (id) {
-      await api.patch('/client/update/'+id, saida
+      await api.patch('/afflited/update/'+id, saida
       , {
         headers: {
           'Authorization': `Basic ${token.token}`
@@ -298,7 +357,7 @@ const AfflitedForm = (props) => {
       
 
     } else {
-      await api.post('/client/create', saida
+      await api.post('/afflited/create', saida
       , {
         headers: {
           'Authorization': `Basic ${token.token}`
@@ -324,8 +383,18 @@ const AfflitedForm = (props) => {
 
     if (validaCampos(name, phone, doc)) {
       try {
-         await save(tipoPessoa,name,corporateName,doc,phone,zap,cepData,estado,cidade, rua,bairro,informacoesAdicionais,email,id,idAdd)
-         navigate("/customers");
+         await save(tipoPessoa,name,corporateName,doc,phone,zap,cepData,
+          estado,cidade, rua,bairro,informacoesAdicionais,
+          email,id,idAdd, kitM,
+          complementCostM,
+          projectCostM,
+          taxM,
+          assemblyCostM, kitI,
+          complementCostI,
+          projectCostI,
+          taxI,
+          assemblyCostI, )
+         navigate("/affliteds");
          toast.success("Operação realizada com sucesso!",{
           autoClose: 1000,
         })
@@ -351,12 +420,13 @@ const AfflitedForm = (props) => {
         <Tabs>
     <TabList>
       <Tab>Informações Básicas</Tab>
-      <Tab> Configurações</Tab>
+      <Tab> Preço Inversor</Tab>
+      <Tab> Preço Micro Inversor</Tab>
     </TabList>
 
     <TabPanel>
       <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-      <div className='col-md-2'>
+      <div className='col-md-3'>
           <label htmlFor="inputFirstName" className="form-label">
             Tipo
           </label>
@@ -366,7 +436,10 @@ const AfflitedForm = (props) => {
           </select>
 
         </div>
-        <div className="col-md-8">
+
+
+
+        <div className="col-md-3">
 
           <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
             {lbFantasia === "" ? "Nome" : lbFantasia}
@@ -375,7 +448,7 @@ const AfflitedForm = (props) => {
           <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
-        <div className="col-md-4"  >
+        <div className="col-md-3"  >
           <label htmlFor="inputDocumento" className="form-label ">
             {lbDocument === "" ? "CPF" : lbDocument}
           </label>
@@ -383,7 +456,7 @@ const AfflitedForm = (props) => {
           <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} />
         </div>
 
-        <div className="col-md-5" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
+        <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
@@ -406,7 +479,7 @@ const AfflitedForm = (props) => {
           <PhoneInput className="form-control" id="inputPhoneNumber" value={zap} onChange={handleInputZap}>  </PhoneInput>
         </div>
 
-        <div className='col-md-5'>
+        <div className='col-md-3'>
           <label htmlFor="CEP" className="form-label">
             CEP
           </label>
@@ -414,50 +487,131 @@ const AfflitedForm = (props) => {
         </div>
 
         <div className='col-md-3'>
-          <label htmlFor="estado" className="form-label">
+          <label htmlFor="estado" className="form-label combomob">
             Estado
           </label>
           <SelectEstado className="form-select" id="inputCep" value={estado} onChange={handleEstado}>  </SelectEstado>
         </div>
 
-        <div className='col-md-8'>
-          <label htmlFor="Cidade" className="form-label">
-            Cidade
+       
+        
+        <div className='col-md-3'>
+          <label htmlFor="Cidade" className="form-label combomob">
+            Cidade 
           </label>
-          <Cidades className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
+          <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
         </div>
 
-        <div className="col-md-5"  >
+        <div className="col-md-3"  >
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
           <input type="text" className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
 
-        <div className="col-md-6"  >
+        <div className="col-md-3"  >
           <label htmlFor="inputBairro" className="form-label ">
             Bairro
           </label>
           <input type="text" className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
 
-        <div className="col-md-5"  >
+        <div className="col-md-3"  >
           <label htmlFor="informacoesAdicionais" className="form-label ">
             Informações Adicionais
           </label>
           <input type="text" className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
 
-        <div className="col-md-5"  >
+        <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
           <input type="text" className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         </div>
+
+
+
+       
     </TabPanel>
     <TabPanel>
-      <h2>Any content 2</h2>
+    <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
+    <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+          Kit Inversor
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={kitM} onChange={(e) => setKitmicro(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+         Custo comp. Inv.
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={complementCostM} onChange={(e) => setcustoComplementarm(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+         Projeto Inversor
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={projectCostM} onChange={(e) => setProjetom(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+        Montagem Inversor
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={assemblyCostM} onChange={(e) => setMontagemm(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+          Taxa Inversor
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={taxM} onChange={(e) => setTaxam(e.target.value)} />
+        </div>
+        </div>
+    </TabPanel>
+    <TabPanel>
+    <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
+
+
+    <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+         Kit Micro Inversor
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={kitI} onChange={(e) => setKitinv(e.target.value)} />
+        </div>
+
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+         Custo comp. Micro Inv.
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={complementCostI} onChange={(e) => setcustoComplementari(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+         Projeto Micro Inv.
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={projectCostI} onChange={(e) => setProjetoinv(e.target.value)} />
+        </div>
+
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+        Montagem Micro Inv.
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={assemblyCostI} onChange={(e) => setMontagemi(e.target.value)} />
+        </div>
+        <div className="col-md-3"  >
+          <label htmlFor="email" className="form-label ">
+        Taxa Micro Inv.
+          </label>
+          <input type="text" className="form-control number" id="idEmail" value={taxI} onChange={(e) => setTaxainv(e.target.value)} />
+        </div>
+      </div>
     </TabPanel>
   </Tabs>
 
@@ -469,6 +623,11 @@ const AfflitedForm = (props) => {
         </div>
       </form>
     </div>
+    
+
+
+
+
     
   );
 };

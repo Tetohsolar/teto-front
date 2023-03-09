@@ -17,7 +17,7 @@ const AfflitedDataTable = (props) => {
   const navigate = useNavigate();
 
  function edit(id){
-  navigate("/customers/edit/"+id)
+  navigate("/affliteds/edit/"+id)
  }
   useEffect(() => {
 
@@ -134,7 +134,7 @@ const AfflitedDataTable = (props) => {
         </table>
         </div>
       </div>
-      <Link to={"/customers/new"} className="btn btn-primary text-light">Criar novo Filiado</Link>
+      <Link to={"/affliteds/new"} className="btn btn-primary text-light">Criar novo Filiado</Link>
     </div>
     </form>
   );
