@@ -1,22 +1,65 @@
 import './customer-data-table.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from "boring-avatars";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
+import Pagination from '../pagination/Pagination';
+
+//PAGINATION
+let PageSize = 10;
 
 const CustomerDataTable = (props) => {
   
   const [clientes, setClientes] = useState([])
   const [name, setName] = useState([])
-  const [cpfCnpj, setCpfCnpj] = useState([])
+  const [totalPages, setTotalPages] =useState([])
+
+  const [atualPage, setAtualPage] =useState([])
+
   const [idSelected, setIdSelected] = useState([])
   
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
 
+   //Pagination
+   const [currentPage, setCurrentPage] = useState(1);
+
+   const currentTableData = useMemo(() => {
+     const firstPageIndex = (currentPage - 1) * PageSize;
+     const lastPageIndex = firstPageIndex + PageSize;
+     return clientes;
+   }, [currentPage, clientes]);
+ 
+   
+   function onPageChanged(data) {
+    const filtro = {
+      fantasy:name,
+      corporatename:"",
+      document:"",
+      page:data-1,
+      pageSize:10
+    }
+
+    const { currentPage, totalPages, pageLimit } = data;
+  
+    api.post('/client/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      setClientes(response.data.clients)
+      
+    })
+    setCurrentPage(data);
+  }
+   const paginate = ({ selected }) => {
+     setCurrentPage(selected + 1);
+   };
+
+   
  function edit(id){
   navigate("/customers/edit/"+id)
  }
@@ -45,8 +88,7 @@ const CustomerDataTable = (props) => {
       corporatename:"",
       document:"",
       page:0,
-      pageSize:50
-
+      pageSize:10
     }
     
     await api.post('/client/byparam', filtro,{
@@ -56,6 +98,7 @@ const CustomerDataTable = (props) => {
     })
       .then((response) => {
         setClientes(response.data.clients)
+        setTotalPages(response.data.totalItems)
 
       }).catch((err) => {
         console.log(err)
@@ -81,6 +124,7 @@ const CustomerDataTable = (props) => {
   }
   function handleMask(e){
     listaUsers(name)
+    setCurrentPage(1);
     e.preventDefault()
   }
 
@@ -102,7 +146,7 @@ const CustomerDataTable = (props) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
-            {clientes.map((user) => {
+            {currentTableData && currentTableData.map((user) => {
               return (
                 <tr key={user.id}>
                   <td>{user.fantasy}</td>
@@ -133,6 +177,15 @@ const CustomerDataTable = (props) => {
             })}
           </tbody>
         </table>
+        <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={totalPages}
+            pageSize={PageSize}
+            onPageChange={ data => onPageChanged(data)}
+          />
+
+
         </div>
       </div>
       <Link to={"/customers/new"} className="btn btn-primary text-light">Criar novo Cliente</Link>
