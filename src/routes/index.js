@@ -9,6 +9,7 @@ import NewUSer from '../pages/users/new';
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext';
 
+
 import NewClient from '../pages/customers/new';
 import EditUser from '../pages/users/edit';
 import CustomerList from '../pages/customers/list';
@@ -20,6 +21,10 @@ import EditClient from '../pages/customers/edit';
 import AfflitedList from '../pages/afflited/list';
 import NewAfflited from '../pages/afflited/new';
 import EditAfflited from '../pages/afflited/edit';
+import NewProduct from '../pages/products/new';
+import EditProduct from '../pages/products/edit';
+
+
 
 
 const RoutesApp = () => {
@@ -62,7 +67,9 @@ const RoutesApp = () => {
             <Route path="products">
               <Route index element={<ProductList />} />
               <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<New />} />
+              <Route path="new" element={<NewProduct />} />
+              <Route path="edit/:Id" element={<EditProduct />} />
+
             </Route>
 
             <Route path="users">
