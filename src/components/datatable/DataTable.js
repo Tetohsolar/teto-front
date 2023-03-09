@@ -1,13 +1,16 @@
 import './datatable.scss'
 import { Link } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useMemo } from 'react'
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from './ModalDelete'
+import ReactPaginate from 'react-paginate';
+import Pagination from '../pagination/Pagination';
 
 
 
-
+//PAGINATION
+let PageSize = 10;
 
 const DataTable = (props) => {
 
@@ -17,29 +20,53 @@ const DataTable = (props) => {
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
   const [userFind, setUserFind] = useState('')
+  const [page, setPage] = useState(1)
   const [updateUsers, setUpdateUsers] = useState(false)
 
 
-  async function updateStateUser(response) {
-    let lista = [];
-    const isCollectionEmpty = response.size == 0;
-    if (!isCollectionEmpty) {
 
-      let arr = Object.entries(response.users)
-      arr.forEach((([key, value]) => (
-        lista.push({
-          id: value.id,
-          name: value.name,
-          imagem: value.imagem,
-          email: value.email,
 
-        }))
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
 
-      ))
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return users.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, users]);
+
+  const paginate = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
+
+
+  //call  all users when start page
+  useEffect(() => {
+    console.log('chamou')
+
+    async function listaUsers() {
+      setUpdateUsers(true)
+      await api.get('/user/all', {
+        headers: {
+          'Authorization': `token ${token.token}`
+        }
+      }).then((response) => {
+
+        setUsers(response.data.users)
+
+      }).catch((err) => {
+        console.log(err)
+      })
     }
-    setUsers(users => [...lista])
-  }
+    listaUsers();
+    setUpdateUsers(false)
+  }, [updateUsers])
 
+
+
+
+
+  //find user 
   async function handleSearchUser() {
     let lista = []
     let filtro = {
@@ -48,13 +75,25 @@ const DataTable = (props) => {
       "page": 0,
       "pageSize": 5
     }
-    await api.post('/user/byparam', filtro, {
-      headers: {
-        'Authorization': `token ${token.token}`
-      }
-    })
-      .then((response) => {
-        console.log(response.data.users)
+    if (userFind != null) {
+      await api.post('/user/byparam', filtro, {
+        headers: {
+          'Authorization': `token ${token.token}`
+        }
+      })
+        .then((response) => {
+          setUsers(response.data.users)
+        }).catch((err) => {
+          console.log(err)
+        })
+
+    }
+    else {
+      await api.get('/user/all', {
+        headers: {
+          'Authorization': `token ${token.token}`
+        }
+      }).then((response) => {
 
         setUsers(response.data.users)
 
@@ -62,45 +101,15 @@ const DataTable = (props) => {
         console.log(err)
       })
 
+    }
+
 
   }
 
 
 
-  useEffect(() => {
 
-    const storageUser = localStorage.getItem('cliente')
-
-
-    async function listaUsers() {
-      await api.get('/user/all', {
-        headers: {
-          'Authorization': `token ${storageUser.token}`
-        }
-      })
-        .then((response) => {
-
-          updateStateUser(response.data)
-
-        }).catch((err) => {
-          console.log(err)
-        })
-
-
-    }
-    listaUsers();
-    setUpdateUsers(false)
-
-    return () => { }
-
-
-  }, [updateUsers])
-
-
-
-
-
-  //set user to modal and update user list after 2 seconds
+  //set user to delete modal and update user list after 2 seconds
   function updateListUser(user) {
     setUpdateUsers(false)
     let myUser = {
@@ -111,19 +120,17 @@ const DataTable = (props) => {
     setTimeout((e) => {
       setUpdateUsers(true)
     }, 2000)
-    setUpdateUsers(false)
+
+
   }
 
 
-
-
-
   return (
-    <div className="p-3 mb-3 bg-white border rounded-3">
+    <div className="p-3 mb-3 bg-white border rounded-3 container">
 
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Crie novos usuários para acessar sua conta.</p>
-      <hr className="my-4" />
+      <hr className="mnpm i bootstrap-icons-4" />
       <div className="input-group mb-3 search-w">
         <input type="text" className="form-control"
           onChange={(e) => setUserFind(e.target.value)}
@@ -141,8 +148,10 @@ const DataTable = (props) => {
       <div className="table-w">
         <div className="table-responsive">
           <table className="table table-borderless">
+
             <tbody>
-              {users && users.map((user) => {
+
+              {currentTableData && currentTableData.map((user) => {
                 return (
 
                   <tr key={user.id}>
@@ -183,6 +192,15 @@ const DataTable = (props) => {
               })}
             </tbody>
           </table>
+          <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={users.length}
+            pageSize={PageSize}
+            onPageChange={page => setCurrentPage(page)}
+          />
+
+
         </div>
       </div>
       <Link to={"/users/new"} className="btn btn-primary text-light">
@@ -191,7 +209,7 @@ const DataTable = (props) => {
 
 
 
-    </div>
+    </div >
   );
 };
 
