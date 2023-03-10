@@ -14,7 +14,7 @@ import { json } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
-
+import {NumericFormat} from 'react-number-format';
 
 
 function PhoneInput(props) {
@@ -157,6 +157,32 @@ const AfflitedForm = (props) => {
         setProjetoinv(response.data.projectCostI)
         setTaxainv(response.data.taxI)
         setMontagemi(response.data.assemblyCostI)
+        setKitmicro(response.data.assemblyCostM)
+        setcustoComplementarm(response.data.complementCostM)
+        setProjetom(response.data.projectCostM)
+        setTaxam(response.data.taxM)
+        setMontagemm(response.data.assemblyCostM)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       }).catch((error) => {
         toast.error(error.response.data.message)
       });
@@ -305,17 +331,17 @@ const AfflitedForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
-      kitM:kitM,
-      complementCostM:complementCostM,
-      projectCostM:projectCostM,
-      taxM:taxM,
-      assemblyCostM: assemblyCostM,
+      kitM:parseFloat(kitM.replace(',','.')),
+      complementCostM:parseFloat(complementCostM.replace(',','.')),
+      projectCostM:parseFloat(projectCostM.replace(',','.')),
+      taxM:parseFloat(taxM.replace(',','.')),
+      assemblyCostM:parseFloat(assemblyCostM.replace(',','.')),
       
-      kitI:kitI,
-      complementCostI:complementCostI,
-      projectCostI: projectCostI,
-      taxI:taxI,
-      assemblyCostI: assemblyCostI,
+      kitI:parseFloat(kitI.replace(',','.')),
+      complementCostI:parseFloat(complementCostI.replace(',','.')),
+      projectCostI:parseFloat(projectCostI.replace(',','.')),
+      taxI:parseFloat(taxI.replace(',','.')),
+      assemblyCostI:parseFloat(assemblyCostI.replace(',','.')),
       
       Addresses: [
         {
@@ -445,7 +471,7 @@ const AfflitedForm = (props) => {
             {lbFantasia === "" ? "Nome" : lbFantasia}
 
           </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
         <div className="col-md-3"  >
@@ -460,7 +486,7 @@ const AfflitedForm = (props) => {
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
-          <input type="text" className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
 
 
@@ -506,28 +532,28 @@ const AfflitedForm = (props) => {
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
-          <input type="text" className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control"  id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="inputBairro" className="form-label ">
             Bairro
           </label>
-          <input type="text" className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="informacoesAdicionais" className="form-label ">
             Informações Adicionais
           </label>
-          <input type="text" className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+          <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
-          <input type="text" className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         </div>
 
@@ -541,35 +567,37 @@ const AfflitedForm = (props) => {
           <label htmlFor="email" className="form-label ">
           Kit Inversor
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={kitM} onChange={(e) => setKitmicro(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+ className="form-control number" value={kitI||''} onChange={(e) => setKitinv(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
          Custo comp. Inv.
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={complementCostM} onChange={(e) => setcustoComplementarm(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+ className="form-control number" value={complementCostI||''} onChange={(e) => setcustoComplementari(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
          Projeto Inversor
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={projectCostM} onChange={(e) => setProjetom(e.target.value)} />
+          <NumericFormat decimalScale={2} decimalSeparator=","  placeholder="" className="form-control number" value={projectCostI|| ''} onChange={(e) => setProjetoinv(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
         Montagem Inversor
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={assemblyCostM} onChange={(e) => setMontagemm(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostI||''} onChange={(e) => setMontagemi(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
           Taxa Inversor
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={taxM} onChange={(e) => setTaxam(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxI||''} onChange={(e) => setTaxainv(e.target.value)}/>
         </div>
         </div>
     </TabPanel>
@@ -581,7 +609,7 @@ const AfflitedForm = (props) => {
           <label htmlFor="email" className="form-label ">
          Kit Micro Inversor
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={kitI} onChange={(e) => setKitinv(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={kitM||''} onChange={(e) => setKitmicro(e.target.value)}/>
         </div>
 
 
@@ -589,27 +617,27 @@ const AfflitedForm = (props) => {
           <label htmlFor="email" className="form-label ">
          Custo comp. Micro Inv.
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={complementCostI} onChange={(e) => setcustoComplementari(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={complementCostM||''} onChange={(e) => setcustoComplementarm(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
          Projeto Micro Inv.
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={projectCostI} onChange={(e) => setProjetoinv(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={projectCostM||''} onChange={(e) => setProjetom(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
         Montagem Micro Inv.
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={assemblyCostI} onChange={(e) => setMontagemi(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostM||''} onChange={(e) => setMontagemm(e.target.value)}/>
         </div>
         <div className="col-md-3"  >
           <label htmlFor="email" className="form-label ">
         Taxa Micro Inv.
           </label>
-          <input type="text" className="form-control number" id="idEmail" value={taxI} onChange={(e) => setTaxainv(e.target.value)} />
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM||''} onChange={(e) => setTaxam(e.target.value)}/>
         </div>
       </div>
     </TabPanel>
