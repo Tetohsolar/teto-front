@@ -1,0 +1,23 @@
+.search-w {
+    width: 256px;
+}
+
+.table-w {
+    max-width: 960px;
+}
+
+.td-img {
+    width: 48px;
+}
+
+.table-avatar {
+    width: 32px;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid #A6CDE5;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .combomob{ width: 218px; }
+  }
