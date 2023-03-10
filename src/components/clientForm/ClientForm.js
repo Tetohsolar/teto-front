@@ -356,7 +356,7 @@ const ClientForm = (props) => {
             {lbFantasia === "" ? "Nome" : lbFantasia}
 
           </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text"  maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
         <div className="col-md-4"  >
@@ -371,7 +371,7 @@ const ClientForm = (props) => {
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
-          <input type="text" className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
+          <input type="text"  maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
 
 
@@ -408,35 +408,35 @@ const ClientForm = (props) => {
           <label htmlFor="Cidade" className="form-label">
             Cidade
           </label>
-          <Cidades className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
-        </div>
+          <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
+        </div> 
 
         <div className="col-md-5"  >
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
-          <input type="text" className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
+          <input type="text"  maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
 
         <div className="col-md-6"  >
           <label htmlFor="inputBairro" className="form-label ">
             Bairro
           </label>
-          <input type="text" className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
 
         <div className="col-md-5"  >
           <label htmlFor="informacoesAdicionais" className="form-label ">
             Informações Adicionais
           </label>
-          <input type="text" className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+          <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
 
         <div className="col-md-5"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
-          <input type="text" className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
 
         <div className="d-grid gap-2 d-md-block col-12">
