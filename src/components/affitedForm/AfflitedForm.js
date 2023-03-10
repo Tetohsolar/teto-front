@@ -369,14 +369,14 @@ const AfflitedForm = (props) => {
         headers: {
           'Authorization': `Basic ${token.token}`
         }
-
+                            
       }).then((response) => {
        // console.log(response.data.message)
        //toast.success(response.data.message).then(limpaCampos())
-      }).catch(
-        (response) => {
-          toast.error(response.response.data.message)
-          throw new Error() 
+      }).catch( 
+        (response) => { 
+          toast.error(response.response.data.message) 
+          throw new Error()                                
 
         }
       );

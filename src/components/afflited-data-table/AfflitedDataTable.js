@@ -1,20 +1,64 @@
 import './customer-data-table.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from "boring-avatars";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 
+import Pagination from '../pagination/Pagination';
+
+//PAGINATION
+let PageSize = 10;
+
+
 const AfflitedDataTable = (props) => {
   
   const [objs, setObjects] = useState([])
   const [name, setName] = useState([])
+  const [totalPages, setTotalPages] = useState([])
   const [idSelected, setIdSelected] = useState([])
   
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
+
+//Pagination
+const [currentPage, setCurrentPage] = useState(1);
+
+const currentTableData = useMemo(() => {
+  const firstPageIndex = (currentPage - 1) * PageSize;
+  const lastPageIndex = firstPageIndex + PageSize;
+  return objs;
+}, [currentPage, objs]);
+
+
+function onPageChanged(data) {
+ const filtro = {
+   name:name,
+   page:data-1,
+   pageSize:10
+   
+ }
+ 
+
+ const { currentPage, totalPages, pageLimit } = data;
+
+ api.post('/afflited/byparam', filtro,{
+   headers: {
+     'Authorization': `Basic ${localStorage.getItem("token")}`
+   }
+ }).then((response) => {
+   setObjects(response.data.tutorials)
+   
+ })
+ setCurrentPage(data);
+}
+const paginate = ({ selected }) => {
+  setCurrentPage(selected + 1);
+};
+
+
 
  function edit(id){
   navigate("/affliteds/edit/"+id)
@@ -53,8 +97,9 @@ const AfflitedDataTable = (props) => {
       }
     })
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data.tutorials)
         setObjects(response.data.tutorials)
+        setTotalPages(response.data.totalItems)
 
       }).catch((err) => {
         console.log(err)
@@ -132,6 +177,15 @@ const AfflitedDataTable = (props) => {
             })}
           </tbody>
         </table>
+
+        <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={totalPages}
+            pageSize={PageSize}
+            onPageChange={ data => onPageChanged(data)}
+          />
+
         </div>
       </div>
       <Link to={"/affliteds/new"} className="btn btn-primary text-light">Criar novo Filiado</Link>
