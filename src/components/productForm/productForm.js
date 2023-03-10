@@ -10,19 +10,6 @@ import api from '../../api';
 import {NumericFormat} from 'react-number-format';
 
 
-function NumberInput(props) {
-  return (
-    <InputMask
-    maskChar={null}
-      mask= '9999999999.99'
-      value={props.value}
-      onChange={props.onChange}
-      className="form-control" required={props.required} placeholder={props.placeholder}
-      type={props.type} name={props.name} id={props.id} >
-    </InputMask>
-  );
-}
-
 const ProductForm = (props) => {
 
   const [codigo, setCodigo] = useState('')
@@ -116,8 +103,8 @@ const ProductForm = (props) => {
       descriptionFriendly: descriptionFriendly,
       guarantee:garantia,
       supplier:fornecedor,
-      weight:peso,
-      price:preco,
+      weight:parseFloat(peso.replace(',','.')),
+      price:parseFloat(preco.replace(',','.')),
       dimenssion:dimensao, 
     }
 
@@ -219,13 +206,13 @@ const ProductForm = (props) => {
           </label>
           <input type="text" className="form-control number" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-6">
           <label htmlFor="inputMarca" className="form-label">
             Marca
           </label>
           <input type="marca" className="form-control" id="inputMarca" value={marca || ''} onChange={(e) => setMarca(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-6">
           <label htmlFor="inputCategoria" className="form-label">
             Categoria
           </label>
@@ -253,14 +240,14 @@ const ProductForm = (props) => {
           <label htmlFor="inputPreco" className="form-label">
            Preço
           </label>
-          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={preco| ''} onChange={(e) => setPreco(e.target.value)}/>
-        </div>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco||''} onChange={(e) => setPreco(e.target.value)}/>
+          </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
            Peso (Kg)
           </label>
           
-          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={peso|| ''} onChange={(e) => setPeso(e.target.value)}/>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","className="form-control number" value={peso||''} onChange={(e) => setPeso(e.target.value)}/>
         </div>
         <div className="col-md-4">
           <label htmlFor="inputDimensao" className="form-label">
