@@ -124,7 +124,7 @@ const AfflitedForm = (props) => {
 
     try {
       const storageUser = localStorage.getItem('token')
-      console.log(storageUser)
+      //console.log(storageUser)
 
       await api.get('/afflited/get/' + id, {
         headers: {
@@ -157,7 +157,7 @@ const AfflitedForm = (props) => {
         setProjetoinv(response.data.projectCostI)
         setTaxainv(response.data.taxI)
         setMontagemi(response.data.assemblyCostI)
-        setKitmicro(response.data.assemblyCostM)
+        setKitmicro(response.data.kitM)
         setcustoComplementarm(response.data.complementCostM)
         setProjetom(response.data.projectCostM)
         setTaxam(response.data.taxM)
@@ -331,17 +331,17 @@ const AfflitedForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
-      kitM:parseFloat(kitM.replace(',','.')),
-      complementCostM:parseFloat(complementCostM.replace(',','.')),
-      projectCostM:parseFloat(projectCostM.replace(',','.')),
-      taxM:parseFloat(taxM.replace(',','.')),
-      assemblyCostM:parseFloat(assemblyCostM.replace(',','.')),
+      kitM:parseFloat((''+kitM).replace(',','.')),
+      complementCostM:parseFloat(String(complementCostM).replace(',','.')),
+      projectCostM:parseFloat(String(projectCostM).replace(',','.')),
+      taxM:parseFloat(String(taxM).replace(',','.')),
+      assemblyCostM:parseFloat(String(assemblyCostM).replace(',','.')),
       
-      kitI:parseFloat(kitI.replace(',','.')),
-      complementCostI:parseFloat(complementCostI.replace(',','.')),
-      projectCostI:parseFloat(projectCostI.replace(',','.')),
-      taxI:parseFloat(taxI.replace(',','.')),
-      assemblyCostI:parseFloat(assemblyCostI.replace(',','.')),
+      kitI:parseFloat(String(kitI).replace(',','.')),
+      complementCostI:parseFloat(String(complementCostI).replace(',','.')),
+      projectCostI:parseFloat(String(projectCostI).replace(',','.')),
+      taxI:parseFloat(String(taxI).replace(',','.')),
+      assemblyCostI:parseFloat(''+String(assemblyCostI).replace(',','.')),
       
       Addresses: [
         {
@@ -361,7 +361,7 @@ const AfflitedForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    console.log(saida);
+    //console.log(saida);
     
     if (id) {
       await api.patch('/afflited/update/'+id, saida
@@ -426,7 +426,7 @@ const AfflitedForm = (props) => {
         })
       
         }catch(error){
-         ///console.log(error);
+         console.log(error);
       }
       
     }

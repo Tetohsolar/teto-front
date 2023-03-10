@@ -87,7 +87,7 @@ const paginate = ({ selected }) => {
       corporatename:"%",
       document:"%",
       page:0,
-      pageSize:50
+      pageSize:10
 
     }
     
@@ -97,7 +97,7 @@ const paginate = ({ selected }) => {
       }
     })
       .then((response) => {
-        console.log(response.data.tutorials)
+        //console.log(response.data.tutorials)
         setObjects(response.data.tutorials)
         setTotalPages(response.data.totalItems)
 
