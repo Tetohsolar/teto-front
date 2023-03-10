@@ -97,7 +97,7 @@ const paginate = ({ selected }) => {
       }
     })
       .then((response) => {
-        console.log(response.data.tutorials)
+        //console.log(response.data.tutorials)
         setObjects(response.data.tutorials)
         setTotalPages(response.data.totalItems)
 
