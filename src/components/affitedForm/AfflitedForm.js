@@ -87,7 +87,7 @@ const AfflitedForm = (props) => {
   
   const[assemblyCostM, setMontagemm] = useState('')
       
-
+      
 
   const[kitI, setKitinv] = useState('')
   const[complementCostI, setcustoComplementari] = useState('')
@@ -95,7 +95,7 @@ const AfflitedForm = (props) => {
   const[taxI, setTaxainv] = useState('')
   const[assemblyCostI, setMontagemi] = useState('')
  
-
+                                                                                                                                                
 
 
 
@@ -558,44 +558,43 @@ const AfflitedForm = (props) => {
         </div>
 
 
-
-       
+       complementCostI
     </TabPanel>
     <TabPanel>
     <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
     <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-          Kit Inversor
+          <label htmlFor="kitI" className="form-label ">
+          Custo do Kit
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
  className="form-control number" value={kitI||''} onChange={(e) => setKitinv(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-         Custo comp. Inv.
+          <label htmlFor="complementCostI" className="form-label ">
+         Custo complementar
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
  className="form-control number" value={complementCostI||''} onChange={(e) => setcustoComplementari(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-         Projeto Inversor
+          <label htmlFor="projectCostI" className="form-label ">
+         Custo do projeto
           </label>
           <NumericFormat decimalScale={2} decimalSeparator=","  placeholder="" className="form-control number" value={projectCostI|| ''} onChange={(e) => setProjetoinv(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-        Montagem Inversor
+          <label htmlFor="assemblyCostI" className="form-label ">
+        Montagem do Kit
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostI||''} onChange={(e) => setMontagemi(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-          Taxa Inversor
+          <label htmlFor="taxI" className="form-label ">
+          Taxa Adicional
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxI||''} onChange={(e) => setTaxainv(e.target.value)}/>
         </div>
@@ -606,36 +605,36 @@ const AfflitedForm = (props) => {
 
 
     <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-         Kit Micro Inversor
+          <label htmlFor="kitM" className="form-label ">
+         Custo do Kit
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={kitM||''} onChange={(e) => setKitmicro(e.target.value)}/>
         </div>
 
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-         Custo comp. Micro Inv.
+          <label htmlFor="complementCostM" className="form-label ">
+         Custo complementar 
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={complementCostM||''} onChange={(e) => setcustoComplementarm(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-         Projeto Micro Inv.
+          <label htmlFor="projectCostM" className="form-label ">
+         Custo do projeto
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={projectCostM||''} onChange={(e) => setProjetom(e.target.value)}/>
         </div>
 
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-        Montagem Micro Inv.
+          <label htmlFor="assemblyCostM" className="form-label ">
+        Montagem do Kit
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostM||''} onChange={(e) => setMontagemm(e.target.value)}/>
         </div>
         <div className="col-md-3"  >
-          <label htmlFor="email" className="form-label ">
-        Taxa Micro Inv.
+          <label htmlFor="taxM" className="form-label ">
+        Taxa Adicional
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM||''} onChange={(e) => setTaxam(e.target.value)}/>
         </div>
