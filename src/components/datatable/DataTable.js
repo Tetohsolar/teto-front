@@ -20,10 +20,7 @@ const DataTable = (props) => {
   const [userDel, setUserDel] = useState([])
   const [userFind, setUserFind] = useState('')
   const [updateUsers, setUpdateUsers] = useState(false)
-
-
-
-
+  const [totalPages, setTotalPages] =useState([])
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,77 +28,67 @@ const DataTable = (props) => {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return users.slice(firstPageIndex, lastPageIndex);
+    return users;
   }, [currentPage, users]);
 
-  const paginate = ({ selected }) => {
-    setCurrentPage(selected + 1);
-  };
+  function onPageChanged(data) {
+    const filtro = {
+      name:userFind,
+      page:data-1,
+      pageSize:10
+    }
+    console.log(userFind);
 
+    
+    api.post('/user/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      //console.log(response.data.users)
+      setUsers(response.data.users)
+      setCurrentPage(data);  
+    })
+    
+  }
+   const paginate = ({ selected }) => {
+     setCurrentPage(selected + 1);
+   };
+
+
+   async function listaUsers() {
+    setUpdateUsers(true)
+    const filtro = {
+      name:userFind,
+      page:0,
+      pageSize:10
+    }
+
+    
+    await api.post('/user/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      setUsers(response.data.users)
+      setTotalPages(response.data.totalItems)
+      setCurrentPage(1);
+
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   //call  all users when start page
   useEffect(() => {
-    console.log('chamou')
-
-    async function listaUsers() {
-      setUpdateUsers(true)
-      await api.get('/user/all', {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      }).then((response) => {
-
-        setUsers(response.data.users)
-
-      }).catch((err) => {
-        console.log(err)
-      })
-    }
     listaUsers();
     setUpdateUsers(false)
   }, [updateUsers])
 
 
-
-
-
   //find user 
   async function handleSearchUser() {
-
-    let filtro = {
-      "name": "%" + userFind + "%",
-      "email": "%",
-      "page": 0,
-      "pageSize": 5
-    }
-    if (userFind != null) {
-      await api.post('/user/byparam', filtro, {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      })
-        .then((response) => {
-          setUsers(response.data.users)
-        }).catch((err) => {
-          console.log(err)
-        })
-
-    }
-    else {
-      await api.get('/user/all', {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      }).then((response) => {
-
-        setUsers(response.data.users)
-
-      }).catch((err) => {
-        console.log(err)
-      })
-
-    }
-
+    listaUsers();
 
   }
 
@@ -194,9 +181,9 @@ const DataTable = (props) => {
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
-            totalCount={users.length}
+            totalCount={totalPages}
             pageSize={PageSize}
-            onPageChange={page => setCurrentPage(page)}
+            onPageChange={page => onPageChanged(page)}
           />
 
 

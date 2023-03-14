@@ -8,7 +8,7 @@ import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 
 import Pagination from '../pagination/Pagination';
-
+import { VscNewFile } from "react-icons/vsc";
 //PAGINATION
 let PageSize = 10;
 
@@ -131,17 +131,29 @@ const paginate = ({ selected }) => {
   
   return (
     <form onSubmit={afterSubmit}> 
+
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className='my-4' />
       <div className="input-group mb-3 search-w">
         <input type="text" className="form-control" placeholder="Buscar Afiliado" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+        <div className='btn-create'>
         <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={afterSubmit}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
         </button>
+      
       </div>
+      
+
+
+
+       <div>
+       <Link to={"/affliteds/new"} className="btn btn-primary text-light mais"><VscNewFile/></Link>
+       </div>
+       </div>
+
       <div>
         <div className='table-responsive'>
         <table className="table">
@@ -188,7 +200,7 @@ const paginate = ({ selected }) => {
 
         </div>
       </div>
-      <Link to={"/affliteds/new"} className="btn btn-primary text-light">Criar novo Filiado</Link>
+      
     </div>
     </form>
   );

@@ -1,17 +1,46 @@
 import './administrator.scss'
 import { Link } from 'react-router-dom';
-
-const administrator = [
-  {
-    id: 1,
-    img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
-    firstName: "Ana Silva",
-    email: "anna@domain.com",
-    userType: "Admin",
-  },
-];
+import { useEffect, useState } from 'react';
+import api from '../../api';
 
 const DataTable = (props) => {
+  const [administrator, setAdministrator] = useState([])
+  const [idSelected, setIdSelected] = useState([])
+
+  useEffect(() => {
+
+    const id = localStorage.getItem('userlog');
+    const token = localStorage.getItem("token");
+
+    
+    api.get('/user/get/' + id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      const administrator = [
+        {
+          id: response.data.id,
+          img: "https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy",
+          firstName: response.data.name,
+          email: response.data.email,
+          userType: response.data.tipo,
+        },
+      ];
+      setIdSelected(response.data.id);
+  
+      setAdministrator(administrator)
+      
+   
+    },[])
+
+       return () => { }
+
+
+  }, [])
+
+
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
@@ -40,7 +69,7 @@ const DataTable = (props) => {
           </table>
         </div>
       </div>
-      <Link to={"/users/new"} className="btn btn-primary text-light">
+      <Link to={"/users/edit/"+idSelected} className="btn btn-primary text-light">
         Editar perfil
       </Link>
     </div>

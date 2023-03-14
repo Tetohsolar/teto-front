@@ -29,9 +29,12 @@ const EditProfileForm = (props) => {
 
 
   async function findUserById() {
+
+    const token = localStorage.getItem("token");
+
     await api.get(`/user/get/${props.userId}`, {
       headers: {
-        'Authorization': `Basic ${token.token}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
@@ -51,9 +54,14 @@ const EditProfileForm = (props) => {
   async function handleUpdateUser(e) {
     setReloadPage(true)
     e.preventDefault()
-    updateUser(id, name, phone, email, password, confirmPassword, tipo)
+   try {
+    
+    await updateUser(id, name, phone, email, tipo)
     setReloadPage(false)
-    navigate("/users/")
+    navigate("/users/")}
+    catch(error){
+
+    }
 
 
   }

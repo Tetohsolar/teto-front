@@ -80,7 +80,9 @@ function AuthProvider({ children }) {
 
     })
       .catch((err) => {
-        toast.error(err)
+
+        toast.error(err.response.data.message)
+        throw new Error();
       })
 
   }
@@ -89,19 +91,18 @@ function AuthProvider({ children }) {
 
 
   //id, name, phone, email, password, confirmPassword, tipo
-  async function updateUser(id, name, phone, email, password) {
+  async function updateUser(id, name, phone, email, tipo) {
 
     setLoading(true)
+    const token = localStorage.getItem("token");
     await api.patch(`/user/update/${id}`, {
       name: name,
       phone: phone,
       email: email,
-      password: password,
-      confirmpassword: password,
-      tipoR: 'Admin'
+      tipoR: tipo
     }, {
       headers: {
-        'Authorization': `Basic ${token.token}`
+        'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
@@ -110,16 +111,19 @@ function AuthProvider({ children }) {
 
     })
       .catch((err) => {
-        toast.error(err)
+        
+        toast.error(err.response.data.message)
+        throw new Error()
       })
 
   }
 
   async function deleteUser(id) {
     setLoading(true)
+    const token = localStorage.getItem("token");
     await api.delete(`/user/delete/${id}`, {
       headers: {
-        'Authorization': `Basic ${token.token}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
@@ -141,6 +145,7 @@ function AuthProvider({ children }) {
   function setStorageUserLocal(data) {
     // localStorage.setItem('cliente', JSON.stringify(data))
     localStorage.setItem('token', data.token)
+    localStorage.setItem('userlog', data.id)
 
   }
 
