@@ -4,7 +4,6 @@ import { useState, useEffect, useContext, useMemo } from 'react'
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from './ModalDelete'
-import ReactPaginate from 'react-paginate';
 import Pagination from '../pagination/Pagination';
 
 
@@ -20,8 +19,8 @@ const DataTable = (props) => {
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
   const [userFind, setUserFind] = useState('')
-  const [page, setPage] = useState(1)
   const [updateUsers, setUpdateUsers] = useState(false)
+
 
 
 
@@ -68,7 +67,7 @@ const DataTable = (props) => {
 
   //find user 
   async function handleSearchUser() {
-    let lista = []
+
     let filtro = {
       "name": "%" + userFind + "%",
       "email": "%",
