@@ -144,11 +144,14 @@ const ProductsDataTable = (props) => {
         <input type="text" className="form-control" placeholder="Categoria" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setCategory(e.target.value)} />
         <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} />
         </div>
+        <div className='bt-create'>
         <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleSeach}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
         </button>
+        <Link to={"/products/new"} className="btn btn-primary text-light">Novo</Link>
+        </div>
       </div>
       <div>
         <div className='table-responsive'>
@@ -194,7 +197,6 @@ const ProductsDataTable = (props) => {
           />
         </div>
       </div>
-      <Link to={"/products/new"} className="btn btn-primary text-light">Criar novo Produto</Link>
     </div>
     </form>
   );
