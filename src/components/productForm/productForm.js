@@ -10,19 +10,6 @@ import api from '../../api';
 import {NumericFormat} from 'react-number-format';
 
 
-function NumberInput(props) {
-  return (
-    <InputMask
-    maskChar={null}
-      mask= '9999999999.99'
-      value={props.value}
-      onChange={props.onChange}
-      className="form-control" required={props.required} placeholder={props.placeholder}
-      type={props.type} name={props.name} id={props.id} >
-    </InputMask>
-  );
-}
-
 const ProductForm = (props) => {
 
   const [codigo, setCodigo] = useState('')
@@ -116,8 +103,8 @@ const ProductForm = (props) => {
       descriptionFriendly: descriptionFriendly,
       guarantee:garantia,
       supplier:fornecedor,
-      weight:peso,
-      price:preco,
+      weight:parseFloat(peso.replace(',','.')),
+      price:parseFloat(preco.replace(',','.')),
       dimenssion:dimensao, 
     }
 
@@ -213,54 +200,54 @@ const ProductForm = (props) => {
       <p>Cadastre novos produtos para seus clientes.</p>
      
       <form className="row g-3" onSubmit={handleSave}>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label htmlFor="inputCodigo" className="form-label">
            Código
           </label>
-          <input type="text" className="form-control number" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
+          <input type="text"  maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-4">
           <label htmlFor="inputMarca" className="form-label">
             Marca
           </label>
-          <input type="marca" className="form-control" id="inputMarca" value={marca || ''} onChange={(e) => setMarca(e.target.value)} />
+          <input type="marca" maxLength={100} className="form-control" id="inputMarca" value={marca || ''} onChange={(e) => setMarca(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-4">
           <label htmlFor="inputCategoria" className="form-label">
             Categoria
           </label>
-          <input type="categoria" className="form-control" id="inputCategoria" value={categoria || ''} onChange={(e) => setCategoria(e.target.value)} />
+          <input type="categoria" maxLength={100} className="form-control" id="inputCategoria" value={categoria || ''} onChange={(e) => setCategoria(e.target.value)} />
         </div>
         <div className="col-md-12">
           <label htmlFor="descricao" className="form-label">
             Descrição
           </label>
-          <input type="descricao" className="form-control" id="inputDescricao" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
+          <input type="descricao" maxLength={200} className="form-control" id="inputDescricao" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
         </div>
         <div className="col-md-6">
           <label htmlFor="inputGarantia" className="form-label">
             Garantia
           </label>
-          <input type="text" className="form-control" id="inputGarantia" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputGarantia" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
         </div>
         <div className="col-md-6">
           <label htmlFor="inputFornecedor" className="form-label">
             Fornecedor
           </label>
-          <input type="text" className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
+          <input type="text" maxLength={100}className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputPreco" className="form-label">
            Preço
           </label>
-          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={preco| ''} onChange={(e) => setPreco(e.target.value)}/>
-        </div>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco||''} onChange={(e) => setPreco(e.target.value)}/>
+          </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
            Peso (Kg)
           </label>
           
-          <NumericFormat format="####.##"  placeholder="" className="form-control number" value={peso|| ''} onChange={(e) => setPeso(e.target.value)}/>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","className="form-control number" value={peso||''} onChange={(e) => setPeso(e.target.value)}/>
         </div>
         <div className="col-md-4">
           <label htmlFor="inputDimensao" className="form-label">
@@ -272,13 +259,13 @@ const ProductForm = (props) => {
         <label htmlFor="inputDescricaoTec" className="form-label">
             Descrição Técnica 
           </label>
-          <textarea type="text" className="form-control" id="inputDescricaoTec" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
+          <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoTec" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
         </div>
         <div className="col-md-12">
           <label htmlFor="inputDescricaoAmigavel" className="form-label">
             Descrição Amigável
           </label>
-          <textarea type="text" className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
+          <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
         </div>
       
         <div className="d-grid gap-2 d-md-block col-12">

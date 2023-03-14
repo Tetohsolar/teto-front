@@ -1,14 +1,19 @@
 import './products-data-table.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from "boring-avatars";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
+import Pagination from '../pagination/Pagination';
+
+//PAGINATION
+let PageSize = 10;
 
 const ProductsDataTable = (props) => {
   
+  const [totalPages, setTotalPages] =useState([])
   const [products, setProducts] = useState([])
   const [name, setName] = useState([])
   const [cpfCnpj, setCpfCnpj] = useState([])
@@ -20,6 +25,42 @@ const ProductsDataTable = (props) => {
   
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
+
+  
+   //Pagination
+   const [currentPage, setCurrentPage] = useState(1);
+
+   const currentTableData = useMemo(() => {
+     const firstPageIndex = (currentPage - 1) * PageSize;
+     const lastPageIndex = firstPageIndex + PageSize;
+     return products;
+   }, [currentPage, products]);
+   
+   function onPageChanged(data) {
+    const filtro = {
+      description:name,
+      brand: brand,
+      category:category,
+      page:data-1,
+      pageSize:10
+    }
+
+    const { currentPage, totalPages, pageLimit } = data;
+  
+    api.post('/products/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      setProducts(response.data.tutorials)
+      
+    })
+    setCurrentPage(data);
+  }
+   const paginate = ({ selected }) => {
+     setCurrentPage(selected + 1);
+   };
+
 
  function edit(id){
   navigate("/products/edit/"+id)
@@ -52,8 +93,7 @@ const ProductsDataTable = (props) => {
       descriptionTec:"%",
       descriptionFriendly:"%",
       page:0,
-      pageSize:50
-
+      pageSize:10
     }
     
     await api.post('/products/byparam', filtro,{
@@ -63,6 +103,7 @@ const ProductsDataTable = (props) => {
     })
       .then((response) => {
         setProducts(response.data.tutorials)
+        setTotalPages(response.data.totalItems)
 
       }).catch((err) => {
         console.log(err)
@@ -97,7 +138,7 @@ const ProductsDataTable = (props) => {
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className='my-4' />
-      <div className="input-group mb-3 search-w divfora">
+      <div className="input-group">
        <div className='filtro'>
         <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
         <input type="text" className="form-control" placeholder="Categoria" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setCategory(e.target.value)} />
@@ -113,7 +154,7 @@ const ProductsDataTable = (props) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
-            {products.map((obj) => {
+            {currentTableData && currentTableData.map((obj) => {
               return (
                 <tr key={obj.id}>
                   <td>{obj.description}</td>
@@ -128,7 +169,7 @@ const ProductsDataTable = (props) => {
                           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
                         </svg>
                       </button>
-                      <button type="button" class="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{
+                      <button type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{
                         setIdSelected(obj.id)
                       }}>
 
@@ -144,6 +185,13 @@ const ProductsDataTable = (props) => {
             })}
           </tbody>
         </table>
+        <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={totalPages}
+            pageSize={PageSize}
+            onPageChange={ data => onPageChanged(data)}
+          />
         </div>
       </div>
       <Link to={"/products/new"} className="btn btn-primary text-light">Criar novo Produto</Link>

@@ -1,22 +1,65 @@
 import './customer-data-table.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from "boring-avatars";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
+import Pagination from '../pagination/Pagination';
+
+//PAGINATION
+let PageSize = 10;
 
 const CustomerDataTable = (props) => {
   
   const [clientes, setClientes] = useState([])
   const [name, setName] = useState([])
-  const [cpfCnpj, setCpfCnpj] = useState([])
+  const [totalPages, setTotalPages] =useState([])
+
+  const [atualPage, setAtualPage] =useState([])
+
   const [idSelected, setIdSelected] = useState([])
   
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
 
+   //Pagination
+   const [currentPage, setCurrentPage] = useState(1);
+
+   const currentTableData = useMemo(() => {
+     const firstPageIndex = (currentPage - 1) * PageSize;
+     const lastPageIndex = firstPageIndex + PageSize;
+     return clientes;
+   }, [currentPage, clientes]);
+ 
+   
+   function onPageChanged(data) {
+    const filtro = {
+      fantasy:name,
+      corporatename:"",
+      document:"",
+      page:data-1,
+      pageSize:10
+    }
+
+    const { currentPage, totalPages, pageLimit } = data;
+  
+    api.post('/client/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      setClientes(response.data.clients)
+      
+    })
+    setCurrentPage(data);
+  }
+   const paginate = ({ selected }) => {
+     setCurrentPage(selected + 1);
+   };
+
+   
  function edit(id){
   navigate("/customers/edit/"+id)
  }
@@ -45,8 +88,7 @@ const CustomerDataTable = (props) => {
       corporatename:"",
       document:"",
       page:0,
-      pageSize:50
-
+      pageSize:10
     }
     
     await api.post('/client/byparam', filtro,{
@@ -56,6 +98,7 @@ const CustomerDataTable = (props) => {
     })
       .then((response) => {
         setClientes(response.data.clients)
+        setTotalPages(response.data.totalItems)
 
       }).catch((err) => {
         console.log(err)
@@ -81,6 +124,7 @@ const CustomerDataTable = (props) => {
   }
   function handleMask(e){
     listaUsers(name)
+    setCurrentPage(1);
     e.preventDefault()
   }
 
@@ -102,7 +146,7 @@ const CustomerDataTable = (props) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
-            {clientes.map((user) => {
+            {currentTableData && currentTableData.map((user) => {
               return (
                 <tr key={user.id}>
                   <td>{user.fantasy}</td>
@@ -117,7 +161,7 @@ const CustomerDataTable = (props) => {
                           <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
                         </svg>
                       </button>
-                      <button type="button" class="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{
+                      <button type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{
                         setIdSelected(user.id)
                       }}>
 
@@ -133,6 +177,15 @@ const CustomerDataTable = (props) => {
             })}
           </tbody>
         </table>
+        <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={totalPages}
+            pageSize={PageSize}
+            onPageChange={ data => onPageChanged(data)}
+          />
+
+
         </div>
       </div>
       <Link to={"/customers/new"} className="btn btn-primary text-light">Criar novo Cliente</Link>
