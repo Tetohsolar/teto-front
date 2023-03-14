@@ -23,6 +23,7 @@ import NewAfflited from '../pages/afflited/new';
 import EditAfflited from '../pages/afflited/edit';
 import NewProduct from '../pages/products/new';
 import EditProduct from '../pages/products/edit';
+import NewNegocio from '../pages/negocio/new';
 
 
 
@@ -30,6 +31,8 @@ import EditProduct from '../pages/products/edit';
 const RoutesApp = () => {
 
   const { token } = useContext(AuthContext)
+  // const token = localStorage.getItem('token')
+  // console.log(`toke nav: ${token}`)
 
 
 
@@ -55,7 +58,7 @@ const RoutesApp = () => {
             <Route path="projects">
               <Route index element={<ProjectsList />} />
               <Route path=":projectId" element={<Single />} />
-              <Route path="new" element={<New />} />
+              <Route path="new" element={<NewNegocio />} />
             </Route>
 
             <Route path="sizings">
