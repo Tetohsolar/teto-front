@@ -55,7 +55,7 @@ function AuthProvider({ children }) {
 
     }).catch((err) => {
       console.log(err)
-      toast.error(err)
+      toast.error('Erro ao logar, verifique seu usuário e/ou senha!')
     })
 
   }
@@ -86,7 +86,7 @@ function AuthProvider({ children }) {
   }
 
 
-  
+
 
   //id, name, phone, email, password, confirmPassword, tipo
   async function updateUser(id, name, phone, email, password) {
@@ -139,13 +139,13 @@ function AuthProvider({ children }) {
 
   //Save user locally
   function setStorageUserLocal(data) {
-    localStorage.setItem('cliente', JSON.stringify(data))
+    // localStorage.setItem('cliente', JSON.stringify(data))
     localStorage.setItem('token', data.token)
 
   }
 
   function signOut() {
-    localStorage.removeItem("cliente")
+    // localStorage.removeItem("cliente")
     localStorage.removeItem("token")
 
   }
@@ -158,7 +158,6 @@ function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
-
         signUp,
         signIn,
         signOut,
