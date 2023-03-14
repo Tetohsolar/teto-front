@@ -1,9 +1,10 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
 import { useState, useContext } from 'react'
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProfileForm = (props) => {
@@ -20,7 +21,7 @@ const ProfileForm = (props) => {
 
   const { signUp } = useContext(AuthContext)
 
-
+  const navigate = useNavigate();
 
 
   function limpaCampos() {
@@ -55,10 +56,21 @@ const ProfileForm = (props) => {
 
     e.preventDefault();
     if (validaCampos) {
-      signUp(name, phone, email, password, confirmPassword, tipo)
+
+      try {
+      
+       await signUp(name, phone, email, password, confirmPassword, tipo);
+       limpaCampos()
+       navigate("/users") 
+      
+      } catch (error) {
+        
+      }
+      
+      
 
 
-      limpaCampos()
+      
 
     }
 
