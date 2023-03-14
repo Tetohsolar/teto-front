@@ -1,9 +1,9 @@
 import AccessNavbar from '../../components/accessnavbar/AccessNavbar';
 import { AuthContext } from '../../context/AuthContext';
 import './login.scss';
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -14,12 +14,20 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn } = useContext(AuthContext)
+  const { signIn, token, signOut } = useContext(AuthContext)
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    signOut()
+
+
+  }, [])
 
 
   async function handleLogin(e) {
     e.preventDefault();
+
     if (email !== '' && password !== '') {
 
       signIn(email, password)
@@ -30,12 +38,17 @@ const Login = () => {
         })
 
     }
+
+
   }
+
+
 
   return (
     <div id='body' className="login">
       <AccessNavbar />
       <main className="form-signin w-100 h-100">
+        <ToastContainer />
 
 
         <div className="bg-form">
