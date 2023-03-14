@@ -7,9 +7,10 @@ import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
+import { VscNewFile } from "react-icons/vsc";
 
 //PAGINATION
-let PageSize = 10;
+let PageSize = 5;
 
 const CustomerDataTable = (props) => {
   
@@ -40,7 +41,7 @@ const CustomerDataTable = (props) => {
       corporatename:"",
       document:"",
       page:data-1,
-      pageSize:10
+      pageSize:5
     }
 
     const { currentPage, totalPages, pageLimit } = data;
@@ -88,7 +89,7 @@ const CustomerDataTable = (props) => {
       corporatename:"",
       document:"",
       page:0,
-      pageSize:10
+      pageSize:5
     }
     
     await api.post('/client/byparam', filtro,{
@@ -136,11 +137,16 @@ const CustomerDataTable = (props) => {
       <hr className='my-4' />
       <div className="input-group mb-3 search-w">
         <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+        
+         <div id="btn-create" >
         <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
         </button>
+        <Link to={"/customers/new"} className="btn btn-primary text-light"><VscNewFile/></Link>
+      </div>
+
       </div>
       <div>
         <div className='table-responsive'>
@@ -188,7 +194,7 @@ const CustomerDataTable = (props) => {
 
         </div>
       </div>
-      <Link to={"/customers/new"} className="btn btn-primary text-light">Criar novo Cliente</Link>
+      
     </div>
     </form>
   );
