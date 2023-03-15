@@ -6,8 +6,6 @@ import { AuthContext } from '../../context/AuthContext';
 import MyModal from './ModalDelete'
 import Pagination from '../pagination/Pagination';
 
-
-
 //PAGINATION
 let PageSize = 10;
 
