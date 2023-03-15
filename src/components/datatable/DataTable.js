@@ -4,10 +4,7 @@ import { useState, useEffect, useContext, useMemo } from 'react'
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from './ModalDelete'
-import ReactPaginate from 'react-paginate';
 import Pagination from '../pagination/Pagination';
-import { VscNewFile,VscSearch, VscEdit } from "react-icons/vsc";
-
 
 //PAGINATION
 let PageSize = 10;
@@ -20,11 +17,8 @@ const DataTable = (props) => {
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
   const [userFind, setUserFind] = useState('')
-  const [page, setPage] = useState(1)
   const [updateUsers, setUpdateUsers] = useState(false)
-
-
-
+  const [totalPages, setTotalPages] =useState([])
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,74 +29,64 @@ const DataTable = (props) => {
     return users;
   }, [currentPage, users]);
 
-  const paginate = ({ selected }) => {
-    setCurrentPage(selected + 1);
-  };
+  function onPageChanged(data) {
+    const filtro = {
+      name:userFind,
+      page:data-1,
+      pageSize:10
+    }
+    console.log(userFind);
 
+    
+    api.post('/user/byparam', filtro,{
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      //console.log(response.data.users)
+      setUsers(response.data.users)
+      setCurrentPage(data);  
+    })
+    
+  }
+   const paginate = ({ selected }) => {
+     setCurrentPage(selected + 1);
+   };
+
+
+   async function listaUsers() {
+    setUpdateUsers(true)
+    const filtro = {
+      name:userFind,
+      page:0,
+      pageSize:10
+    }
+
+    
+    await api.post('/user/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem("token")}`
+      }
+    }).then((response) => {
+      setUsers(response.data.users)
+      setTotalPages(response.data.totalItems)
+      setCurrentPage(1);
+
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   //call  all users when start page
   useEffect(() => {
-    console.log('chamou')
-
-    async function listaUsers() {
-      setUpdateUsers(true)
-      await api.get('/user/all', {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      }).then((response) => {
-
-        setUsers(response.data.users)
-
-      }).catch((err) => {
-        console.log(err)
-      })
-    }
     listaUsers();
     setUpdateUsers(false)
   }, [updateUsers])
 
 
-
-
-
   //find user 
   async function handleSearchUser() {
-    let lista = []
-    let filtro = {
-      "name": "%" + userFind + "%",
-      "email": "%",
-      "page": 0,
-      "pageSize": 5
-    }
-    if (userFind != null) {
-      await api.post('/user/byparam', filtro, {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      })
-        .then((response) => {
-          setUsers(response.data.users)
-        }).catch((err) => {
-          console.log(err)
-        })
-
-    }
-    else {
-      await api.get('/user/all', {
-        headers: {
-          'Authorization': `token ${token.token}`
-        }
-      }).then((response) => {
-
-        setUsers(response.data.users)
-
-      }).catch((err) => {
-        console.log(err)
-      })
-
-    }
-
+    listaUsers();
 
   }
 
@@ -136,19 +120,15 @@ const DataTable = (props) => {
           onChange={(e) => setUserFind(e.target.value)}
           placeholder="Buscar..." aria-label="Recipient's username"
           aria-describedby="button-addon2" />
-        <div className='btn-create'>
+
         <button className="btn btn-primary text-light d-flex align-items-center"
           onClick={(e) => { handleSearchUser(e) }}
           type="button" id="button-addon2">
-         <VscSearch/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
         </button>
       </div>
-
-      <Link to={"/users/new"} className="btn btn-primary text-light">
-      <VscNewFile/>
-      </Link>
-      </div>
-      
       <div className="table-w">
         <div className="table-responsive">
           <table className="table table-borderless">
@@ -174,7 +154,9 @@ const DataTable = (props) => {
                       <div className="d-flex gap-2">
                         <Link to={`/users/edit/${user.id}`}>
                           <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center">
-                          <VscEdit/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-fill" viewBox="0 0 16 16">
+                              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                            </svg>
                           </button>
                         </Link>
                         <button type="button" class="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => updateListUser(user)}>
@@ -197,9 +179,9 @@ const DataTable = (props) => {
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
-            totalCount={users.length}
+            totalCount={totalPages}
             pageSize={PageSize}
-            onPageChange={page => setCurrentPage(page)}
+            onPageChange={page => onPageChanged(page)}
           />
 
 
