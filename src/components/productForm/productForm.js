@@ -3,7 +3,6 @@ import './productform.scss';
 import { useState, useContext, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import InputMask from 'react-input-mask';
 import { redirect, useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import api from '../../api';

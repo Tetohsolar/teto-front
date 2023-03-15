@@ -8,9 +8,9 @@ import { cnpjMask } from './cnpjmask'
 import InputMask from 'react-input-mask';
 import api from '../../api';
 
-import { redirect, useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
-import { json } from 'react-router-dom';
+
 
 function PhoneInput(props) {
   return (
@@ -71,7 +71,7 @@ const ClientForm = (props) => {
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
 
-  const { signUp, loadingAuth, token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
@@ -80,7 +80,7 @@ const ClientForm = (props) => {
   useEffect(() => {
 
 
-    const storageUser = localStorage.getItem('cliente')
+    
     if (clientId){
     loadClienById(clientId)
     }
