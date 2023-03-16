@@ -7,7 +7,7 @@ import MyModal from './ModalDelete'
 import Pagination from '../pagination/Pagination';
 
 //PAGINATION
-let PageSize = 10;
+let PageSize = 5;
 
 const DataTable = (props) => {
 

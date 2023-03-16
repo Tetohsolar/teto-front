@@ -1,7 +1,7 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
 import { useState, useContext } from 'react'
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ const ProfileForm = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
+  const [habilitar, setHabilitar] = useState('');
 
 
 
@@ -31,11 +32,12 @@ const ProfileForm = (props) => {
     setConfirmPassword('')
     setTipo('')
     setPhone('')
+    setHabilitar('')
   }
 
 
 
-  function validaCampos(name, email, phone, password, confirmPassword, tipo) {
+  function validaCampos(name, email, phone, password, confirmPassword, tipo, habilitar) {
 
     if (name !== '' && email !== '' && phone !== '') {
       return true
@@ -59,7 +61,7 @@ const ProfileForm = (props) => {
 
       try {
 
-        await signUp(name, phone, email, password, confirmPassword, tipo);
+        await signUp(name, phone, email, password, confirmPassword, tipo, habilitar);
         limpaCampos()
         navigate("/users")
 
@@ -96,7 +98,7 @@ const ProfileForm = (props) => {
           <input className="form-control" type="file" id="formFile" />
         </div>
       </div>
-      <hr className="my-4" />
+      <hr className="my-5" />
       <form className="row g-3" onSubmit={handleSaveUser}>
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
@@ -112,17 +114,29 @@ const ProfileForm = (props) => {
           </label>
           <input type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-7">
           <label htmlFor="inputPassword4" className="form-label">
             Senha
           </label>
           <input type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-5">
           <label htmlFor="inputPassword4" className="form-label">
             Confirmar senha
           </label>
           <input type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
+        </div>
+        <div className="col-4">
+          <label htmlFor="inputPhoneNumber" className="form-label">
+            Telefone
+          </label>
+
+          <InputMask
+            className="form-control" id="inputPhoneNumber"
+            onChange={(e) => setPhone(e.target.value)}
+            mask='(99)9999-99999'
+            value={phone || ''}>
+          </InputMask>
         </div>
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
@@ -132,23 +146,25 @@ const ProfileForm = (props) => {
             <option value="">Selecionar...</option>
             <option value="Admin">Admin</option>
             <option value="User">User</option>
+            <option value="Root">Root</option>
 
           </select>
         </div>
 
 
-        <div className="col-4">
-          <label htmlFor="inputPhoneNumber" className="form-label">
-            Telefone
+        <div className="col-md-4">
+          <label htmlFor="inputUserType" className="form-label">
+            Situação
           </label>
+          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            <option value="">Selecionar...</option>
+            <option value="Habilitar">Habilitar</option>
+            <option value="Desabilitar">Desabilitar</option>
 
-          <InputMask
-            className="form-control" id="inputPhoneNumber"
-            onChange={(e) => setPhone(e.target.value)}
-            mask='(99)9999-9999'
-            value={phone || ''}>
-          </InputMask>
+          </select>
         </div>
+
+
 
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit" >

@@ -8,9 +8,9 @@ import { cnpjMask } from './cnpjmask'
 import InputMask from 'react-input-mask';
 import api from '../../api';
 
-import { redirect, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
-import { json } from 'react-router-dom';
+
 
 function PhoneInput(props) {
   return (

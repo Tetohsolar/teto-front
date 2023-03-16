@@ -17,7 +17,6 @@ const ProductsDataTable = (props) => {
   const [totalPages, setTotalPages] =useState([])
   const [products, setProducts] = useState([])
   const [name, setName] = useState([])
-  const [cpfCnpj, setCpfCnpj] = useState([])
   const [idSelected, setIdSelected] = useState([])
   const [brand, setBrand] = useState([])
   const [category, setCategory] = useState([])
@@ -46,7 +45,7 @@ const ProductsDataTable = (props) => {
       pageSize:5
     }
 
-    const { currentPage, totalPages, pageLimit } = data;
+    const {  } = data;
   
     api.post('/products/byparam', filtro,{
       headers: {
@@ -57,9 +56,7 @@ const ProductsDataTable = (props) => {
       
     })
     setCurrentPage(data);
-  }
-   const paginate = ({ selected }) => {
-     setCurrentPage(selected + 1);
+  
    };
 
 
@@ -68,7 +65,7 @@ const ProductsDataTable = (props) => {
  }
   useEffect(() => {
 
-    const storageUser = localStorage.getItem('cliente')
+    
 
 
     list("%");

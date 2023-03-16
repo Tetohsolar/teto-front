@@ -7,6 +7,7 @@ import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { VscNewFile, VscSearch } from "react-icons/vsc";
+import { BsFillPencilFill } from "react-icons/bs";
 
 //PAGINATION
 let PageSize = 5;
@@ -43,9 +44,9 @@ const CustomerDataTable = (props) => {
       pageSize: 5
     }
 
-    const { currentPage, totalPages, pageLimit } = data;
 
-    api.post('/client/byparam', filtro, {
+  
+    api.post('/client/byparam', filtro,{
       headers: {
         'Authorization': `Basic ${localStorage.getItem("token")}`
       }
@@ -68,7 +69,6 @@ const CustomerDataTable = (props) => {
   useEffect(() => {
     console.log(token)
 
-    const storageUser = localStorage.getItem('cliente')
 
 
     listaUsers("%");
