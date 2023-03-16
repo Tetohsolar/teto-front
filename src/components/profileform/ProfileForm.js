@@ -15,15 +15,9 @@ const ProfileForm = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
-  const [habilitar, setHabilitar] = useState('');
-
-
-
-
-  const { signUp } = useContext(AuthContext)
-
-  const navigate = useNavigate();
-
+  const [habilitar, setHabilitar] = useState('')
+  const { signUp,profilelogged } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   function limpaCampos() {
     setName('')
@@ -34,8 +28,6 @@ const ProfileForm = (props) => {
     setPhone('')
     setHabilitar('')
   }
-
-
 
   function validaCampos(name, email, phone, password, confirmPassword, tipo, habilitar) {
 
@@ -51,9 +43,6 @@ const ProfileForm = (props) => {
 
   }
 
-
-
-
   async function handleSaveUser(e) {
 
     e.preventDefault();
@@ -66,24 +55,16 @@ const ProfileForm = (props) => {
         navigate("/users")
 
       } catch (error) {
-
+        console.log(error)
       }
-
-
-
-
-
 
     }
 
   }
 
-
-
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
-
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Crie novos usuários para acessar sua conta.</p>
       <hr className="my-4" />
@@ -106,7 +87,6 @@ const ProfileForm = (props) => {
           </label>
           <input type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
-
 
         <div className="col-md-5">
           <label htmlFor="inputEmail" className="form-label">
@@ -146,8 +126,10 @@ const ProfileForm = (props) => {
             <option value="">Selecionar...</option>
             <option value="Admin">Admin</option>
             <option value="User">User</option>
-            <option value="Root">Root</option>
-
+            {
+              profilelogged === 'Root' ?   <option value="Root">Root</option> :''
+            }
+           
           </select>
         </div>
 
@@ -156,10 +138,11 @@ const ProfileForm = (props) => {
           <label htmlFor="inputUserType" className="form-label">
             Situação
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
             <option value="">Selecionar...</option>
-            <option value="Habilitar">Habilitar</option>
-            <option value="Desabilitar">Desabilitar</option>
+            <option value="S">Habilitado</option>
+
+            <option value="N">Desabilitado</option>
 
           </select>
         </div>

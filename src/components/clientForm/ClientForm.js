@@ -7,10 +7,8 @@ import { cpfMask } from './cpfmask'
 import { cnpjMask } from './cnpjmask'
 import InputMask from 'react-input-mask';
 import api from '../../api';
-
 import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
-
 
 function PhoneInput(props) {
   return (
@@ -70,7 +68,6 @@ const ClientForm = (props) => {
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
-
   const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -79,8 +76,6 @@ const ClientForm = (props) => {
 
   useEffect(() => {
 
-
-    const storageUser = localStorage.getItem('cliente')
     if (clientId) {
       loadClienById(clientId)
     }
@@ -92,8 +87,7 @@ const ClientForm = (props) => {
   async function loadClienById(id) {
 
     try {
-      const storageUser = localStorage.getItem('token')
-
+      
       await api.get('/client/get/' + id, {
         headers: {
           'Authorization': `Basic ${token}`
@@ -126,12 +120,11 @@ const ClientForm = (props) => {
       });
 
     } catch (err) {
+      console.log (err)
 
     }
 
-
   }
-
 
   function limpaCampos() {
     setName('')
@@ -152,7 +145,6 @@ const ClientForm = (props) => {
     handleEstadoValue("")
   }
 
-
   function validaCampos(name, phone, doc) {
 
     if (name === "") {
@@ -172,7 +164,6 @@ const ClientForm = (props) => {
   }
 
   function handleMask(e) {
-    // alert(tipoPessoa)
     if (tipoPessoa === "F" || tipoPessoa === "") {
       const formatado = cpfMask(doc);
       setDoc(formatado);
@@ -185,12 +176,10 @@ const ClientForm = (props) => {
   //chama para trocar assunto
   function handleTipoPessoa(e) {
 
-    //setTipoPessoa(e.target.value)
-    handleTipoPessoaValue(e.target.value)
+  handleTipoPessoaValue(e.target.value)
 
   }
   function handleTipoPessoaValue(e) {
-
 
     if (e === "F" || e === "") {
       setLbFantasia("Nome");
@@ -209,7 +198,6 @@ const ClientForm = (props) => {
   }
 
   async function handleEstadoValue(value) {
-    //e.preventDefault();
     const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + value + "/municipios";
 
     const requestInfo = {
@@ -241,12 +229,12 @@ const ClientForm = (props) => {
       });
 
     } catch (err) {
+      console.log(err)
 
     }
   };
 
   const navigate = useNavigate();
-
 
   async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
 
@@ -281,8 +269,6 @@ const ClientForm = (props) => {
           }
 
         }).then((response) => {
-          // console.log(response.data.message)
-          //toast.success(response.data.message).then(limpaCampos())
         }).catch(
           (response) => {
             toast.error(response.response.data.message)
@@ -300,8 +286,6 @@ const ClientForm = (props) => {
           }
 
         }).then((response) => {
-          //console.log(response.data.message)
-          //toast.success(response.data.message).then(limpaCampos())
         }).catch(
           (response) => {
             toast.error(response.response.data.message)
@@ -309,7 +293,6 @@ const ClientForm = (props) => {
           }
         )
     }
-
 
   }
 
@@ -326,19 +309,16 @@ const ClientForm = (props) => {
         })
 
       } catch (error) {
-        ///console.log(error);
+        console.log(error);
       }
 
     }
 
   }
 
-
-
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
-
       <form className="row g-3" onSubmit={handleSaveUser}>
         <div className='col-md-3'>
           <label htmlFor="inputFirstName" className="form-label">
@@ -381,7 +361,6 @@ const ClientForm = (props) => {
           </label>
           <PhoneInput className="form-control" id="inputPhoneNumber" value={phone} onChange={handleInput}> </PhoneInput>
         </div>
-
 
         <div className="col-md-3">
           <label htmlFor="inputPassword4" className="form-label">
