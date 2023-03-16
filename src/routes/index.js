@@ -49,29 +49,28 @@ const RoutesApp = () => {
             <Route path="signup" element={<Signup />} />
 
             <Route path="customers">
-              <Route index element={<CustomerList />} />
-              <Route path=":clientId" element={<Single />} />
-              <Route path="new" element={<NewClient />} />
-              <Route path="edit/:clientId" element={<EditClient />} />
+              <Route index element={token ? <CustomerList /> : <Navigate to="/login"/> } />
+              <Route path=":clientId" element={ token ? <Single/> : <Navigate to="/login" />} />
+              <Route path="new" element={ token ? <NewClient  /> : <Navigate to="/login" />} />
+              <Route path="edit/:clientId" element={ token ? <EditClient /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="projects">
-              <Route index element={<ProjectsList />} />
-              <Route path=":projectId" element={<Single />} />
-              <Route path="new" element={<NewNegocio />} />
+              <Route index element={ token ? <ProjectsList /> : <Navigate to="/login" />} />
+              <Route path=":projectId" element={token ? <Single /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <NewNegocio /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="sizings">
-              <Route index element={<SizingList />} />
-              <Route path=":sizingId" element={<Single />} />
-              <Route path="new" element={<New />} />
+              <Route index element={ token ? <SizingList /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <New /> : <Navigate to="/login" />}   />
             </Route>
 
             <Route path="products">
-              <Route index element={<ProductList />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<NewProduct />} />
-              <Route path="edit/:Id" element={<EditProduct />} />
+              <Route index element={ token ? <ProductList /> : <Navigate to="/login" />} />
+              <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <NewProduct /> : <Navigate to="/login" />} />
+              <Route path="edit/:Id" element={token ? <EditProduct /> : <Navigate to="/login" />} />
 
             </Route>
 
@@ -89,14 +88,14 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="settings">
-              <Route index element={<Settings />} />
+              <Route index element={token ? <Settings /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="affliteds">
-              <Route index element={<AfflitedList />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<NewAfflited />} />
-              <Route path="edit/:clientId" element={<EditAfflited />} />
+              <Route index element={ token ? <AfflitedList /> : <Navigate to="/login" />} />
+              <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <NewAfflited /> : <Navigate to="/login" />} />
+              <Route path="edit/:clientId" element={token ? <EditAfflited /> : <Navigate to="/login" />} />
             </Route>
 
           </Route>

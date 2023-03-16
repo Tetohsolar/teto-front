@@ -6,11 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { redirect, useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import api from '../../api';
-import {NumericFormat} from 'react-number-format';
-
+import { NumericFormat } from 'react-number-format';
 
 const ProductForm = (props) => {
-
   const [codigo, setCodigo] = useState('')
   const [marca, setMarca] = useState('')
   const [categoria, setCategoria] = useState('')
@@ -22,18 +20,13 @@ const ProductForm = (props) => {
   const [preco, setPreco] = useState('')
   const [peso, setPeso] = useState('')
   const [dimensao, setDimensao] = useState('')
-  const {Id} = useParams();
-  const [idSelected,setIdSelected] = useState('')
-
-
-
+  const { Id } = useParams();
+  const [idSelected, setIdSelected] = useState('')
   const { signUp, token } = useContext(AuthContext)
   const navigate = useNavigate();
 
   async function loadById(id) {
-
     try {
-      const storageUser = localStorage.getItem('token')
 
       await api.get('/products/get/' + id, {
         headers: {
@@ -53,26 +46,20 @@ const ProductForm = (props) => {
         setPeso(response.data.weight)
         setDimensao(response.data.dimenssion)
         setIdSelected(response.data.id)
-        
 
-        
       }).catch((error) => {
         toast.error(error.response.data.message)
       });
 
     } catch (err) {
+      console.log(err)
 
     }
-
-
   }
 
   useEffect(() => {
-
-
-    const storageUser = localStorage.getItem('cliente')
-    if (Id){
-    loadById(Id)
+    if (Id) {
+      loadById(Id)
     }
 
     return () => { }
@@ -92,118 +79,88 @@ const ProductForm = (props) => {
     setPeso('')
     setDimensao('')
   }
-  async function saveProduct(codef,brand,category,description,descriptionTec,
-  descriptionFriendly,garantia,fornecedor,preco,peso,dimensao,idSelected){
-    const json = {codef: codef,
+  async function saveProduct(codef, brand, category, description, descriptionTec,
+    descriptionFriendly, garantia, fornecedor, preco, peso, dimensao, idSelected) {
+    const json = {
+      codef: codef,
       description: description,
       brand: brand,
       category: category,
       descriptionTec: descriptionTec,
       descriptionFriendly: descriptionFriendly,
-      guarantee:garantia,
-      supplier:fornecedor,
-      weight:parseFloat(peso.replace(',','.')),
-      price:parseFloat(preco.replace(',','.')),
-      dimenssion:dimensao, 
+      guarantee: garantia,
+      supplier: fornecedor,
+      weight: parseFloat(peso.replace(',', '.')),
+      price: parseFloat(preco.replace(',', '.')),
+      dimenssion: dimensao,
     }
 
-   
     if (idSelected) {
-      await api.patch('/products/update/'+idSelected, json
-      , {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
+      await api.patch('/products/update/' + idSelected, json
+        , {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
 
-      }).then((response) => {
-       // console.log(response.data.message)
-       //toast.success(response.data.message).then(limpaCampos())
-      }).catch(
-        (response) => {
-          toast.error(response.response.data.message)
-          throw new Error() 
+        }).then((response) => {
 
-        }
-      );
+        }).catch(
+          (response) => {
+            toast.error(response.response.data.message)
+            throw new Error()
+          }
+        );
 
-    }else {
+    } else {
 
-    
-  await api.post('/products/create', json
-    , {
-    headers: {
-      'Authorization': `Basic ${token}`
+      await api.post('/products/create', json
+        , {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
+
+        }).then((response) => {
+
+          toast.success('Operação realizada com sucesso');
+        }).catch(
+          (response) => {
+            toast.error(response.response.data.message)
+            throw new Error();
+
+          }
+        )
     }
-
-  }).then((response) => {
-    ///console.log(response.data.message)
-    toast.success('Operação realizada com sucesso');
-  }).catch(
-    (response) => {
-      toast.error(response.response.data.message)
-      throw new Error();
-
-    }
-  )
   }
-
-  } 
   async function handleSave(e) {
-    
 
     e.preventDefault();
 
     if (true) {
       try {
-         await saveProduct(codigo,marca,categoria,descricao,descricaoTec,
-          descricaoAmigavel,garantia,fornecedor,preco,peso,dimensao,idSelected)
-         navigate("/products");
-         toast.success("Operação realizada com sucesso!",{
+        await saveProduct(codigo, marca, categoria, descricao, descricaoTec,
+          descricaoAmigavel, garantia, fornecedor, preco, peso, dimensao, idSelected)
+        navigate("/products");
+        toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
         })
-      
-        }catch(error){
-         console.log(error);
+
+      } catch (error) {
+        console.log(error);
       }
-      
     }
-
   }
-
-
-
-  /*function validaCampos(codigo, marca, descricao, descricaoTec, descricaoAmigavel, garantia, fornecedor, preco, peso) {
-
-    if (codigo !== '' && marca !== '' && descricao !== '') {
-      return true
-    if (descricaoTec !== '' && descricaoAmigavel !== '' && garantia !== '') {
-      return true
-    if (fornecedor !== '' && preco !== '' && peso !== '') {
-      return true
-    }
-    else {
-    return false
-    }
-
-  }
-}    
-
-
-
-/**/
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
-
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Cadastre novos produtos para seus clientes.</p>
-     
+
       <form className="row g-3" onSubmit={handleSave}>
         <div className="col-md-4">
           <label htmlFor="inputCodigo" className="form-label">
-           Código
+            Código
           </label>
-          <input type="text"  maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
+          <input type="text" maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputMarca" className="form-label">
@@ -233,20 +190,19 @@ const ProductForm = (props) => {
           <label htmlFor="inputFornecedor" className="form-label">
             Fornecedor
           </label>
-          <input type="text" maxLength={100}className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputPreco" className="form-label">
-           Preço
+            Preço
           </label>
-          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco||''} onChange={(e) => setPreco(e.target.value)}/>
-          </div>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco || ''} onChange={(e) => setPreco(e.target.value)} />
+        </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
-           Peso (Kg)
+            Peso (Kg)
           </label>
-          
-          <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","className="form-control number" value={peso||''} onChange={(e) => setPeso(e.target.value)}/>
+          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={peso || ''} onChange={(e) => setPeso(e.target.value)} />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputDimensao" className="form-label">
@@ -255,8 +211,8 @@ const ProductForm = (props) => {
           <input type="dimensao" className="form-control" id="inputDimensao" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)} />
         </div>
         <div className="col-md-12">
-        <label htmlFor="inputDescricaoTec" className="form-label">
-            Descrição Técnica 
+          <label htmlFor="inputDescricaoTec" className="form-label">
+            Descrição Técnica
           </label>
           <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoTec" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
         </div>
@@ -266,7 +222,6 @@ const ProductForm = (props) => {
           </label>
           <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
         </div>
-      
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar

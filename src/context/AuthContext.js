@@ -13,9 +13,8 @@ function AuthProvider({ children }) {
   // const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState('')
+  const [profilelogged, setProfileLogged] = useState('')
   const [idLogged, setIdLogged] = useState('')
-
-
 
 
   //add new User
@@ -27,8 +26,10 @@ function AuthProvider({ children }) {
 
       setToken(response.data.token)
       setIdLogged(response.data.userId)
+      setProfileLogged(response.data.profile)
       toast.success(response.data.message)
       setLoading(false)
+
 
     }).catch((err) => {
       console.log(err)
@@ -38,7 +39,7 @@ function AuthProvider({ children }) {
   }
 
   //SignUp User
-  async function signUp(name, phone, email, password, confirmpassword, tipo) {
+  async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar) {
     setLoading(true)
     await api.post('/user/create', {
       name: name,
@@ -46,7 +47,9 @@ function AuthProvider({ children }) {
       email: email,
       password: password,
       confirmpassword: confirmpassword,
-      tipo: tipo
+      tipo: tipo,
+      enabled: habilitar
+
     }, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -69,7 +72,7 @@ function AuthProvider({ children }) {
 
 
   //id, name, phone, email, password, confirmPassword, tipo
-  async function updateUser(id, name, phone, email, tipo) {
+  async function updateUser(id, name, phone, email, tipo, habilitar) {
 
     setLoading(true)
 
@@ -77,7 +80,8 @@ function AuthProvider({ children }) {
       name: name,
       phone: phone,
       email: email,
-      tipoR: tipo
+      tipoR: tipo,
+      enabled: habilitar
     }, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -145,7 +149,8 @@ function AuthProvider({ children }) {
         deleteUser,
         ToastContainer,
         token,
-        idLogged
+        idLogged,
+        profilelogged
       }}>
       {children}
     </AuthContext.Provider>
