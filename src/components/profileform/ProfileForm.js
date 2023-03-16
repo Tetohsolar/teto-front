@@ -15,7 +15,7 @@ const ProfileForm = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
-  const [habilitar,setHabilitar] = useState('');
+  const [habilitar, setHabilitar] = useState('');
 
 
 
@@ -60,26 +60,23 @@ const ProfileForm = (props) => {
     if (validaCampos) {
 
       try {
-      
-       await signUp(name, phone, email, password, confirmPassword, tipo, habilitar);
-       limpaCampos()
-       navigate("/users") 
-      
+
+        await signUp(name, phone, email, password, confirmPassword, tipo, habilitar);
+        limpaCampos()
+        navigate("/users")
+
       } catch (error) {
-        
+
       }
-      
-      
 
 
-      
+
+
+
 
     }
 
   }
-
-
-
 
 
 

@@ -18,7 +18,7 @@ const EditProfileForm = (props) => {
 
 
 
-  const { updateUser,} = useContext(AuthContext)
+  const { updateUser, token } = useContext(AuthContext)
   const navigate = useNavigate();
 
 
@@ -29,7 +29,7 @@ const EditProfileForm = (props) => {
 
   async function findUserById() {
 
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     await api.get(`/user/get/${props.userId}`, {
       headers: {
@@ -44,7 +44,7 @@ const EditProfileForm = (props) => {
         setTipo(response.data.tipo)
 
       })
-    console.log(id)
+
   }
 
 
@@ -53,12 +53,13 @@ const EditProfileForm = (props) => {
   async function handleUpdateUser(e) {
     setReloadPage(true)
     e.preventDefault()
-   try {
-    
-    await updateUser(id, name, phone, email, tipo)
-    setReloadPage(false)
-    navigate("/users/")}
-    catch(error){
+    try {
+
+      await updateUser(id, name, phone, email, tipo)
+      setReloadPage(false)
+      navigate("/users/")
+    }
+    catch (error) {
 
     }
 
@@ -106,13 +107,13 @@ const EditProfileForm = (props) => {
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
-        <InputMask
+          <InputMask
             className="form-control" id="inputPhoneNumber"
             onChange={(e) => setPhone(e.target.value)}
             mask='(99)9999-99999'
             value={phone || ''}>
           </InputMask>
-         </div>
+        </div>
 
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
@@ -127,7 +128,7 @@ const EditProfileForm = (props) => {
           </select>
         </div>
 
-         <div className="col-md-4">
+        <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Situação
           </label>

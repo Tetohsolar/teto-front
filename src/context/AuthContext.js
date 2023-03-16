@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../api'
+import objectHash from 'object-hash';
 
 
 export const AuthContext = createContext({})
@@ -12,27 +13,9 @@ function AuthProvider({ children }) {
   // const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState('')
+  const [idLogged, setIdLogged] = useState('')
 
 
-
-
-  useEffect(() => {
-
-    function loadStorage() {
-      const storageUser = localStorage.getItem('cliente')
-
-      if (storageUser) {// se tiver usuário no localstorage, ele será salvo no state user
-        setToken(JSON.parse(storageUser))
-
-
-      }
-      setLoading(true)
-
-    }
-
-    loadStorage()
-
-  }, [loading])
 
 
   //add new User
@@ -42,14 +25,8 @@ function AuthProvider({ children }) {
       password: password
     }).then((response) => {
 
-      let newUser = {
-        id: response.data.userId,
-        token: response.data.token,
-        message: response.data.message
-      }
-
-      setStorageUserLocal(newUser)
-      setToken(newUser.token)
+      setToken(response.data.token)
+      setIdLogged(response.data.userId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -76,6 +53,7 @@ function AuthProvider({ children }) {
       }
 
     }).then((response) => {
+
       toast.success(response.data.message)
 
     })
@@ -94,7 +72,7 @@ function AuthProvider({ children }) {
   async function updateUser(id, name, phone, email, tipo) {
 
     setLoading(true)
-    const token = localStorage.getItem("token");
+
     await api.patch(`/user/update/${id}`, {
       name: name,
       phone: phone,
@@ -111,7 +89,7 @@ function AuthProvider({ children }) {
 
     })
       .catch((err) => {
-        
+
         toast.error(err.response.data.message)
         throw new Error()
       })
@@ -120,7 +98,7 @@ function AuthProvider({ children }) {
 
   async function deleteUser(id) {
     setLoading(true)
-    const token = localStorage.getItem("token");
+
     await api.delete(`/user/delete/${id}`, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -141,17 +119,14 @@ function AuthProvider({ children }) {
 
 
 
-  //Save user locally
-  function setStorageUserLocal(data) {
-    // localStorage.setItem('cliente', JSON.stringify(data))
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('userlog', data.id)
 
-  }
 
   function signOut() {
-    // localStorage.removeItem("cliente")
-    localStorage.removeItem("token")
+    setToken(null)
+    setIdLogged(null)
+
+
+
 
   }
 
@@ -169,7 +144,8 @@ function AuthProvider({ children }) {
         updateUser,
         deleteUser,
         ToastContainer,
-        token
+        token,
+        idLogged
       }}>
       {children}
     </AuthContext.Provider>

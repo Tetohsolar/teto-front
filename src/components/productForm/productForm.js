@@ -37,7 +37,7 @@ const ProductForm = (props) => {
 
       await api.get('/products/get/' + id, {
         headers: {
-          'Authorization': `Basic ${storageUser}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {
@@ -112,7 +112,7 @@ const ProductForm = (props) => {
       await api.patch('/products/update/'+idSelected, json
       , {
         headers: {
-          'Authorization': `Basic ${token.token}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {
@@ -132,7 +132,7 @@ const ProductForm = (props) => {
   await api.post('/products/create', json
     , {
     headers: {
-      'Authorization': `Basic ${token.token}`
+      'Authorization': `Basic ${token}`
     }
 
   }).then((response) => {
