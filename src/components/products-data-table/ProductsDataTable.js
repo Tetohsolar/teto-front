@@ -127,9 +127,20 @@ const ProductsDataTable = (props) => {
         <hr className='my-4' />
         <div className="input-group">
           <div className='filtro'>
+          <div className="col-md-5">
             <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
-            <input type="text" className="form-control" placeholder="Categoria" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setCategory(e.target.value)} />
+           </div> 
+           <div className="col-md-4">
+            <select name="pets" id="input-user-type" className="form-select" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">Selecionar...</option>
+            <option value="Inversor">Inversor</option>
+            <option value="Microinversor">Microninversor</option>
+            <option value="Placa">Placa</option>
+          </select>
+          </div>
+          <div className="col-md-3">
             <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} />
+          </div>
           </div>
           <div className='btn-create' id="btn-create">
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleSeach}>
@@ -142,6 +153,14 @@ const ProductsDataTable = (props) => {
           <div className='table-responsive'>
             <table className="table">
               <tbody>
+                <tr className='cab1'>
+                <th className='cab2'>Descrição</th>
+                <th className='cab3'>Categoria</th>
+
+                <th>Marca</th>
+
+
+                </tr>
                 {currentTableData && currentTableData.map((obj) => {
                   return (
                     <tr key={obj.id}>
