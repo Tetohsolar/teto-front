@@ -7,7 +7,7 @@ import MyModal from './ModalDelete'
 import Pagination from '../pagination/Pagination';
 
 //PAGINATION
-let PageSize = 10;
+let PageSize = 5;
 
 const DataTable = (props) => {
 
@@ -33,7 +33,7 @@ const DataTable = (props) => {
     const filtro = {
       name:userFind,
       page:data-1,
-      pageSize:10
+      pageSize:5
     }
     console.log(userFind);
 
@@ -59,7 +59,7 @@ const DataTable = (props) => {
     const filtro = {
       name:userFind,
       page:0,
-      pageSize:10
+      pageSize:5
     }
 
     

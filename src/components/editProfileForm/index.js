@@ -5,21 +5,20 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
+import InputMask from 'react-input-mask';
 
 const EditProfileForm = (props) => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
   const [id, setId] = useState('')
   const [reloadPage, setReloadPage] = useState(false)
 
 
 
-  const { updateUser, token } = useContext(AuthContext)
+  const { updateUser,} = useContext(AuthContext)
   const navigate = useNavigate();
 
 
@@ -103,6 +102,18 @@ const EditProfileForm = (props) => {
           <input type="email" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
 
+        <div className="col-4">
+          <label htmlFor="inputPhoneNumber" className="form-label">
+            Telefone
+          </label>
+        <InputMask
+            className="form-control" id="inputPhoneNumber"
+            onChange={(e) => setPhone(e.target.value)}
+            mask='(99)9999-99999'
+            value={phone || ''}>
+          </InputMask>
+         </div>
+
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Tipo de usuário
@@ -111,18 +122,22 @@ const EditProfileForm = (props) => {
             <option value="">Selecionar...</option>
             <option value="Admin">Admin</option>
             <option value="User">User</option>
+            <option value="User">Root</option>
 
           </select>
         </div>
 
-
-        <div className="col-4">
-          <label htmlFor="inputPhoneNumber" className="form-label">
-            Telefone
+         <div className="col-md-4">
+          <label htmlFor="inputUserType" className="form-label">
+            Situação
           </label>
-          <input type="text" className="form-control" id="inputPhoneNumber" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </div>
+          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            <option value="">Selecionar...</option>
+            <option value="User">Habilitar</option>
+            <option value="User">Desabilitar</option>
 
+          </select>
+        </div>
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit" >
             Atualizar
