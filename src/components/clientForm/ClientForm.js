@@ -8,9 +8,9 @@ import { cnpjMask } from './cnpjmask'
 import InputMask from 'react-input-mask';
 import api from '../../api';
 
-import { redirect, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
-import { json } from 'react-router-dom';
+
 
 function PhoneInput(props) {
   return (
@@ -71,7 +71,7 @@ const ClientForm = (props) => {
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
 
-  const { signUp, loadingAuth, token } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
@@ -81,8 +81,8 @@ const ClientForm = (props) => {
 
 
     const storageUser = localStorage.getItem('cliente')
-    if (clientId){
-    loadClienById(clientId)
+    if (clientId) {
+      loadClienById(clientId)
     }
 
     return () => { }
@@ -96,18 +96,18 @@ const ClientForm = (props) => {
 
       await api.get('/client/get/' + id, {
         headers: {
-          'Authorization': `Basic ${storageUser}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {
         setName(response.data.fantasy)
         setDoc(response.data.document)
         setCorporateName(response.data.corporatename)
-        
+
         response.data.tipo === "Fisico" ? setTipoPessoa("F") : setTipoPessoa("J")
-        let olha = response.data.tipo ==="Fisico"?"F":"J"
+        let olha = response.data.tipo === "Fisico" ? "F" : "J"
         handleTipoPessoaValue(olha)
-        
+
         setPhone(response.data.phone)
         setZap(response.data.zap)
         setCepData(response.data.Addresses[0].postcode)
@@ -131,7 +131,7 @@ const ClientForm = (props) => {
 
 
   }
- 
+
 
   function limpaCampos() {
     setName('')
@@ -191,7 +191,7 @@ const ClientForm = (props) => {
   }
   function handleTipoPessoaValue(e) {
 
-    
+
     if (e === "F" || e === "") {
       setLbFantasia("Nome");
       setExibeCorporateName("");
@@ -246,9 +246,9 @@ const ClientForm = (props) => {
   };
 
   const navigate = useNavigate();
-  
-  
-  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email,id,idAdd) {
+
+
+  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
 
     const json = {
       fantasy: name,
@@ -261,7 +261,7 @@ const ClientForm = (props) => {
       addInformation: inform,
       Addresses: [
         {
-          id:idAdd?idAdd:undefined,
+          id: idAdd ? idAdd : undefined,
           street: logradouro,
           postcode: cep,
           city: cidade,
@@ -272,44 +272,44 @@ const ClientForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    
+
     if (id) {
-      await api.patch('/client/update/'+id, saida
-      , {
-        headers: {
-          'Authorization': `Basic ${token.token}`
-        }
+      await api.patch('/client/update/' + id, saida
+        , {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
 
-      }).then((response) => {
-       // console.log(response.data.message)
-       //toast.success(response.data.message).then(limpaCampos())
-      }).catch(
-        (response) => {
-          toast.error(response.response.data.message)
-          throw new Error() 
+        }).then((response) => {
+          // console.log(response.data.message)
+          //toast.success(response.data.message).then(limpaCampos())
+        }).catch(
+          (response) => {
+            toast.error(response.response.data.message)
+            throw new Error()
 
-        }
-      );
-      
+          }
+        );
+
 
     } else {
       await api.post('/client/create', saida
-      , {
-        headers: {
-          'Authorization': `Basic ${token.token}`
-        }
+        , {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
 
-      }).then((response) => {
-        //console.log(response.data.message)
-        //toast.success(response.data.message).then(limpaCampos())
-      }).catch(
-        (response) => {
-          toast.error(response.response.data.message)
-          throw new Error() 
-        }
-      )
+        }).then((response) => {
+          //console.log(response.data.message)
+          //toast.success(response.data.message).then(limpaCampos())
+        }).catch(
+          (response) => {
+            toast.error(response.response.data.message)
+            throw new Error()
+          }
+        )
     }
-    
+
 
   }
 
@@ -319,16 +319,16 @@ const ClientForm = (props) => {
 
     if (validaCampos(name, phone, doc)) {
       try {
-         await save(tipoPessoa,name,corporateName,doc,phone,zap,cepData,estado,cidade, rua,bairro,informacoesAdicionais,email,id,idAdd)
-         navigate("/customers");
-         toast.success("Operação realizada com sucesso!",{
+        await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, id, idAdd)
+        navigate("/customers");
+        toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
         })
-      
-        }catch(error){
-         ///console.log(error);
+
+      } catch (error) {
+        ///console.log(error);
       }
-      
+
     }
 
   }
@@ -356,7 +356,7 @@ const ClientForm = (props) => {
             {lbFantasia === "" ? "Nome" : lbFantasia}
 
           </label>
-          <input type="text"  maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
 
         <div className="col-md-4"  >
@@ -371,7 +371,7 @@ const ClientForm = (props) => {
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
-          <input type="text"  maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
 
 
@@ -409,13 +409,13 @@ const ClientForm = (props) => {
             Cidade
           </label>
           <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
-        </div> 
+        </div>
 
         <div className="col-md-5"  >
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
-          <input type="text"  maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
+          <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
 
         <div className="col-md-6"  >
