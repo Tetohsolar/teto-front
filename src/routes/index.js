@@ -63,7 +63,6 @@ const RoutesApp = () => {
 
             <Route path="sizings">
               <Route index element={ token ? <SizingList /> : <Navigate to="/login" />} />
-              <Route path=":sizingId" element={ token ?<Single /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <New /> : <Navigate to="/login" />}   />
             </Route>
 
