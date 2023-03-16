@@ -15,6 +15,7 @@ const EditProfileForm = (props) => {
   const [tipo, setTipo] = useState('')
   const [id, setId] = useState('')
   const [reloadPage, setReloadPage] = useState(false)
+  const [habilitar, setHabilitar] = useState('');
 
 
 
@@ -132,7 +133,7 @@ const EditProfileForm = (props) => {
           <label htmlFor="inputUserType" className="form-label">
             Situação
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
             <option value="">Selecionar...</option>
             <option value="User">Habilitar</option>
             <option value="User">Desabilitar</option>

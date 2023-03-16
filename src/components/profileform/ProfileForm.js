@@ -156,7 +156,7 @@ const ProfileForm = (props) => {
           <label htmlFor="inputUserType" className="form-label">
             Situação
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
             <option value="">Selecionar...</option>
             <option value="Habilitar">Habilitar</option>
             <option value="Desabilitar">Desabilitar</option>
