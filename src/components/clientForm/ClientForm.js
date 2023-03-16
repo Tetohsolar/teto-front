@@ -96,7 +96,7 @@ const ClientForm = (props) => {
 
       await api.get('/client/get/' + id, {
         headers: {
-          'Authorization': `Basic ${storageUser}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {
@@ -277,7 +277,7 @@ const ClientForm = (props) => {
       await api.patch('/client/update/' + id, saida
         , {
           headers: {
-            'Authorization': `Basic ${token.token}`
+            'Authorization': `Basic ${token}`
           }
 
         }).then((response) => {
@@ -296,7 +296,7 @@ const ClientForm = (props) => {
       await api.post('/client/create', saida
         , {
           headers: {
-            'Authorization': `Basic ${token.token}`
+            'Authorization': `Basic ${token}`
           }
 
         }).then((response) => {

@@ -123,12 +123,10 @@ const AfflitedForm = (props) => {
   async function loadClienById(id) {
 
     try {
-      const storageUser = localStorage.getItem('token')
-      //console.log(storageUser)
-
+      
       await api.get('/afflited/get/' + id, {
         headers: {
-          'Authorization': `Basic ${storageUser}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {
@@ -351,7 +349,7 @@ const AfflitedForm = (props) => {
       await api.patch('/afflited/update/'+id, saida
       , {
         headers: {
-          'Authorization': `Basic ${token.token}`
+          'Authorization': `Basic ${token}`
         }
                             
       }).then((response) => {
@@ -370,7 +368,7 @@ const AfflitedForm = (props) => {
       await api.post('/afflited/create', saida
       , {
         headers: {
-          'Authorization': `Basic ${token.token}`
+          'Authorization': `Basic ${token}`
         }
 
       }).then((response) => {

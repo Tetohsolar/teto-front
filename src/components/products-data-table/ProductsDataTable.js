@@ -49,7 +49,7 @@ const ProductsDataTable = (props) => {
   
     api.post('/products/byparam', filtro,{
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     }).then((response) => {
       setProducts(response.data.tutorials)
@@ -96,7 +96,7 @@ const ProductsDataTable = (props) => {
     
     await api.post('/products/byparam', filtro,{
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
@@ -113,7 +113,7 @@ const ProductsDataTable = (props) => {
 
     await api.delete('/products/delete/'+idSelected, {
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
