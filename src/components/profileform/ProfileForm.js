@@ -58,26 +58,23 @@ const ProfileForm = (props) => {
     if (validaCampos) {
 
       try {
-      
-       await signUp(name, phone, email, password, confirmPassword, tipo);
-       limpaCampos()
-       navigate("/users") 
-      
+
+        await signUp(name, phone, email, password, confirmPassword, tipo);
+        limpaCampos()
+        navigate("/users")
+
       } catch (error) {
-        
+
       }
-      
-      
 
 
-      
+
+
+
 
     }
 
   }
-
-
-
 
 
 
