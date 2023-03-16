@@ -134,18 +134,19 @@ const CustomerDataTable = (props) => {
       <div className="p-3 mb-3 bg-white border rounded-3">
         <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
         <hr className='my-4' />
-        <div className="input-group mb-3 search-w">
+        <div className='bt-cima'>
+        <div className="input-group mb-5 search-w">
           <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
 
-          <div id="btn-create" >
+        </div>
+        <div className="btn-create-customer" >
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
               <VscSearch />
 
             </button>
             <Link to={"/customers/new"} className="btn btn-primary text-light"><VscNewFile /></Link>
           </div>
-
-        </div>
+          </div>
         <div>
           <div className='table-responsive'>
             <table className="table">
