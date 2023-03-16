@@ -48,7 +48,7 @@ const CustomerDataTable = (props) => {
   
     api.post('/client/byparam', filtro,{
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     }).then((response) => {
       setClientes(response.data.clients)
@@ -67,9 +67,6 @@ const CustomerDataTable = (props) => {
 
 
   useEffect(() => {
-    console.log(token)
-
-
 
     listaUsers("%");
     // setUpdateUsers(false)
@@ -96,7 +93,7 @@ const CustomerDataTable = (props) => {
 
     await api.post('/client/byparam', filtro, {
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
@@ -113,7 +110,7 @@ const CustomerDataTable = (props) => {
 
     await api.delete('/client/delete/' + idSelected, {
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {

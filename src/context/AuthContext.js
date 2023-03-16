@@ -13,6 +13,7 @@ function AuthProvider({ children }) {
   // const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState('')
+  const [idLogged, setIdLogged] = useState('')
 
 
 
@@ -25,6 +26,7 @@ function AuthProvider({ children }) {
     }).then((response) => {
 
       setToken(response.data.token)
+      setIdLogged(response.data.userId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -121,6 +123,7 @@ function AuthProvider({ children }) {
 
   function signOut() {
     setToken(null)
+    setIdLogged(null)
 
 
 
@@ -141,7 +144,8 @@ function AuthProvider({ children }) {
         updateUser,
         deleteUser,
         ToastContainer,
-        token
+        token,
+        idLogged
       }}>
       {children}
     </AuthContext.Provider>

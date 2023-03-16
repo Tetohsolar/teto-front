@@ -35,9 +35,7 @@ const DataTable = (props) => {
       page: data - 1,
       pageSize: 10
     }
-    console.log(userFind);
-
-
+    
     api.post('/user/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -65,7 +63,7 @@ const DataTable = (props) => {
 
     await api.post('/user/byparam', filtro, {
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     }).then((response) => {
       setUsers(response.data.users)

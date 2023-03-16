@@ -46,7 +46,7 @@ function onPageChanged(data) {
 
  api.post('/afflited/byparam', filtro,{
    headers: {
-     'Authorization': `Basic ${localStorage.getItem("token")}`
+     'Authorization': `Basic ${token}`
    }
  }).then((response) => {
    setObjects(response.data.tutorials)
@@ -77,11 +77,7 @@ const paginate = ({ selected }) => {
   }, [])
 
   async function list(name) {
-      
-    if (token.token){
-      localStorage.setItem("token",token.token)
-    }
-    //console.log(localStorage.getItem("token"))
+    console.log(token);
     const filtro = {
       fantasy:"%"+name+"%",
       corporatename:"%",
@@ -93,7 +89,7 @@ const paginate = ({ selected }) => {
     
     await api.post('/afflited/byparam', filtro,{
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
