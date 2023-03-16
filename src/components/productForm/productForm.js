@@ -90,8 +90,8 @@ const ProductForm = (props) => {
       descriptionFriendly: descriptionFriendly,
       guarantee: garantia,
       supplier: fornecedor,
-      weight: parseFloat(peso.replace(',', '.')),
-      price: parseFloat(preco.replace(',', '.')),
+      weight: parseFloat(String(peso).replace(',', '.')),
+      price: parseFloat(String(preco).replace(',', '.')),
       dimenssion: dimensao,
     }
 
@@ -172,7 +172,12 @@ const ProductForm = (props) => {
           <label htmlFor="inputCategoria" className="form-label">
             Categoria
           </label>
-          <input type="categoria" maxLength={100} className="form-control" id="inputCategoria" value={categoria || ''} onChange={(e) => setCategoria(e.target.value)} />
+          <select name="pets" id="input-user-type" className="form-select" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+            <option value="">Selecionar...</option>
+            <option value="Inversor">Inversor</option>
+            <option value="Microinversor">Microninversor</option>
+            <option value="Placa">Placa</option>
+          </select>
         </div>
         <div className="col-md-12">
           <label htmlFor="descricao" className="form-label">

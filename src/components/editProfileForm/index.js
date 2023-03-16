@@ -16,7 +16,7 @@ const EditProfileForm = (props) => {
   const [id, setId] = useState('')
   const [reloadPage, setReloadPage] = useState(false)
   const [habilitar, setHabilitar] = useState('')
-  const { signUp,profilelogged } = useContext(AuthContext)
+  const { signUp, profilelogged } = useContext(AuthContext)
   const { updateUser, token } = useContext(AuthContext)
   const navigate = useNavigate();
 
@@ -103,7 +103,7 @@ const EditProfileForm = (props) => {
             <option value="Admin">Admin</option>
             <option value="User">User</option>
             {
-              profilelogged === 'Root' ?   <option value="Root">Root</option> :''
+              profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
             <option value="Root">Root</option>
           </select>

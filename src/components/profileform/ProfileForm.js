@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 
-
 const ProfileForm = (props) => {
 
   const [name, setName] = useState('')
@@ -16,7 +15,7 @@ const ProfileForm = (props) => {
   const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
   const [habilitar, setHabilitar] = useState('')
-  const { signUp,profilelogged } = useContext(AuthContext)
+  const { signUp, profilelogged } = useContext(AuthContext)
   const navigate = useNavigate()
 
   function limpaCampos() {
@@ -40,7 +39,6 @@ const ProfileForm = (props) => {
     else {
       return false
     }
-
   }
 
   async function handleSaveUser(e) {
@@ -57,9 +55,7 @@ const ProfileForm = (props) => {
       } catch (error) {
         console.log(error)
       }
-
     }
-
   }
 
   return (
@@ -87,7 +83,6 @@ const ProfileForm = (props) => {
           </label>
           <input type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
-
         <div className="col-md-5">
           <label htmlFor="inputEmail" className="form-label">
             Email
@@ -110,7 +105,6 @@ const ProfileForm = (props) => {
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
-
           <InputMask
             className="form-control" id="inputPhoneNumber"
             onChange={(e) => setPhone(e.target.value)}
@@ -127,13 +121,10 @@ const ProfileForm = (props) => {
             <option value="Admin">Admin</option>
             <option value="User">User</option>
             {
-              profilelogged === 'Root' ?   <option value="Root">Root</option> :''
+              profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-           
           </select>
         </div>
-
-
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Situação
@@ -141,14 +132,9 @@ const ProfileForm = (props) => {
           <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
             <option value="">Selecionar...</option>
             <option value="S">Habilitado</option>
-
             <option value="N">Desabilitado</option>
-
           </select>
         </div>
-
-
-
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar
@@ -160,5 +146,3 @@ const ProfileForm = (props) => {
 };
 
 export default ProfileForm;
-
-
