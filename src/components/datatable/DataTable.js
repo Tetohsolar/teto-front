@@ -31,7 +31,7 @@ const DataTable = (props) => {
     const filtro = {
       name: userFind,
       page: data - 1,
-      pageSize: 10
+      pageSize: 5
     }
     
     api.post('/user/byparam', filtro, {
@@ -39,7 +39,7 @@ const DataTable = (props) => {
         'Authorization': `Basic ${token}`
       }
     }).then((response) => {
-      //console.log(response.data.users)
+     
       setUsers(response.data.users)
       setCurrentPage(data);
     })
@@ -55,7 +55,7 @@ const DataTable = (props) => {
     const filtro = {
       name: userFind,
       page: 0,
-      pageSize: 10
+      pageSize: 5
     }
 
 
@@ -125,6 +125,19 @@ const DataTable = (props) => {
           <table className="table table-borderless">
 
             <tbody>
+              <tr>
+                <th>
+
+                </th>
+                <th>
+                  Nome
+                  
+                </th>
+                
+                <th>
+                  E-mail
+                </th>
+              </tr>
 
               {currentTableData && currentTableData.map((user) => {
                 return (

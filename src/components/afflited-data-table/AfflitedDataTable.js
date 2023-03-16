@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { VscNewFile } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
-//PAGINATION
 let PageSize = 10;
 
 
@@ -24,7 +23,6 @@ const AfflitedDataTable = (props) => {
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
 
-//Pagination
 const [currentPage, setCurrentPage] = useState(1);
 
 const currentTableData = useMemo(() => {
@@ -41,7 +39,6 @@ function onPageChanged(data) {
    pageSize:10
    
  }
- 
 
  const { currentPage, totalPages, pageLimit } = data;
 
@@ -59,8 +56,6 @@ const paginate = ({ selected }) => {
   setCurrentPage(selected + 1);
 };
 
-
-
  function edit(id){
   navigate("/affliteds/edit/"+id)
  }
@@ -70,7 +65,6 @@ const paginate = ({ selected }) => {
 
 
     list("%");
-   // setUpdateUsers(false)
 
     return () => { }
 
@@ -94,7 +88,6 @@ const paginate = ({ selected }) => {
       }
     })
       .then((response) => {
-        //console.log(response.data.tutorials)
         setObjects(response.data.tutorials)
         setTotalPages(response.data.totalItems)
 
@@ -143,9 +136,6 @@ const paginate = ({ selected }) => {
       
       </div>
       
-
-
-
        <div>
        <Link to={"/affliteds/new"} className="btn btn-primary text-light mais"><VscNewFile/></Link>
        </div>
@@ -155,6 +145,19 @@ const paginate = ({ selected }) => {
         <div className='table-responsive'>
         <table className="table">
           <tbody>
+
+          <tr>
+               
+                <th>
+                  Nome
+                  
+                </th>
+                
+                <th>
+                  Telefone
+                </th>
+              </tr>
+
             {objs.map((user) => {
               return (
                 <tr key={user.id}>
