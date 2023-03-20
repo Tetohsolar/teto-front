@@ -100,16 +100,24 @@ const DataTable = (props) => {
 
 
   }
+  function handleMask(e) {
+    listaUsers(users)
+    setCurrentPage(1);
+    e.preventDefault()
+  }
 
   return (
-    <div className="p-3 mb-3 bg-white border rounded-3 container">
+    <form>
+    <div className="p-3 mb-3 bg-white border rounded-3 ">
 
-      <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-      <p>Crie novos usuários para acessar sua conta.</p>
-      <hr className="mnpm i bootstrap-icons-4" />
+    <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+        <hr className='my-4' />
       <div className="input-group mb-3 search-w">
+        
         <input type="text" className="form-control"
+        
           onChange={(e) => setUserFind(e.target.value)}
+          
           placeholder="Buscar..." aria-label="Recipient's username"
           aria-describedby="button-addon2" />
         <div className='btn-create'>
@@ -146,14 +154,18 @@ const DataTable = (props) => {
                     <td className="td-img">
                       <img className="table-avatar" src={"https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy"} alt="Avatar" />
                     </td>
+                    
                     <td>{user.name}</td>
+                    
                     <td>{user.email}</td>
+                    
                     <td>
                       <span className="badge bg-light text-secondary">
                         {user.userType}
                       </span>
+                      
                     </td>
-
+                    
                     <td>
                       <div className="d-flex gap-2">
                         <Link to={`/users/edit/${user.id}`}>
@@ -169,13 +181,17 @@ const DataTable = (props) => {
                       </div>
                       
                     </td>
+                    
                   </tr>
-            
+                   
                 );
 
               })}
+              
             </tbody>
+            
           </table>
+          
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
@@ -186,6 +202,7 @@ const DataTable = (props) => {
         </div>
       </div>
     </div >
+    </form>
   );
 };
 

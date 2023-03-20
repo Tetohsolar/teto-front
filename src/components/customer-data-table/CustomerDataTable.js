@@ -115,7 +115,7 @@ const CustomerDataTable = (props) => {
 
   return (
     <form onSubmit={handleMask}>
-      <div className="p-3 mb-3 bg-white border rounded-3">
+      <div className="p-3 mb-3 bg-white border rounded-3 container">
         <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
         <hr className='my-4' />
         <div className='bt-cima'>
