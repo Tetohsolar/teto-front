@@ -128,7 +128,7 @@ const ProductsDataTable = (props) => {
         <div className="input-group">
           <div className='filtro'>
           <div className="col-md-5">
-            <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+            <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} onKeyUp = {(e) => {list(name)}} />
            </div> 
            <div className="col-md-4">
             <select name="pets" id="input-user-type" className="form-select" value={category} onChange={(e) => setCategory(e.target.value)}>
@@ -139,7 +139,7 @@ const ProductsDataTable = (props) => {
           </select>
           </div>
           <div className="col-md-3">
-            <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} />
+            <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} onKeyUp = {(e) => {list(name)}}/>
           </div>
           </div>
           <div className='btn-create' id="btn-create">
