@@ -9,6 +9,9 @@ import InputMask from 'react-input-mask';
 import api from '../../api';
 import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
+
+
 
 function PhoneInput(props) {
   return (
@@ -48,6 +51,7 @@ function Cidades(props) {
 }
 
 const ClientForm = (props) => {
+ 
 
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -74,6 +78,8 @@ const ClientForm = (props) => {
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const { clientId } = useParams();
 
+ 
+  
   useEffect(() => {
 
     if (clientId) {
@@ -144,7 +150,8 @@ const ClientForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, doc) {
+  function validaCampos(name, phone, documento) {
+   
 
     if (name === "") {
       toast.error("Nome É obrigatório", {
@@ -157,6 +164,24 @@ const ClientForm = (props) => {
         autoClose: 1000,
       })
       return false;
+    }
+
+    if ( documento !== ''){
+      if ( documento.length<=14 && !cpf.isValid(documento)){
+        toast.error("CPF inválido", {
+          autoClose: 1000,
+        }
+         ); throw new Error;
+
+      }else if(documento.length >14 && !cnpj.isValid(documento)){
+        toast.error("CNPJ inválido", {
+          autoClose: 1000,
+        }); 
+        throw new Error;
+      
+
+      }
+
     }
 
     return true;
@@ -236,6 +261,7 @@ const ClientForm = (props) => {
 
   async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
 
+    
     const json = {
       fantasy: name,
       corporatename: corpName,
@@ -258,6 +284,7 @@ const ClientForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
+    if (await validaCampos(name,phone,documento)){
 
     if (id) {
       await api.patch('/client/update/' + id, saida
@@ -289,7 +316,7 @@ const ClientForm = (props) => {
             throw new Error()
           }
         )
-    }
+    }}
   }
 
   async function handleSaveUser(e) {
@@ -393,7 +420,7 @@ const ClientForm = (props) => {
           <label htmlFor="email" className="form-label ">
             Email
           </label>
-          <input type="text" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit">
