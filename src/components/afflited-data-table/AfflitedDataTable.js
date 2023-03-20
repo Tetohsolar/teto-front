@@ -101,7 +101,7 @@ const paginate = ({ selected }) => {
 
     await api.delete('/afflited/delete/'+idSelected, {
       headers: {
-        'Authorization': `Basic ${localStorage.getItem("token")}`
+        'Authorization': `Basic ${token}`
       }
     })
       .then((response) => {
