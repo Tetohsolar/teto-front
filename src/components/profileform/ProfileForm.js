@@ -123,6 +123,7 @@ const ProfileForm = (props) => {
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
+             <option value="Root">Root</option>
           </select>
         </div>
         <div className="col-md-4">
