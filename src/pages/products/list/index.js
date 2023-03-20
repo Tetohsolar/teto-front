@@ -7,7 +7,7 @@ import ProducstDataTable from '../../../components/products-data-table/ProductsD
 
 const ProductList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Produtos';
+  const pageTitle = 'Produtos';
   return (
     <div>
       <Navbar />
@@ -15,7 +15,7 @@ const ProductList = () => {
         <Sidebar activeButtonProducts='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className='pb-3'>{pageTitle}</h5>
-          <ProducstDataTable listTitle="Lista de produtos"/>
+          <ProducstDataTable listTitle="Lista de produtos" />
         </div>
       </div>
     </div>

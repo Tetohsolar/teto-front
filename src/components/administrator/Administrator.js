@@ -4,17 +4,15 @@ import { useContext, useEffect, useState } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 
-
 const DataTable = (props) => {
   const [administrator, setAdministrator] = useState([])
   const [idSelected, setIdSelected] = useState([])
   const { token, idLogged } = useContext(AuthContext)
 
   useEffect(() => {
-    
 
     //const id = localStorage.getItem('userlog');
-    
+
     api.get('/user/get/' + idLogged, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -31,17 +29,14 @@ const DataTable = (props) => {
         },
       ];
       setIdSelected(response.data.id);
-  
+
       setAdministrator(administrator)
-      
-   
-    },[])
 
-       return () => { }
+    }, [])
 
+    return () => { }
 
   }, [])
-
 
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
@@ -71,7 +66,7 @@ const DataTable = (props) => {
           </table>
         </div>
       </div>
-      <Link to={"/users/edit/"+idSelected} className="btn btn-primary text-light">
+      <Link to={"/users/edit/" + idSelected} className="btn btn-primary text-light">
         Editar perfil
       </Link>
     </div>

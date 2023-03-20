@@ -6,12 +6,10 @@ import '../../pages.scss';
 
 import AfflitedForm from '../../../components/affitedForm/AfflitedForm';
 
-
-const EditAfflited= ({ childToParent }) => {
+const EditAfflited = ({ childToParent }) => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Atualização de Filiado";
-
 
   return (
     <div>

@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import api from '../api'
 import objectHash from 'object-hash';
 
-
 export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
@@ -15,7 +14,6 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState('')
   const [profilelogged, setProfileLogged] = useState('')
   const [idLogged, setIdLogged] = useState('')
-
 
   //add new User
   async function signIn(email, password) {
@@ -29,7 +27,6 @@ function AuthProvider({ children }) {
       setProfileLogged(response.data.profile)
       toast.success(response.data.message)
       setLoading(false)
-
 
     }).catch((err) => {
       console.log(err)
@@ -67,9 +64,6 @@ function AuthProvider({ children }) {
       })
 
   }
-
-
-
 
   //id, name, phone, email, password, confirmPassword, tipo
   async function updateUser(id, name, phone, email, tipo, habilitar) {
@@ -120,24 +114,12 @@ function AuthProvider({ children }) {
 
   }
 
-
-
-
-
-
   function signOut() {
     setToken(null)
     setIdLogged(null)
 
 
-
-
   }
-
-
-
-
-
 
   return (
     <AuthContext.Provider

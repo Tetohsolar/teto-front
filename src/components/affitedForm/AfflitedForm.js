@@ -166,7 +166,7 @@ const AfflitedForm = (props) => {
   }
 
   function validaCampos(name, phone, documento) {
-    
+
     if (name === "") {
       toast.error("Nome É obrigatório", {
         autoClose: 1000,
@@ -180,28 +180,28 @@ const AfflitedForm = (props) => {
       return false;
     }
 
-      console.log("entrou valor "+ documento)
-      if ( documento !== ''){
-        
-        if ( documento.length<=14 && !cpf.isValid(documento)){
-          toast.error("CPF inválido", {
-            autoClose: 1000,
-          }
-           ); throw new Error;
-  
-        }else if(documento.length >14 && !cnpj.isValid(documento)){
-          toast.error("CNPJ inválido", {
-            autoClose: 1000,
-          }); 
-          throw new Error;
-        
-  
+    console.log("entrou valor " + documento)
+    if (documento !== '') {
+
+      if (documento.length <= 14 && !cpf.isValid(documento)) {
+        toast.error("CPF inválido", {
+          autoClose: 1000,
         }
-  
+        ); throw new Error;
+
+      } else if (documento.length > 14 && !cnpj.isValid(documento)) {
+        toast.error("CNPJ inválido", {
+          autoClose: 1000,
+        });
+        throw new Error;
+
+
       }
 
-      
-    
+    }
+
+
+
 
     return true;
   }
@@ -366,7 +366,7 @@ const AfflitedForm = (props) => {
 
     const valida = validaCampos(name, phone, doc);
     if (valida) {
-     console.log("aqui" + valida)
+      console.log("aqui" + valida)
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,

@@ -6,12 +6,10 @@ import '../../pages.scss';
 import ProfileForm from '../../../components/profileform/ProfileForm';
 import ClientForm from '../../../components/clientForm/ClientForm';
 
-
 const EditClient = ({ childToParent }) => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Atualização de Cliente";
-
 
   return (
     <div>

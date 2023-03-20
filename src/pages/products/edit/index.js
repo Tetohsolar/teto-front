@@ -10,7 +10,6 @@ const EditProduct = ({ childToParent }) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Atualização do Produto";
 
-
   return (
     <div>
       <Navbar />

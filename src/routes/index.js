@@ -25,17 +25,11 @@ import NewProduct from '../pages/products/new';
 import EditProduct from '../pages/products/edit';
 import NewNegocio from '../pages/negocio/new';
 
-
-
-
 const RoutesApp = () => {
 
   const { token } = useContext(AuthContext)
   // const token = localStorage.getItem('token')
   // console.log(`toke nav: ${token}`)
-
-
-
 
   return (
     <div>
@@ -47,27 +41,26 @@ const RoutesApp = () => {
             <Route index element={token ? <Home /> : <Navigate to="/login" />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-
             <Route path="customers">
-              <Route index element={token ? <CustomerList /> : <Navigate to="/login"/> } />
-              <Route path=":clientId" element={ token ? <Single/> : <Navigate to="/login" />} />
-              <Route path="new" element={ token ? <NewClient  /> : <Navigate to="/login" />} />
-              <Route path="edit/:clientId" element={ token ? <EditClient /> : <Navigate to="/login" />} />
+              <Route index element={token ? <CustomerList /> : <Navigate to="/login" />} />
+              <Route path=":clientId" element={token ? <Single /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <NewClient /> : <Navigate to="/login" />} />
+              <Route path="edit/:clientId" element={token ? <EditClient /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="projects">
-              <Route index element={ token ? <ProjectsList /> : <Navigate to="/login" />} />
+              <Route index element={token ? <ProjectsList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <Single /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewNegocio /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="sizings">
-              <Route index element={ token ? <SizingList /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <New /> : <Navigate to="/login" />}   />
+              <Route index element={token ? <SizingList /> : <Navigate to="/login" />} />
+              <Route path="new" element={token ? <New /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="products">
-              <Route index element={ token ? <ProductList /> : <Navigate to="/login" />} />
+              <Route index element={token ? <ProductList /> : <Navigate to="/login" />} />
               <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewProduct /> : <Navigate to="/login" />} />
               <Route path="edit/:Id" element={token ? <EditProduct /> : <Navigate to="/login" />} />
@@ -92,7 +85,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="affliteds">
-              <Route index element={ token ? <AfflitedList /> : <Navigate to="/login" />} />
+              <Route index element={token ? <AfflitedList /> : <Navigate to="/login" />} />
               <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewAfflited /> : <Navigate to="/login" />} />
               <Route path="edit/:clientId" element={token ? <EditAfflited /> : <Navigate to="/login" />} />

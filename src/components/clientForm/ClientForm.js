@@ -51,7 +51,7 @@ function Cidades(props) {
 }
 
 const ClientForm = (props) => {
- 
+
 
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -78,8 +78,8 @@ const ClientForm = (props) => {
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const { clientId } = useParams();
 
- 
-  
+
+
   useEffect(() => {
 
     if (clientId) {
@@ -151,7 +151,7 @@ const ClientForm = (props) => {
   }
 
   function validaCampos(name, phone, documento) {
-   
+
 
     if (name === "") {
       toast.error("Nome É obrigatório", {
@@ -166,19 +166,19 @@ const ClientForm = (props) => {
       return false;
     }
 
-    if ( documento !== ''){
-      if ( documento.length<=14 && !cpf.isValid(documento)){
+    if (documento !== '') {
+      if (documento.length <= 14 && !cpf.isValid(documento)) {
         toast.error("CPF inválido", {
           autoClose: 1000,
         }
-         ); throw new Error;
+        ); throw new Error;
 
-      }else if(documento.length >14 && !cnpj.isValid(documento)){
+      } else if (documento.length > 14 && !cnpj.isValid(documento)) {
         toast.error("CNPJ inválido", {
           autoClose: 1000,
-        }); 
+        });
         throw new Error;
-      
+
 
       }
 
@@ -261,7 +261,7 @@ const ClientForm = (props) => {
 
   async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
 
-    
+
     const json = {
       fantasy: name,
       corporatename: corpName,
@@ -284,39 +284,40 @@ const ClientForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    if (await validaCampos(name,phone,documento)){
+    if (await validaCampos(name, phone, documento)) {
 
-    if (id) {
-      await api.patch('/client/update/' + id, saida
-        , {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
+      if (id) {
+        await api.patch('/client/update/' + id, saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
 
-        }).then((response) => {
-        }).catch(
-          (response) => {
-            toast.error(response.response.data.message)
-            throw new Error()
+          }).then((response) => {
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
 
-          }
-        );
+            }
+          );
 
-    } else {
-      await api.post('/client/create', saida
-        , {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
+      } else {
+        await api.post('/client/create', saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
 
-        }).then((response) => {
-        }).catch(
-          (response) => {
-            toast.error(response.response.data.message)
-            throw new Error()
-          }
-        )
-    }}
+          }).then((response) => {
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
+            }
+          )
+      }
+    }
   }
 
   async function handleSaveUser(e) {
