@@ -458,7 +458,7 @@ const AfflitedForm = (props) => {
                 <label htmlFor="email" className="form-label ">
                   Email
                 </label>
-                <input type="text" maxLength={100} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="email" maxLength={100} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
           </TabPanel>
