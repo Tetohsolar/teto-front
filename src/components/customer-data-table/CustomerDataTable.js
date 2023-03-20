@@ -120,7 +120,9 @@ const CustomerDataTable = (props) => {
         <hr className='my-4' />
         <div className='bt-cima'>
           <div className="input-group mb-5 search-w">
-            <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+            <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" 
+            onChange={(e) => setName(e.target.value)} 
+            onKeyUp={(e) => {listaUsers(name)}}/>
 
           </div>
           <div className="btn-create-customer" >

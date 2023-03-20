@@ -107,7 +107,7 @@ const DataTable = (props) => {
   }
 
   return (
-    <form>
+    <form onSubmit={handleMask}>
     <div className="p-3 mb-3 bg-white border rounded-3 ">
 
     <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
@@ -117,6 +117,7 @@ const DataTable = (props) => {
         <input type="text" className="form-control"
         
           onChange={(e) => setUserFind(e.target.value)}
+          onKeyUp={(e) => {listaUsers()}}
           
           placeholder="Buscar..." aria-label="Recipient's username"
           aria-describedby="button-addon2" />
