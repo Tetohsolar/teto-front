@@ -9,6 +9,9 @@ import InputMask from 'react-input-mask';
 import api from '../../api';
 import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
+
+
 
 function PhoneInput(props) {
   return (
@@ -48,6 +51,7 @@ function Cidades(props) {
 }
 
 const ClientForm = (props) => {
+ 
 
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -74,6 +78,8 @@ const ClientForm = (props) => {
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const { clientId } = useParams();
 
+ 
+  
   useEffect(() => {
 
     if (clientId) {
@@ -87,7 +93,7 @@ const ClientForm = (props) => {
   async function loadClienById(id) {
 
     try {
-      
+
       await api.get('/client/get/' + id, {
         headers: {
           'Authorization': `Basic ${token}`
@@ -120,10 +126,9 @@ const ClientForm = (props) => {
       });
 
     } catch (err) {
-      console.log (err)
+      console.log(err)
 
     }
-
   }
 
   function limpaCampos() {
@@ -145,7 +150,8 @@ const ClientForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, doc) {
+  function validaCampos(name, phone, documento) {
+   
 
     if (name === "") {
       toast.error("Nome É obrigatório", {
@@ -158,6 +164,24 @@ const ClientForm = (props) => {
         autoClose: 1000,
       })
       return false;
+    }
+
+    if ( documento !== ''){
+      if ( documento.length<=14 && !cpf.isValid(documento)){
+        toast.error("CPF inválido", {
+          autoClose: 1000,
+        }
+         ); throw new Error;
+
+      }else if(documento.length >14 && !cnpj.isValid(documento)){
+        toast.error("CNPJ inválido", {
+          autoClose: 1000,
+        }); 
+        throw new Error;
+      
+
+      }
+
     }
 
     return true;
@@ -176,7 +200,7 @@ const ClientForm = (props) => {
   //chama para trocar assunto
   function handleTipoPessoa(e) {
 
-  handleTipoPessoaValue(e.target.value)
+    handleTipoPessoaValue(e.target.value)
 
   }
   function handleTipoPessoaValue(e) {
@@ -196,7 +220,6 @@ const ClientForm = (props) => {
     }
 
   }
-
   async function handleEstadoValue(value) {
     const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + value + "/municipios";
 
@@ -238,6 +261,7 @@ const ClientForm = (props) => {
 
   async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
 
+    
     const json = {
       fantasy: name,
       corporatename: corpName,
@@ -260,6 +284,7 @@ const ClientForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
+    if (await validaCampos(name,phone,documento)){
 
     if (id) {
       await api.patch('/client/update/' + id, saida
@@ -277,7 +302,6 @@ const ClientForm = (props) => {
           }
         );
 
-
     } else {
       await api.post('/client/create', saida
         , {
@@ -292,8 +316,7 @@ const ClientForm = (props) => {
             throw new Error()
           }
         )
-    }
-
+    }}
   }
 
   async function handleSaveUser(e) {
@@ -311,9 +334,7 @@ const ClientForm = (props) => {
       } catch (error) {
         console.log(error);
       }
-
     }
-
   }
 
   return (
@@ -328,96 +349,79 @@ const ClientForm = (props) => {
             <option value="F">Física</option>
             <option value="J">Jurídica</option>
           </select>
-
         </div>
         <div className="col-md-4">
-
           <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
             {lbFantasia === "" ? "Nome" : lbFantasia}
-
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
-
         <div className="col-md-4"  >
           <label htmlFor="inputDocumento" className="form-label ">
             {lbDocument === "" ? "CPF" : lbDocument}
           </label>
-
           <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} />
         </div>
-
         <div className="col-md-5" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
           <label htmlFor="inputCorporateName" className="form-label ">
             Razão Social
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
-
-
         <div className="col-md-3">
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
           <PhoneInput className="form-control" id="inputPhoneNumber" value={phone} onChange={handleInput}> </PhoneInput>
         </div>
-
         <div className="col-md-3">
           <label htmlFor="inputPassword4" className="form-label">
             Whatsapp
           </label>
           <PhoneInput className="form-control" id="inputPhoneNumber" value={zap} onChange={handleInputZap}>  </PhoneInput>
         </div>
-
         <div className='col-md-5'>
           <label htmlFor="CEP" className="form-label">
             CEP
           </label>
           <CepInput className="form-control" id="inputCep" value={cepData} onChange={handleInputCep} name="cep" onBlur={searchCep} >   </CepInput>
         </div>
-
         <div className='col-md-3'>
           <label htmlFor="estado" className="form-label">
             Estado
           </label>
           <SelectEstado className="form-select" id="inputCep" value={estado} onChange={handleEstado}>  </SelectEstado>
         </div>
-
         <div className='col-md-3'>
           <label htmlFor="Cidade" className="form-label">
             Cidade
           </label>
           <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
         </div>
-
         <div className="col-md-5"  >
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
-
         <div className="col-md-6"  >
           <label htmlFor="inputBairro" className="form-label ">
             Bairro
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
-
         <div className="col-md-5"  >
           <label htmlFor="informacoesAdicionais" className="form-label ">
             Informações Adicionais
           </label>
           <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
-
         <div className="col-md-5"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
-          <input type="text" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-
         <div className="d-grid gap-2 d-md-block col-12">
           <button className="btn btn-primary text-light" type="submit">
             Salvar

@@ -135,6 +135,8 @@ const CustomerDataTable = (props) => {
           <div className='table-responsive'>
             <table className="table">
               <tbody>
+                <th className='nome1'> Nome </th>
+                <th className='tel1'> Telefone</th>
                 {currentTableData && currentTableData.map((user) => {
                   return (
                     <tr key={user.id}>

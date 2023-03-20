@@ -130,7 +130,7 @@ const DataTable = (props) => {
       </div>
       <div className="table-w">
         <div className="table-responsive">
-          <table className="table table-borderless">
+          <table className="table">
 
             <tbody>
               <tr>
@@ -144,6 +144,12 @@ const DataTable = (props) => {
                 
                 <th>
                   E-mail
+                </th>
+                <th>
+
+                </th>
+                <th>
+                  
                 </th>
               </tr>
 
