@@ -120,9 +120,9 @@ const CustomerDataTable = (props) => {
         <hr className='my-4' />
         <div className='bt-cima'>
           <div className="input-group mb-5 search-w">
-            <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2" 
-            onChange={(e) => setName(e.target.value)} 
-            onKeyUp={(e) => {listaUsers(name)}}/>
+            <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2"
+              onChange={(e) => setName(e.target.value)}
+              onKeyUp={(e) => { listaUsers(name) }} />
 
           </div>
           <div className="btn-create-customer" >
@@ -150,13 +150,13 @@ const CustomerDataTable = (props) => {
                           <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
                             edit(user.id)
                           }}>
-                            <BsFillPencilFill/>
+                            <BsFillPencilFill />
                           </button>
                           <button type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
                             setIdSelected(user.id)
                           }}>
 
-                            <BsFillTrash3Fill/>
+                            <BsFillTrash3Fill />
                           </button>
                           <MyModal userId={user.id} uc=" o Cliente" onClick={handleAfterDel} />
                         </div>

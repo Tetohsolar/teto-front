@@ -7,7 +7,7 @@ import CustomerDataTable from '../../../components/customer-data-table/CustomerD
 
 const CustomerList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Clientes';
+  const pageTitle = 'Clientes';
   return (
     <div>
       <Navbar />

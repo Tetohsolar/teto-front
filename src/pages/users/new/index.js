@@ -10,9 +10,6 @@ const NewUSer = ({ childToParent }) => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Informações do usuário";
-
-
-
   return (
     <div>
       <Navbar />

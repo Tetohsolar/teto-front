@@ -7,15 +7,10 @@ import EditProFileForm from '../../../components/editProfileForm'
 import '../../pages.scss';
 import './new.scss';
 
-
-
 const EditUser = (props) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Informações do usuário";
-
   const { userId } = useParams();
-
-
 
   return (
     <div>
@@ -24,9 +19,7 @@ const EditUser = (props) => {
         <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-
           <EditProFileForm listTitle="Editar perfil do usuário" userId={userId} />
-
 
         </div>
       </div>

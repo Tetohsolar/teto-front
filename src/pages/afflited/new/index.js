@@ -5,12 +5,10 @@ import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
 import AfflitedForm from '../../../components/affitedForm/AfflitedForm';
 
-
 const NewAfflited = ({ childToParent }) => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Cadastro de Filiado";
-
 
   return (
     <div>

@@ -6,13 +6,11 @@ import '../../pages.scss';
 import ProfileForm from '../../../components/profileform/ProfileForm';
 import ClientForm from '../../../components/clientForm/ClientForm';
 
-
 const NewClient = ({ childToParent }) => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Cadastro de Cliente";
-
-
+  
   return (
     <div>
       <Navbar />

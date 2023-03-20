@@ -7,10 +7,10 @@ import AfflitedDataTable from '../../../components/afflited-data-table/AfflitedD
 
 const AfflitedList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle= 'Afflited';
+  const pageTitle = 'Afflited';
   return (
     <div>
-      <Navbar activeButtonCustomer/>
+      <Navbar activeButtonCustomer />
       <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
         <Sidebar activeButtonAffliteds='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
