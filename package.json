@@ -11,6 +11,7 @@
     "bootstrap-icons": "^1.10.3",
     "boring-avatars": "^1.7.0",
     "classnames": "^2.3.2",
+    "cpf-cnpj-validator": "^1.0.3",
     "datable": "^1.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
