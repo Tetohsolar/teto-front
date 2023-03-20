@@ -130,7 +130,7 @@ const DataTable = (props) => {
       </div>
       <div className="table-w">
         <div className="table-responsive">
-          <table className="table">
+          <table className="table ">
 
             <tbody>
               <tr>
@@ -145,12 +145,9 @@ const DataTable = (props) => {
                 <th>
                   E-mail
                 </th>
-                <th>
+                <tr className='coludsc'>
 
-                </th>
-                <th>
-                  
-                </th>
+                </tr>
               </tr>
 
               {currentTableData && currentTableData.map((user) => {

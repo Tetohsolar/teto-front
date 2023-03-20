@@ -13,6 +13,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
 import { NumericFormat } from 'react-number-format';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
 
 function PhoneInput(props) {
   return (
@@ -164,8 +165,8 @@ const AfflitedForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, doc) {
-
+  function validaCampos(name, phone, documento) {
+    
     if (name === "") {
       toast.error("Nome É obrigatório", {
         autoClose: 1000,
@@ -178,6 +179,29 @@ const AfflitedForm = (props) => {
       })
       return false;
     }
+
+      console.log("entrou valor "+ documento)
+      if ( documento !== ''){
+        
+        if ( documento.length<=14 && !cpf.isValid(documento)){
+          toast.error("CPF inválido", {
+            autoClose: 1000,
+          }
+           ); throw new Error;
+  
+        }else if(documento.length >14 && !cnpj.isValid(documento)){
+          toast.error("CNPJ inválido", {
+            autoClose: 1000,
+          }); 
+          throw new Error;
+        
+  
+        }
+  
+      }
+
+      
+    
 
     return true;
   }
@@ -340,7 +364,9 @@ const AfflitedForm = (props) => {
 
     e.preventDefault();
 
-    if (validaCampos(name, phone, doc)) {
+    const valida = validaCampos(name, phone, doc);
+    if (valida) {
+     console.log("aqui" + valida)
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,
