@@ -126,7 +126,9 @@ const paginate = ({ selected }) => {
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className='my-4' />
       <div className="input-group mb-3 search-w">
-        <input type="text" className="form-control" placeholder="Buscar Afiliado" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} />
+        <input type="text" className="form-control" placeholder="Buscar Afiliado"
+         aria-label="Recipient's username" aria-describedby="button-addon2"
+          onChange={(e) => setName(e.target.value)} onKeyUp = {(e) => {list(name)}}/>
         <div className='btn-create'>
         <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={afterSubmit}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
