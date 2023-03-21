@@ -24,26 +24,16 @@ const Signup = () => {
     }
   }
 
-  function limpaCampos() {
-    setName('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
-    setTipo('')
-    setPhone('')
-  }
-
   async function handleSaveUser(e) {
     e.preventDefault();
     if (validaCampos) {
       signUp(name, phone, email, password, confirmPassword, tipo)
-      limpaCampos()
     }
   }
 
   return (
-    <div>
-      <div className=' v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
+    <div className='bg-access'>
+      <div className='v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
         <div className='m-4 pt-3 pt-md-0'>
           <img className='logo-teto-solar' src={logoTetoSolar} alt='Logo da teto Solar'></img>
         </div>

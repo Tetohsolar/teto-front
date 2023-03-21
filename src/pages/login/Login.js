@@ -2,8 +2,6 @@ import { AuthContext } from '../../context/AuthContext';
 import './login.scss';
 import { useState, useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import logoTetoSolar from '../../assets/img/teto-solar-visual-signature.png'
 
 const Login = () => {
@@ -28,9 +26,8 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <ToastContainer />
-      <div className=' v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
+    <div className='bg-access'>
+      <div className='v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
         <div className='m-4 pt-3 pt-md-0'>
           <img className='logo-teto-solar' src={logoTetoSolar} alt='Logo da teto Solar'></img>
         </div>
@@ -63,7 +60,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
