@@ -36,7 +36,28 @@ const Sidebar = (props) => {
           </li>
           <span className='my-2 fw-semibold sidebar-sections'>NEGÓCIOS</span>
           <li className='my-1'>
-            <Link to={"/projects"} className={`nav-link ${props.activeButtonProjects}`}>
+            {/* Modal */}
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    ...
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary">Understood</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*END MODAL*/}
+
+            {/* Button trigger modal*/}
+            <Link className={`nav-link`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <div className='d-flex align-items-center gap-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
