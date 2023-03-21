@@ -423,7 +423,7 @@ const ClientForm = (props) => {
           </label>
           <input type="email" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="d-grid gap-2 d-md-block col-12">
+        <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit">
             Salvar
           </button>

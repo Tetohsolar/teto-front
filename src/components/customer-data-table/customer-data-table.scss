@@ -32,3 +32,17 @@
 .nome1{
     width: 40%
 }
+
+.containerCustom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.paginationCustomer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+  

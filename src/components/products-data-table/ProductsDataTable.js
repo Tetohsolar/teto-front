@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { VscNewFile, VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import { AiFillPlusSquare } from "react-icons/ai";
+
 
 
 //PAGINATION
@@ -123,7 +125,10 @@ const ProductsDataTable = (props) => {
   return (
     <form onSubmit={handleSeach}>
       <div className="p-3 mb-3 bg-white border rounded-3">
+        <div className='containerCustom'>
         <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+        <Link to={"/products/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo produto</Link>
+        </div>
         <hr className='my-4' />
         <div className="input-group">
           <div className='filtro'>
@@ -146,7 +151,6 @@ const ProductsDataTable = (props) => {
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleSeach}>
               <VscSearch />
             </button>
-            <Link to={"/products/new"} className="btn btn-primary text-light"><VscNewFile /></Link>
           </div>
         </div>
         <div>
@@ -188,6 +192,7 @@ const ProductsDataTable = (props) => {
                 })}
               </tbody>
             </table>
+           <div className='paginationCustomer'>
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
@@ -195,6 +200,7 @@ const ProductsDataTable = (props) => {
               pageSize={PageSize}
               onPageChange={data => onPageChanged(data)}
             />
+            </div>
           </div>
         </div>
       </div>
