@@ -1,14 +1,37 @@
-.form-access {
-  max-width: 360px;
-  padding: 15px;
-  padding-top: 120px;
-}
-
 body {
   background-image: url(../../assets/img/bg-cell.png);
   background-color: #061823;
 }
 
-.bg-form {
+.bg-login {
   background: linear-gradient(180deg, #061823 54.48%, rgba(6, 24, 35, 0) 100%);
+}
+
+.logo-teto-solar {
+  max-height: 160px;
+}
+
+.form-area {
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.form-width {
+  max-width: 368px;
+}
+
+.subtitle-form {
+  color: #6e6e6e;
+}
+
+.v100 {
+  min-height: 100vh;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .logo-teto-solar {
+    max-height: 360px;
+  }
 }
