@@ -49,7 +49,7 @@ const Login = () => {
             <div className="col-auto mb-3">
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" id="autoSizingCheck" />
-                <label className="form-check-label" for="autoSizingCheck">
+                <label className="form-check-label" htmlFor="autoSizingCheck">
                   Lembrar
                 </label>
               </div>
