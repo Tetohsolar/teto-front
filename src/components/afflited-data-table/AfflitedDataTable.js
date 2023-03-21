@@ -8,9 +8,9 @@ import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 
 import Pagination from '../pagination/Pagination';
-import { VscNewFile } from "react-icons/vsc";
+import { AiFillPlusSquare } from "react-icons/ai";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
-let PageSize = 10;
+let PageSize = 5;
 
 
 const AfflitedDataTable = (props) => {
@@ -36,7 +36,7 @@ const AfflitedDataTable = (props) => {
     const filtro = {
       name: name,
       page: data - 1,
-      pageSize: 10
+      pageSize: 5
 
     }
 
@@ -78,7 +78,7 @@ const AfflitedDataTable = (props) => {
       corporatename: "%",
       document: "%",
       page: 0,
-      pageSize: 10
+      pageSize: 5
 
     }
 
@@ -123,7 +123,11 @@ const AfflitedDataTable = (props) => {
     <form onSubmit={afterSubmit}>
 
       <div className="p-3 mb-3 bg-white border rounded-3">
-        <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+        
+        <div className='afflitedsfilter'>
+          <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+            <Link to={"/affliteds/new"} className="btn btn-primary text-light mais"><AiFillPlusSquare /> Novo Afiliado</Link>
+          </div>
         <hr className='my-4' />
         <div className="input-group mb-3 search-w">
           <input type="text" className="form-control" placeholder="Buscar Afiliado"
@@ -138,9 +142,7 @@ const AfflitedDataTable = (props) => {
 
           </div>
 
-          <div>
-            <Link to={"/affliteds/new"} className="btn btn-primary text-light mais"><VscNewFile /></Link>
-          </div>
+         
         </div>
 
         <div>
@@ -188,14 +190,16 @@ const AfflitedDataTable = (props) => {
               </tbody>
             </table>
 
-            <Pagination
+
+            <div className ='pagidireita'>
+            <Pagination 
               className="pagination-bar"
               currentPage={currentPage}
               totalCount={totalPages}
               pageSize={PageSize}
               onPageChange={data => onPageChanged(data)}
             />
-
+            </div>
           </div>
         </div>
 
