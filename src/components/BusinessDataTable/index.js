@@ -63,7 +63,7 @@ const BusinessDataTable = (props) => {
       </div>
       <NewBusiness />
       <hr className="my-3 text-body-tertiary" />
-      <form class="row mb-3">
+      <form class="row mb-3 justify-content-end">
         <div class="col-auto">
           <select class="form-select" aria-label="Selecionar">
             <option selected>Em aberto</option>
