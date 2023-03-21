@@ -3,8 +3,8 @@ import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
-import ProjectsDataTable from '../../../components/negocios-data-table/NegociosDataTable';
-import VerticalBarChart from '../../../components/verticalBarChart/VerticalBarChart';
+import NegociosDataTable from '../../../components/negocios-data-table/NegociosDataTable';
+import SixMonthsCharts from '../../../components/SixMonthsCharts/SixMonthsCharts';
 
 const ProjectsList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
@@ -16,8 +16,8 @@ const ProjectsList = () => {
         <Sidebar activeButtonProjects='active' />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className='pb-3'>{pageTitle}</h5>
-          <VerticalBarChart />
-          <ProjectsDataTable listTitle="Últimos 6 meses" />
+          <SixMonthsCharts listTitle="asdfasf" />
+          <NegociosDataTable listTitle="Últimos 6 meses" />
         </div>
       </div>
     </div>

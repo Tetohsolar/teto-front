@@ -1,4 +1,4 @@
-
+import "./tiny-bar-chart.scss";
 import React from "react";
 import { BarChart, Bar } from "recharts";
 
@@ -47,10 +47,10 @@ const data = [
   }
 ];
 
-export default function App() {
+export default function TinyBarChart() {
   return (
     <BarChart width={150} height={40} data={data}>
-      <Bar dataKey="uv" fill="#8884d8" />
+      <Bar dataKey="uv" fill="#B0EACD" />
     </BarChart>
   );
 }
