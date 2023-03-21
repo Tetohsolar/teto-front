@@ -51,7 +51,7 @@ const Navbar = () => {
                     <li><a className="dropdown-item" href="https://beta.reactjs.org/">Perfil</a></li>
                     <li><a className="dropdown-item" href="https://beta.reactjs.org/">Aparência</a></li>
                     <li><a className="dropdown-item" href="https://beta.reactjs.org/">Configurações</a></li>
-                    <li><a className="dropdown-item" onClick={handleSignOut} href="">Sair</a></li>
+                    <li><button className="dropdown-item" onClick={handleSignOut}>Sair</button></li>
                   </ul>
                 </li>
               </ul>

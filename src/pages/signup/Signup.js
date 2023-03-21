@@ -43,11 +43,11 @@ const Signup = () => {
 
   return (
     <div>
-      <div className=' v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-4 pb-md-0'>
-        <div className='m-4 pt-4 pt-md-0'>
+      <div className=' v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
+        <div className='m-4 pt-3 pt-md-0'>
           <img className='logo-teto-solar' src={logoTetoSolar} alt='Logo da teto Solar'></img>
         </div>
-        <div className='form-area m-4'>
+        <div className='form-area m-3'>
           <form className='form-width' onSubmit={handleSaveUser}>
             <h1 className="h3 mb-3 fw-semibold text-center text-primary">Crie sua conta</h1>
             <p className='subtitle-form text-center'>Crie uma conta para acompanhar o processo de seus projetos.</p>
