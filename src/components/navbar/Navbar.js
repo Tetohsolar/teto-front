@@ -1,12 +1,35 @@
 import './navbar.scss'
 import logo from './teto-solar.svg'
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 import { AuthContext } from '../../context/AuthContext';
+import api from '../../api';
 
 const Navbar = () => {
   const { dispatch } = useContext(SidebarWrapperContext)
   const { signOut } = useContext(AuthContext)
+  const [administrator, setAdministrator] = useState([])
+  const { token, idLogged } = useContext(AuthContext)
+
+  useEffect(() => {
+    api.get('/user/get/' + idLogged, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      const administrator = [
+        {
+          id: response.data.id,
+          firstName: response.data.name,
+        },
+      ];
+      
+      setAdministrator(administrator)
+    }, [])
+
+    return () => { }
+  })
 
   function handleSignOut() {
     signOut()
@@ -35,7 +58,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href='https://getbootstrap.com/' role="button" data-bs-toggle="dropdown" aria-expanded="false">{'Alexandre'}</a>
+                  <a className="nav-link dropdown-toggle" href='https://getbootstrap.com/' role="button" data-bs-toggle="dropdown" aria-expanded="false">{administrator.map((row) => { return (<span key={row.id}>{row.firstName}</span>) })}</a>
                   <ul className="dropdown-menu dropdown-menu-end shadow border border-0">
                     <li><a className="dropdown-item" href="https://beta.reactjs.org/">Novo negócio</a></li>
                     <li><a className="dropdown-item" href="https://beta.reactjs.org/">Conta</a></li>

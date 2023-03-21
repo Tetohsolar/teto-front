@@ -6,7 +6,6 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 
 const Home = () => {
-  const userName = 'Ana'
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
 
   return (
@@ -15,22 +14,39 @@ const Home = () => {
       <div
         className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}
       >
-        <Sidebar activeButtonHome='active' />
+        <Sidebar activeButtonHome="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
-          <h5 className='pb-3'>{`Olá, ${userName}!`}</h5>
+          <h5 className="pb-3">
+            Dashboard
+          </h5>
           <div className="row">
             <div className="col-lg-4">
-              <Card cardContentHome='card-content-home' cardTitle='Negócios deste mês' />
+              <Card
+                cardContentHome="card-content-home"
+                cardTitle="Negócios deste mês"
+              />
             </div>
             <div className="col-lg-4">
-              <Card cardContentHome='card-content-home' cardTitle='Negócios fechados neste mês' />
+              <Card
+                cardContentHome="card-content-home"
+                cardTitle="Negócios fechados neste mês"
+              />
             </div>
             <div className="col-lg-4">
-              <Card cardContentHome='card-content-home' cardTitle='Negócios em aberto' />
+              <Card
+                cardContentHome="card-content-home"
+                cardTitle="Negócios em aberto"
+              />
             </div>
           </div>
-          <Card cardContentHome='card-content-home' cardTitle='Últimos 6 meses' />
-          <Card cardContentHome='card-content-home' cardTitle='Lista de negócios deste mês' />
+          <Card
+            cardContentHome="card-content-home"
+            cardTitle="Últimos 6 meses"
+          />
+          <Card
+            cardContentHome="card-content-home"
+            cardTitle="Lista de negócios deste mês"
+          />
         </div>
       </div>
     </div>
