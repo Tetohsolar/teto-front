@@ -1,15 +1,14 @@
 .form-access {
-    max-width: 360px;
-    padding: 15px;
-    padding-top: 120px;
-    height: calc(100vh - 65px);
-  }
-  
+  max-width: 360px;
+  padding: 15px;
+  padding-top: 120px;
+}
+
 body {
-    background-image: url(./bg-cell.png);
-    background-color: #030C11;
+  background-image: url(../../assets/img/bg-cell.png);
+  background-color: #061823;
 }
 
 .bg-form {
-    background: linear-gradient(180deg, #061823 54.48%, rgba(6, 24, 35, 0) 100%);
+  background: linear-gradient(180deg, #061823 54.48%, rgba(6, 24, 35, 0) 100%);
 }

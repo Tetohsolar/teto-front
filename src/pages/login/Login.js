@@ -1,4 +1,3 @@
-import AccessNavbar from '../../components/accessnavbar/AccessNavbar';
 import { AuthContext } from '../../context/AuthContext';
 import './login.scss';
 import { useState, useContext, useEffect } from "react"
@@ -6,51 +5,31 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
-
 const Login = () => {
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const { signIn, signOut } = useContext(AuthContext)
   const navigate = useNavigate();
 
-
   useEffect(() => {
     signOut()
-
-
   }, [])
-
 
   async function handleLogin(e) {
     e.preventDefault();
 
     if (email !== '' && password !== '') {
-
       signIn(email, password)
         .then(() => {
           navigate("/")
-
-
         })
-
     }
-
-
   }
-
-
 
   return (
     <div id='body' className="login">
-      <AccessNavbar />
       <main className="form-signin w-100 h-100">
         <ToastContainer />
-
-
         <div className="bg-form">
           <form className="form-access m-auto" onSubmit={handleLogin} >
             <h1 className="h3 mb-3 fw-normal text-center text-light">Acesse sua conta</h1>
@@ -64,18 +43,14 @@ const Login = () => {
             </div>
             <button className="w-100 btn btn-primary" type="submit">Entrar</button>
             <div className="m-3">
-              <p className="mb-2 text-center text-light">Não tem uma conta? <a href="/signup">Cadastre-se</a></p>
               <p className="mb-2 text-center text-light">Esqueceu sua senha? <a href="google.com">Recuperar senha</a></p>
             </div>
-            <p className="m-5 text-center text-secondary">&copy; 2023 Teto Solar</p>
           </form>
           <ToastContainer />
         </div>
       </main>
     </div>
-
   );
-
 };
 
 export default Login;
