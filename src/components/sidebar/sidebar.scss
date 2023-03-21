@@ -3,6 +3,11 @@ $header-total-height: 65px;
 .sidebar {
     width: 232px;
     min-height: calc(100vh - $header-total-height);
+    background-color: #F4F9FC;
+}
+
+.sidebar-sections {
+    color: #8B8B8B;
 }
 
 #sidebar-wrapper {
