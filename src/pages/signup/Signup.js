@@ -61,29 +61,27 @@ const Signup = () => {
               <label htmlFor="inputEmail" className="form-label">
                 Email
               </label>
-              <input placeholder='Seu email' type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+              <input placeholder="Seu email" type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className='row'>
               <div className="mb-3 col-md-6">
                 <label htmlFor="inputPassword4" className="form-label">
                   Senha
                 </label>
-                <input placeholder='Sua senha' type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
+                <input placeholder="Sua senha" type="password" className="form-control" id="inputPassword4" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
               </div>
               <div className="mb-3 col-md-6">
-                <label htmlFor="inputPassword4" className="form-label">
+                <label htmlFor="inputPassword2" className="form-label">
                   Confirmar senha
                 </label>
-                <input placeholder='Confirmar senha' type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <input placeholder="Confirmar senha" type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
               </div>
             </div>
-            <div className="col-auto mb-3">
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" id="autoSizingCheck" />
-                <label className="form-check-label" htmlFor="autoSizingCheck">
-                  Lembrar
-                </label>
-              </div>
+            <div className="mb-3">
+              <label htmlFor="inputPhone" className="form-label">
+                Telefone
+              </label>
+              <input placeholder="Seu telefonte" type="text" className="form-control" id="inputPhone" value={phone || ''} onChange={(e) => setPhone(e.target.value)} />
             </div>
             <div className="col-auto">
               <button className="w-100 btn btn-primary" type="submit">Criar conta</button>
