@@ -1,5 +1,4 @@
-import './projects-data-table.scss'
-import { Link } from 'react-router-dom';
+import './negocios-data-table.scss'
 import NewNegocio from '../../pages/negocio/new'
 
 const projects = [
@@ -8,7 +7,7 @@ const projects = [
   { id: 3, projectName: 'Leite de capivaris' },
 ];
 
-const ProjectsDataTable = (props) => {
+const NegociosDataTable = (props) => {
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
@@ -61,4 +60,4 @@ const ProjectsDataTable = (props) => {
   );
 };
 
-export default ProjectsDataTable;
+export default NegociosDataTable;
