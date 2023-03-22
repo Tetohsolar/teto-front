@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { VscNewFile, VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import { AiFillPlusSquare } from "react-icons/ai";
 
 //PAGINATION
 let PageSize = 5;
@@ -116,7 +117,12 @@ const CustomerDataTable = (props) => {
   return (
     <form onSubmit={handleMask}>
       <div className="p-3 mb-3 bg-white border rounded-3 container">
-        <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+        <div className='containerCustom'>
+        <h5 className="card-content-title fw-semibold ">{props.listTitle}
+        </h5>
+        <Link to={"/customers/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Cliente </Link>
+        
+        </div>
         <hr className='my-4' />
         <div className='bt-cima'>
           <div className="input-group mb-5 search-w">
@@ -124,14 +130,15 @@ const CustomerDataTable = (props) => {
               onChange={(e) => setName(e.target.value)}
               onKeyUp={(e) => { listaUsers(name) }} />
 
-          </div>
-          <div className="btn-create-customer" >
-            <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
+              <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
               <VscSearch />
 
             </button>
-            <Link to={"/customers/new"} className="btn btn-primary text-light"><VscNewFile /></Link>
           </div>
+         
+           
+            
+          
         </div>
         <div>
           <div className='table-responsive'>
@@ -166,6 +173,7 @@ const CustomerDataTable = (props) => {
                 })}
               </tbody>
             </table>
+            <div className='paginationCustomer'>
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
@@ -173,6 +181,7 @@ const CustomerDataTable = (props) => {
               pageSize={PageSize}
               onPageChange={data => onPageChanged(data)}
             />
+            </div>
           </div>
         </div>
 
