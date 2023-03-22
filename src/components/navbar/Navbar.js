@@ -12,7 +12,7 @@ const Navbar = () => {
   const { token, idLogged } = useContext(AuthContext)
 
   useEffect(() => {
-    api.get('/user/get/' + idLogged, {
+   /* api.get('/user/get/' + idLogged, {
       headers: {
         'Authorization': `Basic ${token}`
       }
@@ -26,7 +26,7 @@ const Navbar = () => {
       ];
       
       setAdministrator(administrator)
-    }, [])
+    }, [])*/
 
     return () => { }
   })
