@@ -118,9 +118,9 @@ const EditProfileForm = (props) => {
             <option value="N">Desabilitado</option>
           </select>
         </div>
-        <div className="d-grid gap-2 d-md-block col-12">
+        <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
-            Atualizar
+           Salvar
           </button>
         </div>
       </form>

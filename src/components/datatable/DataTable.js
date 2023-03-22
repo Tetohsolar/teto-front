@@ -7,6 +7,7 @@ import MyModal from './ModalDelete'
 import Pagination from '../pagination/Pagination';
 import { VscNewFile, VscSearch } from 'react-icons/vsc';
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import { AiFillPlusSquare } from "react-icons/ai";
 let PageSize = 5;
 
 const DataTable = (props) => {
@@ -110,7 +111,10 @@ const DataTable = (props) => {
     <form onSubmit={handleMask}>
     <div className="p-3 mb-3 bg-white border rounded-3 ">
 
+    <div className='containerCustom'>
     <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+    <Link to={"/users/new"} className="btn btn-primary text-light"> <AiFillPlusSquare/> Novo usuário</Link>
+    </div>
         <hr className='my-4' />
       <div className="input-group mb-3 search-w">
         
@@ -126,7 +130,7 @@ const DataTable = (props) => {
       </div>
 
       <div>
-      <Link to={"/users/new"} className="btn btn-primary text-light mais"> <VscNewFile/> </Link>
+      
       </div>
       </div>
       <div className="table-w">
@@ -134,23 +138,29 @@ const DataTable = (props) => {
           <table className="table ">
 
             <tbody>
+            
               <tr>
                 <th>
+              
 
                 </th>
-                <th>
+                <th className='nome1'>
                   Nome
                   
                 </th>
                 
-                <th>
+                <th className='nome1'>
                   E-mail
                 </th>
-                <tr className='coludsc'>
-
-                </tr>
+                <th>
+                 
+                </th>
+                <th>
+                  
+                </th>
+                
               </tr>
-
+            
               {currentTableData && currentTableData.map((user) => {
                 return (
 
@@ -196,6 +206,7 @@ const DataTable = (props) => {
             
           </table>
           
+          <div className='paginationCustomer'>
           <Pagination
             className="pagination-bar"
             currentPage={currentPage}
@@ -203,9 +214,10 @@ const DataTable = (props) => {
             pageSize={PageSize}
             onPageChange={page => onPageChanged(page)}
           />
+          </div>
         </div>
       </div>
-    </div >
+    </div>
     </form>
   );
 };
