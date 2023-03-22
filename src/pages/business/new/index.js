@@ -13,7 +13,7 @@ import React from 'react'
 // import { useContext } from 'react'
 
 
-export default function NewNegocio(prop) {
+export default function NewBusiness(prop) {
 
   // const { deleteUser } = useContext(AuthContext)
 
@@ -30,12 +30,10 @@ export default function NewNegocio(prop) {
           <div className="modal-body">
             <div className="container-fluid">
               <div className="row">
-                
               </div>
             </div>
           </div>
           <div className="modal-footer">
-
           </div>
         </div>
       </div>
