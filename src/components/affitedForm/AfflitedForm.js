@@ -173,13 +173,23 @@ const AfflitedForm = (props) => {
       })
       return false;
     }
+    
+    
     if (phone === "") {
       toast.error("Telefone É obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
+    let phonenomask = phone.replace('_',"");
 
+    if (phonenomask.length < 15 ) {
+      toast.error("Telefone é inválido", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+  
     console.log("entrou valor " + documento)
     if (documento !== '') {
 
@@ -460,7 +470,7 @@ const AfflitedForm = (props) => {
                 <label htmlFor="Cidade" className="form-label combomob">
                   Cidade
                 </label>
-                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
+                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="inputLogradouro" className="form-label ">

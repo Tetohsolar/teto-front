@@ -7,7 +7,7 @@ import AfflitedDataTable from '../../../components/afflited-data-table/AfflitedD
 
 const AfflitedList = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle = 'Afflited';
+  const pageTitle = 'Afiliados';
   return (
     <div>
       <Navbar activeButtonCustomer />
