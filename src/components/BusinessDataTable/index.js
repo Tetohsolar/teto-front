@@ -40,10 +40,10 @@ const BusinessDataTable = (props) => {
   const averageValue = "199.999,99"
   return (
     <div className="p-3 mb-3 bg-white rounded-3">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex flex-column flex-sm-row justify-content-between">
         <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
         <button
-          className="btn btn-primary text-light d-flex align-items-center gap-2"
+          className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
           type="submit"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -53,25 +53,41 @@ const BusinessDataTable = (props) => {
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-plus-square-fill"
+            className="bi bi-plus-square-fill"
             viewBox="0 0 16 16"
           >
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
           </svg>
-          Novo
+          Novo negócio
         </button>
       </div>
       <NewBusiness />
       <hr className="my-3 text-body-tertiary" />
-      <form class="row mb-3 justify-content-end">
-        <div class="col-auto">
-          <select class="form-select" aria-label="Selecionar">
-            <option selected>Em aberto</option>
-            <option value="1">Fechados</option>
-            <option value="2">Perdidos</option>
-          </select>
+      <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
+        <div className="input-group mb-3 w-auto">
+          <input type="text" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" />
+          <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2" />
+          <input type="text" className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" />
+          <button className="btn btn-primary" type="button" id="button-addon2">
+            <span className="d-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </span>
+          </button>
         </div>
-      </form>
+        <form className="mb-3 justify-content-end">
+          <div className="row">
+            <di className="col-md-auto">
+              <select className="form-select" aria-label="Selecionar">
+                <option selected>Em aberto</option>
+                <option value="1">Fechados</option>
+                <option value="2">Perdidos</option>
+              </select>
+            </di>
+          </div>
+        </form>
+      </div>
       <div className="row">
         <div className="mb-3 mb-sm-0">
           <div className="card border-light-subtle">
@@ -83,7 +99,7 @@ const BusinessDataTable = (props) => {
                     <tr>
                       <th scope="col">Número</th>
                       <th scope="col">Nome</th>
-                      <th scope="col">Criado em</th>
+                      <th scope="col">Data</th>
                       <th scope="col">Status</th>
                       <th scope="col">Potência</th>
                       <th scope="col">Valor</th>
@@ -95,9 +111,9 @@ const BusinessDataTable = (props) => {
                       return (
                         <tr key={item.id}>
                           <td>{item.id}</td>
+                          <td>{item.name}</td>
                           <td>{item.creationDate}</td>
-                          <td>{item.expirationDate}</td>
-                          <td><span class="badge rounded-pill text-bg-lightblue text-primary">{item.status}</span></td>
+                          <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.status}</span></td>
                           <td>{item.power}</td>
                           <td>{item.amount}</td>
                           <td>
@@ -106,7 +122,7 @@ const BusinessDataTable = (props) => {
                                 type="button"
                                 className="btn btn-light btn-sm text-primary d-flex align-items-center"
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pie-chart-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pie-chart-fill" viewBox="0 0 16 16">
                                   <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778l-5.5 5.5zM8.5.015V7.5h7.485A8.001 8.001 0 0 0 8.5.015z"/>
                                 </svg>
                               </button>
@@ -114,7 +130,7 @@ const BusinessDataTable = (props) => {
                                 type="button"
                                 className="btn btn-light btn-sm text-primary d-flex align-items-center"
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-send-fill" viewBox="0 0 16 16">
                                   <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                                 </svg>
                               </button>
@@ -155,13 +171,18 @@ const BusinessDataTable = (props) => {
                     })}
                   </tbody>
                 </table>
-                <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-secondary">1</button>
-                    <button type="button" class="btn btn-outline-secondary">2</button>
-                    <button type="button" class="btn btn-outline-secondary">3</button>
-                    <button type="button" class="btn btn-outline-secondary">4</button>
-                  </div>
+              </div>
+              <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+                <div className="btn-group" role="group" aria-label="First group">
+                  <button type="button" className="d-flex btn btn-outline-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/></svg>
+                  </button>
+                  <button type="button" className="btn btn-outline-primary active">1</button>
+                  <button type="button" className="btn btn-outline-primary">2</button>
+                  <button type="button" className="btn btn-outline-primary">3</button>
+                  <button type="button" className="d-flex btn btn-outline-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/></svg>
+                  </button>
                 </div>
               </div>
             </div>
