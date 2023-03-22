@@ -3,36 +3,36 @@ import NewBusiness from '../../pages/business/new';
 
 const business = [
   {
-    id: 130320230001,
-    creationDate: "13/03/2023",
-    expirationDate: "14/03/2023",
-    status: "Pode editar",
+    id: "202303001",
+    name: "Maria Santos",
+    creationDate: "14/03/2023",
+    status: "Em aberto",
     power: "2.3",
-    amount: "99.999,99",
+    amount: "29.999,99",
   },
   {
-    id: 130320230002,
-    creationDate: "13/03/2023",
-    expirationDate: "14/03/2023",
-    status: "Pode ver",
-    power: "2.1",
-    amount: "73.777,77",
+    id: "202303002",
+    name: "Antônio Filho",
+    creationDate: "15/03/2023",
+    status: "Em aberto",
+    power: "2.3",
+    amount: "27.999,99",
   },
   {
-    id: 130320230003,
-    creationDate: "13/03/2023",
-    expirationDate: "14/03/2023",
-    status: "Pode editar",
-    power: "3.2",
-    amount: "123.456,78",
+    id: "2023030036",
+    name: "Empresa XYZ",
+    creationDate: "16/03/2023",
+    status: "Em aberto",
+    power: "2.3",
+    amount: "139.999,99",
   },
   {
-    id: 130320230004,
-    creationDate: "13/03/2023",
-    expirationDate: "14/03/2023",
-    status: "Pode ver",
-    power: "4.3",
-    amount: "78.88,33",
+    id: "202303004",
+    name: "Luciana Ferreira",
+    creationDate: "17/03/2023",
+    status: "Em aberto",
+    power: "2.3",
+    amount: "49.999,99",
   },
 ];
 
@@ -58,7 +58,7 @@ const BusinessDataTable = (props) => {
           >
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
           </svg>
-          Novo negócio
+          Novo
         </button>
       </div>
       <NewBusiness />
@@ -82,8 +82,8 @@ const BusinessDataTable = (props) => {
                   <thead>
                     <tr>
                       <th scope="col">Número</th>
+                      <th scope="col">Nome</th>
                       <th scope="col">Criado em</th>
-                      <th scope="col">Validade</th>
                       <th scope="col">Status</th>
                       <th scope="col">Potência</th>
                       <th scope="col">Valor</th>
