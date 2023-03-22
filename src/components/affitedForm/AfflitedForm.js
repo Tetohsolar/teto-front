@@ -559,7 +559,7 @@ const AfflitedForm = (props) => {
             </div>
           </TabPanel>
         </Tabs>
-        <div className="d-grid gap-2 d-md-block col-12">
+        <div className='afflitedsalvar'>
           <button className="btn btn-primary text-light" type="submit">
             Salvar
           </button>
