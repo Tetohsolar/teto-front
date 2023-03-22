@@ -31,3 +31,14 @@
 .number{
     text-align: right;
 }
+
+.afflitedsfilter{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.afflitedsalvar{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
