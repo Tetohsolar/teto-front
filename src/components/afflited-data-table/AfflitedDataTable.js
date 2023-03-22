@@ -126,7 +126,7 @@ const AfflitedDataTable = (props) => {
         
         <div className='afflitedsfilter'>
           <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-            <Link to={"/affliteds/new"} className="btn btn-primary text-light mais"><AiFillPlusSquare /> Novo Afiliado</Link>
+            <Link to={"/affliteds/new"} className="btn btn-primary text-light "><AiFillPlusSquare /> Novo Afiliado</Link>
           </div>
         <hr className='my-4' />
         <div className="input-group mb-3 search-w">
@@ -200,7 +200,7 @@ const AfflitedDataTable = (props) => {
               onPageChange={data => onPageChanged(data)}
             />
             </div>
-          </div>
+          </div> 
         </div>
 
       </div>
