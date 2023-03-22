@@ -150,7 +150,7 @@ const ClientForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, documento) {
+  function validaCampos(name, phone, documento,zap,cep) {
 
 
     if (name === "") {
@@ -165,6 +165,47 @@ const ClientForm = (props) => {
       })
       return false;
     }
+
+    let phonenomask=phone.replace('_', '');
+    
+
+    if (phonenomask.length <15) {
+      toast.error("Telefone é invalido", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+
+
+    
+    if (zap){
+
+    
+    let zapnomask=zap.replace('_', '');
+    
+
+    
+    if (zapnomask.length <15) {
+      toast.error("WhatsApp é invalido", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+  }
+    
+    if (cep ){
+      let cepnomask=cep.replace('_', '');
+   
+      if (cepnomask.length <9) {
+        toast.error("Cep é invalido", {
+          autoClose: 1000,
+        })
+        return false;
+      }  
+    }
+    
+
+
 
     if (documento !== '') {
       if (documento.length <= 14 && !cpf.isValid(documento)) {
@@ -324,7 +365,7 @@ const ClientForm = (props) => {
 
     e.preventDefault();
 
-    if (validaCampos(name, phone, doc)) {
+    if (validaCampos(name, phone, doc,zap,cepData)) {
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, id, idAdd)
         navigate("/customers");
