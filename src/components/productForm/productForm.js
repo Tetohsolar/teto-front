@@ -228,9 +228,11 @@ const ProductForm = (props) => {
           <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
         </div>
         <div className="d-grid gap-2 d-md-block col-12">
+        <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar
           </button>
+        </div>
         </div>
       </form>
     </div>

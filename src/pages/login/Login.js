@@ -2,8 +2,6 @@ import { AuthContext } from '../../context/AuthContext';
 import './login.scss';
 import { useState, useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import logoTetoSolar from '../../assets/img/teto-solar-visual-signature.png'
 
 const Login = () => {
@@ -28,13 +26,12 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <ToastContainer />
-      <div className=' v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-4 pb-md-0'>
-        <div className='m-4 pt-4 pt-md-0'>
+    <div className='bg-access'>
+      <div className='v100 bg-login d-flex justify-content-md-around  justify-content-start align-items-center flex-md-row flex-column pb-3 pb-md-0'>
+        <div className='m-4 pt-3 pt-md-0'>
           <img className='logo-teto-solar' src={logoTetoSolar} alt='Logo da teto Solar'></img>
         </div>
-        <div className='form-area m-4'>
+        <div className='form-area m-3'>
           <form className='form-width' onSubmit={handleLogin}>
             <h1 className="h3 mb-3 fw-semibold text-center text-primary">Acesse sua conta</h1>
             <p className='subtitle-form text-center'>Realize login para acompanhar o processo de seus projetos cadastrados.</p>
@@ -63,7 +60,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
