@@ -87,7 +87,7 @@ async function list(name) {
     situation:`${situation}` 
   }
 
-  console.log(filtro)
+  
   await api.post('/business/byparam', filtro, {
     headers: {
       'Authorization': `Basic ${token}`
@@ -121,7 +121,6 @@ function onPageChanged(data) {
   })
     .then((response) => {
       setObjects(response.data.business)
-      console.log(response.data.business)
       setTotalPages(response.data.totalItems)
 
     }).catch((err) => {
