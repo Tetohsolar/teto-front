@@ -1,9 +1,10 @@
 import './home.scss';
 import { useContext } from 'react';
-import Card from '../../components/card/Card'
+import Card from '../../components/Card'
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
+import Widget from '../../components/Widgets';
 
 const Home = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
@@ -21,21 +22,18 @@ const Home = () => {
           </h5>
           <div className="row">
             <div className="col-lg-4">
-              <Card
+              <Widget type="current-month"
                 cardContentHome="card-content-home"
-                cardTitle="Negócios deste mês"
               />
             </div>
             <div className="col-lg-4">
-              <Card
+              <Widget type="earnings"
                 cardContentHome="card-content-home"
-                cardTitle="Negócios fechados neste mês"
               />
             </div>
             <div className="col-lg-4">
-              <Card
+              <Widget type="open-business"
                 cardContentHome="card-content-home"
-                cardTitle="Negócios em aberto"
               />
             </div>
           </div>
