@@ -70,7 +70,7 @@ const BusinessDataTable = (props) => {
           <input type="text" className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" />
           <button className="btn btn-primary" type="button" id="button-addon2">
             <span className="d-flex align-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
               </svg>
             </span>
@@ -174,13 +174,13 @@ const BusinessDataTable = (props) => {
               </div>
               <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                 <div className="btn-group" role="group" aria-label="First group">
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/></svg>
                   </button>
                   <button type="button" className="btn btn-outline-secondary text-primary active">1</button>
                   <button type="button" className="btn btn-outline-secondary text-primary">2</button>
                   <button type="button" className="btn btn-outline-secondary text-primary">3</button>
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/></svg>
                   </button>
                 </div>
