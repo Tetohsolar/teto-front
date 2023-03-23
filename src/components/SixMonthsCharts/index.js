@@ -10,16 +10,16 @@ export default function SixMonthsCharts(props) {
         <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Fechados</h6>
-              <TinyBarGainChart barChartFill="#4AA96C" />
+              <h6 className="card-title">Negócios fechados</h6>
+              <TinyBarGainChart />
             </div>
           </div>
         </div>
         <div className="col-sm-6">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Perdidos</h6>
-              <TinyBarLossesChart barChartFill="#F55C47" />
+              <h6 className="card-title">Negócios perdidos</h6>
+              <TinyBarLossesChart />
             </div>
           </div>
         </div>
