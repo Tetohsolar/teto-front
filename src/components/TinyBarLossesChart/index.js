@@ -1,52 +1,84 @@
 import "./style.scss";
-import React from "react";
-import { BarChart, Bar, ResponsiveContainer } from "recharts";
+import React, { useState, useCallback } from "react";
+import { BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
   {
-    name: "Page A",
-    uv: 1600,
-    pv: 2400,
-    amt: 2400,
+    name: "04/2022",
+    amt: 80,
   },
   {
-    name: "Page B",
-    uv: 800,
-    pv: 1398,
-    amt: 2210,
+    name: "05/2022",
+    amt: 36,
   },
   {
-    name: "Page C",
-    uv: 400,
-    pv: 9800,
-    amt: 2290,
+    name: "06/2022",
+    amt: 72,
   },
   {
-    name: "Page D",
-    uv: 800,
-    pv: 3908,
-    amt: 2000,
+    name: "07/2022",
+    amt: 44,
   },
   {
-    name: "Page E",
-    uv: 400,
-    pv: 4800,
-    amt: 2181,
+    name: "08/2022",
+    amt: 80,
   },
   {
-    name: "Page F",
-    uv: 1600,
-    pv: 3800,
-    amt: 2500,
+    name: "09/2022",
+    amt: 96,
+  },
+  {
+    name: "10/2022",
+    amt: 12,
+  },
+  {
+    name: "11/2022",
+    amt: 36,
+  },
+  {
+    name: "12/2022",
+    amt: 72,
+  },
+  {
+    name: "01/2023",
+    amt: 44,
+  },
+  {
+    name: "02/2023",
+    amt: 80,
+  },
+  {
+    name: "03/2023",
+    amt: 96,
   },
 ];
 
 export default function TinyBarLossesChart(props) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeItem = data[activeIndex];
+  const handleClick = useCallback(
+    (entry, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
+
   return (
-    <ResponsiveContainer width="100%" height={100} >
-      <BarChart data={data}>
-        <Bar dataKey="uv" fill={props.barChartFill} />
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+      <ResponsiveContainer width="100%" height={100} >
+        <BarChart data={data}>
+          <Bar dataKey="amt" onClick={handleClick}>
+            {data.map((entry, index) => (
+              <Cell
+                cursor="pointer"
+                fill={index === activeIndex ? "#B02A37" : "#E2868F"}
+                key={`cell-${index}`}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+      <span className="content">{`${activeItem.name}: ${activeItem.amt}`}</span>
+    </div>
   );
 }

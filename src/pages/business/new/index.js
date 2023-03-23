@@ -77,7 +77,7 @@ export default function NewBusiness(prop) {
                   <label htmlFor="inputCodigo" className="form-label">
                     Informações Adicionais:
                   </label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                   {/* <input type="text" maxLength={200} className="form-control" id="inputCodigo" /> */}
                 </div>
 
