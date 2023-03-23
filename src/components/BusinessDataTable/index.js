@@ -1,7 +1,11 @@
 import './style.scss'
 import NewBusiness from '../../pages/business/new';
 import { AiOutlinePartition } from 'react-icons/ai';
-
+import { AuthContext } from '../../context/AuthContext';
+import api from '../../api';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import Pagination from '../pagination/Pagination';
+import { format } from 'date-fns'
 const business = [
   {
     id: "202303001",
@@ -39,21 +43,102 @@ const business = [
 
 const selectOptions = [
   {
-    value: "abertos",
+    value: "Aberta",
     label: "Em aberto",
   },
   {
-    value: "fechados",
+    value: "Ganhos",
     label: "Fechados",
   },
   {
-    value: "perdidos",
+    value: "Perdas",
     label: "Perdidos",
   },
 ];
 
+let PageSize = 5;
 const BusinessDataTable = (props) => {
-  const totalValue = "999"
+  const [currentPage, setCurrentPage] = useState(1);
+  const [objs, setObjects] = useState([])
+  const [totalPages, setTotalPages] = useState([])
+  const [idSelected, setIdSelected] = useState([])
+  const { token } = useContext(AuthContext)
+  const [name, setName] = useState([])
+  const [situation, setSituation] = useState([])
+
+  useEffect(() => {
+
+   list("%");
+
+  return () => { }
+
+
+}, [])
+
+
+async function list(name) {
+  
+  const filtro = {
+    fantasy: "%" + name + "%",
+    document: "%",
+    page: 0,
+    pageSize: 5, 
+    typeConnection:'Trifásico',
+    situation:`${situation}` 
+  }
+
+  console.log(filtro)
+  await api.post('/business/byparam', filtro, {
+    headers: {
+      'Authorization': `Basic ${token}`
+    }
+  })
+    .then((response) => {
+      setObjects(response.data.business)
+      setTotalPages(response.data.totalItems)
+
+    }).catch((err) => {
+      console.log(err)
+    })
+
+}
+
+
+function onPageChanged(data) {
+  const filtro = {
+    fantasy: "%" + name + "%",
+    document: "%",
+    page: data-1,
+    pageSize: 5, 
+    typeConnection:'Trifásico',
+    situation:situation
+  }
+
+  api.post('/business/byparam', filtro, {
+    headers: {
+      'Authorization': `Basic ${token}`
+    }
+  })
+    .then((response) => {
+      setObjects(response.data.business)
+      console.log(response.data.business)
+      setTotalPages(response.data.totalItems)
+
+    }).catch((err) => {
+      console.log(err)
+    })
+    setCurrentPage(data);
+
+}
+function find(){
+  list("%")
+}
+
+const paginate = ({ selected }) => {
+  setCurrentPage(selected + 1);
+};
+
+  const totalValue =  `${totalPages}` 
   return (
     <div className="p-3 mb-3 bg-white rounded-3">
       <div className="d-flex flex-column flex-sm-row justify-content-between">
@@ -81,8 +166,8 @@ const BusinessDataTable = (props) => {
       <hr className="my-3 text-body-tertiary" />
       <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
         <div className="input-group mb-3 w-auto">
-          <input type="text" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" />
-          <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2" />
+          <input type="text" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2"/>
+          <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2"  onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
           <input type="text" className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" />
           <button className="btn btn-primary" type="button" id="button-addon2">
             <span className="d-flex align-items-center">
@@ -95,7 +180,7 @@ const BusinessDataTable = (props) => {
         <form className="mb-3 justify-content-end">
           <div className="row">
             <div className="col-md-auto">
-              <select className="form-select" aria-label="Selecionar">
+              <select className="form-select" aria-label="Selecionar" onChange={(e) => setSituation(e.target.value)} onKeyUp={find} onClick={find}>
                 {selectOptions.map((option) => (<option key={option.value} value={option.value} >{option.label}</option>))}
               </select>
             </div>
@@ -121,14 +206,14 @@ const BusinessDataTable = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {business.map((item) => {
+                    {objs.map((item) => {
                       return (
                         <tr key={item.id}>
                           <td>{item.id}</td>
-                          <td>{item.name}</td>
-                          <td>{item.creationDate}</td>
-                          <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.status}</span></td>
-                          <td>{item.power}</td>
+                          <td>{item.Client.fantasy}</td>
+                          <td>{format(new Date(item.createdAt),'dd/MM/yyyy')}</td>
+                          <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.situation}</span></td>
+                          <td>{item.systempower}</td>
                           <td>{item.amount}</td>
                           <td>
                             <div className="d-flex gap-2 justify-content-end">
@@ -186,19 +271,15 @@ const BusinessDataTable = (props) => {
                   </tbody>
                 </table>
               </div>
-              <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                <div className="btn-group" role="group" aria-label="First group">
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/></svg>
-                  </button>
-                  <button type="button" className="btn btn-outline-secondary text-primary active">1</button>
-                  <button type="button" className="btn btn-outline-secondary text-primary">2</button>
-                  <button type="button" className="btn btn-outline-secondary text-primary">3</button>
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/></svg>
-                  </button>
-                </div>
-              </div>
+              <div className ='pagidireita'>
+            <Pagination 
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={totalPages}
+              pageSize={PageSize}
+              onPageChange={data => onPageChanged(data)}
+            />
+            </div>
             </div>
           </div>
         </div>
