@@ -1,11 +1,11 @@
 import './home.scss';
 import { useContext } from 'react';
-import Card from '../../components/Card'
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 import Widget from '../../components/Widgets';
 import SixMonthLargeChart from '../../components/SixMonthLargeChart';
+import SixMonthsBusinessDataTable from '../../components/SixMonthsBusinessDataTable';
 
 const Home = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
@@ -37,10 +37,7 @@ const Home = () => {
             </div>
           </div>
           <SixMonthLargeChart chartTitle="Últimos 6 meses"/>
-          <Card
-            cardContentHome="card-content-home"
-            cardTitle="Lista de negócios deste mês"
-          />
+          <SixMonthsBusinessDataTable listTitle="Mês atual" />
         </div>
       </div>
     </div>
