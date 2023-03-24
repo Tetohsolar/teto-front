@@ -77,7 +77,7 @@ const ProductsDataTable = (props) => {
   async function list(name) {
     const filtro = {
       codef: "%",
-      brand: "%" + brand + "%",
+      brand:  brand ,
       category:  category ,
       description: "%" + name + "%",
       descriptionTec: "%",
