@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { VscNewFile, VscSearch } from "react-icons/vsc";
+import { VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
 
