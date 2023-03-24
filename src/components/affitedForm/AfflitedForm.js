@@ -500,13 +500,7 @@ const AfflitedForm = (props) => {
           </TabPanel>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-              <div className="col-md-3"  >
-                <label htmlFor="kitI" className="form-label ">
-                  Kit
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={kitI || ''} onChange={(e) => setKitinv(e.target.value)} />
-              </div>
+             
               <div className="col-md-3"  >
                 <label htmlFor="complementCostI" className="form-label ">
                   Complementar
@@ -536,12 +530,7 @@ const AfflitedForm = (props) => {
           </TabPanel>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-              <div className="col-md-3"  >
-                <label htmlFor="kitM" className="form-label ">
-                  Kit
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={kitM || ''} onChange={(e) => setKitmicro(e.target.value)} />
-              </div>
+              
               <div className="col-md-3"  >
                 <label htmlFor="complementCostM" className="form-label ">
                   Complementar

@@ -78,7 +78,7 @@ const ProductsDataTable = (props) => {
     const filtro = {
       codef: "%",
       brand: "%" + brand + "%",
-      category: "%" + category + "%",
+      category:  category ,
       description: "%" + name + "%",
       descriptionTec: "%",
       descriptionFriendly: "%",
