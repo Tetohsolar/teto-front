@@ -65,9 +65,7 @@ const ProductForm = (props) => {
         setDescricao(response.data.description)
         setCategoria(response.data.category)
         setHiddenMarca(response.data.brand);
-        loadBrand(response.data.category)
-        
-
+        loadBrand(response.data.brand)
         setMarca(response.data.brand)
         setDescricaoTec(response.data.descriptionTec)
         setDescricaoAmigavel(response.data.descriptionFriendly)
@@ -182,7 +180,7 @@ const ProductForm = (props) => {
     }
   }
 
-  async function loadBrand(){
+  async function loadBrand(brand){
     let cat = categoria;
     if (cat==="Inversor"){
       cat="M"
@@ -193,7 +191,7 @@ const ProductForm = (props) => {
     else{
       cat="P"
     }
-   await loadBrandByProduct(cat).then(console.log(categoria))
+   await loadBrandByProduct(cat).then( setMarca(brand))
   }
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
@@ -214,6 +212,7 @@ const ProductForm = (props) => {
             Categoria
           </label>
           <select name="pets" id="input-user-type" className="form-select" value={categoria} onChange={(e) => setCategoria(e.target.value)} onClick={loadBrand}>
+          <option value="">Selecionar</option>
             <option value="Placa">Placa</option>
             <option value="Inversor">Inversor</option>
             <option value="Microinversor">Microninversor</option>
@@ -228,7 +227,8 @@ const ProductForm = (props) => {
             Marca
           </label>
 
-        <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)}>
+        <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+          <option value="">Selecionar </option>
                 {brands?brands.map((option) => (<option key={option.name} value={option.name} >{option.name}</option>)):""}
               </select>  
          </div>
