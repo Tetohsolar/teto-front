@@ -166,7 +166,9 @@ const ProductsDataTable = (props) => {
                   <th className='cab3'>Categoria</th>
 
                   <th>Marca</th>
+                  <th>
 
+                  </th>
 
                 </tr>
                 {currentTableData && currentTableData.map((obj) => {
