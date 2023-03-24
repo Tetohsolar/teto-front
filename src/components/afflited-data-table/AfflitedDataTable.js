@@ -160,6 +160,9 @@ const AfflitedDataTable = (props) => {
                   <th>
                     Telefone
                   </th>
+                  <th>
+                    
+                  </th>
                 </tr>
 
                 {objs.map((user) => {
