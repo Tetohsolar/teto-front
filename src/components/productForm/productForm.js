@@ -64,8 +64,9 @@ const ProductForm = (props) => {
         setCodigo(response.data.codef)
         setDescricao(response.data.description)
         setCategoria(response.data.category)
-        setHiddenMarca(response.data.brand);
-        loadBrand(response.data.brand)
+        loadBrand(response.data.category,response.data.brand)
+        
+        
         setMarca(response.data.brand)
         setDescricaoTec(response.data.descriptionTec)
         setDescricaoAmigavel(response.data.descriptionFriendly)
@@ -180,8 +181,12 @@ const ProductForm = (props) => {
     }
   }
 
-  async function loadBrand(brand){
-    let cat = categoria;
+  async function loadBrand(cat, brand){
+    if (categoria){
+      cat = categoria
+      console.log("aqui")
+    }
+    
     if (cat==="Inversor"){
       cat="M"
     } else
