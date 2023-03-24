@@ -10,6 +10,7 @@ import { AiFillPlusSquare } from "react-icons/ai";
 import { VscSearch } from "react-icons/vsc";
 import { BsFillPieChartFill, BsFillSendFill, BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import InputMask from 'react-input-mask';
+import moment from 'moment/moment';
 
 function DateInput(props) {
   return (
@@ -17,6 +18,8 @@ function DateInput(props) {
       mask='99/99/9999'
       value={props.value}
       onChange={props.onChange}
+      onKeyUp={props.onKeyUp}
+      onKeyDown={props.onKeyDown}
       className="form-control" required={props.required} placeholder={props.placeholder}
       type={props.type} name={props.name} id={props.id} >
     </InputMask>
@@ -74,21 +77,28 @@ const currentTableData = useMemo(() => {
 async function list(name) {
   
   var dateString = String(data) ;
+  var dateCaract = String(data).replace('_','') ;
 
   var dateParts = dateString.split("/");
-  var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
-  
+  var dateObject = String(dateParts[2])+"-"+ String(dateParts[1]) +"-"+ String(dateParts[0]);
+  let datanova = '2000-02-01';
+
+  if (dateCaract.length>=10 && moment(dateObject).isValid())
+  {
+    datanova = dateObject
+  }
+   
   const filtro = {
     fantasy: "%" + name + "%",
     document: "%",
     page: 0,
     pageSize: 5, 
     number: numero,
-    dateSt: dateObject,
+    dateSt: datanova,
     situation:`${situation}` 
   }
 
-  console.log(dateObject)
+  
   await api.post('/business/byparam', filtro, {
     headers: {
       'Authorization': `Basic ${token}`
@@ -106,13 +116,26 @@ async function list(name) {
 
 
 function onPageChanged(data) {
+
+  var dateString = String(data) ;
+  var dateCaract = String(data).replace('_','') ;
+
+  var dateParts = dateString.split("/");
+  var dateObject = String(dateParts[2])+"-"+ String(dateParts[1]) +"-"+ String(dateParts[0]);
+  let datanova = '2000-02-01';
+
+  if (dateCaract.length>=10 && moment(dateObject).isValid())
+  {
+    datanova = dateObject
+  }
+
   const filtro = {
     fantasy: "%" + name + "%",
     document: "%",
     page: data-1,
     pageSize: 5, 
     number:numero,
-    dateSt: data,
+    dateSt: datanova,
     situation:`${situation}`
   }
 
@@ -160,7 +183,10 @@ const paginate = ({ selected }) => {
         <div className="filtro">
           <input type="numero" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" onChange={(e) => setNumero(e.target.value)} onKeyUp={(e) => { list(name) }}/>
           <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2"  onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
-          <DateInput className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" onChange={(e) => setData(e.target.value)} onKeyUp={(e) => { list(name) }} />
+          <DateInput className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" onChange={(e) => {setData(e.target.value)}} 
+          onKeyUp={(e)=>{
+            list(name)
+          }}  />
          
           <button className="btn btn-primary filtro2" type="button" id="button-addon2">
             <span className="d-flex align-items-center">
