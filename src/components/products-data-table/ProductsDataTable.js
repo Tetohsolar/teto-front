@@ -101,6 +101,10 @@ const ProductsDataTable = (props) => {
 
   }
 
+  function find(){
+    list("%")
+  }
+  
   async function handleAfterDel(e) {
 
     await api.delete('/products/delete/' + idSelected, {
@@ -136,7 +140,7 @@ const ProductsDataTable = (props) => {
               <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
             </div>
             <div className="col-md-4">
-              <select name="pets" id="input-user-type" className="form-select" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <select name="pets" id="input-user-type" className="form-select" value={category} onChange={(e) => setCategory(e.target.value)} onKeyUp={find} onClick={find}>
                 <option value="">Selecionar...</option>
                 <option value="Inversor">Inversor</option>
                 <option value="Microinversor">Microninversor</option>
