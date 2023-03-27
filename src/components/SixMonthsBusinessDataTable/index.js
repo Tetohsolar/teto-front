@@ -1,43 +1,106 @@
 import './style.scss'
 import NewBusiness from '../../pages/business/new';
+import api from '../../api';
+import { AuthContext } from '../../context/AuthContext';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { format } from 'date-fns';
+import Pagination from '../pagination/Pagination';
 
-const business = [
-  {
-    id: "202303001",
-    name: "Maria Santos",
-    creationDate: "14/03/2023",
-    status: "Fechado",
-    power: "2.3",
-    amount: "29.999,99",
-  },
-  {
-    id: "202303002",
-    name: "Antônio Filho",
-    creationDate: "15/03/2023",
-    status: "Perdido",
-    power: "2.3",
-    amount: "27.999,99",
-  },
-  {
-    id: "2023030036",
-    name: "Empresa XYZ",
-    creationDate: "16/03/2023",
-    status: "Em aberto",
-    power: "2.3",
-    amount: "139.999,99",
-  },
-  {
-    id: "202303004",
-    name: "Luciana Ferreira",
-    creationDate: "17/03/2023",
-    status: "Em aberto",
-    power: "2.3",
-    amount: "49.999,99",
-  },
-];
+
 
 const SixMonthsBusinessDataTable = (props) => {
-  const totalValue = "99"
+  const PageSize= 5
+  const [objs, setObjects] = useState([])
+  const [totalPages, setTotalPages] = useState([])
+  const { token } = useContext(AuthContext)
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  useEffect(() => {
+
+    list("%");
+    
+ 
+   return () => { }
+ 
+ 
+ }, [])
+
+ function onPageChanged(data) {
+
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const currentDate = `${year}-${month}-${'01'}`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
+    const filtro = {
+      fantasy: "%",
+      document: "%",
+      page: data-1,
+      pageSize: 5, 
+      number: "%",
+      dateSt:currentDate,
+      dateEnd:EndDate
+    }
+
+  api.post('/business/byparam', filtro, {
+    headers: {
+      'Authorization': `Basic ${token}`
+    }
+  })
+    .then((response) => {
+      setObjects(response.data.business)
+      setTotalPages(response.data.totalItems)
+
+    }).catch((err) => {
+      console.log(err)
+    })
+    setCurrentPage(data);
+
+}
+ async function list(){
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const currentDate = `${year}-${month}-${'01'}`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
+    const filtro = {
+      fantasy: "%",
+      document: "%",
+      page: 0,
+      pageSize: 5, 
+      number: "%",
+      dateSt:currentDate,
+      dateEnd:EndDate
+    }
+    
+  
+    
+   await api.post('/business/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    })
+      .then((response) => {
+        setObjects(response.data.business)
+        setTotalPages(response.data.totalItems)
+  
+      }).catch((err) => {
+        console.log(err)
+      })
+  
+  }  
+
+  const totalValue = totalPages
   return (
     <div className="p-3 mb-3 bg-white rounded-3">
       <h5 className="card-content-title mb-3 fw-semibold">{props.listTitle}</h5>
@@ -55,21 +118,21 @@ const SixMonthsBusinessDataTable = (props) => {
                       <th scope="col">Nome</th>
                       <th scope="col">Data</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Potência</th>
-                      <th scope="col">Valor</th>
+                      <th scope="col" className='alinhadaDireita'>Potência</th>
+                      <th scope="col" className='alinhadaDireita'>Valor</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {business.map((item) => {
+                    {objs.map((item) => {
                       return (
                         <tr key={item.id}>
-                          <td>{item.id}</td>
-                          <td>{item.name}</td>
-                          <td>{item.creationDate}</td>
-                          <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.status}</span></td>
-                          <td>{item.power}</td>
-                          <td>{item.amount}</td>
+                          <td>{item.number}</td>
+                          <td>{item.Client.fantasy}</td>
+                          <td>{format(new Date(item.createdAt),'dd/MM/yyyy')}</td>
+                          <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.situation}</span></td>
+                          <td className='alinhadaDireita'>{item.systempower}</td>
+                          <td className='alinhadaDireita'>{formatter.format(item.amount)}</td>
                           <td>
                             <div className="d-flex gap-2 justify-content-end">
                               <button
@@ -103,19 +166,16 @@ const SixMonthsBusinessDataTable = (props) => {
                   </tbody>
                 </table>
               </div>
-              <div className="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                <div className="btn-group" role="group" aria-label="First group">
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/></svg>
-                  </button>
-                  <button type="button" className="btn btn-outline-secondary text-primary active">1</button>
-                  <button type="button" className="btn btn-outline-secondary text-primary">2</button>
-                  <button type="button" className="btn btn-outline-secondary text-primary">3</button>
-                  <button type="button" className="d-flex btn btn-outline-secondary text-primary align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/></svg>
-                  </button>
-                </div>
-              </div>
+              <div className ='pagidireita'>
+              <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={totalPages}
+              pageSize={PageSize}
+              onPageChange={data => onPageChanged(data)}
+            
+            />
+            </div>
             </div>
           </div>
         </div>
