@@ -21,24 +21,26 @@ const ViewBusiness = () => {
           <h5 className="pb-3">Resumo</h5>
           <div className="row topResume">
             <div className="col-lg-4 card-mateus rounded-3">
-              <label>Status </label>
+              <h6 class="card-content-title mb-3 fw-semibold">Status </h6> 
               <br></br>
               <span className="badge rounded-pill text-bg-lightblue text-primary">{"Em Aberto"}</span>
             </div>
             <div className="col-lg-4 card-mateus rounded-3">
-              <label>Status </label>
+              <h6 class="card-content-title mb-3 fw-semibold"> Contato </h6>
               <br></br>
-              <span className="badge rounded-pill text-bg-lightblue text-primary">{"Em Aberto"}</span>
+              <label> Mateus alves Vieira Neto </label>
             </div>
             <div className="col-lg-4 card-mateus rounded-3">
-              <label>Status </label>
+              <h6 class="card-content-title mb-3 fw-semibold">Dono do negócio </h6>
               <br></br>
-              <span className="badge rounded-pill text-bg-lightblue text-primary">{"Em Aberto"}</span>
+             
+             <label> Raiane Darla </label>
             </div>
             <div className="col-lg-4 card-mateus rounded-3">
-              <label>Status </label>
-              <br></br>
-              <span className="badge rounded-pill text-bg-lightblue text-primary">{"Em Aberto"}</span>
+              <h6 class="card-content-title mb-3 fw-semibold">Número da proposta </h6>
+              <br></br> 
+              <label> 20230393084</label>
+              
             </div>
            
           </div>
