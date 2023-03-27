@@ -1,0 +1,48 @@
+.home {
+    background-color: #F4F9FC;
+}
+
+.card-mateus {
+    color: #6E6E6E;
+    background-color: #F4F9FC;
+    height: 120px;
+    width: 235px;
+    padding-top: 30px;
+}
+.topResume{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+ 
+
+}
+.card-content-home{
+    background-color: #6E6E6E;
+}
+
+.card-content-home {
+    min-height: 150px;
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+.wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+@media (min-width: 768px) {
+    .wrapper.toggled #sidebar-wrapper {
+        margin-left: -232px;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
