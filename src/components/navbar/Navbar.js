@@ -11,25 +11,25 @@ const Navbar = () => {
   const [administrator, setAdministrator] = useState([])
   const { token, idLogged } = useContext(AuthContext)
 
-  // useEffect(() => {
-  //   api.get('/user/get/' + idLogged, {
-  //     headers: {
-  //       'Authorization': `Basic ${token}`
-  //     }
+  useEffect(() => {
+    api.get('/user/get/' + idLogged, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
 
-  //   }).then((response) => {
-  //     const administrator = [
-  //       {
-  //         id: response.data.id,
-  //         firstName: response.data.name,
-  //       },
-  //     ];
+    }).then((response) => {
+      const administrator = [
+        {
+          id: response.data.id,
+          firstName: response.data.name,
+        },
+      ];
+      
+      setAdministrator(administrator)
+    }, [])
 
-  //     setAdministrator(administrator)
-  //   }, [])
-
-  //   return () => { }
-  // })
+    return () => { }
+  })
 
   function handleSignOut() {
     signOut()
