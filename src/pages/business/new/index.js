@@ -244,6 +244,20 @@ export default function NewBusiness(prop) {
                 </div>
               </div>
             </div>
+            <div className="modal-footer">
+              <button
+                className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                data-bs-dismiss="modal">Voltar</button>
+              <button
+                className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                data-bs-dismiss="modal">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Avançar
+              </button>
+            </div>
           </div>
 
         </div>
@@ -251,82 +265,7 @@ export default function NewBusiness(prop) {
 
 
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-xl" >
-          <div className="modal-content">
-            <div className="modal-header">
-              <div className="d-flex flex-column">
-                <h1 className="modal-title fs-3" id="exampleModalLabel">Nova Proposta de  Negócio </h1>
-                <h5 className='fs-5'>Informações básicas</h5>
-              </div>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      Nome:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      Tipo de Pessoa:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      CPF/CNPJ:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      Telefone:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      WhatsApp:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      E-mail:
-                    </label>
-                    <input type="text" className="form-control" id="inputCodigo" />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm">
-                    <label htmlFor="inputCodigo" className="form-label">
-                      Informações Adicionais:
-                    </label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    {/* <input type="text" maxLength={200} className="form-control" id="inputCodigo" /> */}
-                  </div>
-
-
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <label htmlFor="inputCodigo" className="form-label">
-                        Informações Adicionais:
-                      </label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-              <div className="modal-footer">
+      {/* <div className="modal-footer">
                 <button
                   className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
                   data-bs-dismiss="modal">Voltar</button>
@@ -339,14 +278,9 @@ export default function NewBusiness(prop) {
                   </svg>
                   Avançar
                 </button>
-              </div>
+              </div> */}
 
-            </div>
 
-          </div>
-
-        </div >
-      </div>
 
 
 
