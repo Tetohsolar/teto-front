@@ -138,12 +138,8 @@ const AfflitedDataTable = (props) => {
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={afterSubmit}>
             <VscSearch/>
             </button>
-
           </div>
-
-         
         </div>
-
         <div>
           <div className='table-responsive'>
             
