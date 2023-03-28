@@ -1,28 +1,43 @@
 import "./style.scss";
 
-const data = [
-  {
-    id: 1,
-    customer: "João dos Santos",
-    seller: "Ana Silva",
-    proposal: "2023030001",
-  },
-];
+export default function TinyCardBrief({ type }) {
+  let data = {};
 
-export default function TinyCardBrief(props) {
+  switch (type) {
+    case "customer":
+      data = {
+        title: "Contato",
+        info: "João dos Santos",
+      };
+      break;
+
+    case "seller":
+      data = {
+        title: "Responsável",
+        info: "Ana Silva",
+      };
+      break;
+
+    case "proposal":
+      data = {
+        title: "Proposta",
+        info: "2023030001",
+      };
+      break;
+
+    default:
+      data = {
+        title: "Title",
+        info: "Info",
+      };
+      break;
+  }
+
   return (
     <div>
-      <h6 className="card-content-title mb-3 fw-semibold">{props.title}</h6>
-      <div className="widget">
-        {data.map((item) => {
-          return (
-            <span
-              key={item.id}
-            >
-              {item.customer}
-            </span>
-          );
-        })}
+      <h6 className="card-content-title mb-3 fw-semibold">{data.title}</h6>
+      <div>
+        <p className="mb-0 text-dark">{data.info}</p>
       </div>
     </div>
   );
