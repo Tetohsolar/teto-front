@@ -1,18 +1,19 @@
 .home {
     background-color: #F4F9FC;
+    width: 100%;
 }
 
 .card-mateus {
     color: #6E6E6E;
     background-color: #F4F9FC;
-    height: 120px;
-    width: 235px;
+    height: 105px;
+    width: 250px;
     padding-top: 30px;
 }
 .topResume{
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 35px;
  
 
 }
@@ -46,3 +47,47 @@
         width: 100%;
     }
 }
+
+.toda{
+    width: 1500px;
+   
+}
+.junto{
+    display: flex,
+
+}
+
+.linhabaixo{
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+  
+   
+ 
+    
+}
+.topbaixo{
+    display: flex;
+    flex-direction: row;
+    gap:30%;
+ 
+       
+}
+.infb{
+    display: flex;
+  margin: 20px;
+  
+    
+}
+.container1{
+    margin-top: -78px;
+}
+.tamanho-tr{
+    height: 40px;
+}
+
