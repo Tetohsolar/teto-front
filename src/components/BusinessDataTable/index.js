@@ -224,8 +224,8 @@ const paginate = ({ selected }) => {
                       <th scope="col">Nome</th>
                       <th scope="col">Data</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Potência</th>
-                      <th scope="col">Valor</th>
+                      <th scope="col" className='alinhadaDireita'>Potência</th>
+                      <th scope="col" className='alinhadaDireita'>Valor</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -238,8 +238,8 @@ const paginate = ({ selected }) => {
                           <td>{item.Client.fantasy}</td>
                           <td>{format(new Date(item.createdAt),'dd/MM/yyyy')}</td>
                           <td><span className="badge rounded-pill text-bg-lightblue text-primary">{item.situation}</span></td>
-                          <td>{item.systempower}</td>
-                          <td>{formatter.format(item.amount)}</td>
+                          <td className='alinhaDireita'>{item.systempower}</td>
+                          <td className='alinhaDireita'>{formatter.format(item.amount)}</td>
                           <td>
                       
                             <div className="d-flex gap-2 justify-content-end">
