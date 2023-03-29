@@ -24,6 +24,7 @@ import EditProduct from '../pages/products/edit';
 import NewBusiness from '../pages/business/new';
 import SingleBusiness from '../pages/business/single';
 
+
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
   // const token = localStorage.getItem('token')
@@ -65,13 +66,12 @@ const RoutesApp = () => {
               />
               <Route
                 path=":projectId"
-                element={token ? <Single /> : <Navigate to="/login" />}
+                element={<SingleBusiness />}
               />
               <Route
                 path="new"
                 element={token ? <NewBusiness /> : <Navigate to="/login" />}
               />
-              <Route path="single" element={<SingleBusiness />} />
             </Route>
 
             <Route path="sizings">
