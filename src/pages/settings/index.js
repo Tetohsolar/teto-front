@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Card from '../../components/card/Card'
+import Card from '../../components/Card'
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';

@@ -20,10 +20,37 @@ const ProductForm = (props) => {
   const [preco, setPreco] = useState('')
   const [peso, setPeso] = useState('')
   const [dimensao, setDimensao] = useState('')
+  const [hiddenmarca, setHiddenMarca] = useState('')
   const { Id } = useParams();
   const [idSelected, setIdSelected] = useState('')
   const { signUp, token } = useContext(AuthContext)
   const navigate = useNavigate();
+  const [brands, setBrands] = useState('')
+
+  async function loadBrandByProduct(type) {
+    try {
+      const filtro = {
+        "type":type
+      }
+  
+      
+      await api.post('/brands/all', filtro, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }).then((response) => {
+        setBrands(response.data.brand)
+        
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+ 
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
 
   async function loadById(id) {
     try {
@@ -36,8 +63,11 @@ const ProductForm = (props) => {
       }).then((response) => {
         setCodigo(response.data.codef)
         setDescricao(response.data.description)
-        setMarca(response.data.brand)
         setCategoria(response.data.category)
+        loadBrand(response.data.category,response.data.brand)
+        
+        
+        setMarca(response.data.brand)
         setDescricaoTec(response.data.descriptionTec)
         setDescricaoAmigavel(response.data.descriptionFriendly)
         setGarantia(response.data.guarantee)
@@ -60,16 +90,17 @@ const ProductForm = (props) => {
   useEffect(() => {
     if (Id) {
       loadById(Id)
+    } else {
+    loadBrandByProduct("P")
     }
-
     return () => { }
 
   }, [])
 
   function limpaCampos() {
     setCodigo('')
-    setMarca('')
-    setCategoria('')
+    setMarca('P')
+    setCategoria('Placa')
     setDescricao('')
     setDescricaoTec('')
     setDescricaoAmigavel('')
@@ -149,6 +180,24 @@ const ProductForm = (props) => {
       }
     }
   }
+
+  async function loadBrand(cat, brand){
+    if (categoria){
+      cat = categoria
+      console.log("aqui")
+    }
+    
+    if (cat==="Inversor"){
+      cat="M"
+    } else
+    if (cat==="Microinversor"){
+      cat="M"
+    } 
+    else{
+      cat="P"
+    }
+   await loadBrandByProduct(cat).then( setMarca(brand))
+  }
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
@@ -162,23 +211,33 @@ const ProductForm = (props) => {
           </label>
           <input type="text" maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
-        <div className="col-md-4">
-          <label htmlFor="inputMarca" className="form-label">
-            Marca
-          </label>
-          <input type="marca" maxLength={100} className="form-control" id="inputMarca" value={marca || ''} onChange={(e) => setMarca(e.target.value)} />
-        </div>
+        
         <div className="col-md-4">
           <label htmlFor="inputCategoria" className="form-label">
             Categoria
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-            <option value="">Selecionar...</option>
+          <select name="pets" id="input-user-type" className="form-select" value={categoria} onChange={(e) => setCategoria(e.target.value)} onClick={loadBrand}>
+          <option value="">Selecionar</option>
+            <option value="Placa">Placa</option>
             <option value="Inversor">Inversor</option>
             <option value="Microinversor">Microninversor</option>
-            <option value="Placa">Placa</option>
+            
           </select>
         </div>
+
+        
+        
+        <div className="col-md-4">
+          <label htmlFor="inputMarca" className="form-label">
+            Marca
+          </label>
+
+        <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+          <option value="">Selecionar </option>
+                {brands?brands.map((option) => (<option key={option.name} value={option.name} >{option.name}</option>)):""}
+              </select>  
+         </div>
+        
         <div className="col-md-12">
           <label htmlFor="descricao" className="form-label">
             Descrição
