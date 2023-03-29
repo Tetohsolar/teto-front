@@ -11,10 +11,7 @@ export default function TinyBarGainChart() {
   const [data, setData] = useState([{ name: 'joel', amt: 18 }])
   useEffect(() => {
     getData();
-    console.log(data)
     return () => { }
-
-
   }, [])
 
   async function getData() {
@@ -57,7 +54,22 @@ export default function TinyBarGainChart() {
 
       }).then(
         (response) => {
-          setData(response.data)
+
+          if (response.data && response.data.length !== 0) {
+            setData(response.data)
+          } else {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYar = currentDate.getFullYear();
+
+            const data = [
+              {
+                name: currentMonth + "/" + currentYar,
+                amt: 0,
+              }]
+            setData(data)
+          }
+          //setData(response.data)
         }
       ).catch(erro => {
         setData(data)

@@ -1,6 +1,9 @@
 import "./style.scss";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
+import api from "../../api";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const data = [
   {
@@ -54,6 +57,77 @@ const data = [
 ];
 
 export default function TinyBarLossesChart(props) {
+
+  const { token, AffiliatedId, profilelogged, idLogged } = useContext(AuthContext)
+  const [data, setData] = useState([{ name: 'joel', amt: 18 }])
+  useEffect(() => {
+    getData();
+    return () => { }
+  }, [])
+
+  async function getData() {
+    const data = [
+      {
+        name: "4/2022",
+        amt: 0,
+      }
+
+
+    ];
+
+    let filtro = {
+      situation: "Perdas",
+      AffiliatedId: AffiliatedId,
+      UserId: idLogged
+    }
+
+    if (profilelogged == "Admin") {
+      filtro = {
+        situation: "Perdas",
+        AffiliatedId: AffiliatedId
+      }
+    }
+
+    if (profilelogged == "Root") {
+      filtro = {
+        situation: "Perdas",
+
+      }
+    }
+
+
+
+    await api.post('business/lastYear', filtro,
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then(
+        (response) => {
+          if (response.data && response.data.length!==0) {
+              setData(response.data)
+         } else{
+          const currentDate = new Date();
+          const currentMonth = currentDate.getMonth()+1;
+          const currentYar = currentDate.getFullYear();
+
+          const data = [
+            {
+              name: currentMonth+"/"+currentYar,
+              amt: 0,
+            }]
+            setData(data)
+         }
+        }
+      ).catch(erro => {
+        setData(data)
+        console.log("erro")
+      })
+    //setData(data)
+
+
+  }
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = data[activeIndex];
   const handleClick = useCallback(
