@@ -28,10 +28,10 @@ export default function SingleBusinessDetails(props) {
         <div className="mb-3 col-lg-6">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <div className="d-flex flex-column flex-sm-row justify-content-between">
+              <div className="d-flex justify-content-between mb-3">
                 <h6 className="card-title mb-3">Informações básicas</h6>
                 <button
-                  className="btn btn-light text-primary d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
+                  className="btn btn-light text-primary d-flex align-items-center justify-content-center"
                   type="submit"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
@@ -101,10 +101,10 @@ export default function SingleBusinessDetails(props) {
         <div className="mb-3 col-lg-6">
           <div className="card border-light-subtle">
             <div className="card-body">
-            <div className="d-flex flex-column flex-sm-row justify-content-between">
+              <div className="d-flex justify-content-between mb-3">
                 <h6 className="card-title mb-3">Endereço</h6>
                 <button
-                  className="btn btn-light text-primary d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
+                  className="btn btn-light text-primary d-flex align-items-center justify-content-center"
                   type="submit"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
