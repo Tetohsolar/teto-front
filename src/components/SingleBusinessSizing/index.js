@@ -38,7 +38,7 @@ export default function SingleBusinessSizing(props) {
     <div className="p-3 mb-3 bg-white rounded-3">
       <h5 className="card-content-title mb-3 fw-semibold">{props.title}</h5>
       <div className="row">
-        <div className="mb-3">
+        <div className="mb-3 col-lg-6">
           <div className="card border-light-subtle">
             <div className="card-body">
               <h6 className="card-title mb-3">Informações da geradora</h6>
@@ -123,96 +123,98 @@ export default function SingleBusinessSizing(props) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-6 mb-3 mb-sm-0">
-          <div className="card border-light-subtle">
-            <div className="card-body">
-              <h6 className="card-title mb-3">Informações do sistema</h6>
-              <div className="table-responsive">
-                <table className="table caption-top table-sm mb-0">
-                  <tbody>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Tipo de sistema
-                      </th>
-                      <td>{systemInfoData.tipoDeSistema}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Potência do painel
-                      </th>
-                      <td>{systemInfoData.potenciaDoPainel}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Núm. de placas{" "}
-                      </th>
-                      <td>{systemInfoData.NumeroDePlacas}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Média mensal{" "}
-                      </th>
-                      <td>{systemInfoData.mediaMensal}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Potência do sistema
-                      </th>
-                      <td>{systemInfoData.PotenciaDoSistema}</td>
-                    </tr>
-                  </tbody>
-                </table>
+        <div className="col-lg-6">
+          <div className="row">
+            <div className="mb-3">
+              <div className="card border-light-subtle">
+                <div className="card-body">
+                  <h6 className="card-title mb-3">Informações do sistema</h6>
+                  <div className="table-responsive">
+                    <table className="table caption-top table-sm mb-0">
+                      <tbody>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Tipo de sistema
+                          </th>
+                          <td>{systemInfoData.tipoDeSistema}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Potência do painel
+                          </th>
+                          <td>{systemInfoData.potenciaDoPainel}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Núm. de placas{" "}
+                          </th>
+                          <td>{systemInfoData.NumeroDePlacas}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Média mensal{" "}
+                          </th>
+                          <td>{systemInfoData.mediaMensal}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Potência do sistema
+                          </th>
+                          <td>{systemInfoData.PotenciaDoSistema}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="col-sm-6 mb-3 mb-sm-0">
-          <div className="card border-light-subtle">
-            <div className="card-body">
-              <h6 className="card-title mb-3">Descrição do sistema</h6>
-              <div className="table-responsive">
-                <table className="table caption-top table-sm mb-0">
-                  <tbody>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Marca da placa{" "}
-                      </th>
-                      <td>{systemDescriptionData.marcaDaPlaca}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Modelos da placa{" "}
-                      </th>
-                      <td>{systemDescriptionData.modeloDaPlaca}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Marca doo Inversor{" "}
-                      </th>
-                      <td>{systemDescriptionData.MarcaDoInversor}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Modelo do inversor
-                      </th>
-                      <td>{systemDescriptionData.ModeloDoInversor}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Garantia do inversor
-                      </th>
-                      <td>{systemDescriptionData.GarantiaDoInversor}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="fw-semibold">
-                        Núm. de inversores
-                      </th>
-                      <td>{systemDescriptionData.NúmeroDeInversores}</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div className="mb-3 mb-sm-0">
+              <div className="card border-light-subtle">
+                <div className="card-body">
+                  <h6 className="card-title mb-3">Descrição do sistema</h6>
+                  <div className="table-responsive">
+                    <table className="table caption-top table-sm mb-0">
+                      <tbody>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Marca da placa{" "}
+                          </th>
+                          <td>{systemDescriptionData.marcaDaPlaca}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Modelos da placa{" "}
+                          </th>
+                          <td>{systemDescriptionData.modeloDaPlaca}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Marca doo Inversor{" "}
+                          </th>
+                          <td>{systemDescriptionData.MarcaDoInversor}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Modelo do inversor
+                          </th>
+                          <td>{systemDescriptionData.ModeloDoInversor}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Garantia do inversor
+                          </th>
+                          <td>{systemDescriptionData.GarantiaDoInversor}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" className="fw-semibold">
+                            Núm. de inversores
+                          </th>
+                          <td>{systemDescriptionData.NúmeroDeInversores}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
