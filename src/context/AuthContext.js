@@ -14,7 +14,9 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState('')
   const [profilelogged, setProfileLogged] = useState('')
   const [idLogged, setIdLogged] = useState('')
+  const [userName, setUserName] = useState('')
   const [afflitedId, setafflitedId] = useState('')
+
 
   //add new User
   async function signIn(email, password) {
@@ -23,6 +25,7 @@ function AuthProvider({ children }) {
       password: password
     }).then((response) => {
 
+      setUserName(response.data.userName)
       setToken(response.data.token)
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
@@ -138,6 +141,7 @@ function AuthProvider({ children }) {
         token,
         idLogged,
         profilelogged,
+        userName,
         afflitedId
       }}>
       {children}
