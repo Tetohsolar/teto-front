@@ -1,7 +1,7 @@
 import "./style.scss";
 
 export default function SingleBusinessSizing(props) {
-  const data = {
+  const generatorInfoData = {
     cliente: "João dos Santos",
     usuario: "Ana Silva",
     fatorSolar: "1580",
@@ -15,6 +15,23 @@ export default function SingleBusinessSizing(props) {
     energiaFp: "456.0",
     demandaP: "789.0",
     energiaP: "123.1",
+  };
+
+  const systemInfoData = {
+    tipoDeSistema: "Sistema com Inversor",
+    potenciaDoPainel: 465,
+    NumeroDePlacas: 15,
+    mediaMensal: 854,
+    PotenciaDoSistema: 6.98,
+  };
+
+  const systemDescriptionData = {
+    marcaDaPlaca: "Jinko",
+    modeloDaPlaca: "JKM465W-60HL4-V",
+    MarcaDoInversor: "Growatt",
+    ModeloDoInversor: "MIN 5000TL-X",
+    GarantiaDoInversor: 10,
+    NúmeroDeInversores: 1,
   };
 
   return (
@@ -32,73 +49,73 @@ export default function SingleBusinessSizing(props) {
                       <th scope="row" className="fw-semibold">
                         Cliente
                       </th>
-                      <td>{data.cliente}</td>
+                      <td>{generatorInfoData.cliente}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Usuário
                       </th>
-                      <td>{data.usuario}</td>
+                      <td>{generatorInfoData.usuario}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Fator solar
                       </th>
-                      <td>{data.fatorSolar}</td>
+                      <td>{generatorInfoData.fatorSolar}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Tipo de telhado
                       </th>
-                      <td>{data.tipoDeTelhado}</td>
+                      <td>{generatorInfoData.tipoDeTelhado}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Rateios
                       </th>
-                      <td>{data.rateios}</td>
+                      <td>{generatorInfoData.rateios}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Modalidade
                       </th>
-                      <td>{data.modalidade}</td>
+                      <td>{generatorInfoData.modalidade}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Grupo
                       </th>
-                      <td>{data.grupo}</td>
+                      <td>{generatorInfoData.grupo}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Subgrupo
                       </th>
-                      <td>{data.subgrupo}</td>
+                      <td>{generatorInfoData.subgrupo}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Demanda FP
                       </th>
-                      <td>{data.demandaFp}</td>
+                      <td>{generatorInfoData.demandaFp}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Energia FP
                       </th>
-                      <td>{data.energiaFp}</td>
+                      <td>{generatorInfoData.energiaFp}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Demanda P
                       </th>
-                      <td>{data.demandaP}</td>
+                      <td>{generatorInfoData.demandaP}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="fw-semibold">
                         Energia P
                       </th>
-                      <td>{data.energiaP}</td>
+                      <td>{generatorInfoData.energiaP}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -111,17 +128,39 @@ export default function SingleBusinessSizing(props) {
         <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Informações básicas</h6>
+              <h6 className="card-title mb-3">Informações do sistema</h6>
               <div className="table-responsive">
-                <table className="table caption-top table-sm">
+                <table className="table caption-top table-sm mb-0">
                   <tbody>
                     <tr>
-                      <td>a</td>
-                      <td>b</td>
+                      <th scope="row" className="fw-semibold">
+                        Tipo de sistema
+                      </th>
+                      <td>{systemInfoData.tipoDeSistema}</td>
                     </tr>
                     <tr>
-                      <td>c</td>
-                      <td>d</td>
+                      <th scope="row" className="fw-semibold">
+                        Potência do painel
+                      </th>
+                      <td>{systemInfoData.potenciaDoPainel}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Núm. de placas{" "}
+                      </th>
+                      <td>{systemInfoData.NumeroDePlacas}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Média mensal{" "}
+                      </th>
+                      <td>{systemInfoData.mediaMensal}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Potência do sistema
+                      </th>
+                      <td>{systemInfoData.PotenciaDoSistema}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -129,20 +168,48 @@ export default function SingleBusinessSizing(props) {
             </div>
           </div>
         </div>
-        <div className="col-sm-6">
+        <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Endereço</h6>
+              <h6 className="card-title mb-3">Descrição do sistema</h6>
               <div className="table-responsive">
-                <table className="table caption-top table-sm">
+                <table className="table caption-top table-sm mb-0">
                   <tbody>
                     <tr>
-                      <td>a</td>
-                      <td>b</td>
+                      <th scope="row" className="fw-semibold">
+                        Marca da placa{" "}
+                      </th>
+                      <td>{systemDescriptionData.marcaDaPlaca}</td>
                     </tr>
                     <tr>
-                      <td>c</td>
-                      <td>d</td>
+                      <th scope="row" className="fw-semibold">
+                        Modelos da placa{" "}
+                      </th>
+                      <td>{systemDescriptionData.modeloDaPlaca}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Marca doo Inversor{" "}
+                      </th>
+                      <td>{systemDescriptionData.MarcaDoInversor}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Modelo do inversor
+                      </th>
+                      <td>{systemDescriptionData.ModeloDoInversor}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Garantia do inversor
+                      </th>
+                      <td>{systemDescriptionData.GarantiaDoInversor}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="fw-semibold">
+                        Núm. de inversores
+                      </th>
+                      <td>{systemDescriptionData.NúmeroDeInversores}</td>
                     </tr>
                   </tbody>
                 </table>

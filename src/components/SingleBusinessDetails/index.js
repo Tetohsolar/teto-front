@@ -5,7 +5,7 @@ export default function SingleBusinessDetails(props) {
     <div className="p-3 mb-3 bg-white rounded-3">
       <h5 className="card-content-title mb-3 fw-semibold">{props.title}</h5>
       <div className="row">
-        <div className="col-6 mb-3 mb-sm-0">
+        <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
               <h6 className="card-title">Informações básicas</h6>
@@ -26,7 +26,7 @@ export default function SingleBusinessDetails(props) {
             </div>
           </div>
         </div>
-        <div className="col-6 mb-3 mb-sm-0">
+        <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
               <h6 className="card-title">Endereço</h6>
