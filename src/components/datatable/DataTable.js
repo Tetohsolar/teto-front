@@ -34,13 +34,13 @@ const DataTable = (props) => {
       page: data - 1,
       pageSize: 5
     }
-    
+
     api.post('/user/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
       }
     }).then((response) => {
-     
+
       setUsers(response.data.users)
       setCurrentPage(data);
     })
@@ -109,115 +109,115 @@ const DataTable = (props) => {
 
   return (
     <form onSubmit={handleMask}>
-    <div className="p-3 mb-3 bg-white border rounded-3 ">
+      <div className="p-3 mb-3 bg-white border rounded-3 ">
 
-    <div className='containerCustom'>
-    <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-    <Link to={"/users/new"} className="btn btn-primary text-light"> <AiFillPlusSquare/> Novo usuário</Link>
-    </div>
+        <div className='containerCustom'>
+          <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+          <Link to={"/users/new"} className="btn btn-primary text-light"> <AiFillPlusSquare /> Novo usuário</Link>
+        </div>
         <hr className='my-4' />
-      <div className="input-group mb-3 search-w">
-        
-        <input type="text" className="form-control"
-        
-          onChange={(e) => setUserFind(e.target.value)}
-          onKeyUp={(e) => {listaUsers()}}
-          
-          placeholder="Buscar..." aria-label="Recipient's username"
-          aria-describedby="button-addon2" />
-        <div className='btn-create'>
-        <button className="btn btn-primary text-light d-flex align-items-center" onClick={(e) => { handleSearchUser(e) }}> <VscSearch/></button>
-      </div>
+        <div className="input-group mb-3 search-w">
 
-      <div>
-      
-      </div>
-      </div>
-      <div className="table-w">
-        <div className="table-responsive">
-          <table className="table ">
+          <input type="text" className="form-control"
 
-            <tbody>
-            
-              <tr>
-                <th>
-              
+            onChange={(e) => setUserFind(e.target.value)}
+            onKeyUp={(e) => { listaUsers() }}
 
-                </th>
-                <th className='nome1'>
-                  Nome
-                  
-                </th>
-                
-                <th className='nome1'>
-                  E-mail
-                </th>
-                <th>
-                 
-                </th>
-                <th>
-                  
-                </th>
-                
-              </tr>
-            
-              {currentTableData && currentTableData.map((user) => {
-                return (
+            placeholder="Buscar..." aria-label="Recipient's username"
+            aria-describedby="button-addon2" />
+          <div className='btn-create'>
+            <button className="btn btn-primary text-light d-flex align-items-center" onClick={(e) => { handleSearchUser(e) }}> <VscSearch /></button>
+          </div>
 
-                  <tr key={user.id}>
-                    <td className="td-img">
-                      <img className="table-avatar" src={"https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy"} alt="Avatar" />
-                    </td>
-                    
-                    <td>{user.name}</td>
-                    
-                    <td>{user.email}</td>
-                    
-                    <td>
-                      <span className="badge bg-light text-secondary">
-                        {user.userType}
-                      </span>
-                      
-                    </td>
-                    
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Link to={`/users/edit/${user.id}`}>
-                          <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center">
-                            <BsFillPencilFill/>
+          <div>
+
+          </div>
+        </div>
+        <div className="table-w">
+          <div className="table-responsive">
+            <table className="table ">
+
+              <tbody>
+
+                <tr>
+                  <th>
+
+
+                  </th>
+                  <th className='nome1'>
+                    Nome
+
+                  </th>
+
+                  <th className='nome1'>
+                    E-mail
+                  </th>
+                  <th>
+
+                  </th>
+                  <th>
+
+                  </th>
+
+                </tr>
+
+                {currentTableData && currentTableData.map((user) => {
+                  return (
+
+                    <tr key={user.id}>
+                      <td className="td-img">
+                        {/* <img className="table-avatar" src={"https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy"} alt="Avatar" /> */}
+                      </td>
+
+                      <td>{user.name}</td>
+
+                      <td>{user.email}</td>
+
+                      <td>
+                        <span className="badge bg-light text-secondary">
+                          {user.userType}
+                        </span>
+
+                      </td>
+
+                      <td>
+                        <div className="d-flex gap-2">
+                          <Link to={`/users/edit/${user.id}`}>
+                            <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center">
+                              <BsFillPencilFill />
+                            </button>
+                          </Link>
+                          <button type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => updateListUser(user)}>
+
+                            <BsFillTrash3Fill />
                           </button>
-                        </Link>
-                        <button type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => updateListUser(user)}>
+                          <MyModal userId={userDel.id} />
+                        </div>
 
-                         <BsFillTrash3Fill/>
-                        </button>
-                        <MyModal userId={userDel.id} />
-                      </div>
-                      
-                    </td>
-                    
-                  </tr>
-                   
-                );
+                      </td>
 
-              })}
-              
-            </tbody>
-            
-          </table>
-          
-          <div className='paginationCustomer'>
-          <Pagination
-            className="pagination-bar"
-            currentPage={currentPage}
-            totalCount={totalPages}
-            pageSize={PageSize}
-            onPageChange={page => onPageChanged(page)}
-          />
+                    </tr>
+
+                  );
+
+                })}
+
+              </tbody>
+
+            </table>
+
+            <div className='paginationCustomer'>
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={totalPages}
+                pageSize={PageSize}
+                onPageChange={page => onPageChanged(page)}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </form>
   );
 };
