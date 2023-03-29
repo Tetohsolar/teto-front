@@ -178,7 +178,7 @@ const paginate = ({ selected }) => {
         </button>
       </div>
       <NewBusiness />
-      <hr className="" />
+      <hr className="my-3 text-body-tertiary" />
       <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
         <div className="filtro">
           <input type="numero" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" onChange={(e) => setNumero(e.target.value)} onKeyUp={(e) => { list(name) }}/>
