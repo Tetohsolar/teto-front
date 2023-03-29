@@ -1,9 +1,11 @@
 import './home.scss';
 import { useContext } from 'react';
-import Card from '../../components/card/Card'
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
+import Widget from '../../components/Widgets';
+import SixMonthLargeChart from '../../components/SixMonthLargeChart';
+import SixMonthsBusinessDataTable from '../../components/SixMonthsBusinessDataTable';
 
 const Home = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
@@ -16,37 +18,26 @@ const Home = () => {
       >
         <Sidebar activeButtonHome="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
-          <h5 className="pb-3">
-            Dashboard
-          </h5>
+          <h5 className="pb-3">Dashboard</h5>
           <div className="row">
             <div className="col-lg-4">
-              <Card
+              <Widget
+                type="current-month"
                 cardContentHome="card-content-home"
-                cardTitle="Negócios deste mês"
               />
             </div>
             <div className="col-lg-4">
-              <Card
-                cardContentHome="card-content-home"
-                cardTitle="Negócios fechados neste mês"
-              />
+              <Widget type="earnings" cardContentHome="card-content-home" />
             </div>
             <div className="col-lg-4">
-              <Card
+              <Widget
+                type="open-business"
                 cardContentHome="card-content-home"
-                cardTitle="Negócios em aberto"
               />
             </div>
           </div>
-          <Card
-            cardContentHome="card-content-home"
-            cardTitle="Últimos 6 meses"
-          />
-          <Card
-            cardContentHome="card-content-home"
-            cardTitle="Lista de negócios deste mês"
-          />
+          <SixMonthLargeChart chartTitle="Últimos 6 meses"/>
+          <SixMonthsBusinessDataTable listTitle="Mês atual" />
         </div>
       </div>
     </div>

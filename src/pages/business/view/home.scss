@@ -1,0 +1,125 @@
+.home {
+    background-color: #F4F9FC;
+    width: 100%;
+}
+
+.card-mateus {
+    color: #6E6E6E;
+    background-color: #F4F9FC;
+    height: 105px;
+    width: 280px;
+    padding-top: 30px;
+    margin: 5px;
+}
+.topResume{
+    
+    display: flex;
+    justify-content: space-between;
+
+}
+.card-content-home{
+    background-color: #6E6E6E;
+}
+
+.card-content-home {
+    min-height: 150px;
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+.wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+@media (min-width: 768px) {
+    .wrapper.toggled #sidebar-wrapper {
+        margin-left: -232px;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+.toda{
+    width: 1500px;
+   
+}
+.junto{
+    display: flex,
+
+}
+
+.linhabaixo{
+    border-collapse: collapse;
+    border-bottom: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+    
+}
+.topbaixo{
+    display: flex;
+       
+}
+.infb{
+    display: flex;
+    margin: 20px;
+    
+}
+.container1{
+    margin-top: -78px;
+}
+.tamanho-tr{
+    height: 40px;
+}
+table{
+    width: 90%;
+    margin: 20px;
+}
+.margin{
+    margin: 20px;
+}
+
+.cards{
+    width: 47%;
+    margin-left: 20px;
+    
+}
+.conteinerCards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:20px;
+}
+
+.card-title{
+    padding: 20px;
+    width: 47%px;
+    display: flex;
+    justify-content: space-between;
+}
+.primeiraDivHome{
+    padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+    .cards {
+      width: 95%;
+      margin: 5px;
+    }
+    .card-title{
+        width: 95%;
+
+    }
+  }

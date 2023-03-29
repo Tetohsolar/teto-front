@@ -54,6 +54,7 @@ function Cidades(props) {
 const AfflitedForm = (props) => {
 
   const [name, setName] = useState('')
+  const [num, setNumero] = useState('')
   const [id, setId] = useState('')
   const [lbFantasia, setLbFantasia] = useState('')
   const [lbDocument, setLbDocument] = useState('')
@@ -86,6 +87,7 @@ const AfflitedForm = (props) => {
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
+  const handleInputnum = ({ target: { value } }) => setNumero(value);
   const { clientId } = useParams();
 
   useEffect(() => {
@@ -115,6 +117,7 @@ const AfflitedForm = (props) => {
         handleTipoPessoaValue(olha)
 
         setPhone(response.data.phone)
+        setPhone(response.data.num)
         setZap(response.data.zap)
         setCepData(response.data.Addresses[0].postcode)
         setEstado(response.data.Addresses[0].state)
@@ -136,6 +139,7 @@ const AfflitedForm = (props) => {
         setProjetom(response.data.projectCostM)
         setTaxam(response.data.taxM)
         setMontagemm(response.data.assemblyCostM)
+        setNumero(response.data.Addresses[0].number)
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -148,6 +152,7 @@ const AfflitedForm = (props) => {
 
   function limpaCampos() {
     setName('')
+    setNumero('')
     setCorporateName('')
     setPhone('')
     setTipoPessoa('F')
@@ -165,7 +170,7 @@ const AfflitedForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, documento) {
+  function validaCampos(name, phone, documento, cep, zap) {
 
     if (name === "") {
       toast.error("Nome É obrigatório", {
@@ -173,13 +178,23 @@ const AfflitedForm = (props) => {
       })
       return false;
     }
+    
+    
     if (phone === "") {
       toast.error("Telefone É obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
+    let phonenomask = phone.replace('_',"");
 
+    if (phonenomask.length < 15 ) {
+      toast.error("Telefone é inválido", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+  
     console.log("entrou valor " + documento)
     if (documento !== '') {
 
@@ -288,10 +303,11 @@ const AfflitedForm = (props) => {
     complementCostI,
     projectCostI,
     taxI,
-    assemblyCostI,) {
+    assemblyCostI, num) {
 
     const json = {
       fantasy: name,
+      num: num,
       corporatename: corpName,
       phone: phone,
       document: documento,
@@ -318,7 +334,8 @@ const AfflitedForm = (props) => {
           postcode: cep,
           city: cidade,
           state: estado,
-          neighborhood: bairro
+          neighborhood: bairro,
+          number: num
         }
       ]
     }
@@ -378,7 +395,7 @@ const AfflitedForm = (props) => {
           complementCostI,
           projectCostI,
           taxI,
-          assemblyCostI,)
+          assemblyCostI, num)
         navigate("/affliteds");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -420,6 +437,12 @@ const AfflitedForm = (props) => {
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
+              <div className="col-md-3">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Número
+                </label>
+                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
+              </div>
               <div className="col-md-3"  >
                 <label htmlFor="inputDocumento" className="form-label ">
                   {lbDocument === "" ? "CPF" : lbDocument}
@@ -460,7 +483,7 @@ const AfflitedForm = (props) => {
                 <label htmlFor="Cidade" className="form-label combomob">
                   Cidade
                 </label>
-                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
+                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="inputLogradouro" className="form-label ">
@@ -490,13 +513,7 @@ const AfflitedForm = (props) => {
           </TabPanel>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-              <div className="col-md-3"  >
-                <label htmlFor="kitI" className="form-label ">
-                  Kit
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={kitI || ''} onChange={(e) => setKitinv(e.target.value)} />
-              </div>
+             
               <div className="col-md-3"  >
                 <label htmlFor="complementCostI" className="form-label ">
                   Complementar
@@ -526,12 +543,7 @@ const AfflitedForm = (props) => {
           </TabPanel>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-              <div className="col-md-3"  >
-                <label htmlFor="kitM" className="form-label ">
-                  Kit
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={kitM || ''} onChange={(e) => setKitmicro(e.target.value)} />
-              </div>
+              
               <div className="col-md-3"  >
                 <label htmlFor="complementCostM" className="form-label ">
                   Complementar
@@ -556,6 +568,7 @@ const AfflitedForm = (props) => {
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
+              
             </div>
           </TabPanel>
         </Tabs>

@@ -1,7 +1,7 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
 import { useState, useContext } from 'react'
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
@@ -29,22 +29,30 @@ const ProfileForm = (props) => {
   }
 
   function validaCampos(name, email, phone, password, confirmPassword, tipo, habilitar) {
+    if (phone){
 
-    if (name !== '' && email !== '' && phone !== '') {
-      return true
+    
+    let phonenomask=phone.replace('_', '');
+    console.log(phonenomask.length)
+
+      if (phonenomask.length <14) {
+        toast.error("Telefone é invalido", {
+          autoClose: 1000,
+        })
+        return false;
+      }
     }
-    if (password === confirmPassword && tipo !== '') {
-      return true
-    }
-    else {
-      return false
-    }
+
+       return true;
+
   }
+  
+  
 
   async function handleSaveUser(e) {
 
     e.preventDefault();
-    if (validaCampos) {
+    if (await validaCampos(name,email,phone,password,confirmPassword,tipo,habilitar)) {
 
       try {
 
@@ -108,7 +116,7 @@ const ProfileForm = (props) => {
           <InputMask
             className="form-control" id="inputPhoneNumber"
             onChange={(e) => setPhone(e.target.value)}
-            mask='(99)9999-99999'
+            mask='(99)99999-9999'
             value={phone || ''}>
           </InputMask>
         </div>
@@ -136,7 +144,7 @@ const ProfileForm = (props) => {
             <option value="N">Desabilitado</option>
           </select>
         </div>
-        <div className="d-grid gap-2 d-md-block col-12">
+        <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar
           </button>

@@ -20,20 +20,10 @@
 .text-bg-lightblue {
     background-color: #F8F9FA;
 }
-.filtro{
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    height: 40px ;
-    width: 70%;
-    
- 
+
+.alinhadaDireita {
+    text-align: right;
 }
-.filtro2{
-   height: 40px;
-    margin-left: -3%;
- 
-}
-.alinhaDireita{
-    text-align: right;   
+.alinhadoCentro{
+    text-align: center;
 }

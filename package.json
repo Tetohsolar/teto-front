@@ -13,6 +13,8 @@
     "classnames": "^2.3.2",
     "cpf-cnpj-validator": "^1.0.3",
     "datable": "^1.0.3",
+    "date-fns": "^2.29.3",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
