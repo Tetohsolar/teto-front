@@ -10,6 +10,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
+import { useParams } from 'react-router-dom';
 
 const ViewBusiness = () => {
   const [name, setName] = useState('')
@@ -51,13 +52,20 @@ const ViewBusiness = () => {
   const[cep,setCep] = useState ('')
   const[estado,setEstado] = useState ('')
   const[cidade,setCidade] = useState ('')
+  const { businessId } = useParams();
+  const[valor,setValor] = useState ('')
+
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
 
   useEffect(() => {
 
     const bId = 2
 
-    if (bId) {
-      loadbId(bId)
+    if (businessId) {
+      loadbId(businessId)
     }
 
     return () => { }
@@ -125,7 +133,9 @@ const ViewBusiness = () => {
       setInversorMa(response.data['inversor_negocio.brand'])
       setInversorMo(response.data['inversor_negocio.brand'])
       setNumeroInv(response.data.numberInverMicro)
+      setValor(formatter.format(response.data.amount))
       loadAdd(response.data.ClientId)
+      
       
       
       
@@ -153,6 +163,17 @@ const ViewBusiness = () => {
                   <span className="badge rounded-pill text-bg-lightblue text-primary">{status}</span>
                 </div>
                 <div className="col-lg-4 card-mateus rounded-3">
+                  <h6 class="card-content-title mb-3 fw-semibold">Número da proposta </h6>
+
+                  <label> {numberP}</label>
+
+                </div>
+                <div className="col-lg-4 card-mateus rounded-3">
+                  <h6 class="card-content-title mb-3 fw-semibold">Orçamento </h6>
+
+                  <label> {valor} </label>
+                </div>
+                <div className="col-lg-4 card-mateus rounded-3">
                   <h6 class="card-content-title mb-3 fw-semibold"> Contato </h6>
 
                   <label>{name} </label>
@@ -163,12 +184,7 @@ const ViewBusiness = () => {
                   <label> {donoN} </label>
 
                 </div>
-                <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">Número da proposta </h6>
-
-                  <label> {numberP}</label>
-
-                </div>
+                
               </div>
             </div>
           </div>
