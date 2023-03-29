@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
-import Widget from '../../../components/Widgets';
+import Widget from '../../../components/Widget';
 import { useEffect } from 'react';
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
