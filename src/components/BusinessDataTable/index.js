@@ -11,6 +11,7 @@ import { VscSearch } from "react-icons/vsc";
 import { BsFillPieChartFill, BsFillSendFill, BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import InputMask from 'react-input-mask';
 import moment from 'moment/moment';
+import { Link, useNavigate } from 'react-router-dom';
 
 function DateInput(props) {
   return (
@@ -58,6 +59,7 @@ const BusinessDataTable = (props) => {
   const [numero, setNumero] = useState([])
   const [situation, setSituation] = useState([])
   const [abertos, setAbertos] = useState([])
+  const navigate = useNavigate();
 
   
   useEffect(() => {
@@ -159,7 +161,9 @@ function onPageChanged(data) {
 function find(){
   list("%")
 }
-
+function edit(id) {
+  navigate("/business/view/" + id)
+}
 const paginate = ({ selected }) => {
   setCurrentPage(selected + 1);
 };
@@ -259,7 +263,9 @@ const paginate = ({ selected }) => {
                               </button>
                               <button
                                 type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                  edit(item.id)
+                                }}
                               >
                                 <BsPencilFill/>
                               </button>
