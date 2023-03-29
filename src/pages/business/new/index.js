@@ -279,7 +279,7 @@ export default function NewBusiness(prop) {
         <ToastContainer />
         <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
           data-bs-keyboard="false" aria-hidden="true" >
-          <div className="modal-dialog modal-xl" >
+          <div className="modal-dialog modal-lg w-100" >
             <div className="modal-content">
               <div className="modal-header">
                 <div className="d-flex flex-column">
@@ -292,7 +292,7 @@ export default function NewBusiness(prop) {
 
                 <div className="container-fluid">
                   <div className="row d-flex flex-row align-items-end ">
-                    <div className="col-md-2">
+                    <div className="col-md-3 ">
                       <label htmlFor="inputCodigo" className="form-label">
                         Tipo de Cliente:
                       </label>
@@ -305,7 +305,7 @@ export default function NewBusiness(prop) {
 
                     </div>
                     {tipoPessoa === 'PF' ? <>
-                      <div className="col-md-2">
+                      <div className="col-md-3">
 
                         <label htmlFor="inputcpf" className="form-label">
                           CPF:
@@ -331,7 +331,7 @@ export default function NewBusiness(prop) {
                       :
                       <>
 
-                        <div className="col-md-3">
+                        <div className="col-md-4">
 
                           <label htmlFor="inputCnpj" className="form-label">
                             CNPJ:
@@ -346,12 +346,7 @@ export default function NewBusiness(prop) {
 
                         </div>
 
-                        <div div className="col-md-4">
-                          <label htmlFor="inputNomeFantasia" className="form-label">
-                            Nome Fantasia:
-                          </label>
-                          <input type="text" className="form-control" id="inputNomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
-                        </div>
+
                       </>}
                     <div className="col-md-3">
                       <button className='btn btn-primary text-light gap-2' onClick={handleFindClient} >
@@ -365,7 +360,23 @@ export default function NewBusiness(prop) {
                   <br />
                   <hr />
                   <div className="row">
-                    <div className="col-md-2">
+                    <div div className="col-md-6">
+                      <label htmlFor="inputNomeFantasia" className="form-label">
+                        Nome Fantasia:
+                      </label>
+                      <input type="text" className="form-control" id="inputNomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
+                    </div>
+
+                    <div className="col-md-5">
+                      <label htmlFor="inputEmail" className="form-label">
+                        E-mail:
+                      </label>
+                      <input type="text" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+
+                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
                       <label htmlFor="inputFone" className="form-label">
                         Fone:
                       </label>
@@ -377,13 +388,7 @@ export default function NewBusiness(prop) {
                       </InputMask>
 
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputEmail" className="form-label">
-                        E-mail:
-                      </label>
-                      <input type="text" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                       <label htmlFor="inputWhatsapp" className="form-label">
                         Whatsapp:
                       </label>
@@ -408,7 +413,10 @@ export default function NewBusiness(prop) {
 
                     </div>
 
+
+
                   </div>
+
                 </div>
 
               </div>
