@@ -1,59 +1,74 @@
 import "./style.scss";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { BarChart, Bar, Cell, ResponsiveContainer } from "recharts";
+import api from "../../api";
+import { AuthContext } from "../../context/AuthContext";
 
-const data = [
-  {
-    name: "04/2022",
-    amt: 80,
-  },
-  {
-    name: "05/2022",
-    amt: 36,
-  },
-  {
-    name: "06/2022",
-    amt: 72,
-  },
-  {
-    name: "07/2022",
-    amt: 44,
-  },
-  {
-    name: "08/2022",
-    amt: 80,
-  },
-  {
-    name: "09/2022",
-    amt: 96,
-  },
-  {
-    name: "10/2022",
-    amt: 12,
-  },
-  {
-    name: "11/2022",
-    amt: 36,
-  },
-  {
-    name: "12/2022",
-    amt: 72,
-  },
-  {
-    name: "01/2023",
-    amt: 44,
-  },
-  {
-    name: "02/2023",
-    amt: 80,
-  },
-  {
-    name: "03/2023",
-    amt: 96,
-  },
-];
 
 export default function TinyBarGainChart() {
+
+  const { token, AffiliatedId, profilelogged, idLogged } = useContext(AuthContext)
+  const [data, setData] = useState([{ name: 'joel', amt: 18 }])
+  useEffect(() => {
+    getData();
+    console.log(data)
+    return () => { }
+
+
+  }, [])
+
+  async function getData() {
+    const data = [
+      {
+        name: "4/2022",
+        amt: 0,
+      }
+
+
+    ];
+
+    let filtro = {
+      situation: "Ganhos",
+      AffiliatedId: AffiliatedId,
+      UserId: idLogged
+    }
+
+    if (profilelogged == "Admin") {
+      filtro = {
+        situation: "Ganhos",
+        AffiliatedId: AffiliatedId
+      }
+    }
+
+    if (profilelogged == "Root") {
+      filtro = {
+        situation: "Ganhos",
+
+      }
+    }
+
+
+
+    await api.post('business/lastYear', filtro,
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then(
+        (response) => {
+          setData(response.data)
+        }
+      ).catch(erro => {
+        setData(data)
+        console.log("erro")
+      })
+    //setData(data)
+
+
+  }
+
+
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = data[activeIndex];
   const handleClick = useCallback(

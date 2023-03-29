@@ -10,6 +10,7 @@ import api from '../../api';
 import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { set } from 'date-fns';
 
 
 
@@ -54,6 +55,7 @@ const ClientForm = (props) => {
 
 
   const [name, setName] = useState('')
+  const [num, setNumero] = useState('')
   const [id, setId] = useState('')
   const [lbFantasia, setLbFantasia] = useState('')
   const [lbDocument, setLbDocument] = useState('')
@@ -120,6 +122,7 @@ const ClientForm = (props) => {
         setInformacoesAdicionais(response.data.addInformation)
         setId(response.data.id)
         setEmail(response.data.email)
+        setNumero(response.data.Addresses[0].number)
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -133,6 +136,7 @@ const ClientForm = (props) => {
 
   function limpaCampos() {
     setName('')
+    setNumero('')
     setCorporateName('')
     setPhone('')
     setTipoPessoa('F')
@@ -150,7 +154,7 @@ const ClientForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, documento,zap,cep) {
+  function validaCampos(name, phone, documento,cep, zap) {
 
 
     if (name === "") {
@@ -169,7 +173,7 @@ const ClientForm = (props) => {
     let phonenomask=phone.replace('_', '');
     
 
-    if (phonenomask.length <15) {
+    if (phonenomask.length <14) {
       toast.error("Telefone é invalido", {
         autoClose: 1000,
       })
@@ -182,16 +186,15 @@ const ClientForm = (props) => {
 
     
     let zapnomask=zap.replace('_', '');
-    
-
-    
-    if (zapnomask.length <15) {
+     
+    if (zapnomask.length <14) {
       toast.error("WhatsApp é invalido", {
         autoClose: 1000,
       })
       return false;
     }
   }
+  console.log(cep)
     
     if (cep ){
       let cepnomask=cep.replace('_', '');
@@ -203,10 +206,7 @@ const ClientForm = (props) => {
         return false;
       }  
     }
-    
-
-
-
+   
     if (documento !== '') {
       if (documento.length <= 14 && !cpf.isValid(documento)) {
         toast.error("CPF inválido", {
@@ -300,7 +300,7 @@ const ClientForm = (props) => {
 
   const navigate = useNavigate();
 
-  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd) {
+  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
 
 
     const json = {
@@ -319,12 +319,14 @@ const ClientForm = (props) => {
           postcode: cep,
           city: cidade,
           state: estado,
-          neighborhood: bairro
+          neighborhood: bairro,
+          number: num
         }
       ]
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
+    
     if (await validaCampos(name, phone, documento)) {
 
       if (id) {
@@ -365,9 +367,9 @@ const ClientForm = (props) => {
 
     e.preventDefault();
 
-    if (validaCampos(name, phone, doc,zap,cepData)) {
+    if (validaCampos(name, phone, doc,cepData, zap)) {
       try {
-        await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, id, idAdd)
+        await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, id, idAdd, num)
         navigate("/customers");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -398,6 +400,12 @@ const ClientForm = (props) => {
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
+        <div className="col-md-3">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Número
+                </label>
+                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
+              </div>
         <div className="col-md-4"  >
           <label htmlFor="inputDocumento" className="form-label ">
             {lbDocument === "" ? "CPF" : lbDocument}
@@ -438,7 +446,7 @@ const ClientForm = (props) => {
           <label htmlFor="Cidade" className="form-label">
             Cidade
           </label>
-          <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCorporateName(e.target.value)}>  </Cidades>
+          <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
         </div>
         <div className="col-md-5"  >
           <label htmlFor="inputLogradouro" className="form-label ">

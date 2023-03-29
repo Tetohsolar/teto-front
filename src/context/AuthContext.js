@@ -14,6 +14,7 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState('')
   const [profilelogged, setProfileLogged] = useState('')
   const [idLogged, setIdLogged] = useState('')
+  const [afflitedId, setafflitedId] = useState('')
 
   //add new User
   async function signIn(email, password) {
@@ -25,6 +26,7 @@ function AuthProvider({ children }) {
       setToken(response.data.token)
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
+      setafflitedId(response.data.afflitedId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -132,7 +134,8 @@ function AuthProvider({ children }) {
         ToastContainer,
         token,
         idLogged,
-        profilelogged
+        profilelogged,
+        afflitedId
       }}>
       {children}
     </AuthContext.Provider>

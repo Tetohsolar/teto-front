@@ -54,6 +54,7 @@ function Cidades(props) {
 const AfflitedForm = (props) => {
 
   const [name, setName] = useState('')
+  const [num, setNumero] = useState('')
   const [id, setId] = useState('')
   const [lbFantasia, setLbFantasia] = useState('')
   const [lbDocument, setLbDocument] = useState('')
@@ -86,6 +87,7 @@ const AfflitedForm = (props) => {
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
+  const handleInputnum = ({ target: { value } }) => setNumero(value);
   const { clientId } = useParams();
 
   useEffect(() => {
@@ -115,6 +117,7 @@ const AfflitedForm = (props) => {
         handleTipoPessoaValue(olha)
 
         setPhone(response.data.phone)
+        setPhone(response.data.num)
         setZap(response.data.zap)
         setCepData(response.data.Addresses[0].postcode)
         setEstado(response.data.Addresses[0].state)
@@ -136,6 +139,7 @@ const AfflitedForm = (props) => {
         setProjetom(response.data.projectCostM)
         setTaxam(response.data.taxM)
         setMontagemm(response.data.assemblyCostM)
+        setNumero(response.data.Addresses[0].number)
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -148,6 +152,7 @@ const AfflitedForm = (props) => {
 
   function limpaCampos() {
     setName('')
+    setNumero('')
     setCorporateName('')
     setPhone('')
     setTipoPessoa('F')
@@ -165,7 +170,7 @@ const AfflitedForm = (props) => {
     handleEstadoValue("")
   }
 
-  function validaCampos(name, phone, documento) {
+  function validaCampos(name, phone, documento, cep, zap) {
 
     if (name === "") {
       toast.error("Nome É obrigatório", {
@@ -298,10 +303,11 @@ const AfflitedForm = (props) => {
     complementCostI,
     projectCostI,
     taxI,
-    assemblyCostI,) {
+    assemblyCostI, num) {
 
     const json = {
       fantasy: name,
+      num: num,
       corporatename: corpName,
       phone: phone,
       document: documento,
@@ -328,7 +334,8 @@ const AfflitedForm = (props) => {
           postcode: cep,
           city: cidade,
           state: estado,
-          neighborhood: bairro
+          neighborhood: bairro,
+          number: num
         }
       ]
     }
@@ -388,7 +395,7 @@ const AfflitedForm = (props) => {
           complementCostI,
           projectCostI,
           taxI,
-          assemblyCostI,)
+          assemblyCostI, num)
         navigate("/affliteds");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -429,6 +436,12 @@ const AfflitedForm = (props) => {
                   {lbFantasia === "" ? "Nome" : lbFantasia}
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="col-md-3">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Número
+                </label>
+                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="inputDocumento" className="form-label ">
@@ -555,6 +568,7 @@ const AfflitedForm = (props) => {
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
+              
             </div>
           </TabPanel>
         </Tabs>
