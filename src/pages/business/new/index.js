@@ -34,6 +34,9 @@ export default function NewBusiness(prop) {
 
   return (
 
+
+
+
     <>
       {/* Dados do */}
       <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
@@ -241,8 +244,23 @@ export default function NewBusiness(prop) {
 
 
                   </div>
+
+
+                </div>
+
+
+                <div className="row">
+                  <div className="col-lg-12">
+                    <label htmlFor="inputCodigo" className="form-label">
+                      Informações Adicionais:
+                    </label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                  </div>
+
                 </div>
               </div>
+
             </div>
             <div className="modal-footer">
               <button
@@ -258,29 +276,12 @@ export default function NewBusiness(prop) {
                 Avançar
               </button>
             </div>
+
           </div>
 
         </div>
-      </div>
 
-
-
-      {/* <div className="modal-footer">
-                <button
-                  className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">Voltar</button>
-                <button
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">
-
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-                  </svg>
-                  Avançar
-                </button>
-              </div> */}
-
-
+      </div >
 
 
 
@@ -576,7 +577,40 @@ export default function NewBusiness(prop) {
 
 
 
-    </>
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* <div class="modal-content">
+            <div class="modal-header">
+              <div className="d-flex flex-column">
+                <h1 className="modal-title fs-3" id="exampleModalLabel">Nova Proposta de  Negócio </h1>
+                <h5 className='fs-5'>Informações da Geradora</h5>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div> */}
+
+      {/* <div class="modal-footer">
+            <button
+              className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
+              data-bs-dismiss="modal">Voltar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avançar</button>
+
+
+
+          </div> */}
+
+
+    </ >
 
 
 
@@ -585,8 +619,6 @@ export default function NewBusiness(prop) {
   )
 
 }
-
-
 
 
 
