@@ -57,11 +57,13 @@ const BusinessDataTable = (props) => {
   const [data, setData] = useState([])
   const [numero, setNumero] = useState([])
   const [situation, setSituation] = useState([])
+  const [abertos, setAbertos] = useState([])
 
+  
   useEffect(() => {
 
    list("%");
-   
+   setAbertos()
 
   return () => { }
 
