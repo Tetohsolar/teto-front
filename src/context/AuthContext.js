@@ -38,7 +38,7 @@ function AuthProvider({ children }) {
   }
 
   //SignUp User
-  async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar) {
+  async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar, idfiliado) {
     setLoading(true)
     await api.post('/user/create', {
       name: name,
@@ -47,7 +47,8 @@ function AuthProvider({ children }) {
       password: password,
       confirmpassword: confirmpassword,
       tipo: tipo,
-      enabled: habilitar
+      enabled: habilitar,
+      afflitedId: idfiliado
 
     }, {
       headers: {
@@ -68,7 +69,7 @@ function AuthProvider({ children }) {
   }
 
   //id, name, phone, email, password, confirmPassword, tipo
-  async function updateUser(id, name, phone, email, tipo, habilitar) {
+  async function updateUser(id, name, phone, email, tipo, habilitar, idfiliado) {
 
     setLoading(true)
 
@@ -77,7 +78,9 @@ function AuthProvider({ children }) {
       phone: phone,
       email: email,
       tipoR: tipo,
-      enabled: habilitar
+      enabled: habilitar,
+      AffiliatedId: idfiliado
+
     }, {
       headers: {
         'Authorization': `Basic ${token}`
