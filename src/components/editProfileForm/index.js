@@ -18,13 +18,19 @@ const EditProfileForm = (props) => {
   const [habilitar, setHabilitar] = useState('')
   const { signUp, profilelogged } = useContext(AuthContext)
   const { updateUser, token } = useContext(AuthContext)
+  const [filiados, setFiliados] = useState([])
+  const [idfiliado, setIdfiliado] = useState(null) 
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     findUserById()
   }, [reloadPage])
 
   async function findUserById() {
+    
+    await loadfiliados();
 
     await api.get(`/user/get/${props.userId}`, {
       headers: {
@@ -38,14 +44,33 @@ const EditProfileForm = (props) => {
         setPhone(response.data.phone)
         setTipo(response.data.tipo)
         setHabilitar(response.data.enabled)
+        console.log(response.data)
+        setIdfiliado(response.data.AffiliatedId
+)
       })
+  }
+
+  async function loadfiliados(){
+  
+    await api.get('/afflited/all',{
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then(response=>{
+      //console.log(response.data.affiliated)
+      setFiliados(response.data.affiliated)
+
+     
+    }).catch(error=>{
+      console.log(" d eu errado")
+    })
   }
   async function handleUpdateUser(e) {
     setReloadPage(true)
     e.preventDefault()
     try {
 
-      await updateUser(id, name, phone, email, tipo, habilitar)
+      await updateUser(id, name, phone, email, tipo, habilitar,idfiliado)
       setReloadPage(false)
       navigate("/users/")
     }
@@ -58,19 +83,7 @@ const EditProfileForm = (props) => {
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
-      <div className="d-flex gap-3">
-        <div>
-          <img className="input-avatar" src={'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy'} alt="Avatar" />
-        </div>
-        <div>
-          <label htmlFor="formFile" className="form-label">
-            Imagem de perfil
-          </label>
-          <input className="form-control" type="file" id="formFile" />
-        </div>
-      </div>
-      <hr className="my-4" />
-      <form className="row g-3" onSubmit={handleUpdateUser}>
+     <form className="row g-3" onSubmit={handleUpdateUser}>
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
             Nome
@@ -116,6 +129,21 @@ const EditProfileForm = (props) => {
             <option value="">Selecionar...</option>
             <option value="S">Habilitado</option>
             <option value="N">Desabilitado</option>
+          </select>
+        </div>
+
+        <div className="col-md-4">
+          <label htmlFor="inputUserType" className="form-label">
+            Filiado
+          </label>
+          <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
+            <option value="">Selecionar...</option>
+            {filiados?filiados.map(objeto => (
+            <option key={objeto.id} value={objeto.id}>
+              {objeto.fantasy}
+            </option>
+          )):''}
+            
           </select>
         </div>
         <div className="customerCliente">

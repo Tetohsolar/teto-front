@@ -1,13 +1,15 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api';
+
 
 const ProfileForm = (props) => {
-
+  const { token } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -17,6 +19,34 @@ const ProfileForm = (props) => {
   const [habilitar, setHabilitar] = useState('')
   const { signUp, profilelogged } = useContext(AuthContext)
   const navigate = useNavigate()
+  const [filiados, setFiliados] = useState([])
+  const [idfiliado, setIdfiliado] = useState(null)
+ 
+
+  useEffect(() => {
+
+  loadfiliados();
+    return () => { }
+
+  }, [])
+
+  async function loadfiliados(){
+
+    await api.get('/afflited/all',{
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then(response=>{
+      //console.log(response.data.affiliated)
+      setFiliados(response.data.affiliated)
+
+     
+    }).catch(error=>{
+      console.log(" d eu errado")
+    })
+  }
+
+ 
 
   function limpaCampos() {
     setName('')
@@ -56,7 +86,7 @@ const ProfileForm = (props) => {
 
       try {
 
-        await signUp(name, phone, email, password, confirmPassword, tipo, habilitar);
+        await signUp(name, phone, email, password, confirmPassword, tipo, habilitar, idfiliado);
         limpaCampos()
         navigate("/users")
 
@@ -131,7 +161,7 @@ const ProfileForm = (props) => {
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-            <option value="Root">Root</option>
+            
           </select>
         </div>
         <div className="col-md-4">
@@ -144,6 +174,22 @@ const ProfileForm = (props) => {
             <option value="N">Desabilitado</option>
           </select>
         </div>
+
+        <div className="col-md-4">
+          <label htmlFor="inputUserType" className="form-label">
+            Filiado
+          </label>
+          <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
+            <option value="">Selecionar...</option>
+            {filiados?filiados.map(objeto => (
+            <option key={objeto.id} value={objeto.id}>
+              {objeto.fantasy}
+            </option>
+          )):''}
+            
+          </select>
+        </div>
+
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar

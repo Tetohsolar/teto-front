@@ -22,6 +22,7 @@ import EditAfflited from '../pages/afflited/edit';
 import NewProduct from '../pages/products/new';
 import EditProduct from '../pages/products/edit';
 import NewBusiness from '../pages/business/new';
+import SingleBusiness from '../pages/business/single';
 import ViewBusiness from '../pages/business/view';
 
 const RoutesApp = () => {
@@ -33,57 +34,120 @@ const RoutesApp = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={token ? <Home /> : <Navigate to="/login" />} />
+            <Route
+              index
+              element={token ? <Home /> : <Navigate to="/login" />}
+            />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="customers">
-              <Route index element={token ? <CustomerList /> : <Navigate to="/login" />} />
-              <Route path=":clientId" element={token ? <Single /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <NewClient /> : <Navigate to="/login" />} />
-              <Route path="edit/:clientId" element={token ? <EditClient /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <CustomerList /> : <Navigate to="/login" />}
+              />
+              <Route
+                path=":clientId"
+                element={token ? <Single /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new"
+                element={token ? <NewClient /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="edit/:clientId"
+                element={token ? <EditClient /> : <Navigate to="/login" />}
+              />
             </Route>
 
             <Route path="business">
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
-              <Route path=":projectId" element={token ? <Single /> : <Navigate to="/login" />} />
+              <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
-              <Route path="view" element={<ViewBusiness />} />
+              <Route path="view/:businessId" element={<ViewBusiness />} />
             </Route>
 
             <Route path="sizings">
-              <Route index element={token ? <SizingList /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <New /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <SizingList /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new"
+                element={token ? <New /> : <Navigate to="/login" />}
+              />
             </Route>
 
             <Route path="products">
-              <Route index element={token ? <ProductList /> : <Navigate to="/login" />} />
-              <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <NewProduct /> : <Navigate to="/login" />} />
-              <Route path="edit/:Id" element={token ? <EditProduct /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <ProductList /> : <Navigate to="/login" />}
+              />
+              <Route
+                path=":productId"
+                element={token ? <Single /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new"
+                element={token ? <NewProduct /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="edit/:Id"
+                element={token ? <EditProduct /> : <Navigate to="/login" />}
+              />
             </Route>
 
             <Route path="users">
-              <Route index element={token ? <List /> : <Navigate to="/login" />} />
-              <Route path=":userId" element={token ? <Single /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <NewUSer /> : <Navigate to="/login" />} />
-              <Route path="new/:userId" element={token ? <NewUSer /> : <Navigate to="/login" />} />
-              <Route path="/users/edit/:userId" element={token ? <EditUser /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <List /> : <Navigate to="/login" />}
+              />
+              <Route
+                path=":userId"
+                element={token ? <Single /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new"
+                element={token ? <NewUSer /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new/:userId"
+                element={token ? <NewUSer /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/users/edit/:userId"
+                element={token ? <EditUser /> : <Navigate to="/login" />}
+              />
             </Route>
 
             <Route path="settings">
-              <Route index element={token ? <Settings /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <Settings /> : <Navigate to="/login" />}
+              />
             </Route>
 
             <Route path="affliteds">
-              <Route index element={token ? <AfflitedList /> : <Navigate to="/login" />} />
-              <Route path=":productId" element={token ? <Single /> : <Navigate to="/login" />} />
-              <Route path="new" element={token ? <NewAfflited /> : <Navigate to="/login" />} />
-              <Route path="edit/:clientId" element={token ? <EditAfflited /> : <Navigate to="/login" />} />
+              <Route
+                index
+                element={token ? <AfflitedList /> : <Navigate to="/login" />}
+              />
+              <Route
+                path=":productId"
+                element={token ? <Single /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="new"
+                element={token ? <NewAfflited /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="edit/:clientId"
+                element={token ? <EditAfflited /> : <Navigate to="/login" />}
+              />
             </Route>
           </Route>
         </Routes>
       </BrowserRouter>
-    </div >
+    </div>
   );
 };
 

@@ -11,6 +11,7 @@ import { VscSearch } from "react-icons/vsc";
 import { BsFillPieChartFill, BsFillSendFill, BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import InputMask from 'react-input-mask';
 import moment from 'moment/moment';
+import { Link, useNavigate } from 'react-router-dom';
 
 function DateInput(props) {
   return (
@@ -57,11 +58,15 @@ const BusinessDataTable = (props) => {
   const [data, setData] = useState([])
   const [numero, setNumero] = useState([])
   const [situation, setSituation] = useState([])
+  const [abertos, setAbertos] = useState([])
+  const navigate = useNavigate();
 
+  
   useEffect(() => {
 
-    list("%");
 
+   list("%");
+   setAbertos()
 
     return () => { }
 
@@ -151,14 +156,18 @@ const BusinessDataTable = (props) => {
       })
     setCurrentPage(data);
 
-  }
-  function find() {
-    list("%")
-  }
 
-  const paginate = ({ selected }) => {
-    setCurrentPage(selected + 1);
-  };
+}
+function find(){
+  list("%")
+}
+function edit(id) {
+  navigate("/business/view/" + id)
+}
+const paginate = ({ selected }) => {
+  setCurrentPage(selected + 1);
+};
+
 
   const totalValue = `${totalPages}`
   return (
@@ -176,7 +185,7 @@ const BusinessDataTable = (props) => {
         </button>
       </div>
       <NewBusiness />
-      <hr className="" />
+      <hr className="my-3 text-body-tertiary" />
       <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
         <div className="filtro">
           <input type="numero" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" onChange={(e) => setNumero(e.target.value)} onKeyUp={(e) => { list(name) }} />
@@ -259,7 +268,9 @@ const BusinessDataTable = (props) => {
                               </button> */}
                               <button
                                 type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                  edit(item.id)
+                                }}
                               >
                                 <BsPencilFill />
                               </button>

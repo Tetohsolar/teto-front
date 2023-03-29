@@ -117,7 +117,7 @@ const AfflitedForm = (props) => {
         handleTipoPessoaValue(olha)
 
         setPhone(response.data.phone)
-        setPhone(response.data.num)
+        setNumero(response.data.num)
         setZap(response.data.zap)
         setCepData(response.data.Addresses[0].postcode)
         setEstado(response.data.Addresses[0].state)
@@ -180,12 +180,13 @@ const AfflitedForm = (props) => {
     }
     
     
-    if (phone === "") {
+    if (phone === "" || phone === undefined) {
       toast.error("Telefone É obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
+   
     let phonenomask = phone.replace('_',"");
 
     if (phonenomask.length < 15 ) {
@@ -315,7 +316,7 @@ const AfflitedForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
-      kitM: parseFloat(('' + kitM).replace(',', '.')),
+      kitM: parseFloat(('' + String(kitM)).replace(',', '.')),
       complementCostM: parseFloat(String(complementCostM).replace(',', '.')),
       projectCostM: parseFloat(String(projectCostM).replace(',', '.')),
       taxM: parseFloat(String(taxM).replace(',', '.')),
@@ -381,7 +382,7 @@ const AfflitedForm = (props) => {
 
     e.preventDefault();
 
-    const valida = validaCampos(name, phone, doc);
+    const valida = validaCampos(name, phone, doc,cepData,zap);
     if (valida) {
       console.log("aqui" + valida)
       try {
@@ -437,12 +438,7 @@ const AfflitedForm = (props) => {
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
-              <div className="col-md-3">
-                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-                Número
-                </label>
-                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
-              </div>
+            
               <div className="col-md-3"  >
                 <label htmlFor="inputDocumento" className="form-label ">
                   {lbDocument === "" ? "CPF" : lbDocument}
@@ -497,17 +493,24 @@ const AfflitedForm = (props) => {
                 </label>
                 <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
               </div>
-              <div className="col-md-3"  >
-                <label htmlFor="informacoesAdicionais" className="form-label ">
-                  Informações Adicionais
+              <div className="col-md-3">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Número
                 </label>
-                <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
               </div>
+            
               <div className="col-md-3"  >
                 <label htmlFor="email" className="form-label ">
                   Email
                 </label>
                 <input type="email" maxLength={100} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="col-md-7"  >
+                <label htmlFor="informacoesAdicionais" className="form-label ">
+                  Informações Adicionais
+                </label>
+                <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
               </div>
             </div>
           </TabPanel>

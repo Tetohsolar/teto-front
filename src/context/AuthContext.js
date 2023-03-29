@@ -15,6 +15,8 @@ function AuthProvider({ children }) {
   const [profilelogged, setProfileLogged] = useState('')
   const [idLogged, setIdLogged] = useState('')
   const [userName, setUserName] = useState('')
+  const [afflitedId, setafflitedId] = useState('')
+
 
   //add new User
   async function signIn(email, password) {
@@ -27,6 +29,7 @@ function AuthProvider({ children }) {
       setToken(response.data.token)
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
+      setafflitedId(response.data.afflitedId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -38,7 +41,7 @@ function AuthProvider({ children }) {
   }
 
   //SignUp User
-  async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar) {
+  async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar, idfiliado) {
     setLoading(true)
     await api.post('/user/create', {
       name: name,
@@ -47,7 +50,8 @@ function AuthProvider({ children }) {
       password: password,
       confirmpassword: confirmpassword,
       tipo: tipo,
-      enabled: habilitar
+      enabled: habilitar,
+      afflitedId: idfiliado
 
     }, {
       headers: {
@@ -68,7 +72,7 @@ function AuthProvider({ children }) {
   }
 
   //id, name, phone, email, password, confirmPassword, tipo
-  async function updateUser(id, name, phone, email, tipo, habilitar) {
+  async function updateUser(id, name, phone, email, tipo, habilitar, idfiliado) {
 
     setLoading(true)
 
@@ -77,7 +81,9 @@ function AuthProvider({ children }) {
       phone: phone,
       email: email,
       tipoR: tipo,
-      enabled: habilitar
+      enabled: habilitar,
+      AffiliatedId: idfiliado
+
     }, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -135,8 +141,8 @@ function AuthProvider({ children }) {
         token,
         idLogged,
         profilelogged,
-        userName
-
+        userName,
+        afflitedId
       }}>
       {children}
     </AuthContext.Provider>
