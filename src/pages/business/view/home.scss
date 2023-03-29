@@ -7,14 +7,14 @@
     color: #6E6E6E;
     background-color: #F4F9FC;
     height: 105px;
-    width: 250px;
+    width: 280px;
     padding-top: 30px;
+    margin: 5px;
 }
 .topResume{
+    
     display: flex;
-    flex-direction: row;
-    gap: 35px;
- 
+    justify-content: space-between;
 
 }
 .card-content-home{
@@ -59,29 +59,22 @@
 
 .linhabaixo{
     border-collapse: collapse;
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     font-family: Arial, sans-serif;
     font-size: 18px;
     width: 100%;
     padding: 8px;
     text-align: left;
     vertical-align: top;
-  
-   
- 
     
 }
 .topbaixo{
     display: flex;
-    flex-direction: row;
-    gap:30%;
- 
        
 }
 .infb{
     display: flex;
-  margin: 20px;
-  
+    margin: 20px;
     
 }
 .container1{
@@ -90,4 +83,43 @@
 .tamanho-tr{
     height: 40px;
 }
+table{
+    width: 90%;
+    margin: 20px;
+}
+.margin{
+    margin: 20px;
+}
 
+.cards{
+    width: 47%;
+    margin-left: 20px;
+    
+}
+.conteinerCards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:20px;
+}
+
+.card-title{
+    padding: 20px;
+    width: 47%px;
+    display: flex;
+    justify-content: space-between;
+}
+.primeiraDivHome{
+    padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+    .cards {
+      width: 95%;
+      margin: 5px;
+    }
+    .card-title{
+        width: 95%;
+
+    }
+  }
