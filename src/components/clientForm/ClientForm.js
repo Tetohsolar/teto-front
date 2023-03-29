@@ -400,12 +400,7 @@ const ClientForm = (props) => {
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
-        <div className="col-md-3">
-                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-                Número
-                </label>
-                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
-              </div>
+       
         <div className="col-md-4"  >
           <label htmlFor="inputDocumento" className="form-label ">
             {lbDocument === "" ? "CPF" : lbDocument}
@@ -460,17 +455,23 @@ const ClientForm = (props) => {
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
-        <div className="col-md-5"  >
-          <label htmlFor="informacoesAdicionais" className="form-label ">
-            Informações Adicionais
-          </label>
-          <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
-        </div>
+        <div className="col-md-3">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Número
+                </label>
+                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
+              </div>
         <div className="col-md-5"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
           <input type="email" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div className="col-md-5"  >
+          <label htmlFor="informacoesAdicionais" className="form-label ">
+            Informações Adicionais
+          </label>
+          <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
         </div>
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit">
