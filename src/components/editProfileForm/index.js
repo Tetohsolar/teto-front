@@ -1,14 +1,14 @@
 import { AuthContext } from '../../context/AuthContext';
 import './profileform.scss';
 import { useState, useContext, useEffect } from 'react'
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import InputMask from 'react-input-mask';
 
 const EditProfileForm = (props) => {
-
+  const { token, } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -17,7 +17,7 @@ const EditProfileForm = (props) => {
   const [reloadPage, setReloadPage] = useState(false)
   const [habilitar, setHabilitar] = useState('')
   const { signUp, profilelogged } = useContext(AuthContext)
-  const { updateUser, token } = useContext(AuthContext)
+  const { updateUser} = useContext(AuthContext)
   const [filiados, setFiliados] = useState([])
   const [idfiliado, setIdfiliado] = useState(null) 
 
@@ -131,7 +131,8 @@ const EditProfileForm = (props) => {
             <option value="N">Desabilitado</option>
           </select>
         </div>
-
+        {
+          profilelogged === 'Root' ?
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
             Filiado
@@ -146,6 +147,7 @@ const EditProfileForm = (props) => {
             
           </select>
         </div>
+        : ""}
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
            Salvar

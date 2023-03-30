@@ -9,7 +9,7 @@ import api from '../../api';
 
 
 const ProfileForm = (props) => {
-  const { token } = useContext(AuthContext)
+  const { token, } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -21,32 +21,33 @@ const ProfileForm = (props) => {
   const navigate = useNavigate()
   const [filiados, setFiliados] = useState([])
   const [idfiliado, setIdfiliado] = useState(null)
- 
+
+  const [selectvisbile, setSelectVisible] = useState(false)
 
   useEffect(() => {
 
-  loadfiliados();
+    loadfiliados();
     return () => { }
 
   }, [])
 
-  async function loadfiliados(){
+  async function loadfiliados() {
 
-    await api.get('/afflited/all',{
+    await api.get('/afflited/all', {
       headers: {
         'Authorization': `Basic ${token}`
       }
-    }).then(response=>{
+    }).then(response => {
       //console.log(response.data.affiliated)
       setFiliados(response.data.affiliated)
 
-     
-    }).catch(error=>{
+
+    }).catch(error => {
       console.log(" d eu errado")
     })
   }
 
- 
+
 
   function limpaCampos() {
     setName('')
@@ -59,13 +60,13 @@ const ProfileForm = (props) => {
   }
 
   function validaCampos(name, email, phone, password, confirmPassword, tipo, habilitar) {
-    if (phone){
+    if (phone) {
 
-    
-    let phonenomask=phone.replace('_', '');
-    console.log(phonenomask.length)
 
-      if (phonenomask.length <14) {
+      let phonenomask = phone.replace('_', '');
+      console.log(phonenomask.length)
+
+      if (phonenomask.length < 14) {
         toast.error("Telefone é invalido", {
           autoClose: 1000,
         })
@@ -73,16 +74,16 @@ const ProfileForm = (props) => {
       }
     }
 
-       return true;
+    return true;
 
   }
-  
-  
+
+
 
   async function handleSaveUser(e) {
 
     e.preventDefault();
-    if (await validaCampos(name,email,phone,password,confirmPassword,tipo,habilitar)) {
+    if (await validaCampos(name, email, phone, password, confirmPassword, tipo, habilitar)) {
 
       try {
 
@@ -102,18 +103,7 @@ const ProfileForm = (props) => {
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <p>Crie novos usuários para acessar sua conta.</p>
       <hr className="my-4" />
-      <div className="d-flex gap-3">
-        <div>
-          <img className="input-avatar" src={'https://api.dicebear.com/5.x/thumbs/svg?seed=Lucy'} alt="Avatar" />
-        </div>
-        <div>
-          <label htmlFor="formFile" className="form-label">
-            Imagem de perfil
-          </label>
-          <input className="form-control" type="file" id="formFile" />
-        </div>
-      </div>
-      <hr className="my-5" />
+
       <form className="row g-3" onSubmit={handleSaveUser}>
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
@@ -154,14 +144,14 @@ const ProfileForm = (props) => {
           <label htmlFor="inputUserType" className="form-label">
             Tipo de usuário
           </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <select name="pets" id="input-user-type" className="form-select" readonly value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="">Selecionar...</option>
             <option value="Admin">Admin</option>
             <option value="User">User</option>
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-            
+
           </select>
         </div>
         <div className="col-md-4">
@@ -175,21 +165,24 @@ const ProfileForm = (props) => {
           </select>
         </div>
 
-        <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Filiado
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
-            <option value="">Selecionar...</option>
-            {filiados?filiados.map(objeto => (
-            <option key={objeto.id} value={objeto.id}>
-              {objeto.fantasy}
-            </option>
-          )):''}
-            
-          </select>
-        </div>
 
+        {
+          profilelogged === 'Root' ?
+            <div className="col-md-4">
+              <label htmlFor="inputUserType" className="form-label">
+                Filiado
+              </label>
+              <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
+                <option value="">Selecionar...</option>
+                {filiados ? filiados.map(objeto => (
+                  <option key={objeto.id} value={objeto.id}>
+                    {objeto.fantasy}
+                  </option>
+                )) : ''}
+
+              </select>
+            </div>
+            : ""}
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar
