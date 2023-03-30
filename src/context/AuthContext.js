@@ -29,7 +29,8 @@ function AuthProvider({ children }) {
       setToken(response.data.token)
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
-      setafflitedId(response.data.afflitedId)
+      console.log(response.data)
+      setafflitedId(response.data.affliteadId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -42,6 +43,14 @@ function AuthProvider({ children }) {
 
   //SignUp User
   async function signUp(name, phone, email, password, confirmpassword, tipo, habilitar, idfiliado) {
+
+    if (!idfiliado){
+      idfiliado = afflitedId
+      console.log(" não veio")
+    }else{
+      console.log(" veio")
+    }
+
     setLoading(true)
     await api.post('/user/create', {
       name: name,

@@ -13,7 +13,7 @@ let PageSize = 5;
 const DataTable = (props) => {
 
 
-  const { token } = useContext(AuthContext)
+  const { token, profilelogged,  afflitedId} = useContext(AuthContext)
 
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
@@ -53,12 +53,24 @@ const DataTable = (props) => {
 
   async function listaUsers() {
     setUpdateUsers(true)
-    const filtro = {
+    
+    let filtro = {
       name: userFind,
       page: 0,
       pageSize: 5
     }
 
+    if (profilelogged !== "Root"){
+
+      filtro = {
+        name: userFind,
+        page: 0,
+        pageSize: 5,
+        AffiliatedId:afflitedId
+      }
+      
+    }
+    console.log(filtro)
 
     await api.post('/user/byparam', filtro, {
       headers: {
