@@ -206,59 +206,67 @@ export default function NewBusiness(prop) {
   //  }
 
   async function buscaGeracaoSugerida() {
-    setEnergiaPontaTratada('')
-    if (parseInt(energiaPonta) > 99) {
+    setEnergiaPontaTratada(0)
+    await api.post('/taxkhw/byparam', {
+      "subgroup": "A3",
+      "modal": "HA",
+      "ep": energiaPonta,
+      "state": "CE"
 
-      await api.post('/taxkhw/byparam', {
-        "subgroup": "A3",
-        "modal": "HA",
-        "ep": energiaPonta,
-        "state": "CE"
-
-      }, {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
+    }, {
+      headers: {
+        'Authorization': `Basic ${token}`
       }
-      ).then((response) => {
-        setEnergiaPontaTratada(response.data.Taxkwh)
-        console.log(response.data.Taxkwh)
-
-      })
-
     }
+    ).then((response) => {
+      setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
+
+
+    })
+
+
 
   }
 
 
 
 
-  //calculos Geração Média
+  //calculos Geração Média e Geração sugerida no Grupo A
   function handleGrupoAConsMedio(e) {
+    buscaGeracaoSugerida()
+
     if (modalidade === "HA" && subgrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
       //Geração sugerida
-      // buscaGeracaoSugerida()
-      // const data = []
-      // data.push(energiaPontaTratada)
-      // const sum = parseInt(energia_FP) + parseInt(data[data.length - 1])
-      // console.log(data)
-      // // setGeracaoSugerida(sum)
+
+      // console.log(`EFP: ${energia_FP},EP ${energiaPonta}, ${energiaPontaTratada}`)
+      const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
     }
 
     else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
+      //GeracaoSugerida
+      let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
 
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
     }
+
     else if (modalidade === "HA" && subgrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
 
+      //GeracaoSugerida
+      let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+
+
     }
     else {
       setConsumoMedio('')
+      setGeracaoSugerida('')
     }
 
   }
@@ -516,10 +524,10 @@ export default function NewBusiness(prop) {
               </div>
               <div className="modal-footer">
                 <button type="button"
-                  className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
                   data-bs-dismiss="modal">Voltar</button>
                 <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                  className="btn btn-primary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
                   data-bs-dismiss="modal">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -602,7 +610,7 @@ export default function NewBusiness(prop) {
                   <br />
                   <div class="card w-100">
                     <div class="card-header">
-                      Demandas
+                      Informações Complementares
                     </div>
                     <div class="card-body d-flex flex-row ">
 
@@ -664,7 +672,7 @@ export default function NewBusiness(prop) {
                           <label htmlFor="inputDemandaFP" className="form-label">
                             Demanda FP:
                           </label>
-                          <input type="text" className="form-control" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} />
+                          <input type="text" className="form-control" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
 
                         </div>
                         <div className="col-md-3 w-100">
@@ -674,13 +682,13 @@ export default function NewBusiness(prop) {
                           <input type="text" className="form-control" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
 
                         </div>
-                        <div className="col-md-3  w-100 ">
-                          <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
-                            Consumo Médio(KWh):
+                        <div className="col-md-3   w-100">
+                          <label htmlFor="inputEnergiaPonta" className="form-label">
+                            Energia Ponta:
                           </label>
-                          <input type="text" className="form-control" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
-
+                          <input type="text" className="form-control" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
                         </div>
+
 
                       </div>
                       <div className="row p-2  d-flex flex-column">
@@ -690,12 +698,14 @@ export default function NewBusiness(prop) {
                           </label>
                           <input type="text" className="form-control" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
                         </div>
-                        <div className="col-md-3   w-100">
-                          <label htmlFor="inputEnergiaPonta" className="form-label">
-                            Energia Ponta:
+                        <div className="col-md-3  w-100 ">
+                          <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
+                            Consumo Médio(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
+                          <input type="text" className="form-control" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
+
                         </div>
+
 
                         <div className="col-md-3 w-100">
                           <label htmlFor="inputGeracaoSugerida" className="form-label">
@@ -715,10 +725,10 @@ export default function NewBusiness(prop) {
               </div>
               <div className="modal-footer">
                 <button type="button"
-                  className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
+                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
                   data-bs-dismiss="modal">Voltar</button>
                 <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop4" data-bs-toggle="modal"
+                  className="btn btn-primary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop4" data-bs-toggle="modal"
                   data-bs-dismiss="modal">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -742,102 +752,221 @@ export default function NewBusiness(prop) {
             <div className="modal-content">
               <div className="modal-header">
                 <div className="d-flex flex-column">
-                  <h1 className="modal-title fs-3" id="exampleModalLabel">Proposta de Negócio </h1>
-                  <h5 className='fs-5'>Equipamentos</h5>
+                  <h1 className="modal-title fs-4" id="exampleModalLabel">Proposta de Negócio </h1>
+                  <h5 className='fs-5'>Tipo de Sistema</h5>
                 </div>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
 
                 <div className="container-fluid">
-                  <div className="row d-flex justify-content-start">
-                    <div className="col-md-4">
+                  <div className="row ">
+                    <div className="col-md-3">
                       <label htmlFor="inputTipoSistema" className="form-label">
                         Tipo de Sistema:
                       </label>
-                      <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} />
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputPotModulos" className="form-label">
-                        Módulos:
-                      </label>
-                      <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputConsumo" className="form-label">
-                        Consumo(Kwh):
-                      </label>
-                      <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
-                    </div>
-                  </div>
+                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)}  >
+                        <option value="">Selecione</option>
+                        <option value="inv">Inversor</option>
+                        <option value="micro">MicroInversor</option>
 
-                  <div className="row d-flex justify-content-start">
-                    <div className="col-md-4">
-                      <label htmlFor="inputPerda" className="form-label">
-                        Perda:
-                      </label>
-                      <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
+                      </select>
+
                     </div>
-                    <div className="col-md-4">
+                    {tipoSistema === 'inv' ? <>
+
+                      <div className="col-md-2">
+                        <label htmlFor="inputPotModulos" className="form-label">
+                          Potência:
+                        </label>
+                        <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                      </div>
+                      <div className="col-md-2">
+                        <label htmlFor="inputFatorSimult" className="form-label" >
+                          Marca
+                        </label>
+                        <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                      </div>
+
+
+
+
+                    </>
+                      :
+                      <>
+                        <div className="col-md-3">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Potência:
+                          </label>
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                        </div>
+                        <div className="col-md-3">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Marca:
+                          </label>
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                        </div>
+
+
+                      </>}
+
+                    {/* <div className="col-md-2">
                       <label htmlFor="inputPotenciaSist" className="form-label">
                         Potência(kwp):
                       </label>
                       <input type="text" className="form-control" id="inputPotenciaSist" value={potenciaSistema} onChange={(e) => setPotenciaSistema(e.target.value)} />
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputmediaMensal" className="form-label">
-                        Média Mensal(Kwh):
+
+                    <div className="col-md-2">
+                      <label htmlFor="inputPotenciaSist" className="form-label">
+                        Quantidade:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
+                      <input type="text" className="form-control" id="inputPotenciaSist" value={potenciaSistema} onChange={(e) => setPotenciaSistema(e.target.value)} />
+                    </div> */}
+
+                  </div>
+                  <hr />
+                  <div class="card">
+                    <div class="card-header">
+                      Painéis
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-3">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Marca
+                          </label>
+                          {/* <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} /> */}
+                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
+                            <option value="">Selecione</option>
+                            <option value="inv">Jinko</option>
+                            <option value="micro">Canadian</option>
+
+                          </select>
+                        </div>
+                        <div className="col-md-4">
+                          <label htmlFor="inputComplem" className="form-label">
+                            Modelo do Painel
+                          </label>
+                          <input type="text" className="form-control" id="inputComplem" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Potência:
+                          </label>
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                        </div>
+
+
+                        <div className="col-md-2">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Quantidade:
+                          </label>
+                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                        </div>
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Dados do Cliente
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-3">
+                          <label htmlFor="inputConsumo" className="form-label">
+                            Consumo(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputPerda" className="form-label">
+                            Perda:
+                          </label>
+                          <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
+                        </div>
+                        <div className="col-md-3">
+                          <label htmlFor="inputmediaMensal" className="form-label">
+                            Média Mensal(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="row ">
-                    <div className="col-md-4">
-                      <label htmlFor="inputCIP" className="form-label">
-                        CIP:
-                      </label>
-                      <input type="text" className="form-control" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
+
+
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Informações Complementares
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputbandeira" className="form-label">
-                        Bandeira:
-                      </label>
-                      <input type="text" className="form-control" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputPreco" className="form-label">
-                        Preço do Kit:
-                      </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Fator de Simult:
+                          </label>
+                          <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputCIP" className="form-label">
+                            CIP:
+                          </label>
+                          <input type="text" className="form-control" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputbandeira" className="form-label">
+                            Bandeira:
+                          </label>
+                          <input type="text" className="form-control" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputPreco" className="form-label">
+                            Preço do Kit:
+                          </label>
+                          <input type="text" className="form-control" id="inputCodigo" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                        </div>
+                      </div>
+
+
+
                     </div>
                   </div>
-                  <div className="row ">
-                    <div className="col-md-4">
-                      <label htmlFor="inputFatorSimult" className="form-label" >
-                        Fator de Simultaneidade:
-                      </label>
-                      <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
-                    </div>
 
-                    <div className="col-md-4">
-                      <label htmlFor="inputComplem" className="form-label">
-                        Complemento:
-                      </label>
-                      <input type="text" className="form-control" id="inputComplem" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
-                    </div>
-
-                  </div>
                 </div>
-                <br />
+
+
+
+
 
               </div>
+
               <div className="modal-footer">
                 <button type="button"
-                  className="btn btn-secondary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
                   data-bs-dismiss="modal">Voltar</button>
+
                 <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2">
+                  className="btn btn-primary  d-flex align-items-center gap-2">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save2" viewBox="0 0 16 16">
+                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v4.5h2a.5.5 0 0 1 .354.854l-2.5 2.5a.5.5 0 0 1-.708 0l-2.5-2.5A.5.5 0 0 1 5.5 6.5h2V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z" />
+                  </svg>
+                  Salvar
+                </button>
+                <button type="button"
+                  className="btn btn-primary  d-flex align-items-center gap-2">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
@@ -851,7 +980,10 @@ export default function NewBusiness(prop) {
 
           </div>
 
+
         </div>
+
+
 
 
       </form >
