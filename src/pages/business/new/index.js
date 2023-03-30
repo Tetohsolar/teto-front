@@ -574,7 +574,7 @@ export default function NewBusiness(prop) {
                       <label htmlFor="tipoLigacao" className="form-label">
                         Tipo de Ligação:
                       </label>
-                      <select name="tipoLigacao" className="form-control" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
+                      <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
                         <option value="">Selecione</option>
                         <option value="tri">Trifásico</option>
                         <option value="mono">Monofásico</option>
@@ -586,7 +586,7 @@ export default function NewBusiness(prop) {
                         Tipo de Telhado:
                       </label>
 
-                      <select name="tipoLigacao" className="form-control" id="tipoTelhado" value={tipoTelhado} onChange={(e) => setTipoTelhado(e.target.value)}>
+                      <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={tipoTelhado} onChange={(e) => setTipoTelhado(e.target.value)}>
                         <option value="">Selecione</option>
                         <option value="ceramico">Cerâmico</option>
                         <option value="metalico">Metálico</option>
@@ -614,7 +614,7 @@ export default function NewBusiness(prop) {
                             Modalidade:
                           </label>
                           {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
-                          <select className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)}>
+                          <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)}>
                             <option value="">Selecione</option>
                             <option value="Convencional">Convencional</option>
                             <option value="HA">Horos. Azul</option>
@@ -629,7 +629,7 @@ export default function NewBusiness(prop) {
                           </label>
 
 
-                          <select className="form-control" id="inputGrupo" value={grupo} onChange={(e) => setGrupo(e.target.value)} >
+                          <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => setGrupo(e.target.value)} >
                             <option value="">Selecione</option>
                             <option value="A">Grupo A</option>
                             <option value="B">Grupo B</option>
@@ -639,7 +639,7 @@ export default function NewBusiness(prop) {
                           <label htmlFor="inputSubgrupo" className="form-label">
                             Sub-Grupo:
                           </label>
-                          <select className="form-control" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} >
+                          <select className="form-select" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} >
                             <option value="">Selecione</option>
                             {grupo === "A" ? <>
                               <option value="A3">A3</option>
