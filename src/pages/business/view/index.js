@@ -54,6 +54,21 @@ const ViewBusiness = () => {
   const[cidade,setCidade] = useState ('')
   const { businessId } = useParams();
   const[valor,setValor] = useState ('')
+  const[consumo,setConsumo] = useState('')
+  const[geracaoSu,setGeracaoSu] = useState('')
+  const[precoKit,setPrecoKit] = useState('')
+  const[projeto,setProjeto] = useState ('')
+  const[imposto,setImposto] = useState ('')
+  const[montagem,setMontagem] = useState ('')
+  const[comissaoVe,setComissaoVe] = useState('')
+  const[margem,setMargem] = useState('')
+  const[totalLu,setTotalLu] = useState ('')
+  const[margemCa,setMargemCa] = useState ('')
+  const[valorTotal,setValorTotal] = useState ('')
+  const[valorComissao, setValorComissao] = useState ('')
+  const[lucroReal,setLucroReal] = useState ('')
+  const[lucroProjeto,setLucroProjeto] = useState ('')
+  const[complemento,setcomplemento] =useState ('')
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -135,6 +150,23 @@ const ViewBusiness = () => {
       setNumeroInv(response.data.numberInverMicro)
       setValor(formatter.format(response.data.amount))
       loadAdd(response.data.ClientId)
+      setConsumo(response.data.avgconsumption)
+      setGeracaoSu(response.data.suggestedGeneration)
+      setPrecoKit(response.data.kitprice)
+      setProjeto(response.data.project)
+      setImposto(response.data.tax)
+      setMontagem(response.data.assembled)
+      setComissaoVe(response.data.sellercomission)
+      setMargem(response.data.margin)
+      setTotalLu(response.data.amountcost)
+      setMargemCa(response.data.marginCalculate)
+      setValorTotal(response.data.amount)
+      setValorComissao(response.data.valuesellercomission)
+      setLucroProjeto(response.data.profit)
+      setLucroReal(response.data.realProfit)
+      setcomplemento(response.data.complement)
+
+
       
       
       
@@ -274,25 +306,7 @@ const ViewBusiness = () => {
                       <label> {infAdc} </label>
                       </td>
                     </tr>
-                   
-
-
-                  </table>
-
-
-                </div>
-
-                <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Endereço</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
-                  <table className='table_view'>
-                  <tr className='linhabaixo tamanho-tr'>
+                    <tr className='linhabaixo tamanho-tr'>
                       Rua
                       <td>
                       </td>
@@ -332,6 +346,148 @@ const ViewBusiness = () => {
                       <label> {cidade} </label>
                       </td>
                     </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Consumo
+                      <td>
+                      </td>
+                      <td>
+                       <label> {consumo} </label>
+                      </td>
+                    </tr>
+
+                   
+
+
+                  </table>
+
+
+                </div>
+
+                <div className='cards border rounded-3'>
+                <div className='card-title'>
+                      <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
+                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                      }}>
+                        <BsFillPencilFill />
+                      </button>
+                </div>
+                  <table className='table_view'>
+                 
+                    <tr className='linhabaixo tamanho-tr'>
+                     Geração sugerida
+                      <td>
+                      </td>
+                      <td>
+                       <label> {geracaoSu} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Preço do kit 
+                      <td>
+                      </td>
+                      <td>
+                       <label> {precoKit} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                    Complemento
+                      <td>
+                      </td>
+                      <td>
+                       <label> {precoKit} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Projeto
+                      <td>
+                      </td>
+                      <td>
+                       <label> {projeto} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Imposto
+                      <td>
+                      </td>
+                      <td>
+                       <label> {complemento} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                    Montagem
+                      <td>
+                      </td>
+                      <td>
+                       <label> {montagem} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                    Comissão do vendedor/Valor da comissão
+                      <td>
+                      </td>
+                      <td>
+                       <label> {comissaoVe} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                    Margem/ Margem calculada
+                      <td>
+                      </td>
+                      <td>
+                       <label> {margem} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Total de Custo
+                      <td>
+                      </td>
+                      <td>
+                       <label> {totalLu} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Lucro (%)
+                      <td>
+                      </td>
+                      <td>
+                       <label> {lucroReal} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Valor total do projeto
+                      <td>
+                      </td>
+                      <td>
+                       <label> {valorTotal} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Lucro do projeto ($)
+                      <td>
+                      </td>
+                      <td>
+                       <label> {lucroProjeto} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Projeto desconto 2%/ Lucro 2%/ Margem 2%
+                      <td>
+                      </td>
+                      <td>
+                       <label> {rua} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Projeto desconto 4%/Lucro 4%/Margem 4% 
+                      <td>
+                      </td>
+                      <td>
+                       <label> {rua} </label>
+                      </td>
+                    </tr>
+                   
+                    
                   </table>
                
                 
@@ -441,7 +597,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Demanda FP
+                     Demanda fora ponta
                       <td>
                       </td>
                       <td>
@@ -449,7 +605,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Energia FP
+                     Energia fora ponta
                       <td>
                       </td>
                       <td>
@@ -457,7 +613,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Demanda P
+                     Demanda ponta
                       <td>
                       </td>
                       <td>
@@ -465,7 +621,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Energia P
+                     Energia ponta
                       <td>
                       </td>
                       <td>
@@ -534,7 +690,7 @@ const ViewBusiness = () => {
                   
                   
                   <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Informações do sistema</h6>
+                      <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
                       <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
                       }}>
@@ -589,6 +745,113 @@ const ViewBusiness = () => {
                 
                 </div>
                 
+                    
+                  </div>
+                  
+                </div>
+              </div>
+
+              <div className="container-fluid bg-home py-4 ">
+                <div class="p-3 mb-3 bg-white border rounded-3" >
+
+                  <h5 className="pb-3">Rateio</h5>
+                  
+                  <div>
+                
+              </div>
+              <br></br>
+
+              <div className='conteinerCards'>
+                
+                <div className='cards border rounded-3'>
+                <div className='card-title'>
+                      <h6 class="card-content-title mb-3 fw-semibold">Informações de rateio</h6>
+                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                      }}>
+                        <BsFillPencilFill />
+                      </button>
+                </div>
+
+                  <table className='table_view'>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Modalidade
+                      <td>
+                      </td>
+                      <td >
+                      <label>{name} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Grupo
+                      <td>
+                      </td>
+                      <td>
+                      <label> {donoN} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      SubGrupo
+                      <td>
+                      </td>
+                      <td>
+                      <label> {fatorS} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Demanda fora ponta
+                      <td>
+                      </td>
+                      <td>
+                      <label> {telhado} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Energia fora ponta
+                      <td>
+                      </td>
+                      <td>
+                      <label> {tipoL} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Energia ponta
+                      <td>
+                      </td>
+                      <td>
+                      energia
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Consumo médio
+                      <td>
+                      </td>
+                      <td>
+                      <label> {modalidade} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                     Geração sugerida
+                      <td>
+                      </td>
+                      <td>
+                      <label> {grupo} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                    CIP
+                      <td>
+                      </td>
+                      <td>
+                      <label> {subgrupo} </label>
+                      </td>
+                    </tr>
+                   
+                  </table>
+
+
+                </div>
+              
                     
                   </div>
                   
