@@ -84,7 +84,7 @@
     height: 40px;
 }
 .table_view{
-    width: 90%;
+    width: 85%;
     margin: 20px;
 }
 .margin{
@@ -140,3 +140,10 @@
     flex-direction: column;
     flex-wrap: wrap;
   }
+
+  .card-title_rateio{
+    padding: 20px;
+    width: 47%px;
+    display: flex;
+    justify-content: space-between;
+}
