@@ -209,7 +209,7 @@ const ViewBusiness = () => {
                       </button>
                 </div>
 
-                  <table>
+                <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
                       Criado/Modificado em
                       <td>
@@ -291,7 +291,7 @@ const ViewBusiness = () => {
                         <BsFillPencilFill />
                       </button>
                 </div>
-                  <table>
+                  <table className='table_view'>
                   <tr className='linhabaixo tamanho-tr'>
                       Rua
                       <td>
@@ -367,7 +367,7 @@ const ViewBusiness = () => {
                       </button>
                 </div>
 
-                  <table>
+                  <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
                       Cliente
                       <td>
@@ -488,7 +488,7 @@ const ViewBusiness = () => {
                         <BsFillPencilFill />
                       </button>
                 </div>
-                  <table>
+                  <table className='table_view'>
                       
                     <tr className='linhabaixo tamanho-tr'>
                       Tipo de sistema
@@ -541,7 +541,7 @@ const ViewBusiness = () => {
                         <BsFillPencilFill />
                       </button>
                 </div>
-                  <table>
+                  <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
                       <td>
                         Marca da placa
