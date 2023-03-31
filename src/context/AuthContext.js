@@ -30,7 +30,7 @@ function AuthProvider({ children }) {
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
       console.log(response.data)
-      setafflitedId(response.data.affliteadId)
+      setafflitedId(response.data.afflitedId)
       toast.success(response.data.message)
       setLoading(false)
 
@@ -46,11 +46,8 @@ function AuthProvider({ children }) {
 
     if (!idfiliado){
       idfiliado = afflitedId
-      console.log(" não veio")
-    }else{
-      console.log(" veio")
+    
     }
-
     setLoading(true)
     await api.post('/user/create', {
       name: name,
@@ -60,7 +57,7 @@ function AuthProvider({ children }) {
       confirmpassword: confirmpassword,
       tipo: tipo,
       enabled: habilitar,
-      afflitedId: idfiliado
+      AffiliatedId: idfiliado
 
     }, {
       headers: {

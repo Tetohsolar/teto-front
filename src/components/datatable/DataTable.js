@@ -13,7 +13,7 @@ let PageSize = 5;
 const DataTable = (props) => {
 
 
-  const { token, profilelogged,  afflitedId} = useContext(AuthContext)
+  const { token, profilelogged,  afflitedId,idLogged} = useContext(AuthContext)
 
   const [users, setUsers] = useState([])
   const [userDel, setUserDel] = useState([])
@@ -33,6 +33,27 @@ const DataTable = (props) => {
       name: userFind,
       page: data - 1,
       pageSize: 5
+    }
+
+    if (profilelogged !== "Root"){
+
+      filtro = {
+        name: userFind,
+        page: 0,
+        pageSize: 5,
+        AffiliatedId:afflitedId
+      }
+    }
+
+    if (profilelogged === "User"){
+
+      filtro = {
+        name: userFind,
+        page: 0,
+        pageSize: 5,
+        AffiliatedId:afflitedId,
+        UserId:idLogged
+      }
     }
 
     api.post('/user/byparam', filtro, {
@@ -68,10 +89,19 @@ const DataTable = (props) => {
         pageSize: 5,
         AffiliatedId:afflitedId
       }
-      
     }
-    console.log(filtro)
 
+    if (profilelogged === "User"){
+
+      filtro = {
+        name: userFind,
+        page: 0,
+        pageSize: 5,
+        AffiliatedId:afflitedId,
+        UserId:idLogged
+      }
+    }
+    
     await api.post('/user/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
