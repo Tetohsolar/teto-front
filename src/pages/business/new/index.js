@@ -72,7 +72,12 @@ export default function NewBusiness(prop) {
   const [projetoDesconto2, setprojetoDesconto2] = useState('')
   const [projetoDesconto4, setprojetoDesconto4] = useState('')
   const [marcaModulo, setMarcaModulo] = useState('')
-  const [modeloModulo, setModeloModulo] = useState('')
+  const [modeloPlaca, setModeloPlaca] = useState([])
+  const [modeloInversor, setModeloInversor] = useState([])
+  const [modeloMicroInversor, setModeloMicroInversor] = useState([])
+  const [selectedInversor, setSelectecInversor] = useState('')
+  const [selectedModeloPainel, setSelectedModeloPainel] = useState('')
+  const [selectedMicroinversor, setSelectecMicroinversor] = useState('')
   const [marcaInversor, setMarcaInversor] = useState('')
   const [marcaMicroInversor, setMarcaMicroInversor] = useState('')
   const [garantia_inv_micro, setGarantia_inv_micro] = useState('')
@@ -84,6 +89,7 @@ export default function NewBusiness(prop) {
   const [codigo, setCodigo] = useState()
   const [descricao, setDescricao] = useState()
   const [marca, setMarca] = useState()
+  const [marcas, setMarcas] = useState([])
   const [categoria, setCategoria] = useState()
   const [descricaoTec, setDescricaoTec] = useState()
   const [descricaoAmigavel, setDescricaoAmigavel] = useState()
@@ -93,98 +99,10 @@ export default function NewBusiness(prop) {
   const [dimensao, setDimensao] = useState()
   const [idSelected, setIdSelected] = useState()
   const [peso, setPeso] = useState()
+  const [produtos, setProdutos] = useState([])
+  // const [marcaPainel, setPMarcas] = useState([])
 
 
-  async function loadById(id) {
-    try {
-
-      await api.get('/products/get/' + id, {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
-
-      }).then((response) => {
-        setCodigo(response.data.codef)
-        setDescricao(response.data.description)
-        setMarca(response.data.brand)
-        setCategoria(response.data.category)
-        setDescricaoTec(response.data.descriptionTec)
-        setDescricaoAmigavel(response.data.descriptionFriendly)
-        setGarantia(response.data.guarantee)
-        setFornecedor(response.data.supplier)
-        setPreco(response.data.price)
-        setPeso(response.data.weight)
-        setDimensao(response.data.dimenssion)
-        setIdSelected(response.data.id)
-
-      }).catch((error) => {
-        toast.error(error.response.data.message)
-      });
-
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
-
-
-
-
-
-  function handleCaptureEP() {
-    console.log(subgrupo)
-    console.log(energiaPonta)
-    console.log(energia_FP)
-    if (subgrupo === "subA3Azul" && energiaPonta !== null && energia_FP !== null) {
-      setConsumoMedio(energiaPonta + energia_FP)
-    }
-    console.log('chamou')
-
-  }
-
-
-
-
-
-
-
-
-  //{"document":"666.641.953-80"}
-  async function handleFindClient(e) {
-    e.preventDefault();
-
-    try {
-      await api.post('/client/getbydocument',
-        { "document": `${cpf}` }, {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
-
-      }).then((response) => {
-        console.log(response)
-        setNome(response.data.fantasy)
-        setEmail(response.data.email)
-        setFone(response.data.phone)
-        setWhatsapp(response.data.zap)
-        setInf_Adicionais(response.data.addInformation)
-        setEstado(response.data.Addresses[0].state)
-        setCidade(response.data.Addresses[0].city)
-        setCep(response.data.Addresses[0].postcode)
-        setRua(response.data.Addresses[0].street)
-        setBairro(response.data.Addresses[0].neighborhood)
-        setUsuario(userName)
-
-
-
-      }).catch((error) => {
-        toast.error(error.response.data.message)
-      });
-
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
 
   // async function handleCreateBusiness(e) {
   //   e.preventDefault()
@@ -204,6 +122,235 @@ export default function NewBusiness(prop) {
 
 
   //  }
+
+  async function loadAllProducts() {
+    try {
+
+      await api.get('/product/all', {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        setProdutos(response.data)
+        console.log(response.data)
+        // setCodigo(response.data.codef)
+        // setDescricao(response.data.description)
+        // setMarca(response.data.brand)
+        // setCategoria(response.data.category)
+        // setDescricaoTec(response.data.descriptionTec)
+        // setDescricaoAmigavel(response.data.descriptionFriendly)
+        // setGarantia(response.data.guarantee)
+        // setFornecedor(response.data.supplier)
+        // setPreco(response.data.price)
+        // setPeso(response.data.weight)
+        // setDimensao(response.data.dimenssion)
+        // setIdSelected(response.data.id)
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+
+
+
+  //busca por tipo de produto
+  async function loadBrandByProduct(type) {
+    try {
+      const filtro = {
+        "type": type
+      }
+
+
+      await api.post('/brands/all', filtro, {
+        headers: {
+          'Authorization': `Basic ${token}`
+
+        }
+      }).then((response) => {
+        setMarcas(response.data.brand)
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+
+
+  //load inversor and microinversor
+  async function loadBrand() {
+
+    if (tipoSistema) {
+    }
+    let tipo = ''
+
+    if (tipoSistema === "Inversor") {
+      tipo = "M"
+    } else
+      if (tipoSistema === "Microinversor") {
+        tipo = "M"
+      }
+      else {
+        tipo = "P"
+      }
+    console.log(tipo)
+    await loadBrandByProduct(tipo)
+  }
+
+
+
+
+
+
+  async function findInversores() {
+
+    const filtro = {
+      brand: "%",
+      category: "Inversor",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloInversor(response.data.tutorials)
+      console.log(response.data.tutorials)
+
+    })
+
+
+  };
+
+
+
+  async function findMicroInversor() {
+    const filtro = {
+      brand: "%",
+      category: "Microinversor",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloMicroInversor(response.data.tutorials)
+      console.log(response.data.tutorials)
+
+    })
+
+
+  };
+
+
+  async function findAllPainel() {
+    console.log('chamou painel')
+    const filtro = {
+      brand: "%",
+      category: "Placa",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloPlaca(response.data.tutorials)
+      console.log(modeloPlaca)
+
+    })
+
+
+  };
+
+
+  function findAllProductsByBrand(e) {
+    console.log(e)
+    setTipoSistema(e)
+
+    if (e === "Inversor") {
+      console.log('chamou inversor')
+      findInversores()
+
+    }
+    else if (e === "Microinversor") {
+      console.log('chamou microinversor')
+      findMicroInversor()
+
+    }
+
+    findAllPainel()
+  }
+
+
+
+  // useEffect(() => {
+  //   loadBrandByProduct("P")
+  //   loadAllProducts()
+  //   // findAllProducts()
+
+
+  // }, [])
+
+
+
+  async function handleFindClient(e) {
+    e.preventDefault();
+
+    try {
+      await api.post('/client/getbydocument',
+        { "document": `${cpf}` }, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        console.log(response)
+        setNomeFantasia(response.data.fantasy)
+        setEmail(response.data.email)
+        setFone(response.data.phone)
+        setWhatsapp(response.data.zap)
+        setInf_Adicionais(response.data.addInformation)
+        setEstado(response.data.Addresses[0].state)
+        setCidade(response.data.Addresses[0].city)
+        setCep(response.data.Addresses[0].postcode)
+        setRua(response.data.Addresses[0].street)
+        setBairro(response.data.Addresses[0].neighborhood)
+        setUsuario(userName)
+        setNumero(response.data.Addresses[0].number)
+
+
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+
 
   async function buscaGeracaoSugerida() {
     setEnergiaPontaTratada(0)
@@ -271,6 +418,194 @@ export default function NewBusiness(prop) {
 
   }
 
+  function resetFormCliente() {
+    setNomeFantasia('')
+    setCpf('')
+    setCnpj('')
+    setEmail('')
+    setFone('')
+    setWhatsapp('')
+    setInf_Adicionais('')
+    setEstado('')
+    setCidade('')
+    setCep('')
+    setRua('')
+    setBairro('')
+    setNumero('')
+
+  }
+  // async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
+
+
+  //   const json = {
+  //     fantasy: name,
+  //     corporatename: corpName,
+  //     phone: phone,
+  //     document: documento,
+  //     email: email,
+  //     tipo: tipoPesoa,
+  //     zap: zap,
+  //     addInformation: inform,
+  //     Addresses: [
+  //       {
+  //         id: idAdd ? idAdd : undefined,
+  //         street: logradouro,
+  //         postcode: cep,
+  //         city: cidade,
+  //         state: estado,
+  //         neighborhood: bairro,
+  //         number: num
+  //       }
+  //     ]
+  //   }
+  //   const t = JSON.stringify(json);
+  //   const saida = JSON.parse(t);
+
+  //   if (await validaCampos(name, phone, documento)) {
+
+  //     if (id) {
+  //       await api.patch('/client/update/' + id, saida
+  //         , {
+  //           headers: {
+  //             'Authorization': `Basic ${token}`
+  //           }
+
+  //         }).then((response) => {
+  //         }).catch(
+  //           (response) => {
+  //             toast.error(response.response.data.message)
+  //             throw new Error()
+
+  //           }
+  //         );
+
+  //     } else {
+  //       await api.post('/client/create', saida
+  //         , {
+  //           headers: {
+  //             'Authorization': `Basic ${token}`
+  //           }
+
+  //         }).then((response) => {
+  //         }).catch(
+  //           (response) => {
+  //             toast.error(response.response.data.message)
+  //             throw new Error()
+  //           }
+  //         )
+  //     }
+  //   }
+  // }
+
+
+
+  function validaCampos(nome, fone, cep, whatsapp) {
+
+
+    if (nome === "") {
+      toast.error("Nome É obrigatório", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+    if (fone === "") {
+      toast.error("Telefone É obrigatório", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+
+    let phonenomask = fone.replace('_', '');
+
+
+    if (phonenomask.length < 14) {
+      toast.error("Telefone é invalido", {
+        autoClose: 1000,
+      })
+      return false;
+    }
+
+
+
+    if (whatsapp) {
+
+
+      let zapnomask = whatsapp.replace('_', '');
+
+      if (zapnomask.length < 14) {
+        toast.error("WhatsApp é invalido", {
+          autoClose: 1000,
+        })
+        return false;
+      }
+    }
+    console.log(cep)
+
+    if (cep) {
+      let cepnomask = cep.replace('_', '');
+
+      if (cepnomask.length < 9) {
+        toast.error("Cep é invalido", {
+          autoClose: 1000,
+        })
+        return false;
+      }
+    }
+
+
+
+    return true;
+  }
+
+
+
+  async function saveNewClient() {
+
+    if (validaCampos(nomeFantasia, fone, cep, whatsapp)) {
+
+
+      const data = {
+        fantasy: nomeFantasia,
+        corporatename: nomeFantasia,
+        phone: fone,
+        document: cpf,
+        email: email,
+        tipo: tipoPessoa,
+        zap: whatsapp,
+        addInformation: inf_Adicionais,
+        Addresses: [
+          {
+
+            street: rua,
+            postcode: cep,
+            city: cidade,
+            state: estado,
+            neighborhood: bairro,
+            number: numero
+          }
+        ]
+      }
+      console.log(data)
+
+
+
+      await api.post('/client/create', data
+        , {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
+
+        }).then((response) => {
+          console.log(response.data)
+        }).catch(
+          (response) => {
+            toast.error(response.response.data.message)
+            throw new Error()
+          }
+        )
+
+    }
+  }
 
 
 
@@ -327,12 +662,7 @@ export default function NewBusiness(prop) {
 
                       </div>
 
-                      <div div className="col-md-4">
-                        <label htmlFor="inputNome" className="form-label">
-                          Nome:
-                        </label>
-                        <input type="text" className="form-control" id="inputNome" value={nome} onChange={(e) => setNome(e.target.value)} />
-                      </div>
+
 
 
                     </>
@@ -370,7 +700,7 @@ export default function NewBusiness(prop) {
                   <div className="row">
                     <div div className="col-md-6">
                       <label htmlFor="inputNomeFantasia" className="form-label">
-                        Nome Fantasia:
+                        Nome do Cliente:
                       </label>
                       <input type="text" className="form-control" id="inputNomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
                     </div>
@@ -424,110 +754,102 @@ export default function NewBusiness(prop) {
 
 
                   </div>
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Endereço do Cliente
+                    </div>
+                    <div class="card-body">
+
+                      <div className="container-fluid">
+                        <div className="row d-flex">
+                          <div className="col-md-2">
+
+                            <label htmlFor="inputCEP" className="form-label">
+                              CEP:
+                            </label>
+                            <input type="text" className="form-control" id="inputCEP" value={cep} onChange={(e) => setCep(e.target.value)} />
+                          </div>
+                          <div className="col-md-2">
+                            <label htmlFor="inputEstado" className="form-label">
+                              Estado:
+                            </label>
+                            <input type="text" className="form-control" id="inputEstado" value={estado} onChange={(e) => setEstado(e.target.value)} />
+                          </div>
+                          <div className="col-md-5">
+                            <label htmlFor="inputCidade" className="form-label">
+                              Cidade:
+                            </label>
+                            <input type="text" className="form-control" id="inputCidade" value={cidade} onChange={(e) => setCidade(e.target.value)} />
+                          </div>
+
+                          <div className="row justify-content-center">
+                            <div className="col-md-4">
+                              <label htmlFor="inputBairro" className="form-label">
+                                Bairro:
+                              </label>
+                              <input type="text" className="form-control" id="inputBairro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
+                            </div>
+                            <div className="col-md-6">
+                              <label htmlFor="inputRua" className="form-label">
+                                Rua:
+                              </label>
+                              <input type="text" className="form-control" id="inputRua" value={rua} onChange={(e) => setRua(e.target.value)} />
+                            </div>
+                            <div className="col-md-2">
+                              <label htmlFor="inputNumero" className="form-label">
+                                Número:
+                              </label>
+                              <input type="text" className="form-control" id="inputNumero" value={numero} onChange={(e) => setNumero(e.target.value)} />
+                            </div>
+
+
+                          </div>
+
+
+                        </div>
+
+
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <label htmlFor="inputInformAdicio" className="form-label">
+                              Informações Adicionais:
+                            </label>
+                            <textarea class="form-control" id="inputInformAdicio" rows="3" value={inf_Adicionais} onChange={(e) => setInf_Adicionais(e.target.value)}  ></textarea>
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
 
                 </div>
 
+
               </div>
               <div className="modal-footer">
-                <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">
+                <button type="button" onClick={resetFormCliente}
+                  className="btn btn-primary text-light d-flex align-items-center gap-2" >
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                   </svg>
-                  Novo negócio
+                  Novo
                 </button>
-              </div>
+                <button type="button" onClick={saveNewClient}
+                  className="btn btn-primary text-light d-flex align-items-center gap-2" >
 
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Dados do  MODAL 2*/}
-        <div className="modal  fade modal-lg" id="staticBackdrop2" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
-          data-bs-keyboard="false" aria-hidden="true" >
-          <div className="modal-dialog" >
-            <div className="modal-content">
-              <div className="modal-header">
-                <div className="d-flex flex-column">
-                  <h1 className="modal-title fs-3" id="exampleModalLabel">Proposta de Negócio </h1>
-                  <h5 className='fs-5'>Endereço do Cliente</h5>
-                </div>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div className="modal-body">
-
-                <div className="container-fluid">
-                  <div className="row d-flex">
-                    <div className="col-md-2">
-
-                      <label htmlFor="inputCEP" className="form-label">
-                        CEP:
-                      </label>
-                      <input type="text" className="form-control" id="inputCEP" value={cep} onChange={(e) => setCep(e.target.value)} />
-                    </div>
-                    <div className="col-md-2">
-                      <label htmlFor="inputEstado" className="form-label">
-                        Estado:
-                      </label>
-                      <input type="text" className="form-control" id="inputEstado" value={estado} onChange={(e) => setEstado(e.target.value)} />
-                    </div>
-                    <div className="col-md-5">
-                      <label htmlFor="inputCidade" className="form-label">
-                        Cidade:
-                      </label>
-                      <input type="text" className="form-control" id="inputCidade" value={cidade} onChange={(e) => setCidade(e.target.value)} />
-                    </div>
-
-                    <div className="row justify-content-center">
-                      <div className="col-md-4">
-                        <label htmlFor="inputBairro" className="form-label">
-                          Bairro:
-                        </label>
-                        <input type="text" className="form-control" id="inputBairro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
-                      </div>
-                      <div className="col-md-6">
-                        <label htmlFor="inputRua" className="form-label">
-                          Rua:
-                        </label>
-                        <input type="text" className="form-control" id="inputRua" value={rua} onChange={(e) => setRua(e.target.value)} />
-                      </div>
-                      <div className="col-md-2">
-                        <label htmlFor="inputNumero" className="form-label">
-                          Número:
-                        </label>
-                        <input type="text" className="form-control" id="inputNumero" value={numero} onChange={(e) => setNumero(e.target.value)} />
-                      </div>
-
-
-                    </div>
-
-
-                  </div>
-
-
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <label htmlFor="inputInformAdicio" className="form-label">
-                        Informações Adicionais:
-                      </label>
-                      <textarea class="form-control" id="inputInformAdicio" rows="3" value={inf_Adicionais} onChange={(e) => setInf_Adicionais(e.target.value)}  ></textarea>
-
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-              <div className="modal-footer">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                  </svg>
+                  Salvar e Avançar
+                </button>
                 <button type="button"
-                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">Voltar</button>
-                <button type="button"
-                  className="btn btn-primary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
                   data-bs-dismiss="modal">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -541,11 +863,11 @@ export default function NewBusiness(prop) {
 
           </div>
 
-        </div >
+        </div>
 
+        {/* Dados do  MODAL 2*/}
 
-        {/* Dados do  MODAL.. 3*/}
-        <div className="modal  fade modal-lg w-100" id="staticBackdrop3" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
+        <div className="modal fade modal-lg w-100" id="staticBackdrop2" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
           data-bs-keyboard="false" aria-hidden="true" >
           <div className="modal-dialog" >
             <div className="modal-content">
@@ -717,193 +1039,6 @@ export default function NewBusiness(prop) {
 
                     </div>
                   </div>
-
-
-
-                </div>
-
-              </div>
-              <div className="modal-footer">
-                <button type="button"
-                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">Voltar</button>
-                <button type="button"
-                  className="btn btn-primary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop4" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">
-
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-                  </svg>
-                  Avançar
-                </button>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div >
-
-
-        {/* Dados do  MODAL 4*/}
-        <div className="modal  fade modal-lg" id="staticBackdrop4" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
-          data-bs-keyboard="false" aria-hidden="true" >
-          <div className="modal-dialog" >
-            <div className="modal-content">
-              <div className="modal-header">
-                <div className="d-flex flex-column">
-                  <h1 className="modal-title fs-4" id="exampleModalLabel">Proposta de Negócio </h1>
-                  <h5 className='fs-5'>Tipo de Sistema</h5>
-                </div>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div className="modal-body">
-
-                <div className="container-fluid">
-                  <div className="row ">
-                    <div className="col-md-3">
-                      <label htmlFor="inputTipoSistema" className="form-label">
-                        Tipo de Sistema:
-                      </label>
-                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)}  >
-                        <option value="">Selecione</option>
-                        <option value="inv">Inversor</option>
-                        <option value="micro">MicroInversor</option>
-
-                      </select>
-
-                    </div>
-                    {tipoSistema === 'inv' ? <>
-
-                      <div className="col-md-2">
-                        <label htmlFor="inputPotModulos" className="form-label">
-                          Potência:
-                        </label>
-                        <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                      </div>
-                      <div className="col-md-2">
-                        <label htmlFor="inputFatorSimult" className="form-label" >
-                          Marca
-                        </label>
-                        <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
-                      </div>
-
-
-
-
-                    </>
-                      :
-                      <>
-                        <div className="col-md-3">
-                          <label htmlFor="inputPotModulos" className="form-label">
-                            Potência:
-                          </label>
-                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                        </div>
-                        <div className="col-md-3">
-                          <label htmlFor="inputPotModulos" className="form-label">
-                            Marca:
-                          </label>
-                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                        </div>
-
-
-                      </>}
-
-                    {/* <div className="col-md-2">
-                      <label htmlFor="inputPotenciaSist" className="form-label">
-                        Potência(kwp):
-                      </label>
-                      <input type="text" className="form-control" id="inputPotenciaSist" value={potenciaSistema} onChange={(e) => setPotenciaSistema(e.target.value)} />
-                    </div>
-
-                    <div className="col-md-2">
-                      <label htmlFor="inputPotenciaSist" className="form-label">
-                        Quantidade:
-                      </label>
-                      <input type="text" className="form-control" id="inputPotenciaSist" value={potenciaSistema} onChange={(e) => setPotenciaSistema(e.target.value)} />
-                    </div> */}
-
-                  </div>
-                  <hr />
-                  <div class="card">
-                    <div class="card-header">
-                      Painéis
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                        <div className="col-md-3">
-                          <label htmlFor="inputFatorSimult" className="form-label" >
-                            Marca
-                          </label>
-                          {/* <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} /> */}
-                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
-                            <option value="">Selecione</option>
-                            <option value="inv">Jinko</option>
-                            <option value="micro">Canadian</option>
-
-                          </select>
-                        </div>
-                        <div className="col-md-4">
-                          <label htmlFor="inputComplem" className="form-label">
-                            Modelo do Painel
-                          </label>
-                          <input type="text" className="form-control" id="inputComplem" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputPotModulos" className="form-label">
-                            Potência:
-                          </label>
-                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                        </div>
-
-
-                        <div className="col-md-2">
-                          <label htmlFor="inputPotModulos" className="form-label">
-                            Quantidade:
-                          </label>
-                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
-                        </div>
-
-
-
-                      </div>
-
-                    </div>
-                  </div>
-                  <br />
-                  <div class="card">
-                    <div class="card-header">
-                      Dados do Cliente
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                        <div className="col-md-3">
-                          <label htmlFor="inputConsumo" className="form-label">
-                            Consumo(Kwh):
-                          </label>
-                          <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-3">
-                          <label htmlFor="inputPerda" className="form-label">
-                            Perda:
-                          </label>
-                          <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
-                        </div>
-                        <div className="col-md-3">
-                          <label htmlFor="inputmediaMensal" className="form-label">
-                            Média Mensal(Kwh):
-                          </label>
-                          <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-
                   <br />
                   <div class="card">
                     <div class="card-header">
@@ -944,6 +1079,258 @@ export default function NewBusiness(prop) {
                     </div>
                   </div>
 
+
+
+                </div>
+
+              </div>
+              <div className="modal-footer">
+                <button type="button"
+                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop" data-bs-toggle="modal"
+                  data-bs-dismiss="modal">Voltar</button>
+                <button type="button"
+                  className="btn btn-primary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                  data-bs-dismiss="modal">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                  </svg>
+                  Avançar
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div >
+
+
+        {/* Dados do  MODAL 3*/}
+        <div className="modal fade modal-lg " id="staticBackdrop3" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
+          data-bs-keyboard="false" aria-hidden="true" >
+          <div className="modal-dialog" >
+            <div className="modal-content">
+              <div className="modal-header">
+                <div className="d-flex flex-column">
+                  <h1 className="modal-title fs-4" id="exampleModalLabel">Proposta de Negócio </h1>
+                  <h5 className='fs-5'>Tipo de Sistema</h5>
+                </div>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+
+                <div className="container-fluid">
+                  <div className="row ">
+                    <div className="col-md-3">
+                      <label htmlFor="inputTipoSistema" className="form-label">
+                        Tipo de Sistema:
+                      </label>
+                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                        <option value="">Selecione</option>
+                        <option value="Inversor">Inversor</option>
+                        <option value="Microinversor">Microinversor</option>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+                  <hr />
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Tipo de Sistema: <strong>{tipoSistema}</strong>
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        {tipoSistema === 'Inversor' ? <>
+
+                          <div className="col-md-3">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Marca:
+                            </label>
+
+                            <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca} >
+                              <option value="">Selecionar </option>
+                              {modeloInversor ? modeloInversor.map((option) =>
+                              (<option key={option.id}
+                                value={option.brand} >
+                                {option.brand}</option>)) : ""}
+                            </select>
+
+                          </div>
+
+                          <div className="col-md-4">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Modelo
+                            </label>
+
+                            <select className="form-select" id="inputModeloInversor" value={selectedInversor} onChange={(e) => setSelectecInversor(e.target.value)}  >
+                              <option value="">Selecione</option>
+                              {modeloInversor && modeloInversor.map((produto) => (
+                                <option key={produto.id} value={produto.description}>{produto.description}</option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-md-3">
+                            <label htmlFor="inputPotModulos" className="form-label">
+                              Potência:
+                            </label>
+                            <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                          </div>
+
+
+
+                          <div className="col-md-1">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Qtde:
+                            </label>
+                            <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                          </div>
+
+                        </>
+                          :
+                          <>
+
+                            <div className="col-md-3">
+                              <label htmlFor="inputPotModulos" className="form-label">
+                                Marca:
+                              </label>
+
+                              <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+                                <option value="">Selecionar </option>
+                                {modeloMicroInversor ? modeloMicroInversor.map((option) => (<option key={option.id} value={option.brand} >{option.brand}</option>)) : ""}
+                              </select>
+                            </div>
+                            <div className="col-md-4">
+                              <label htmlFor="inputModeloMicro" className="form-label" >
+                                Modelo
+                              </label>
+
+                              <select className="form-select" id="inputModeloMicro" value={selectedMicroinversor} onChange={(e) => setSelectecMicroinversor(e.target.value)}  >
+                                <option value="">Selecione</option>
+                                {modeloMicroInversor && modeloMicroInversor.map((produto) => (
+                                  <option key={produto.id} value={produto.description}>{produto.description}</option>
+                                ))}
+
+                              </select>
+
+                            </div>
+                            <div className="col-md-3">
+                              <label htmlFor="inputPotModulos" className="form-label">
+                                Potência:
+                              </label>
+                              <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                            </div>
+
+
+
+                            <div className="col-md-1">
+                              <label htmlFor="inputFatorSimult" className="form-label" >
+                                Qtde:
+                              </label>
+                              <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                            </div>
+
+
+                          </>}
+
+
+
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <br />
+
+
+
+
+                  <div class="card">
+                    <div class="card-header">
+                      Painéis
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-4">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Marca
+                          </label>
+                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
+                            <option value="">Selecione</option>
+                            {modeloPlaca && modeloPlaca.map((produto) => (
+                              <option key={produto.id} value={produto.brand}>{produto.brand}</option>
+                            ))}
+
+
+                          </select>
+                        </div>
+                        <div className="col-md-4">
+                          <label htmlFor="inputComplem" className="form-label">
+                            Modelo do Painel
+                          </label>
+                          <select className="form-select" id="inputTipoSistema" value={selectedModeloPainel} onChange={(e) => setSelectedModeloPainel(e.target.value)}  >
+                            <option value="">Selecione</option>
+                            {modeloPlaca && modeloPlaca.map((produto) => (
+                              <option key={produto.id} value={produto.description}>{produto.description}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Potência:
+                          </label>
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                        </div>
+
+
+                        <div className="col-md-1">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Qtde:
+                          </label>
+                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Dados do Cliente
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-3">
+                          <label htmlFor="inputConsumo" className="form-label">
+                            Consumo(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputPerda" className="form-label">
+                            Perda:
+                          </label>
+                          <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
+                        </div>
+                        <div className="col-md-3">
+                          <label htmlFor="inputmediaMensal" className="form-label">
+                            Média Mensal(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                 </div>
 
 
@@ -954,7 +1341,7 @@ export default function NewBusiness(prop) {
 
               <div className="modal-footer">
                 <button type="button"
-                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop3" data-bs-toggle="modal"
+                  className="btn btn-secondary  d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
                   data-bs-dismiss="modal">Voltar</button>
 
                 <button type="button"
