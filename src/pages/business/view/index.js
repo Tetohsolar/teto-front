@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
+import { AiFillPlusSquare } from "react-icons/ai";
+import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 
 const ViewBusiness = () => {
   const [name, setName] = useState('')
@@ -21,59 +23,62 @@ const ViewBusiness = () => {
   const { token } = useContext(AuthContext)
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const [modificadoD, setModificadoD] = useState('')
-  const[tipoPessoa, setTipoPessoa] = useState('')
-  const[documento,setDocumento] = useState('')
-  const[telefone,setTelefone] = useState('')
-  const[zap,setZap] = useState ('')
-  const[email, setEmail] = useState ('')
-  const[infAdc, setInfAdc] = useState('')
-  const[fatorS, setFatorS] = useState ('')
-  const[telhado,setTelhado] = useState('')
-  const[tipoL,setTipoL] = useState ('')
-  const[modalidade,setModalidade] = useState('')
-  const[grupo,setGrupo] = useState('')
-  const[subgrupo,setSubGrupo] = useState('')
-  const[demandaFp,setDemandaFp] = useState('')
-  const[energiaFp,setEnergiaFp] = useState('')
-  const[demandaP,setDemandaP] = useState ('')
-  const[energiaP,setEnergiaP] = useState('')
-  const[tipoSistema,setTipoSistema] = useState('')
-  const[painelP,setPainelP] = useState('')
-  const[numeroP,setNumeroP] = useState('')
-  const[media,setMedia] = useState('')
-  const[potenciaS,setPotenciaS] = useState('')
-  const[marcaP,setMarcaP] = useState('')
-  const[modeloP,setModeloP] = useState('')
-  const[inversorMa,setInversorMa] = useState('')
-  const[inversorMo,setInversorMo] = useState('')
-  const[numeroInv,setNumeroInv] = useState('')
-  const[rua,setRua] = useState ('')
-  const[bairro,setBairro] = useState ('')
-  const[cep,setCep] = useState ('')
-  const[estado,setEstado] = useState ('')
-  const[cidade,setCidade] = useState ('')
+  const [tipoPessoa, setTipoPessoa] = useState('')
+  const [documento, setDocumento] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [zap, setZap] = useState('')
+  const [email, setEmail] = useState('')
+  const [infAdc, setInfAdc] = useState('')
+  const [fatorS, setFatorS] = useState('')
+  const [telhado, setTelhado] = useState('')
+  const [tipoL, setTipoL] = useState('')
+  const [modalidade, setModalidade] = useState('')
+  const [grupo, setGrupo] = useState('')
+  const [subgrupo, setSubGrupo] = useState('')
+  const [demandaFp, setDemandaFp] = useState('')
+  const [energiaFp, setEnergiaFp] = useState('')
+  const [demandaP, setDemandaP] = useState('')
+  const [energiaP, setEnergiaP] = useState('')
+  const [tipoSistema, setTipoSistema] = useState('')
+  const [painelP, setPainelP] = useState('')
+  const [numeroP, setNumeroP] = useState('')
+  const [media, setMedia] = useState('')
+  const [potenciaS, setPotenciaS] = useState('')
+  const [marcaP, setMarcaP] = useState('')
+  const [modeloP, setModeloP] = useState('')
+  const [inversorMa, setInversorMa] = useState('')
+  const [inversorMo, setInversorMo] = useState('')
+  const [numeroInv, setNumeroInv] = useState('')
+  const [rua, setRua] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [cep, setCep] = useState('')
+  const [estado, setEstado] = useState('')
+  const [cidade, setCidade] = useState('')
   const { businessId } = useParams();
-  const[valor,setValor] = useState ('')
-  const[consumo,setConsumo] = useState('')
-  const[geracaoSu,setGeracaoSu] = useState('')
-  const[precoKit,setPrecoKit] = useState('')
-  const[projeto,setProjeto] = useState ('')
-  const[imposto,setImposto] = useState ('')
-  const[montagem,setMontagem] = useState ('')
-  const[comissaoVe,setComissaoVe] = useState('')
-  const[margem,setMargem] = useState('')
-  const[totalLu,setTotalLu] = useState ('')
-  const[margemCa,setMargemCa] = useState ('')
-  const[valorTotal,setValorTotal] = useState ('')
-  const[valorComissao, setValorComissao] = useState ('')
-  const[lucroReal,setLucroReal] = useState ('')
-  const[lucroProjeto,setLucroProjeto] = useState ('')
-  const[complemento,setcomplemento] =useState ('')
+  const [valor, setValor] = useState('')
+  const [consumo, setConsumo] = useState('')
+  const [geracaoSu, setGeracaoSu] = useState('')
+  const [precoKit, setPrecoKit] = useState('')
+  const [projeto, setProjeto] = useState('')
+  const [imposto, setImposto] = useState('')
+  const [montagem, setMontagem] = useState('')
+  const [comissaoVe, setComissaoVe] = useState('')
+  const [margem, setMargem] = useState('')
+  const [totalLu, setTotalLu] = useState('')
+  const [margemCa, setMargemCa] = useState('')
+  const [valorTotal, setValorTotal] = useState('')
+  const [valorComissao, setValorComissao] = useState('')
+  const [lucroReal, setLucroReal] = useState('')
+  const [lucroProjeto, setLucroProjeto] = useState('')
+  const [complemento, setcomplemento] = useState('')
+  const [situation, setSituation] = useState([]);
+  const [business, setBusiness] = useState([]);
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
   })
+
 
   useEffect(() => {
 
@@ -88,13 +93,13 @@ const ViewBusiness = () => {
   }, [])
 
 
-  async function loadAdd(Id){
+  async function loadAdd(Id) {
     await api.get('/client/get/add/' + Id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
-    }).then((response) => { 
+    }).then((response) => {
       console.log(response.data)
       setRua(response.data.street)
       setBairro(response.data.neighborhood)
@@ -105,7 +110,7 @@ const ViewBusiness = () => {
     })
 
   }
-  
+
   async function loadbId(id) {
 
 
@@ -121,9 +126,9 @@ const ViewBusiness = () => {
       setNumberP(response.data.number)
       setDonoN(response.data['User.name'])
       //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
-      setModificadoD(format(new Date(response.data.updatedAt),'dd/MM/yyyy'))
+      setModificadoD(format(new Date(response.data.updatedAt), 'dd/MM/yyyy'))
       setTipoPessoa(response.data['Client.tipo'])
-      setDocumento(response.data ['Client.document'])
+      setDocumento(response.data['Client.document'])
       setTelefone(response.data['Client.phone'])
       setZap(response.data['Client.zap'])
       setEmail(response.data['Client.email'])
@@ -165,12 +170,8 @@ const ViewBusiness = () => {
       setLucroProjeto(response.data.profit)
       setLucroReal(response.data.realProfit)
       setcomplemento(response.data.complement)
+      setBusiness(response.data.shares)
 
-
-      
-      
-      
-      
 
     }).catch((error) => { console.log(error) })
 
@@ -216,7 +217,7 @@ const ViewBusiness = () => {
                   <label> {donoN} </label>
 
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -225,23 +226,23 @@ const ViewBusiness = () => {
             <div class="p-3 mb-3 bg-white border rounded-3 table-container  " >
               <h5 className="pb-3">Detalhes do negócio</h5>
               <div>
-                
+
               </div>
               <br></br>
 
               <div className='conteinerCards'>
-                
+
                 <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                  <div className='card-title'>
+                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
+                    }}>
+                      <BsFillPencilFill />
+                    </button>
+                  </div>
 
-                <table className='table_view'>
+                  <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
                       Criado/Modificado em
                       <td>
@@ -255,7 +256,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label>{name} </label>
+                        <label>{name} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -295,7 +296,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {email} </label>
+                        <label> {email} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -303,7 +304,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {infAdc} </label>
+                        <label> {infAdc} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -311,7 +312,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                       <label> {rua} </label>
+                        <label> {rua} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -319,7 +320,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {bairro} </label>
+                        <label> {bairro} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -327,7 +328,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {cep} </label>
+                        <label> {cep} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -335,7 +336,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {estado} </label>
+                        <label> {estado} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -343,19 +344,19 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {cidade} </label>
+                        <label> {cidade} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Consumo
+                      Consumo
                       <td>
                       </td>
                       <td>
-                       <label> {consumo} </label>
+                        <label> {consumo} </label>
                       </td>
                     </tr>
 
-                   
+
 
 
                   </table>
@@ -364,164 +365,164 @@ const ViewBusiness = () => {
                 </div>
 
                 <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                  <div className='card-title'>
+                    <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
+                    }}>
+                      <BsFillPencilFill />
+                    </button>
+                  </div>
                   <table className='table_view'>
-                 
+
                     <tr className='linhabaixo tamanho-tr'>
-                     Geração sugerida
+                      Geração sugerida
                       <td>
                       </td>
                       <td>
-                       <label> {geracaoSu} </label>
+                        <label> {geracaoSu} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Preço do kit 
+                      Preço do kit
                       <td>
                       </td>
                       <td>
-                       <label> {precoKit} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                    Complemento
-                      <td>
-                      </td>
-                      <td>
-                       <label> {precoKit} </label>
+                        <label> {precoKit} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Projeto
+                      Complemento
                       <td>
                       </td>
                       <td>
-                       <label> {projeto} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Imposto
-                      <td>
-                      </td>
-                      <td>
-                       <label> {complemento} </label>
+                        <label> {precoKit} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    Montagem
+                      Projeto
                       <td>
                       </td>
                       <td>
-                       <label> {montagem} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                    Comissão do vendedor/Valor da comissão
-                      <td>
-                      </td>
-                      <td>
-                       <label> {comissaoVe} </label>
+                        <label> {projeto} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    Margem/ Margem calculada
+                      Imposto
                       <td>
                       </td>
                       <td>
-                       <label> {margem} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Total de Custo
-                      <td>
-                      </td>
-                      <td>
-                       <label> {totalLu} </label>
+                        <label> {complemento} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Lucro (%)
+                      Montagem
                       <td>
                       </td>
                       <td>
-                       <label> {lucroReal} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Valor total do projeto
-                      <td>
-                      </td>
-                      <td>
-                       <label> {valorTotal} </label>
+                        <label> {montagem} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Lucro do projeto ($)
+                      Comissão do vendedor/Valor da comissão
                       <td>
                       </td>
                       <td>
-                       <label> {lucroProjeto} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Projeto desconto 2%/ Lucro 2%/ Margem 2%
-                      <td>
-                      </td>
-                      <td>
-                       <label> {rua} </label>
+                        <label> {comissaoVe} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Projeto desconto 4%/Lucro 4%/Margem 4% 
+                      Margem/ Margem calculada
                       <td>
                       </td>
                       <td>
-                       <label> {rua} </label>
+                        <label> {margem} </label>
                       </td>
                     </tr>
-                   
-                    
+                    <tr className='linhabaixo tamanho-tr'>
+                      Total de Custo
+                      <td>
+                      </td>
+                      <td>
+                        <label> {totalLu} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Lucro (%)
+                      <td>
+                      </td>
+                      <td>
+                        <label> {lucroReal} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Valor total do projeto
+                      <td>
+                      </td>
+                      <td>
+                        <label> {valorTotal} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Lucro do projeto ($)
+                      <td>
+                      </td>
+                      <td>
+                        <label> {lucroProjeto} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Projeto desconto 2%/ Lucro 2%/ Margem 2%
+                      <td>
+                      </td>
+                      <td>
+                        <label> {rua} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Projeto desconto 4%/Lucro 4%/Margem 4%
+                      <td>
+                      </td>
+                      <td>
+                        <label> {rua} </label>
+                      </td>
+                    </tr>
+
+
                   </table>
-               
-                
-                
-                
+
+
+
+
                 </div>
 
               </div>
             </div>
-            
-             
-            
-          </div>
-           <div className="container-fluid bg-home py-4 ">
-                <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
 
-                  <h5 className="pb-3">Dimensionamento</h5>
-                  
-                  <div>
-                
+
+
+          </div>
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <h5 className="pb-3">Dimensionamento</h5>
+
+              <div>
+
               </div>
               <br></br>
 
               <div className='conteinerCards'>
-                
-                <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
+                <div className='cards border rounded-3'>
+                  <div className='card-title'>
+                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                    }}>
+                      <BsFillPencilFill />
+                    </button>
+                  </div>
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
@@ -529,7 +530,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td >
-                      <label>{name} </label>
+                        <label>{name} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -537,15 +538,15 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {donoN} </label>
+                        <label> {donoN} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Fator Solar 
+                      Fator Solar
                       <td>
                       </td>
                       <td>
-                      <label> {fatorS} </label>
+                        <label> {fatorS} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -553,15 +554,15 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label> {telhado} </label>
+                        <label> {telhado} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Tipo de Ligação 
+                      Tipo de Ligação
                       <td>
                       </td>
                       <td>
-                      <label> {tipoL} </label>
+                        <label> {tipoL} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -569,66 +570,66 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                       Rateio x
+                        Rateio x
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Modalidade
+                      Modalidade
                       <td>
                       </td>
                       <td>
-                      <label> {modalidade} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Grupo
-                      <td>
-                      </td>
-                      <td>
-                      <label> {grupo} </label>
+                        <label> {modalidade} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    SubGrupo
+                      Grupo
                       <td>
                       </td>
                       <td>
-                      <label> {subgrupo} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Demanda fora ponta
-                      <td>
-                      </td>
-                      <td>
-                      <label> {demandaFp} </label>
+                        <label> {grupo} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Energia fora ponta
+                      SubGrupo
                       <td>
                       </td>
                       <td>
-                      <label> {energiaFp} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Demanda ponta
-                      <td>
-                      </td>
-                      <td>
-                      <label> {demandaP} </label>
+                        <label> {subgrupo} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                     Energia ponta
+                      Demanda fora ponta
                       <td>
                       </td>
                       <td>
-                      <label> {energiaP} </label>
+                        <label> {demandaFp} </label>
                       </td>
                     </tr>
-                    
+                    <tr className='linhabaixo tamanho-tr'>
+                      Energia fora ponta
+                      <td>
+                      </td>
+                      <td>
+                        <label> {energiaFp} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Demanda ponta
+                      <td>
+                      </td>
+                      <td>
+                        <label> {demandaP} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Energia ponta
+                      <td>
+                      </td>
+                      <td>
+                        <label> {energiaP} </label>
+                      </td>
+                    </tr>
+
 
 
                   </table>
@@ -636,22 +637,22 @@ const ViewBusiness = () => {
 
                 </div>
                 <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Informações do sistema</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                  <div className='card-title'>
+                    <h6 class="card-content-title mb-3 fw-semibold">Informações do sistema</h6>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
+                    }}>
+                      <BsFillPencilFill />
+                    </button>
+                  </div>
                   <table className='table_view'>
-                      
+
                     <tr className='linhabaixo tamanho-tr'>
                       Tipo de sistema
                       <td>
                       </td>
                       <td>
-                      <label>{tipoSistema} </label>
+                        <label>{tipoSistema} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -659,44 +660,44 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td>
-                      <label>{painelP} </label>
+                        <label>{painelP} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    Número de placas
+                      Número de placas
                       <td>
                       </td>
                       <td>
-                      <label>{numeroP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                    Média mensal
-                      <td>
-                      </td>
-                      <td>
-                      <label>{media} </label>
+                        <label>{numeroP} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    Potência do sistema
+                      Média mensal
                       <td>
                       </td>
                       <td>
-                      <label>{potenciaS} </label>
+                        <label>{media} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Potência do sistema
+                      <td>
+                      </td>
+                      <td>
+                        <label>{potenciaS} </label>
                       </td>
                     </tr>
                   </table>
-                  
-                  
-                  <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
+
+                  <div className='card-title'>
+                    <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                    }}>
+                      <BsFillPencilFill />
+                    </button>
+                  </div>
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
                       <td>
@@ -711,7 +712,7 @@ const ViewBusiness = () => {
                         Modelo da placa
                       </td>
                       <td>
-                      <label> {modeloP} </label>
+                        <label> {modeloP} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -719,15 +720,15 @@ const ViewBusiness = () => {
                         Marca do Inversor
                       </td>
                       <td>
-                      <label> {inversorMa} </label>
+                        <label> {inversorMa} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       <td>
-                        Modelo do Inversor 
+                        Modelo do Inversor
                       </td>
                       <td>
-                      <label> {inversorMo} </label>
+                        <label> {inversorMo} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -735,129 +736,118 @@ const ViewBusiness = () => {
                         Número de Inversores
                       </td>
                       <td>
-                      <label> {numeroInv} </label>
+                        <label> {numeroInv} </label>
                       </td>
                     </tr>
                   </table>
-               
-                
-                
-                
+
+
+
+
                 </div>
-                
-                    
+
+
+              </div>
+
+            </div>
+          </div>
+
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Rateio</h5>
+
+                <button
+                  className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
+                  type="submit"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                >
+                  <AiFillPlusSquare />
+                  Novo rateio
+                </button>
+              </div>
+
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
                   </div>
-                  
-                </div>
+                </form>
               </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                      <h6 className="card-title">Informações da geradora</h6>
+                      <div className="table-responsive">
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">Modalidade</th>
+                              <th scope="col">Grupo</th>
+                              <th scope="col">SubGrupo</th>
+                              <th scope="col" className='alinhadaDireita' >Consumo</th>
+                              <th scope="col" className='alinhadaDireita'>G.Sugerida</th>
+                              <th scope="col" className='alinhadaDireita'>C.I.P</th>
+                              <th scope="col" className='alinhadaDireita'>Dem. F. Ponta </th>
+                              <th scope="col" className='alinhadaDireita'>Ener. F. Ponta</th>
+                              <th scope="col" className='alinhadaDireita'>Dem. Ponta</th>
+                              <th scope="col" className='alinhadaDireita'>Ener. Ponta</th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
 
-              <div className="container-fluid bg-home py-4 ">
-                <div class="p-3 mb-3 bg-white border rounded-3" >
-
-                  <h5 className="pb-3">Rateio</h5>
-                  
-                  <div>
-                
-              </div>
-              <br></br>
-
-              <div className='conteinerCards'>
-                
-                <div className='cards border rounded-3'>
-                <div className='card-title'>
-                      <h6 class="card-content-title mb-3 fw-semibold">Informações de rateio</h6>
-                      <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                      }}>
-                        <BsFillPencilFill />
-                      </button>
-                </div>
-
-                  <table className='table_view'>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Modalidade
-                      <td>
-                      </td>
-                      <td >
-                      <label>{name} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Grupo
-                      <td>
-                      </td>
-                      <td>
-                      <label> {donoN} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      SubGrupo
-                      <td>
-                      </td>
-                      <td>
-                      <label> {fatorS} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Demanda fora ponta
-                      <td>
-                      </td>
-                      <td>
-                      <label> {telhado} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Energia fora ponta
-                      <td>
-                      </td>
-                      <td>
-                      <label> {tipoL} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Energia ponta
-                      <td>
-                      </td>
-                      <td>
-                      energia
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Consumo médio
-                      <td>
-                      </td>
-                      <td>
-                      <label> {modalidade} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                     Geração sugerida
-                      <td>
-                      </td>
-                      <td>
-                      <label> {grupo} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                    CIP
-                      <td>
-                      </td>
-                      <td>
-                      <label> {subgrupo} </label>
-                      </td>
-                    </tr>
-                   
-                  </table>
-
-
-                </div>
-              
-                    
+                          <tbody>
+                            {business.map((item) => {
+                              return (
+                                <tr key={item.id}>
+                                  <td>{item.modality}</td>
+                                  <td>{item.group}</td>
+                                  <td>{item.subgroup}</td>
+                                  <td className='alinhaDireita'>{item.avgconsumption}</td>
+                                  <td className='alinhaDireita'>{item.suggestedGeneration}</td>
+                                  <td className='alinhaDireita'>{formatter.format(item.CIP)}</td>
+                                  <td className='alinhaDireita'>{item.demandaFP}</td>
+                                  <td className='alinhaDireita'>{item.energiaFP}</td>
+                                  <td className='alinhaDireita'>{item.demandaP}</td>
+                                  <td className='alinhaDireita'>{item.energiaP}</td>
+                                  <td>
+                                    <div className="d-flex gap-2 justify-content-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                      >
+                                        <BsPencilFill />
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                      >
+                                        <BsFillTrash3Fill />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
-                  
                 </div>
               </div>
-              
+
+            </div>
+          </div>
+
         </div>
       </div>
 
