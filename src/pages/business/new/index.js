@@ -3,6 +3,9 @@ import api from '../../../api'
 import { AuthContext } from '../../../context/AuthContext'
 import InputMask from 'react-input-mask';
 import { ToastContainer, toast } from 'react-toastify'
+import ExibeItens from './exibeItens';
+
+
 
 
 
@@ -47,7 +50,8 @@ export default function NewBusiness(prop) {
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const [tipoSistema, setTipoSistema] = useState('')
-  const [potenciaModulo, setPotenciaModulo] = useState('')
+  const [potenciaPainel, setPotenciaPainel] = useState('')
+  const [listaPotencia, setListaPotencia] = useState([])
   const [perdas, serPerdas] = useState('')
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
   const [qtdeModulos, setQtdeModulos] = useState('')
@@ -71,7 +75,7 @@ export default function NewBusiness(prop) {
   const [lucroReal, setLucroReal] = useState('')
   const [projetoDesconto2, setprojetoDesconto2] = useState('')
   const [projetoDesconto4, setprojetoDesconto4] = useState('')
-  const [marcaModulo, setMarcaModulo] = useState('')
+  const [marcaPainel, setMarcaPainel] = useState('')
   const [modeloPlaca, setModeloPlaca] = useState([])
   const [modeloInversor, setModeloInversor] = useState([])
   const [modeloMicroInversor, setModeloMicroInversor] = useState([])
@@ -80,8 +84,15 @@ export default function NewBusiness(prop) {
   const [selectedMicroinversor, setSelectecMicroinversor] = useState('')
   const [marcaInversor, setMarcaInversor] = useState('')
   const [marcaMicroInversor, setMarcaMicroInversor] = useState('')
-  const [garantia_inv_micro, setGarantia_inv_micro] = useState('')
-  const [qtde_inv_micro, setQtde_inv_micro] = useState('')
+  const [potenciaInversor, setPotenciaInversor] = useState('')
+  const [potenciaMicroInv, setPotenciaMicroInv] = useState('')
+  const [qtdeMicroInve, setQtdeMicroInve] = useState('')
+  const [qtdeInversor, setQtdeInversor] = useState('')
+  const [qtdePainel, setQtdePainel] = useState()
+  const [listaInversor, setListaInversor] = useState([])
+  const [listaMicroinversor, setlistaMicroInversor] = useState([])
+  const [updateListaItens, setUpdateListaitens] = useState('')
+
   const [taxa, setTaxa] = useState('')
   const { token, userName } = useContext(AuthContext)
 
@@ -100,28 +111,12 @@ export default function NewBusiness(prop) {
   const [idSelected, setIdSelected] = useState()
   const [peso, setPeso] = useState()
   const [produtos, setProdutos] = useState([])
-  // const [marcaPainel, setPMarcas] = useState([])
+  const [updateLista, setUpdateLista] = useState()
 
 
 
-  // async function handleCreateBusiness(e) {
-  //   e.preventDefault()
-  //   if (tipoPessoa === 'PF') {
-  //     try {
-  //       await api.post('/business/create',
-  //         {
-  //           fatorSolar, number, nome, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP, energia_FP, demPonta, energiaPonta, consumoMedio, geracaoSugerida, geracaoDesejada, modoProposta, cip, bandeira, fatorSimult, perdas, potenciaConsiderada, qtdeModulos, potenciaSistema, consumoMedio, potenciaModulo, mediaMensal, precoKit, complemento, projeto, taxa, montagem, comissao, margem, custo_total, margemCalculada, valorTotalProjeto, valorComissao, lucroProjeto, lucroReal,
 
 
-  //         } catch (error) {
-
-  //         }
-
-
-  //     }
-
-
-  //  }
 
   async function loadAllProducts() {
     try {
@@ -134,18 +129,7 @@ export default function NewBusiness(prop) {
       }).then((response) => {
         setProdutos(response.data)
         console.log(response.data)
-        // setCodigo(response.data.codef)
-        // setDescricao(response.data.description)
-        // setMarca(response.data.brand)
-        // setCategoria(response.data.category)
-        // setDescricaoTec(response.data.descriptionTec)
-        // setDescricaoAmigavel(response.data.descriptionFriendly)
-        // setGarantia(response.data.guarantee)
-        // setFornecedor(response.data.supplier)
-        // setPreco(response.data.price)
-        // setPeso(response.data.weight)
-        // setDimensao(response.data.dimenssion)
-        // setIdSelected(response.data.id)
+
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -237,6 +221,7 @@ export default function NewBusiness(prop) {
 
 
 
+
   async function findMicroInversor() {
     const filtro = {
       brand: "%",
@@ -304,13 +289,6 @@ export default function NewBusiness(prop) {
 
 
 
-  // useEffect(() => {
-  //   loadBrandByProduct("P")
-  //   loadAllProducts()
-  //   // findAllProducts()
-
-
-  // }, [])
 
 
 
@@ -327,6 +305,7 @@ export default function NewBusiness(prop) {
       }).then((response) => {
         console.log(response)
         setNomeFantasia(response.data.fantasy)
+        setNome(response.data.fantasy)
         setEmail(response.data.email)
         setFone(response.data.phone)
         setWhatsapp(response.data.zap)
@@ -434,68 +413,7 @@ export default function NewBusiness(prop) {
     setNumero('')
 
   }
-  // async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
 
-
-  //   const json = {
-  //     fantasy: name,
-  //     corporatename: corpName,
-  //     phone: phone,
-  //     document: documento,
-  //     email: email,
-  //     tipo: tipoPesoa,
-  //     zap: zap,
-  //     addInformation: inform,
-  //     Addresses: [
-  //       {
-  //         id: idAdd ? idAdd : undefined,
-  //         street: logradouro,
-  //         postcode: cep,
-  //         city: cidade,
-  //         state: estado,
-  //         neighborhood: bairro,
-  //         number: num
-  //       }
-  //     ]
-  //   }
-  //   const t = JSON.stringify(json);
-  //   const saida = JSON.parse(t);
-
-  //   if (await validaCampos(name, phone, documento)) {
-
-  //     if (id) {
-  //       await api.patch('/client/update/' + id, saida
-  //         , {
-  //           headers: {
-  //             'Authorization': `Basic ${token}`
-  //           }
-
-  //         }).then((response) => {
-  //         }).catch(
-  //           (response) => {
-  //             toast.error(response.response.data.message)
-  //             throw new Error()
-
-  //           }
-  //         );
-
-  //     } else {
-  //       await api.post('/client/create', saida
-  //         , {
-  //           headers: {
-  //             'Authorization': `Basic ${token}`
-  //           }
-
-  //         }).then((response) => {
-  //         }).catch(
-  //           (response) => {
-  //             toast.error(response.response.data.message)
-  //             throw new Error()
-  //           }
-  //         )
-  //     }
-  //   }
-  // }
 
 
 
@@ -575,7 +493,6 @@ export default function NewBusiness(prop) {
         addInformation: inf_Adicionais,
         Addresses: [
           {
-
             street: rua,
             postcode: cep,
             city: cidade,
@@ -607,6 +524,69 @@ export default function NewBusiness(prop) {
     }
   }
 
+  function addNewEquipment(e) {
+    e.preventDefault()
+    if (tipoSistema === "Inversor") {
+      const inv = {
+        marca: marcaInversor,
+        model: modeloInversor[0].description,
+        pot: potenciaInversor,
+        qtde: qtdeInversor
+      }
+      produtos.push(inv)
+      setProdutos(produtos)
+
+    }
+    else if (tipoSistema === "Microinversor") {
+
+      const micro = {
+        marca: marcaMicroInversor,
+        model: modeloMicroInversor[0].description,
+        pot: potenciaMicroInv,
+        qtde: qtdeMicroInve
+      }
+
+
+
+      produtos.push(micro)
+      setProdutos(produtos)
+
+
+    }
+
+    console.log(produtos)
+  }
+
+  function DelEquipment(e) {
+    e.preventDefault()
+    listaInversor.pop()
+
+  }
+
+  function addPainel(e) {
+    e.preventDefault()
+    const painel = {
+      marca: marcaPainel,
+      model: selectedModeloPainel,
+      pot: potenciaPainel,
+      qtde: qtdePainel
+    }
+
+    if (painel.marca !== null && painel.selectedModeloPainel !== null && painel.pot !== null && painel.qtde > 0) {
+
+      produtos.push(painel)
+      setProdutos(produtos)
+
+    }
+
+  }
+
+  useEffect(() => {
+    setProdutos(produtos)
+  }, [updateLista, produtos])
+
+
+
 
 
 
@@ -619,6 +599,7 @@ export default function NewBusiness(prop) {
     <>
       {/* Dados do  MODAL 1*/}
       <form>
+
         <ToastContainer />
         <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
           data-bs-keyboard="false" aria-hidden="true" >
@@ -632,6 +613,15 @@ export default function NewBusiness(prop) {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
+
+                {/* <div class="card">
+                  <div class="card-header">
+                    Dados
+                  </div>
+                  <div class="card-body">
+
+                  </div>
+                </div> */}
 
                 <div className="container-fluid">
                   <div className="row d-flex flex-row align-items-end ">
@@ -832,13 +822,16 @@ export default function NewBusiness(prop) {
 
               </div>
               <div className="modal-footer">
+
+
+
                 <button type="button" onClick={resetFormCliente}
                   className="btn btn-primary text-light d-flex align-items-center gap-2" >
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                   </svg>
-                  Novo
+                  Limpar Campos
                 </button>
                 <button type="button" onClick={saveNewClient}
                   className="btn btn-primary text-light d-flex align-items-center gap-2" >
@@ -846,7 +839,7 @@ export default function NewBusiness(prop) {
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                   </svg>
-                  Salvar e Avançar
+                  Salvar Cliente
                 </button>
                 <button type="button"
                   className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
@@ -857,7 +850,11 @@ export default function NewBusiness(prop) {
                   </svg>
                   Avançar
                 </button>
+
               </div>
+
+
+
 
             </div>
 
@@ -886,7 +883,7 @@ export default function NewBusiness(prop) {
                       <label htmlFor="inputCodigo" className="form-label">
                         Cliente:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={nome} onChange={(e) => setNome(e.target.value)} />
+                      <input type="text" className="form-control" id="inputCodigo" value={nome} onChange={(e) => setNomeFantasia(e.target.value)} />
                     </div>
                     <div className="col-md-4">
                       <label htmlFor="inputCodigo" className="form-label">
@@ -1107,8 +1104,8 @@ export default function NewBusiness(prop) {
 
 
         {/* Dados do  MODAL 3*/}
-        <div className="modal fade modal-lg " id="staticBackdrop3" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
-          data-bs-keyboard="false" aria-hidden="true" >
+        <div className="modal fade modal-lg " id="staticBackdrop3" role="dialog" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
+          data-bs-keyboard="false" aria-hidden="true" onMouseMove={updateLista} >
           <div className="modal-dialog" >
             <div className="modal-content">
               <div className="modal-header">
@@ -1121,8 +1118,26 @@ export default function NewBusiness(prop) {
               <div className="modal-body">
 
                 <div className="container-fluid">
-                  <div className="row ">
-                    <div className="col-md-3">
+                  <div className="row">
+
+
+
+                    <div className="col-sm-9">
+                      <label htmlFor="inputTipoSistema" className="form-label ">
+                        <strong>Equipamentos Adicionados:</strong>
+                      </label>
+                      <ul className='list-group list-group-flush '>
+                        {produtos.map((item) => (
+                          <li className='list-group-item'>Qtde: {item.qtde} / Marca: {item.marca} / Modelo: {item.model} </li>
+                        ))}
+                      </ul>
+
+                    </div>
+                  </div>
+                  <br />
+                  <hr />
+                  <div className="row">
+                    <div className="col-sm-3">
                       <label htmlFor="inputTipoSistema" className="form-label">
                         Tipo de Sistema:
                       </label>
@@ -1136,23 +1151,30 @@ export default function NewBusiness(prop) {
 
                     </div>
 
+
                   </div>
-                  <hr />
                   <br />
+
                   <div class="card">
                     <div class="card-header">
-                      Tipo de Sistema: <strong>{tipoSistema}</strong>
+                      <div className="row d-flex justify-content-center">
+                        <strong>Especifique o(s) {tipoSistema} (es):</strong>
+
+                      </div>
                     </div>
+
                     <div class="card-body">
+
                       <div className="row d-flex justify-content-start">
                         {tipoSistema === 'Inversor' ? <>
 
-                          <div className="col-md-3">
+                          <div className="col-sm-3">
                             <label htmlFor="inputFatorSimult" className="form-label" >
                               Marca:
                             </label>
 
-                            <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca} >
+
+                            <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarcaInversor(e.target.value)} value={marcaInversor} >
                               <option value="">Selecionar </option>
                               {modeloInversor ? modeloInversor.map((option) =>
                               (<option key={option.id}
@@ -1162,10 +1184,11 @@ export default function NewBusiness(prop) {
 
                           </div>
 
-                          <div className="col-md-4">
+                          <div className="col-sm-3">
                             <label htmlFor="inputFatorSimult" className="form-label" >
-                              Modelo
+                              Modelo:
                             </label>
+
 
                             <select className="form-select" id="inputModeloInversor" value={selectedInversor} onChange={(e) => setSelectecInversor(e.target.value)}  >
                               <option value="">Selecione</option>
@@ -1175,39 +1198,43 @@ export default function NewBusiness(prop) {
                             </select>
                           </div>
 
-                          <div className="col-md-3">
-                            <label htmlFor="inputPotModulos" className="form-label">
+                          <div className="col-sm-2">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
                               Potência:
                             </label>
-                            <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+
+                            <input type="text" className="form-control" id="inputPotModulos" value={potenciaInversor} onChange={(e) => setPotenciaInversor(e.target.value)} />
                           </div>
 
-
-
-                          <div className="col-md-1">
+                          <div className="col-sm-2">
                             <label htmlFor="inputFatorSimult" className="form-label" >
                               Qtde:
                             </label>
-                            <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+
+                            <input type="text" className="form-control" id="inputFatorSimult" value={qtdeInversor} onChange={(e) => setQtdeInversor(e.target.value)} />
                           </div>
+
+
+
 
                         </>
                           :
                           <>
 
-                            <div className="col-md-3">
-                              <label htmlFor="inputPotModulos" className="form-label">
+                            <div className="col-sm-3">
+                              <label htmlFor="inputFatorSimult" className="form-label" >
                                 Marca:
                               </label>
 
-                              <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+
+                              <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarcaMicroInversor(e.target.value)} value={marcaMicroInversor}>
                                 <option value="">Selecionar </option>
                                 {modeloMicroInversor ? modeloMicroInversor.map((option) => (<option key={option.id} value={option.brand} >{option.brand}</option>)) : ""}
                               </select>
                             </div>
-                            <div className="col-md-4">
-                              <label htmlFor="inputModeloMicro" className="form-label" >
-                                Modelo
+                            <div className="col-sm-3">
+                              <label htmlFor="inputFatorSimult" className="form-label" >
+                                Modelo:
                               </label>
 
                               <select className="form-select" id="inputModeloMicro" value={selectedMicroinversor} onChange={(e) => setSelectecMicroinversor(e.target.value)}  >
@@ -1219,31 +1246,44 @@ export default function NewBusiness(prop) {
                               </select>
 
                             </div>
-                            <div className="col-md-3">
-                              <label htmlFor="inputPotModulos" className="form-label">
+                            <div className="col-sm-2">
+                              <label htmlFor="inputFatorSimult" className="form-label" >
                                 Potência:
                               </label>
-                              <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+
+                              <input type="text" className="form-control" id="inputPotModulos" value={potenciaPainel} onChange={(e) => setPotenciaPainel(e.target.value)} />
                             </div>
 
 
 
-                            <div className="col-md-1">
+                            <div className="col-md-2">
                               <label htmlFor="inputFatorSimult" className="form-label" >
                                 Qtde:
                               </label>
-                              <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+
+                              <input type="text" className="form-control" id="inputFatorSimult" value={qtdeMicroInve} onChange={(e) => setQtdeMicroInve(e.target.value)} />
                             </div>
 
 
                           </>}
 
+                        <div className="col-sm-1  d-flex align-items-center">
+                          <button onClick={(e) => addNewEquipment(e)} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                          </svg></button>
+                        </div>
 
-
-
+                        <div className="col-sm-1  d-flex align-items-center">
+                          <button onClick={(e) => DelEquipment(e)} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                          </svg></button>
+                        </div>
 
 
                       </div>
+
+
 
                     </div>
                   </div>
@@ -1258,11 +1298,11 @@ export default function NewBusiness(prop) {
                     </div>
                     <div class="card-body">
                       <div className="row d-flex justify-content-start">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                           <label htmlFor="inputFatorSimult" className="form-label" >
                             Marca
                           </label>
-                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
+                          <select className="form-select" id="inputTipoSistema" value={marcaPainel} onChange={(e) => setMarcaPainel(e.target.value)}  >
                             <option value="">Selecione</option>
                             {modeloPlaca && modeloPlaca.map((produto) => (
                               <option key={produto.id} value={produto.brand}>{produto.brand}</option>
@@ -1271,7 +1311,7 @@ export default function NewBusiness(prop) {
 
                           </select>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                           <label htmlFor="inputComplem" className="form-label">
                             Modelo do Painel
                           </label>
@@ -1286,16 +1326,29 @@ export default function NewBusiness(prop) {
                           <label htmlFor="inputPotModulos" className="form-label">
                             Potência:
                           </label>
-                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaPainel} onChange={(e) => setPotenciaPainel(e.target.value)} />
                         </div>
 
 
-                        <div className="col-md-1">
+                        <div className="col-md-2">
                           <label htmlFor="inputPotModulos" className="form-label">
                             Qtde:
                           </label>
-                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdePainel} onChange={(e) => setQtdePainel(e.target.value)} />
                         </div>
+
+                        <div className="col-sm-1  d-flex align-items-center">
+                          <button onClick={(e) => addPainel(e)} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                          </svg></button>
+                        </div>
+
+                        {/* <div className="col-sm-1  d-flex align-items-center">
+                          <button onClick={(e) => DelEquipment(e)} ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                          </svg></button>
+                        </div> */}
                       </div>
 
                     </div>
@@ -1350,7 +1403,7 @@ export default function NewBusiness(prop) {
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save2" viewBox="0 0 16 16">
                     <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v4.5h2a.5.5 0 0 1 .354.854l-2.5 2.5a.5.5 0 0 1-.708 0l-2.5-2.5A.5.5 0 0 1 5.5 6.5h2V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z" />
                   </svg>
-                  Salvar
+                  Salvar Proposta
                 </button>
                 <button type="button"
                   className="btn btn-primary  d-flex align-items-center gap-2">
