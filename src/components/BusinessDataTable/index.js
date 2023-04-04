@@ -174,16 +174,8 @@ const paginate = ({ selected }) => {
     <div className="p-3 mb-3 bg-white rounded-3">
       <div className="d-flex flex-column flex-sm-row justify-content-between">
         <h5 className="card-content-title fw-semibold mb-3">{props.listTitle}</h5>
-        <button
-          className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
-          type="submit"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          <AiFillPlusSquare />
-          Novo negócio
-        </button>
-      </div>
+          <Link to={"/business/create"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Negocio </Link>
+        </div>
       <NewBusiness />
       <hr className="my-3 text-body-tertiary" />
       <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
