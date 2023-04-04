@@ -238,7 +238,7 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={() => {
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdropMateus" onClick={() => {
 
                     }}>
                       <BsFillPencilFill />
