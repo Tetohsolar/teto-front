@@ -18,6 +18,7 @@ function AuthProvider({ children }) {
   const [afflitedId, setafflitedId] = useState('')
 
 
+
   //add new User
   async function signIn(email, password) {
     await api.post('/user/login', {
@@ -142,7 +143,7 @@ function AuthProvider({ children }) {
         idLogged,
         profilelogged,
         userName,
-        afflitedId
+        afflitedId,
       }}>
       {children}
     </AuthContext.Provider>
