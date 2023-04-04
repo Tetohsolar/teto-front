@@ -19,7 +19,7 @@ const CustomerDataTable = (props) => {
   const [name, setName] = useState([])
   const [totalPages, setTotalPages] = useState([])
   const [idSelected, setIdSelected] = useState([])
-  const { token } = useContext(AuthContext)
+  const { token,  profilelogged,  afflitedId,idLogged } = useContext(AuthContext)
   const navigate = useNavigate();
 
   //Pagination
@@ -33,12 +33,24 @@ const CustomerDataTable = (props) => {
 
 
   function onPageChanged(data) {
-    const filtro = {
+    let filtro = {
       fantasy: name,
       corporatename: "",
       document: "",
       page: data - 1,
       pageSize: 5
+    }
+
+    if (profilelogged !== "Root"){
+
+      filtro = {
+        fantasy: name,
+      corporatename: "",
+      document: "",
+      page: data - 1,
+      pageSize: 5,
+        AffiliatedId:afflitedId
+      }
     }
 
     api.post('/client/byparam', filtro, {
@@ -69,13 +81,28 @@ const CustomerDataTable = (props) => {
 
   async function listaUsers(name) {
 
-    const filtro = {
+    let filtro = {
       fantasy: name,
       corporatename: "",
       document: "",
       page: 0,
       pageSize: 5
     }
+
+    if (profilelogged !== "Root"){
+
+      filtro = {
+        name: name,
+        page: 0,
+        corporatename: "",
+        document: "",
+        pageSize: 5,
+        AffiliatedId:afflitedId
+      }
+    }
+
+    
+
 
     await api.post('/client/byparam', filtro, {
       headers: {
