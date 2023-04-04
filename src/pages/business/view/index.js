@@ -13,8 +13,10 @@ import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import EditPersonalData from './editpersonal';
 
 const ViewBusiness = () => {
+  const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
   const [logradouro, setLogradouro] = useState('')
   const [status, setStatus] = useState('')
@@ -73,6 +75,7 @@ const ViewBusiness = () => {
   const [complemento, setcomplemento] = useState('')
   const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
+  const [client, setClient] = useState([]);
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -94,13 +97,24 @@ const ViewBusiness = () => {
 
 
   async function loadAdd(Id) {
+
+
+    await api.get('/client/get/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setClient(response.data)
+      console.log(response.data.document)
+    })
+
     await api.get('/client/get/add/' + Id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
-      console.log(response.data)
       setRua(response.data.street)
       setBairro(response.data.neighborhood)
       setCep(response.data.postcode)
@@ -109,6 +123,13 @@ const ViewBusiness = () => {
 
     })
 
+    
+
+
+  }
+
+  function salvar(t){
+    console.log(t)
   }
 
   async function loadbId(id) {
@@ -121,7 +142,6 @@ const ViewBusiness = () => {
 
     }).then((response) => {
       setName(response.data["Client.fantasy"])
-      console.log(response.data)
       setStatus(response.data.situation)
       setNumberP(response.data.number)
       setDonoN(response.data['User.name'])
@@ -171,6 +191,7 @@ const ViewBusiness = () => {
       setLucroReal(response.data.realProfit)
       setcomplemento(response.data.complement)
       setBusiness(response.data.shares)
+      setClientId(response.data.ClientId)
 
 
     }).catch((error) => { console.log(error) })
@@ -235,12 +256,16 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdropMateus" onClick={() => {
 
                     }}>
                       <BsFillPencilFill />
+                      
                     </button>
+                    
                   </div>
+                  
+                  <EditPersonalData client={client} uc="Cliente" onEnd={salvar} />
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
