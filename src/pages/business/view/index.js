@@ -13,6 +13,7 @@ import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import EditPersonalData from './editpersonal';
 
 const ViewBusiness = () => {
   const [name, setName] = useState('')
@@ -235,10 +236,11 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={() => {
 
                     }}>
                       <BsFillPencilFill />
+                      <EditPersonalData userId={1} uc="  Cliente"  />
                     </button>
                   </div>
 
