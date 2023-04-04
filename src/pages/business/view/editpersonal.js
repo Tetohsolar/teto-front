@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ClientForm from "../../../components/clientForm/ClientForm";
 import InputMask from 'react-input-mask';
 import { ToastContainer, toast } from 'react-toastify'
 
 
-const EditPersonalData = () => {
-
-    const [tipoPessoa, setTipoPessoa] = useState('')
+const EditPersonalData = (prop) => {
+  const [ClientId, setClientId] = useState('')
+  const [tipoPessoa, setTipoPessoa] = useState('')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -23,6 +23,21 @@ const EditPersonalData = () => {
   const [nomeFantasia, setNomeFantasia] = useState('')
   const [razaoSocial, setRazaosocial] = useState('')
   const [cliente, setCliente] = useState('')
+  useEffect(() => {
+
+    if (prop.ClientId) {
+      loadbId(prop.ClientId)
+    }
+
+    return () => { }
+
+  }, [])
+
+  function loadbId(ClientId){
+    //TODO
+
+
+  }
 
     return (
         <>

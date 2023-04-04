@@ -16,6 +16,7 @@ import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import EditPersonalData from './editpersonal';
 
 const ViewBusiness = () => {
+  const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
   const [logradouro, setLogradouro] = useState('')
   const [status, setStatus] = useState('')
@@ -172,6 +173,7 @@ const ViewBusiness = () => {
       setLucroReal(response.data.realProfit)
       setcomplemento(response.data.complement)
       setBusiness(response.data.shares)
+      setClientId(response.data.ClientId)
 
 
     }).catch((error) => { console.log(error) })
@@ -240,7 +242,7 @@ const ViewBusiness = () => {
 
                     }}>
                       <BsFillPencilFill />
-                      <EditPersonalData userId={1} uc="  Cliente"  />
+                      <EditPersonalData userId={ClientId} uc="  Cliente"  />
                     </button>
                   </div>
 
