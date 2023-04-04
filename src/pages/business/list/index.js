@@ -5,6 +5,7 @@ import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
 import SixMonthsCharts from '../../../components/SixMonthsCharts';
 import BusinessDataTable from '../../../components/BusinessDataTable';
+import StepByStep from '../../../components/StepByStep';
 
 const data = [
   {
@@ -71,6 +72,7 @@ const BusinessList = () => {
           <h5 className="pb-3">{pageTitle}</h5>
           <SixMonthsCharts listTitle="Últimos 12 meses" dados={data}/>
           <BusinessDataTable listTitle="Todos os negócios" />
+          <StepByStep />
         </div>
       </div>
     </div>
