@@ -33,59 +33,7 @@ const EditPersonalData = (prop) => {
   const [idAdd, setIdAdd] = useState('')
   const { token } = useContext(AuthContext)
 
-
-  useEffect(() => {
-    console.log(ClientId)
-
-    if (prop.ClientId) {
-      loadbId(prop.ClientId)
-    }
-
-    return () => { }
-
-  }, [])
-
-  async function loadbId(ClientId) {
-    try {
-      
-
-      await api.get('/clientId/get/' + id, {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
-
-      }).then((response) => {
-        setNome(response.data.fantasy)
-        setDoc(response.data.document)
-        setCorporateName(response.data.corporatename)
-
-        response.data.tipo === "Fisico" ? setTipoPessoa("F") : setTipoPessoa("J")
-        let olha = response.data.tipo === "Fisico" ? "F" : "J"
-        //handleTipoPessoaValue(olha)
-
-        setFone(response.data.phone)
-        setWhatsapp(response.data.zap)
-        setCep(response.data.Addresses[0].postcode)
-        setEstado(response.data.Addresses[0].state)
-        //handleEstadoValue(response.data.Addresses[0].state)
-        setCidade(response.data.Addresses[0].city)
-        setRua(response.data.Addresses[0].street)
-        setBairro(response.data.Addresses[0].neighborhood)
-        setIdAdd(response.data.Addresses[0].id)
-        setInf_Adicionais(response.data.addInformation)
-        setId(response.data.id)
-        setEmail(response.data.email)
-        setNumero(response.data.Addresses[0].number)
-
-      }).catch((error) => {
-        toast.error(error.response.data.message)
-      });
-
-    } catch (err) {
-      console.log(err)
-
-    }
-  }
+  
 
   function validaCampos(name, phone, documento, cep) {
 
@@ -157,13 +105,104 @@ const EditPersonalData = (prop) => {
 
   }
 
+  async function salvar(){
+    let nof = prop.client.fantasy
+    let phone =prop.client.phone
+    let tipoPessoaInt = prop.client.tipo
+
+    if (!nomeFantasia){
+      setNomeFantasia(nof)
+    }else{
+      nof=nomeFantasia
+    }
+    !fone?setFone(phone):phone=fone
+    !fone?setFone(phone):phone=fone
+    if (!tipoPessoa){
+      if (prop.client.tipo==="Fisico"){
+        tipoPessoaInt ="F"
+        setTipoPessoa("F")} 
+        else{
+          setTipoPessoa("J")
+          tipoPessoaInt="J"
+        }
+    
+      }
+   
+
+    await save(tipoPessoaInt,nof,"",cpf,phone,whatsapp,cep,estado,cidade,rua,bairro,inf_Adicionais,
+    email,ClientId,'0',numero).then()
+  }
+
+  async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
+
+
+    const json = {
+      fantasy: name,
+      corporatename: corpName,
+      phone: phone,
+      document: documento,
+      email: email,
+      tipo: tipoPesoa,
+      zap: zap,
+      addInformation: inform,
+      Addresses: [
+        {
+          id: idAdd ? idAdd : undefined,
+          street: logradouro,
+          postcode: cep,
+          city: cidade,
+          state: estado,
+          neighborhood: bairro,
+          number: num
+        }
+      ]
+    }
+    const t = JSON.stringify(json);
+    const saida = JSON.parse(t);
+    
+    if (await validaCampos(name, phone, documento)) {
+
+      if (id) {
+        await api.patch('/client/update/' + id, saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+
+          }).then((response) => { 
+            document.getElementById("CloseModal").click()
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
+
+            }
+          );
+
+      } else {
+        await api.post('/client/create', saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+
+          }).then((response) => {
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
+            }
+          )
+      }
+    }
+  }
+
   return (
     <>
-      {/* Dados do  MODAL 1*/}
-      <form>
+      
         <ToastContainer />
         <div className="modal fade" id="staticBackdropMateus" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="staticBackdropLabel"
-          data-bs-keyboard="false" aria-hidden="true" >
+          data-bs-keyboard="false"  aria-hidden="true" >
           <div className="modal-dialog modal-lg w-100" >
             <div className="modal-content">
               <div className="modal-header">
@@ -171,7 +210,7 @@ const EditPersonalData = (prop) => {
                   <h1 className="modal-title fs-3" id="exampleModalLabel">Proposta de Negócio </h1>
                   <h5 className='fs-5'>Dados do Cliente</h5>
                 </div>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CloseModal"></button>
               </div>
               <div className="modal-body">
 
@@ -181,7 +220,7 @@ const EditPersonalData = (prop) => {
                       <label htmlFor="inputCodigo" className="form-label">
                         Tipo de Cliente:
                       </label>
-                      <select name="pets" id="input-user-type" className="form-select" value={tipoPessoa} onChange={(e) => setTipoPessoa(e.target.value)}>
+                      <select name="pets" id="input-user-type" className="form-select" value={tipoPessoa || prop.client.tipo=="Fisico"?"PF":"PJ" } onChange={(e) => setTipoPessoa(e.target.value)}>
                         <option value="" defaultChecked>Selecione</option>
                         <option value="PF" defaultChecked>Pessoa Física</option>
                         <option value="PJ">Pessoa Jurídica</option>
@@ -189,7 +228,7 @@ const EditPersonalData = (prop) => {
                       </select>
 
                     </div>
-                    {tipoPessoa === 'PF' ? <>
+                    {tipoPessoa === 'F' || prop.client.tipo=="Fisico"? <>
                       <div className="col-md-3">
 
                         <label htmlFor="inputcpf" className="form-label">
@@ -199,7 +238,7 @@ const EditPersonalData = (prop) => {
                           className="form-control" id="inputcpf"
                           onChange={(e) => setCpf(e.target.value)}
                           mask='999.999.999-99'
-                          value={cpf || ''}>
+                          value={cpf||prop.client.document }>
                         </InputMask>
 
                       </div>
@@ -218,7 +257,7 @@ const EditPersonalData = (prop) => {
                             className="form-control" id="inputCnpj"
                             onChange={(e) => setCnpj(e.target.value)}
                             mask='99.999.999/9999-999'
-                            value={cnpj || ''}>
+                            value={cnpj || prop.client.document }>
                           </InputMask>
 
                         </div>
@@ -239,13 +278,13 @@ const EditPersonalData = (prop) => {
                       <label htmlFor="inputNomeFantasia" className="form-label">
                         Nome do Cliente:
                       </label>
-                      <input type="text" className="form-control" id="inputNomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
+                      <input type="text" className="form-control" id="inputNomeFantasia" value={ nomeFantasia||prop.client.fantasy} onChange={(e) => setNomeFantasia(e.target.value)} />
                     </div>
                     <div className="col-md-5">
                       <label htmlFor="inputEmail" className="form-label">
                         E-mail:
                       </label>
-                      <input type="text" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      <input type="text" className="form-control" id="inputEmail" value={email||prop.client.email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                   </div>
                   <div className="row">
@@ -257,7 +296,7 @@ const EditPersonalData = (prop) => {
                         className="form-control"
                         onChange={(e) => setFone(e.target.value)} id="inputFone"
                         mask='(99)99999-9999'
-                        value={fone || ''}>
+                        value={fone||prop.client.phone }>
                       </InputMask>
 
                     </div>
@@ -270,7 +309,7 @@ const EditPersonalData = (prop) => {
                         className="form-control"
                         onChange={(e) => setWhatsapp(e.target.value)} id="inputWhatsapp"
                         mask='(99)99999-9999'
-                        value={whatsapp || ''}>
+                        value={whatsapp ||prop.client.phone}>
                       </InputMask>
                     </div>
                   </div>
@@ -353,21 +392,9 @@ const EditPersonalData = (prop) => {
 
               </div>
               <div className="modal-footer">
-                    <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-                  </svg>
-                  Salvar e Avançar
-                </button>
-                <button type="button"
-                  className="btn btn-primary text-light d-flex align-items-center gap-2" data-bs-target="#staticBackdrop2" data-bs-toggle="modal"
-                  data-bs-dismiss="modal">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-                  </svg>
-                  Avançar
-                </button>
+              <button type="button" class="btn btn-primary"   onClick={()=>{
+                salvar()
+              }}>Save changes</button> 
               </div>
 
             </div>
@@ -375,12 +402,8 @@ const EditPersonalData = (prop) => {
           </div>
 
         </div>
-
-        {/* Dados do  MODAL 2*/}
-
-
-
-      </form >
+     
+      
 
     </ >
   )

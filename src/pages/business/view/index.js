@@ -75,6 +75,7 @@ const ViewBusiness = () => {
   const [complemento, setcomplemento] = useState('')
   const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
+  const [client, setClient] = useState([]);
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -96,13 +97,24 @@ const ViewBusiness = () => {
 
 
   async function loadAdd(Id) {
+
+
+    await api.get('/client/get/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setClient(response.data)
+      console.log(response.data.document)
+    })
+
     await api.get('/client/get/add/' + Id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
-      console.log(response.data)
       setRua(response.data.street)
       setBairro(response.data.neighborhood)
       setCep(response.data.postcode)
@@ -111,6 +123,13 @@ const ViewBusiness = () => {
 
     })
 
+    
+
+
+  }
+
+  function salvar(t){
+    console.log(t)
   }
 
   async function loadbId(id) {
@@ -123,7 +142,6 @@ const ViewBusiness = () => {
 
     }).then((response) => {
       setName(response.data["Client.fantasy"])
-      console.log(response.data)
       setStatus(response.data.situation)
       setNumberP(response.data.number)
       setDonoN(response.data['User.name'])
@@ -242,9 +260,12 @@ const ViewBusiness = () => {
 
                     }}>
                       <BsFillPencilFill />
-                      <EditPersonalData userId={ClientId} uc="  Cliente"  />
+                      
                     </button>
+                    
                   </div>
+                  
+                  <EditPersonalData client={client} uc="Cliente" onEnd={salvar} />
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
