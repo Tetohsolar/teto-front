@@ -18,6 +18,7 @@ const ProductForm = (props) => {
   const [garantia, setGarantia] = useState('')
   const [fornecedor, setFornecedor] = useState('')
   const [preco, setPreco] = useState('')
+  const [pot, setPotencia] = useState('')
   const [peso, setPeso] = useState('')
   const [dimensao, setDimensao] = useState('')
   const [hiddenmarca, setHiddenMarca] = useState('')
@@ -111,7 +112,7 @@ const ProductForm = (props) => {
     setDimensao('')
   }
   async function saveProduct(codef, brand, category, description, descriptionTec,
-    descriptionFriendly, garantia, fornecedor, preco, peso, dimensao, idSelected) {
+    descriptionFriendly, garantia, fornecedor, preco, peso, dimensao, idSelected, pot) {
     const json = {
       codef: codef,
       description: description,
@@ -169,7 +170,7 @@ const ProductForm = (props) => {
     if (true) {
       try {
         await saveProduct(codigo, marca, categoria, descricao, descricaoTec,
-          descricaoAmigavel, garantia, fornecedor, preco, peso, dimensao, idSelected)
+          descricaoAmigavel, garantia, fornecedor, preco, peso, dimensao, idSelected, pot)
         navigate("/products");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -262,6 +263,12 @@ const ProductForm = (props) => {
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco || ''} onChange={(e) => setPreco(e.target.value)} />
         </div>
+        <div className="col-md-2">
+                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+                Potência
+                </label>
+                <input type="number"  maxLength={5} className="form-control" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
+              </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
             Peso (Kg)

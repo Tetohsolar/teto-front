@@ -74,7 +74,7 @@ const ClientForm = (props) => {
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
-  const { token } = useContext(AuthContext)
+  const { token,  afflitedId} = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
@@ -313,6 +313,7 @@ const ClientForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
+      AffiliatedId: afflitedId,
       Addresses: [
         {
           id: idAdd ? idAdd : undefined,
@@ -395,14 +396,14 @@ const ClientForm = (props) => {
             <option value="J">Jurídica</option>
           </select>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
             {lbFantasia === "" ? "Nome" : lbFantasia}
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
        
-        <div className="col-md-4"  >
+        <div className="col-md-3"  >
           <label htmlFor="inputDocumento" className="form-label ">
             {lbDocument === "" ? "CPF" : lbDocument}
           </label>
@@ -414,7 +415,7 @@ const ClientForm = (props) => {
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label htmlFor="inputPhoneNumber" className="form-label">
             Telefone
           </label>
@@ -426,7 +427,7 @@ const ClientForm = (props) => {
           </label>
           <PhoneInput className="form-control" id="inputPhoneNumber" value={zap} onChange={handleInputZap}>  </PhoneInput>
         </div>
-        <div className='col-md-5'>
+        <div className='col-md-3'>
           <label htmlFor="CEP" className="form-label">
             CEP
           </label>
@@ -438,37 +439,38 @@ const ClientForm = (props) => {
           </label>
           <SelectEstado className="form-select" id="inputCep" value={estado} onChange={handleEstado}>  </SelectEstado>
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-2'>
           <label htmlFor="Cidade" className="form-label">
             Cidade
           </label>
           <Cidades maxLength={50} className="form-select" id="inputCep" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
         </div>
-        <div className="col-md-5"  >
+        <div className="col-md-6"  >
           <label htmlFor="inputLogradouro" className="form-label ">
             Logradouro
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
         </div>
-        <div className="col-md-6"  >
+        <div className="col-md-3"  >
           <label htmlFor="inputBairro" className="form-label ">
             Bairro
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
                 <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
                 Número
                 </label>
                 <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
               </div>
-        <div className="col-md-5"  >
+        <div className="col-md-6"  >
           <label htmlFor="email" className="form-label ">
             Email
           </label>
           <input type="email" maxLength={50} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="col-md-5"  >
+        <div className='col-md-3'></div>
+        <div className="col-md-6"  >
           <label htmlFor="informacoesAdicionais" className="form-label ">
             Informações Adicionais
           </label>
