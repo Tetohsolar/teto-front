@@ -60,7 +60,7 @@ const Sidebar = (props) => {
             </Link>
           </li>
           <span className='my-2 fw-semibold sidebar-sections'>OPÇÕES</span>
-          {profilelogged !== "Root"?
+          {profilelogged === "Root"?
           <li className='my-1'>
             <Link to={"/affliteds"} className={`nav-link ${props.activeButtonAffliteds}`}>
               <div className='d-flex align-items-center gap-2'>
