@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import NewBusiness from '../../pages/business/new';
 import './sidebar.scss';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 
 
 const Sidebar = (props) => {
+  const {   profilelogged   } = useContext(AuthContext)
   return (
     <div className="d-flex flex-nowrap" id="sidebar-wrapper">
       <div className="d-flex flex-column flex-shrink-0 px-3 pt-4 sidebar">
@@ -57,6 +60,7 @@ const Sidebar = (props) => {
             </Link>
           </li>
           <span className='my-2 fw-semibold sidebar-sections'>OPÇÕES</span>
+          {profilelogged !== "Root"?
           <li className='my-1'>
             <Link to={"/affliteds"} className={`nav-link ${props.activeButtonAffliteds}`}>
               <div className='d-flex align-items-center gap-2'>
@@ -67,6 +71,7 @@ const Sidebar = (props) => {
               </div>
             </Link>
           </li>
+          :""}
           <li className='my-1'>
             <Link to={"/users"} className={`nav-link ${props.activeButtonUsers}`}>
               <div className='d-flex align-items-center gap-2'>
