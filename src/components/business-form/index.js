@@ -145,14 +145,15 @@ const BusinessForm = (props) => {
   const [usuario, setUsuario] = useState('')
   const [marca, setMarca] = useState()
   const [marcas, setMarcas] = useState([])
+  const [IdClient, setIdClient] = useState([])
  
 
-  const { clientId } = useParams();
+  const { BId } = useParams();
 
   useEffect(() => {
 
-    if (clientId) {
-      loadClienById(clientId)
+    if (BId) {
+      loadClienById(BId)
     }
     return () => { }
 
@@ -446,6 +447,10 @@ const BusinessForm = (props) => {
     e.preventDefault();
 
     try {
+      if (!doc){
+        return
+      }
+
       await api.post('/client/getbydocument',
         { "document": `${doc}` }, {
         headers: {
@@ -466,8 +471,11 @@ const BusinessForm = (props) => {
         setRua(response.data.Addresses[0].street)
         setBairro(response.data.Addresses[0].neighborhood)
         setNumero(response.data.Addresses[0].number)
-
+        setIdClient(response.data.id)
+        setIdAdd(response.data.Addresses[0].id)
+     
       }).catch((error) => {
+        setIdClient(null)
         toast.error(error.response.data.message)
       });
 
@@ -540,21 +548,13 @@ const BusinessForm = (props) => {
 
   const navigate = useNavigate();
 
-  async function save(tipoPesoa, name, corpName, documento, phone, zap,
-    cep, estado, cidade, logradouro, bairro,
-    inform, email, id, idAdd, kitM,
-    complementCostM,
-    projectCostM,
-    taxM,
-    assemblyCostM, kitI,
-    complementCostI,
-    projectCostI,
-    taxI,
-    assemblyCostI, num) {
+  
 
+  async function saveClient(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
+
+    
     const json = {
       fantasy: name,
-      num: num,
       corporatename: corpName,
       phone: phone,
       document: documento,
@@ -562,18 +562,6 @@ const BusinessForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
-      kitM: parseFloat(('' + String(kitM)).replace(',', '.')),
-      complementCostM: parseFloat(String(complementCostM).replace(',', '.')),
-      projectCostM: parseFloat(String(projectCostM).replace(',', '.')),
-      taxM: parseFloat(String(taxM).replace(',', '.')),
-      assemblyCostM: parseFloat(String(assemblyCostM).replace(',', '.')),
-
-      kitI: parseFloat(String(kitI).replace(',', '.')),
-      complementCostI: parseFloat(String(complementCostI).replace(',', '.')),
-      projectCostI: parseFloat(String(projectCostI).replace(',', '.')),
-      taxI: parseFloat(String(taxI).replace(',', '.')),
-      assemblyCostI: parseFloat('' + String(assemblyCostI).replace(',', '.')),
-
       Addresses: [
         {
           id: idAdd ? idAdd : undefined,
@@ -588,70 +576,53 @@ const BusinessForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    //console.log(saida);
+    console.log(json)
+    
+    if (await validaCampos(name, phone, documento)) {
 
-    if (id) {
-      await api.patch('/afflited/update/' + id, saida
-        , {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
+      if (id) {
+        await api.patch('/client/update/' + id, saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
 
-        }).then((response) => {
+          }).then((response) => {
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
+            }
+          );
 
-        }).catch(
-          (response) => {
-            toast.error(response.response.data.message)
-            throw new Error()
+      } else {
+        await api.post('/client/create', saida
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
 
-          }
-        );
-
-    } else {
-      await api.post('/afflited/create', saida
-        , {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
-        }).then((response) => {
-
-        }).catch(
-          (response) => {
-            toast.error(response.response.data.message)
-            throw new Error()
-          }
-        )
-    }
-  }
-
-  async function handleSaveUser(e) {
-
-    e.preventDefault();
-
-    const valida = validaCampos(name, phone, doc,cepData,zap);
-    if (valida) {
-      console.log("aqui" + valida)
-      try {
-        await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
-          estado, cidade, rua, bairro, informacoesAdicionais,
-          email, id, idAdd, kitM,
-          complementCostM,
-          projectCostM,
-          taxM,
-          assemblyCostM, kitI,
-          complementCostI,
-          projectCostI,
-          taxI,
-          assemblyCostI, num)
-        navigate("/affliteds");
-        toast.success("Operação realizada com sucesso!", {
-          autoClose: 1000,
-        })
-
-      } catch (error) {
-        console.log(error);
+          }).then((response) => {
+          }).catch(
+            (response) => {
+              toast.error(response.response.data.message)
+              throw new Error()
+            }
+          )
       }
     }
+  }
+  function handleChangePage(index, lastIndex, event){
+
+   saveClient(tipoPessoa, name, corporateName,doc,phone,zap,
+    cepData,estado,cidade,rua,bairro,informacoesAdicionais,email,IdClient,idAdd,num).catch(
+      ()=>{
+        event.cancel()
+      }
+    )
+    
+    
+
   }
 
   return (
@@ -659,12 +630,12 @@ const BusinessForm = (props) => {
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
 
-      <form className="row g-3" onSubmit={handleSaveUser}>
+      <form className="row g-3" >
 
-        <Tabs>
+        <Tabs onSelect={handleChangePage}>
           <TabList>
             <Tab>Dados do Cliente</Tab>
-            <Tab> Dados da Geradora</Tab>
+            <Tab  > Dados da Geradora</Tab>
             <Tab> Tipo de Sistema</Tab>
           </TabList>
           <TabPanel>
