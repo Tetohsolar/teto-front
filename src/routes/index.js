@@ -24,6 +24,7 @@ import EditProduct from '../pages/products/edit';
 import NewBusiness from '../pages/business/new';
 import SingleBusiness from '../pages/business/single';
 import ViewBusiness from '../pages/business/view';
+import BusinessReport from '../pages/business/report';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -64,6 +65,7 @@ const RoutesApp = () => {
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/:businessId" element={<ViewBusiness />} />
+              <Route path="report/:reportId" element={<BusinessReport />} />
             </Route>
 
             <Route path="sizings">
