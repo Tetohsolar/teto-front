@@ -143,6 +143,9 @@ const BusinessForm = (props) => {
   const [taxa, setTaxa] = useState('')
   const [nome, setNome] = useState('')
   const [usuario, setUsuario] = useState('')
+  const [marca, setMarca] = useState()
+  const [marcas, setMarcas] = useState([])
+ 
 
   const { clientId } = useParams();
 
@@ -155,6 +158,96 @@ const BusinessForm = (props) => {
 
   }, [])
 
+
+  async function findInversores() {
+
+    const filtro = {
+      brand: "%",
+      category: "Inversor",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloInversor(response.data.tutorials)
+      console.log(response.data.tutorials)
+
+    })
+
+
+  };
+
+
+
+  async function findMicroInversor() {
+    const filtro = {
+      brand: "%",
+      category: "Microinversor",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloMicroInversor(response.data.tutorials)
+      console.log(response.data.tutorials)
+
+    })
+
+
+  };
+
+
+  async function findAllPainel() {
+    console.log('chamou painel')
+    const filtro = {
+      brand: "%",
+      category: "Placa",
+      "page": 0,
+      "pageSize": 100
+    }
+
+
+    await api.post('/products/byparam', filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+      setModeloPlaca(response.data.tutorials)
+      console.log(modeloPlaca)
+
+    })
+
+
+  };
+
+
+  function findAllProductsByBrand(e) {
+    console.log(e)
+    setTipoSistema(e)
+
+    if (e === "Inversor") {
+      console.log('chamou inversor')
+      findInversores()
+
+    }
+    else if (e === "Microinversor") {
+      console.log('chamou microinversor')
+      findMicroInversor()
+
+    }
+
+    findAllPainel()
+  }
   async function loadClienById(id) {
 
     try {
@@ -348,6 +441,41 @@ const BusinessForm = (props) => {
     }
   };
 
+
+  async function handleFindClient(e) {
+    e.preventDefault();
+
+    try {
+      await api.post('/client/getbydocument',
+        { "document": `${doc}` }, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        handleEstadoValue(response.data.Addresses[0].state)
+        console.log(response)
+        setName(response.data.fantasy)
+        setEmail(response.data.email)
+        setPhone(response.data.phone)
+        setZap(response.data.zap)
+        setInformacoesAdicionais(response.data.addInformation)
+        setEstado(response.data.Addresses[0].state)
+        setCidade(response.data.Addresses[0].city)
+        setCepData(response.data.Addresses[0].postcode)
+        setRua(response.data.Addresses[0].street)
+        setBairro(response.data.Addresses[0].neighborhood)
+        setNumero(response.data.Addresses[0].number)
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
   async function buscaGeracaoSugerida() {
     setEnergiaPontaTratada(0)
     await api.post('/taxkhw/byparam', {
@@ -550,6 +678,14 @@ const BusinessForm = (props) => {
                   <option value="J">Jurídica</option>
                 </select>
               </div>
+              
+              <div className="col-md-3"  >
+                <label htmlFor="inputDocumento" className="form-label ">
+                  {lbDocument === "" ? "CPF" : lbDocument}
+                </label>
+                <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} onBlur={handleFindClient} />
+              </div>
+
               <div className="col-md-3">
                 <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
                   {lbFantasia === "" ? "Nome" : lbFantasia}
@@ -557,12 +693,7 @@ const BusinessForm = (props) => {
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
             
-              <div className="col-md-3"  >
-                <label htmlFor="inputDocumento" className="form-label ">
-                  {lbDocument === "" ? "CPF" : lbDocument}
-                </label>
-                <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} />
-              </div>
+             
               <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <label htmlFor="inputCorporateName" className="form-label ">
                   Razão Social
@@ -633,8 +764,8 @@ const BusinessForm = (props) => {
             </div>
           </TabPanel>
           <TabPanel>
-          <div className="container-fluid">
-                  <div className="row d-flex">
+          <div className="container">
+                  <div className="row">
                     <div className="col-md-5">
                       <label htmlFor="inputCodigo" className="form-label">
                         Cliente:
@@ -837,6 +968,219 @@ const BusinessForm = (props) => {
                 </div>
           </TabPanel>
           <TabPanel>
+          <div className="container-fluid">
+                  <div className="row ">
+                    <div className="col-md-3">
+                      <label htmlFor="inputTipoSistema" className="form-label">
+                        Tipo de Sistema:
+                      </label>
+                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                        <option value="">Selecione</option>
+                        <option value="Inversor">Inversor</option>
+                        <option value="Microinversor">Microinversor</option>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+                  <hr />
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Tipo de Sistema: <strong>{tipoSistema}</strong>
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        {tipoSistema === 'Inversor' ? <>
+
+                          <div className="col-md-3">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Marca:
+                            </label>
+
+                            <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca} >
+                              <option value="">Selecionar </option>
+                              {modeloInversor ? modeloInversor.map((option) =>
+                              (<option key={option.id}
+                                value={option.brand} >
+                                {option.brand}</option>)) : ""}
+                            </select>
+
+                          </div>
+
+                          <div className="col-md-4">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Modelo
+                            </label>
+
+                            <select className="form-select" id="inputModeloInversor" value={selectedInversor} onChange={(e) => setSelectecInversor(e.target.value)}  >
+                              <option value="">Selecione</option>
+                              {modeloInversor && modeloInversor.map((produto) => (
+                                <option key={produto.id} value={produto.description}>{produto.description}</option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-md-3">
+                            <label htmlFor="inputPotModulos" className="form-label">
+                              Potência:
+                            </label>
+                            <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                          </div>
+
+
+
+                          <div className="col-md-1">
+                            <label htmlFor="inputFatorSimult" className="form-label" >
+                              Qtde:
+                            </label>
+                            <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                          </div>
+
+                        </>
+                          :
+                          <>
+
+                            <div className="col-md-3">
+                              <label htmlFor="inputPotModulos" className="form-label">
+                                Marca:
+                              </label>
+
+                              <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+                                <option value="">Selecionar </option>
+                                {modeloMicroInversor ? modeloMicroInversor.map((option) => (<option key={option.id} value={option.brand} >{option.brand}</option>)) : ""}
+                              </select>
+                            </div>
+                            <div className="col-md-4">
+                              <label htmlFor="inputModeloMicro" className="form-label" >
+                                Modelo
+                              </label>
+
+                              <select className="form-select" id="inputModeloMicro" value={selectedMicroinversor} onChange={(e) => setSelectecMicroinversor(e.target.value)}  >
+                                <option value="">Selecione</option>
+                                {modeloMicroInversor && modeloMicroInversor.map((produto) => (
+                                  <option key={produto.id} value={produto.description}>{produto.description}</option>
+                                ))}
+
+                              </select>
+
+                            </div>
+                            <div className="col-md-3">
+                              <label htmlFor="inputPotModulos" className="form-label">
+                                Potência:
+                              </label>
+                              <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                            </div>
+
+
+
+                            <div className="col-md-1">
+                              <label htmlFor="inputFatorSimult" className="form-label" >
+                                Qtde:
+                              </label>
+                              <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                            </div>
+
+
+                          </>}
+
+
+
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <br />
+
+
+
+
+                  <div class="card">
+                    <div class="card-header">
+                      Painéis
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-4">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Marca
+                          </label>
+                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
+                            <option value="">Selecione</option>
+                            {modeloPlaca && modeloPlaca.map((produto) => (
+                              <option key={produto.id} value={produto.brand}>{produto.brand}</option>
+                            ))}
+
+
+                          </select>
+                        </div>
+                        <div className="col-md-4">
+                          <label htmlFor="inputComplem" className="form-label">
+                            Modelo do Painel
+                          </label>
+                          <select className="form-select" id="inputTipoSistema" value={selectedModeloPainel} onChange={(e) => setSelectedModeloPainel(e.target.value)}  >
+                            <option value="">Selecione</option>
+                            {modeloPlaca && modeloPlaca.map((produto) => (
+                              <option key={produto.id} value={produto.description}>{produto.description}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Potência:
+                          </label>
+                          <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                        </div>
+
+
+                        <div className="col-md-1">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Qtde:
+                          </label>
+                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <br />
+                  <div class="card">
+                    <div class="card-header">
+                      Dados do Cliente
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+                        <div className="col-md-3">
+                          <label htmlFor="inputConsumo" className="form-label">
+                            Consumo(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputPerda" className="form-label">
+                            Perda:
+                          </label>
+                          <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
+                        </div>
+                        <div className="col-md-3">
+                          <label htmlFor="inputmediaMensal" className="form-label">
+                            Média Mensal(Kwh):
+                          </label>
+                          <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
             
           </TabPanel>
         </Tabs>
