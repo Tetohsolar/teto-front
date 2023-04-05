@@ -8,7 +8,7 @@
     background-color: #F4F9FC;
     height: 105px;
     width: 220px;
-    padding-top: 30px;
+    padding-top: 20px;
     margin: 5px;
 }
 .topResume{
@@ -150,4 +150,7 @@
 .espaco_button{
     display: flex;
     justify-content:space-between
+}
+.alinhaDireita{
+    text-align: right;
 }

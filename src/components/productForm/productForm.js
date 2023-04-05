@@ -77,6 +77,7 @@ const ProductForm = (props) => {
         setPeso(response.data.weight)
         setDimensao(response.data.dimenssion)
         setIdSelected(response.data.id)
+        setPotencia(response.data.power)
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -125,6 +126,7 @@ const ProductForm = (props) => {
       weight: parseFloat(String(peso).replace(',', '.')),
       price: parseFloat(String(preco).replace(',', '.')),
       dimenssion: dimensao,
+      power: pot
     }
 
     if (idSelected) {
@@ -206,14 +208,14 @@ const ProductForm = (props) => {
       <p>Cadastre novos produtos para seus clientes.</p>
 
       <form className="row g-3" onSubmit={handleSave}>
-        <div className="col-md-4">
+        <div className="col-md-5">
           <label htmlFor="inputCodigo" className="form-label">
             Código
           </label>
           <input type="text" maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
         
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="inputCategoria" className="form-label">
             Categoria
           </label>
@@ -226,9 +228,7 @@ const ProductForm = (props) => {
           </select>
         </div>
 
-        
-        
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="inputMarca" className="form-label">
             Marca
           </label>
@@ -239,36 +239,37 @@ const ProductForm = (props) => {
               </select>  
          </div>
         
-        <div className="col-md-12">
+        <div className="col-md-11">
           <label htmlFor="descricao" className="form-label">
             Descrição
           </label>
           <input type="descricao" maxLength={200} className="form-control" id="inputDescricao" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
         </div>
-        <div className="col-md-6">
-          <label htmlFor="inputGarantia" className="form-label">
-            Garantia
-          </label>
-          <input type="text" maxLength={100} className="form-control" id="inputGarantia" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
-        </div>
-        <div className="col-md-6">
+        <div className="col-md-5">
           <label htmlFor="inputFornecedor" className="form-label">
             Fornecedor
           </label>
           <input type="text" maxLength={100} className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
+          <label htmlFor="inputGarantia" className="form-label">
+            Garantia
+          </label>
+          <input type="text" maxLength={100} className="form-control" id="inputGarantia" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
+        </div>
+        
+        <div className="col-md-3">
           <label htmlFor="inputPreco" className="form-label">
             Preço
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco || ''} onChange={(e) => setPreco(e.target.value)} />
         </div>
-        <div className="col-md-2">
-                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-                Potência
-                </label>
-                <input type="number"  maxLength={5} className="form-control" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
-              </div>
+        <div className="col-md-3">
+         <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+          Potência
+          </label>
+         <input type="number"  maxLength={5} className="form-control" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
+          </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
             Peso (Kg)
@@ -281,13 +282,13 @@ const ProductForm = (props) => {
           </label>
           <input type="dimensao" className="form-control" id="inputDimensao" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)} />
         </div>
-        <div className="col-md-12">
+        <div className="col-md-11">
           <label htmlFor="inputDescricaoTec" className="form-label">
             Descrição Técnica
           </label>
           <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoTec" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
         </div>
-        <div className="col-md-12">
+        <div className="col-md-11">
           <label htmlFor="inputDescricaoAmigavel" className="form-label">
             Descrição Amigável
           </label>
