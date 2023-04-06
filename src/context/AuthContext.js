@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
   const [idLogged, setIdLogged] = useState('')
   const [userName, setUserName] = useState('')
   const [afflitedId, setafflitedId] = useState('')
+  const [afflited, setAfflited] = useState(null)
 
 
 
@@ -30,10 +31,11 @@ function AuthProvider({ children }) {
       setToken(response.data.token)
       setIdLogged(response.data.userId)
       setProfileLogged(response.data.profile)
-      console.log(response.data)
+      setAfflited(response.data.afflited)
       setafflitedId(response.data.afflitedId)
       toast.success(response.data.message)
       setLoading(false)
+     
 
     }).catch((err) => {
       console.log(err)
@@ -150,6 +152,7 @@ function AuthProvider({ children }) {
         profilelogged,
         userName,
         afflitedId,
+        afflited,
       }}>
       {children}
     </AuthContext.Provider>
