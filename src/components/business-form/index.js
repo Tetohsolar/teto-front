@@ -83,7 +83,7 @@ const BusinessForm = (props) => {
   const [projectCostI, setProjetoinv] = useState('')
   const [taxI, setTaxainv] = useState('')
   const [assemblyCostI, setMontagemi] = useState('')
-  const { token } = useContext(AuthContext)
+  const { token , userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
@@ -91,42 +91,44 @@ const BusinessForm = (props) => {
 
 
   const [fatorSolar, setFatorSolar] = useState('')
-  const [tipoTelhado, setTipoTelhado] = useState('')
-  const [tipoLigacao, setTipoLigacao] = useState('')
-  const [modalidade, setModalidade] = useState('')
-  const [grupo, setGrupo] = useState('')
-  const [subgrupo, setSubgrupo] = useState('')
-  const [demandaFP, setDemandaFP] = useState('')
-  const [energia_FP, setEnergia_FP] = useState('')
-  const [demPonta, setDem_ponta] = useState('')
-  const [energiaPonta, setEnergia_ponta] = useState('')
-  const [energiaPontaTratada, setEnergiaPontaTratada] = useState('')
+  const [tipoTelhado, setTipoTelhado] = useState('Cerâmico')
+  const [tipoLigacao, setTipoLigacao] = useState('Monofásico')
+  const [modalidade, setModalidade] = useState('Convencional')
+  const [grupo, setGrupo] = useState('B')
+  const [subgrupo, setSubgrupo] = useState('B1')
+  const [demandaFP, setDemandaFP] = useState(0)
+  const [energia_FP, setEnergia_FP] = useState(0)
+  const [demPonta, setDem_ponta] = useState(0)
+  const [energiaPonta, setEnergia_ponta] = useState(0)
+  const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
-  const [tipoSistema, setTipoSistema] = useState('')
-  const [potenciaModulo, setPotenciaModulo] = useState('')
+  const [tipoSistema, setTipoSistema] = useState('Invesor')
+  const [potenciaModulo, setPotenciaModulo] = useState('465')
   const [perdas, serPerdas] = useState('')
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
   const [qtdeModulos, setQtdeModulos] = useState('')
-  const [potenciaSistema, setPotenciaSistema] = useState('')
+  const [potenciaSistema, setPotenciaSistema] = useState(0)
   const [mediaMensal, setMediaMensal] = useState('')
-  const [cip, setCip] = useState('')
-  const [bandeira, setbandeira] = useState('')
-  const [fatorSimult, setFatorSimult] = useState('')
+  const [cip, setCip] = useState(0)
+  const [bandeira, setbandeira] = useState(0)
+  const [fatorSimult, setFatorSimult] = useState(0)
   const [precoKit, setPrecoKit] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [projeto, setprojeto] = useState('')
-  const [imposto, setImposto] = useState('')
-  const [montagem, seMontagem] = useState('')
-  const [comissao, setComissao] = useState('')
-  const [margem, setMargem] = useState('')
-  const [custo_total, setCustoTotal] = useState('')
-  const [margemCalculada, setMargemCalculada] = useState('')
-  const [valorTotalProjeto, setValorTotalProjeto] = useState('')
-  const [valorComissao, setValorComissao] = useState('')
-  const [lucroProjeto, setLucroProjeto] = useState('')
-  const [lucroReal, setLucroReal] = useState('')
+  const [precoKitFornecedor, setPrecoKitForncedor] = useState(0)
+  const [precoKitCalculado, setPrecoKitCalculado] = useState(0)
+  const [complemento, setComplemento] = useState(afflited.complementCostI)
+  const [projeto, setprojeto] = useState(afflited.projectCostI)
+  const [imposto, setImposto] = useState(afflited.taxI)
+  const [montagem, seMontagem] = useState(afflited.assemblyCostI)
+  const [comissao, setComissao] = useState(afflited.profitCost)
+  const [margem, setMargem] = useState(0)
+  const [custo_total, setCustoTotal] = useState(0)
+  const [margemCalculada, setMargemCalculada] = useState(0)
+  const [valorTotalProjeto, setValorTotalProjeto] = useState(0)
+  const [valorComissao, setValorComissao] = useState(0)
+  const [lucroProjeto, setLucroProjeto] = useState(0)
+  const [lucroReal, setLucroReal] = useState(0)
   const [projetoDesconto2, setprojetoDesconto2] = useState('')
   const [projetoDesconto4, setprojetoDesconto4] = useState('')
   const [marcaModulo, setMarcaModulo] = useState('')
@@ -145,7 +147,9 @@ const BusinessForm = (props) => {
   const [usuario, setUsuario] = useState('')
   const [marca, setMarca] = useState()
   const [marcas, setMarcas] = useState([])
-  const [IdClient, setIdClient] = useState([])
+  const [IdClient, setIdClient] = useState('')
+  const [demandasVisible, setDemandasVisible] = useState('')
+  const [nPlacas, setNplacas] = useState(0)
  
 
   const { BId } = useParams();
@@ -486,6 +490,7 @@ const BusinessForm = (props) => {
   }
   async function buscaGeracaoSugerida() {
     setEnergiaPontaTratada(0)
+
     await api.post('/taxkhw/byparam', {
       "subgroup": "A3",
       "modal": "HA",
@@ -498,23 +503,36 @@ const BusinessForm = (props) => {
       }
     }
     ).then((response) => {
+      
       setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
-
 
     })
 
 
 
   }
+
+  function calculaDemana(){
+    handleGrupoAConsMedio()
+    console.log(potenciaModulo)
+    let placas = Math.floor((geracaoDesejada *12000)/(potenciaConsiderada*potenciaModulo))
+    setNplacas(placas)
+    let potSistema = (placas*potenciaModulo)/1000;
+    var numeroArredondado = Math.round(potSistema * 100) / 100;
+    setPotenciaSistema(numeroArredondado)
+  }
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
+    if (modalidade ==="Convencional" || modalidade==="Rural" || modalidade==="Outros"){
+      setGeracaoSugerida(consumoMedio)
+      setGeracaoDesejada(consumoMedio)
+      return
+    }
 
     if (modalidade === "HA" && subgrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
-      setConsumoMedio(valor)
-      //Geração sugerida
-
-      // console.log(`EFP: ${energia_FP},EP ${energiaPonta}, ${energiaPontaTratada}`)
+      setConsumoMedio(energiaPonta)
+      setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
     }
@@ -522,10 +540,10 @@ const BusinessForm = (props) => {
     else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
-      //GeracaoSugerida
+      setGeracaoDesejada(valor)
       let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
 
-      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      { result > 0 ?  setGeracaoSugerida(result) : setGeracaoSugerida('') }
     }
 
     else if (modalidade === "HA" && subgrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
@@ -544,11 +562,52 @@ const BusinessForm = (props) => {
     }
 
   }
-
-
-  const navigate = useNavigate();
-
   
+  async function saveBusiness(sunIndex, number, roof,typeConnection,modality,group,subgroup,
+    demadaFp,energiaFp, demandaP,energiaP,avgconsumption,suggestedGeneration,suggestedDesired,situation, cip,
+    flag, syncindex, lost, consideredpower, numberborder, systempower, consumption,
+    panelpower, avgmonth, kitprice, complement, project, tax, assembled,
+    sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit, 
+    realProfit, numberInverMicro, validate, AffiliatedId, ClientId, placaId, InversorId, type, UserId){
+
+    const data = {
+      sunIndex: sunIndex,  number: number, roof: roof, typeConnection: typeConnection,
+      modality: modality,  group: group,  subgroup: subgroup,  demadaFp: demadaFp,
+      energiaFp: energiaFp, demandaP: demandaP, energiaP: energiaP,
+      avgconsumption: avgconsumption, suggestedGeneration: suggestedGeneration,
+      suggestedDesired: suggestedDesired,  situation: situation,
+      cip: cip,   flag: flag, syncindex: syncindex, lost: lost,
+      consideredpower: consideredpower, numberborder: numberborder,
+      systempower: systempower, consumption: consumption,
+      panelpower: panelpower,  avgmonth: avgmonth,
+      kitprice: kitprice,  complement: complement,
+      project: project, tax: tax,  assembled: assembled,
+      sellercomission: sellercomission, margin: margin,
+      amountcost: amountcost, marginCalculate: marginCalculate,
+      amount: amount, valuesellercomission: valuesellercomission,
+      profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
+      validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
+      placaId: placaId, InversorId: InversorId, type: type,  UserId: UserId
+      };
+
+      await api.post('/business/create', data
+          , {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+
+          }).then((response) => {
+            
+          }).catch(
+            (response) => {
+              
+              
+              toast.error(response.response.data.message)
+              throw new Error()
+            }
+          )
+
+  }
 
   async function saveClient(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
 
@@ -576,11 +635,12 @@ const BusinessForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    console.log(json)
+    console.log(saida)
     
     if (await validaCampos(name, phone, documento)) {
 
-      if (id) {
+      console.log("valor do id " +id)
+      if (id ) {
         await api.patch('/client/update/' + id, saida
           , {
             headers: {
@@ -588,6 +648,7 @@ const BusinessForm = (props) => {
             }
 
           }).then((response) => {
+            
           }).catch(
             (response) => {
               toast.error(response.response.data.message)
@@ -603,8 +664,12 @@ const BusinessForm = (props) => {
             }
 
           }).then((response) => {
+            setIdClient(response.data.client.id)
+            setIdAdd(response.data.client.Addresses[0].id)
           }).catch(
             (response) => {
+              
+              
               toast.error(response.response.data.message)
               throw new Error()
             }
@@ -612,16 +677,102 @@ const BusinessForm = (props) => {
       }
     }
   }
-  function handleChangePage(index, lastIndex, event){
+  function handleChangePage( event){
+    event.preventDefault();
 
    saveClient(tipoPessoa, name, corporateName,doc,phone,zap,
-    cepData,estado,cidade,rua,bairro,informacoesAdicionais,email,IdClient,idAdd,num).catch(
+    cepData,estado,cidade,rua,bairro,informacoesAdicionais,email,IdClient,idAdd,num).then(
       ()=>{
-        event.cancel()
+        //setPotenciaSistema(4.8)
+        setNome(name)
+        setUsuario(userName)
+        const today = new Date();
+        const validade =new Date(today.setDate(today.getDate() + 90));
+        const potenciaSistema = 4.8
+        const numberBorard ="1"
+        const placaId = 2;
+        const inversorId =1
+        let demandaFP = 0
+        let energiaPonta = 0
+        let demPonta = 0
+        let energia_FP = 0
+        let geracaoDesejada = 0
+        let perdas = 0
+        let potenciaConsiderada = 0 
+        saveBusiness(fatorSolar,num,tipoTelhado,tipoLigacao,modalidade,grupo,subgrupo,demandaFP,
+          energiaPonta, demPonta,energia_FP,consumoMedio,geracaoSugerida,geracaoDesejada,"Aberta",
+          cip,bandeira,fatorSimult,perdas,potenciaConsiderada,numberBorard,potenciaSistema,consumoMedio,
+          potenciaModulo,mediaMensal,precoKit,complemento,projeto,imposto,montagem,comissao,margem,
+          custo_total, margemCalculada, valorTotalProjeto,valorComissao,lucroProjeto,lucroReal,1,
+          validade,afflitedId,IdClient,placaId,inversorId,tipoSistema,idLogged).then( 
+            ()=>{
+              toast.success("Operação realizada com sucesso!", {
+                autoClose: 1000,
+                })
+            }
+
+          ).catch( (error) =>{
+            toast.error(error, {
+              autoClose: 1000,
+            })
+
+          })
+      }
+ 
+
+    ).catch(
+      (error)=>{
+        toast.error(error, {
+          autoClose: 1000,
+        })
+        
       }
     )
     
+  }
+  function setMod(e){
+    console.log(e!=="HA" || e !=="HV")
+    if (e==="HA" || e ==="HV") {
+    setDemandasVisible('N')
     
+  }else{
+    setDemandasVisible('')
+    setDemandaFP('')
+    setEnergia_FP('')
+    setEnergia_ponta('')
+    setDem_ponta('')
+  }
+  
+  calculaDemana()
+  }
+
+  function calculaPotenciaConsidedara(){
+
+    let f = parseFloat( fatorSolar) *(1-0.07)
+    if (isNaN(f)) {
+      setPotenciaConsiderada(0)
+    }else {
+    setPotenciaConsiderada(Math.ceil(f))
+    }
+  let potSistema = 0 ;
+  
+  }
+
+  function calculaCustos(e){
+    let precoK = parseFloat(precoKitFornecedor) *1.15
+    var numeroArredondado = Math.round(precoK * 100) / 100;
+    let fator = afflited.complementCostI
+    let tax = afflited.taxI
+    if (tipoSistema==="MicroInversor"){
+      fator =afflited.complementCostM
+      tax = afflited.taxM
+    }
+
+    var complement = precoK * fator
+    var imp = precoK * tax
+    setPrecoKit(numeroArredondado)
+    setComplemento(complement)
+    setImposto(imp)
 
   }
 
@@ -630,9 +781,9 @@ const BusinessForm = (props) => {
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
 
-      <form className="row g-3" >
+      <form className="row g-3" onSubmit={handleChangePage}>
 
-        <Tabs onSelect={handleChangePage}>
+        <Tabs >
           <TabList>
             <Tab>Dados do Cliente</Tab>
             <Tab  > Dados da Geradora</Tab>
@@ -741,45 +892,76 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputCodigo" className="form-label">
                         Cliente:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={nome} onChange={(e) => setNome(e.target.value)} />
+                      <input type="text" className="form-control" readOnly id="inputCodigo"  value={name} onChange={(e) => setNome(e.target.value)} />
                     </div>
                     <div className="col-md-4">
                       <label htmlFor="inputCodigo" className="form-label">
                         Usuário:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+                      <input type="text" className="form-control" id="inputCodigo" readOnly value={userName} onChange={(e) => setUsuario(e.target.value)} />
                     </div>
                     <div className="col-md-2">
                       <label htmlFor="inputCodigo" className="form-label">
                         Fator Solar:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} />
+                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={calculaPotenciaConsidedara} onKeyUp={calculaPotenciaConsidedara}/>
                     </div>
-                    <div className="col-md-3 ">
+                    <div className="col-md-3">
+                      <label htmlFor="inputCodigo" className="form-label">
+                      Potência Considerada:
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" readOnly value={potenciaConsiderada} onChange={(e) => setPotenciaConsiderada(e.target.value)} />
+                    </div>
+                    <div className="col-md-2 ">
                       <label htmlFor="tipoLigacao" className="form-label">
                         Tipo de Ligação:
                       </label>
                       <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
-                        <option value="">Selecione</option>
-                        <option value="tri">Trifásico</option>
-                        <option value="mono">Monofásico</option>
+                        <option value="Trifásico">Trifásico</option>
+                        <option value="Monofásico">Monofásico</option>
 
                       </select>
                     </div>
-                    <div className="col-md-4 ">
+                    <div className="col-md-2 ">
                       <label htmlFor="tipoTelhado" className="form-label">
                         Tipo de Telhado:
                       </label>
 
                       <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={tipoTelhado} onChange={(e) => setTipoTelhado(e.target.value)}>
-                        <option value="">Selecione</option>
-                        <option value="ceramico">Cerâmico</option>
-                        <option value="metalico">Metálico</option>
-                        <option value="solo">Solo</option>
-                        <option value="fibrocimento">Fibrocimento</option>
-                        <option value="laje">Laje</option>
-
+                        <option value="Cerâmico">Cerâmico</option>
+                        <option value="Metálico">Metálico</option>
+                        <option value="Em Solo">Solo</option>
+                        <option value="Fibrocimento">Fibrocimento</option>
                       </select>
+                    </div>
+
+                    <div className="col-md-2">
+                      <label htmlFor="inputTipoSistema" className="form-label">
+                        Tipo de Sistema:
+                      </label>
+                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                        <option value="Invesor">Inversor</option>
+                        <option value="MicroInversor">Microinversor</option>
+                      </select>
+
+                    </div>
+
+                    <div className="col-md-2">
+                      <label htmlFor="inputTipoSistema" className="form-label">
+                      Potência do Painel:
+                      </label>
+                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                      <select className="form-select alinhaDireita"  id="inputTipoSistema" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana}  >
+                        <option value="465">465</option>
+                        <option value="470">470</option>
+                        <option value="540">540</option>
+                        <option value="550">550</option>
+                        <option value="590">590</option>
+                        <option value="650">650</option>
+                        <option value="665">665</option>
+                      </select>
+
                     </div>
 
                   </div>
@@ -799,8 +981,7 @@ const BusinessForm = (props) => {
                             Modalidade:
                           </label>
                           {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
-                          <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)}>
-                            <option value="">Selecione</option>
+                          <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => { setModalidade(e.target.value); setMod(e.target.value)}}>
                             <option value="Convencional">Convencional</option>
                             <option value="HA">Horos. Azul</option>
                             <option value="HV">Horos. Verde</option>
@@ -845,51 +1026,61 @@ const BusinessForm = (props) => {
                       </div>
                       <div className="row p-2  d-flex flex-column">
 
-                        <div className="col-md-3  w-100 ">
+                        <div className="col-md-3  w-100 "  id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                           <label htmlFor="inputDemandaFP" className="form-label">
-                            Demanda FP:
+                            Demanda FP(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
+                          <input type="text" className="form-control alinhaDireita" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)}  onBlur={calculaDemana}/>
 
                         </div>
-                        <div className="col-md-3 w-100">
+                        <div className="col-md-3 w-100 " id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                           <label htmlFor="inputEnergiaFP" className="form-label">
-                            Energia FP:
+                            Energia FP(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
+                          <input type="text" className="form-control alinhaDireita" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
 
                         </div>
-                        <div className="col-md-3   w-100">
+                        <div className="col-md-3   w-100" id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                           <label htmlFor="inputEnergiaPonta" className="form-label">
-                            Energia Ponta:
+                            Energia Ponta(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
+                          <input type="text" className="form-control alinhaDireita" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={calculaDemana} />
                         </div>
-
 
                       </div>
-                      <div className="row p-2  d-flex flex-column">
-                        <div className="col-md-3  w-100">
+                      
+                      <div className="row p-2  d-flex flex-column" >
+                        <div className="col-md-3  w-100" id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                           <label htmlFor="inputDemandaPonta" className="form-label">
-                            Demanda Ponta:
+                            Demanda Ponta(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
+                          <input type="text" className="form-control alinhaDireita" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
                         </div>
-                        <div className="col-md-3  w-100 ">
+
+                        <div className="col-md-3  w-100 " id={demandasVisible==="N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                           <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
                             Consumo Médio(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={calculaDemana} onKeyUp={calculaDemana}/>
 
                         </div>
 
 
                         <div className="col-md-3 w-100">
                           <label htmlFor="inputGeracaoSugerida" className="form-label">
-                            Geração Sugerida:
+                            Geração Sugerida(KWh):
                           </label>
-                          <input type="text" className="form-control" id="inputGeracaoSugerida" value={geracaoSugerida || ''} onChange={(e) => setGeracaoSugerida(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoSugerida || ''} onChange={(e) => setGeracaoSugerida(e.target.value)} />
                         </div>
+
+                        <div className="col-md-3 w-100">
+                          <label htmlFor="inputGeracaoSugerida" className="form-label">
+                            Geração Desejada(KWh):
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)} />
+                        </div>
+
+                       
                       </div>
 
                     </div>
@@ -901,31 +1092,87 @@ const BusinessForm = (props) => {
                     </div>
                     <div class="card-body">
                       <div className="row d-flex justify-content-start">
-
-                        <div className="col-md-3">
-                          <label htmlFor="inputFatorSimult" className="form-label" >
-                            Fator de Simult:
+                      
+                      <div className="col-md-1">
+                          <label htmlFor="inputGeracaoSugerida" className="form-label">
+                            N. Placas:
                           </label>
-                          <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita"  readOnly id="inputGeracaoSugerida" value={nPlacas || ''} onChange={(e) => setNplacas(e.target.value)} 
+                          onKeyUp={calculaDemana} onClick={calculaDemana} />
+                        </div>
+
+                      <div className="col-md-2">
+                          <label htmlFor="inputGeracaoSugerida" className="form-label">
+                            Pot. do Sistema(KWh):
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputPreco" className="form-label">
+                            Preço do Kit(Forn):
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputCodigo" onBlur={calculaCustos} value={precoKitFornecedor|| ''} onChange={(e) => setPrecoKitForncedor(e.target.value)}  />
+                        </div>
+
+
+                        <div className="col-md-2">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Preço do Kit (Cobrado)
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
                         </div>
                         <div className="col-md-2">
                           <label htmlFor="inputCIP" className="form-label">
                             CIP:
                           </label>
-                          <input type="text" className="form-control" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
                         </div>
                         <div className="col-md-2">
                           <label htmlFor="inputbandeira" className="form-label">
                             Bandeira:
                           </label>
-                          <input type="text" className="form-control" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
+                        </div>
+
+                        
+                      </div>
+
+
+
+                    </div>
+                  </div>
+                  <br></br>
+                  <div class="card">
+                    <div class="card-header">
+                      Custos
+                    </div>
+                    <div class="card-body">
+                      <div className="row d-flex justify-content-start">
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
+                            Complemento:
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputCIP" className="form-label">
+                            Projeto:
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)} />
+                        </div>
+                        <div className="col-md-2">
+                          <label htmlFor="inputbandeira" className="form-label">
+                            Imposto:
+                          </label>
+                          <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} />
                         </div>
 
                         <div className="col-md-3">
                           <label htmlFor="inputPreco" className="form-label">
-                            Preço do Kit:
+                            Montagem:
                           </label>
-                          <input type="text" className="form-control" id="inputCodigo" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                          <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagemm(e.target.value)} />
                         </div>
                       </div>
 
@@ -947,10 +1194,8 @@ const BusinessForm = (props) => {
                       </label>
                       {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
                       <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
-                        <option value="">Selecione</option>
-                        <option value="Inversor">Inversor</option>
-                        <option value="Microinversor">Microinversor</option>
-
+                        <option value="Invesor">Inversor</option>
+                        <option value="MicroInversor">Microinversor</option>
                       </select>
 
                     </div>
