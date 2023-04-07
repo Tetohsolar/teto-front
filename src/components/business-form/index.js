@@ -673,7 +673,8 @@ const BusinessForm = (props) => {
       amount: amount, valuesellercomission: valuesellercomission,
       profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
       validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
-      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId
+      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId, shares:dados
+
     };
 
     await api.post('/business/create', data
