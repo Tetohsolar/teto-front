@@ -14,6 +14,9 @@ import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
 import { NumericFormat } from 'react-number-format';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { BsFillTrash3Fill, BsPencilFill } from 'react-icons/bs';
+import MyModal from '../communs/ModalDelete';
+import { AiFillPlusSquare, AiOutlinePlus } from 'react-icons/ai';
 
 function PhoneInput(props) {
   return (
@@ -53,6 +56,14 @@ function Cidades(props) {
 
 const BusinessForm = (props) => {
 
+  const [dados, setDados] = useState([
+    {
+      id: 1, modality: "Convencional", group: 'B', subgroup: 'B1', demandaFP: 0, energiaFP: 0,
+      demandaP: 0, energiaP: 0, avgconsumption: 0, suggestedGeneration: 0, CIP: 0
+    }
+
+  ]);
+
   const [name, setName] = useState('')
   const [num, setNumero] = useState('')
   const [id, setId] = useState('')
@@ -83,11 +94,12 @@ const BusinessForm = (props) => {
   const [projectCostI, setProjetoinv] = useState('')
   const [taxI, setTaxainv] = useState('')
   const [assemblyCostI, setMontagemi] = useState('')
-  const { token , userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
+  const { token, userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const handleInputnum = ({ target: { value } }) => setNumero(value);
+  const [idSelected, setIdSelected] = useState('')
 
 
   const [fatorSolar, setFatorSolar] = useState('')
@@ -150,7 +162,43 @@ const BusinessForm = (props) => {
   const [IdClient, setIdClient] = useState('')
   const [demandasVisible, setDemandasVisible] = useState('')
   const [nPlacas, setNplacas] = useState(0)
- 
+  const [idRateio, setIdRateio] = useState(1)
+
+  const handleEdit = (id, campo, valor) => {
+    setDados(prevDados => {
+      const novoDados = [...prevDados];
+      const index = novoDados.findIndex(item => item.id === id);
+      novoDados[index][campo] = valor;
+      return novoDados;
+    });
+  };
+
+
+  
+  const [novoItem, setNovoItem] = useState({
+    id: idRateio, modality: "Convencional", group: 'B', subgroup: 'B1', demandaFP: 0, energiaFP: 0,
+    demandaP: 0, energiaP: 0, avgconsumption: 0, suggestedGeneration: 0, CIP: 0
+  });
+
+  const handleAfterDel =() =>{
+    setDados(prevDados => prevDados.filter(item => item.id !== idSelected));
+
+  }
+  const handleAdd = () => {
+    let idN = idRateio +1
+
+    let novoItem =
+    {
+      id: idN, modality: "Convencional", group: 'B', subgroup: 'B1', demandaFP: 0, energiaFP: 0,
+      demandaP: 0, energiaP: 0, avgconsumption: 0, suggestedGeneration: 0, CIP: 0
+    }
+      setIdRateio(idN)
+      
+      setDados(prevDados => [...prevDados, novoItem]);
+      
+    //  setNovoItem({ id: '', nome: '', idade: '' });
+    
+  };
 
   const { BId } = useParams();
 
@@ -332,24 +380,24 @@ const BusinessForm = (props) => {
       })
       return false;
     }
-    
-    
+
+
     if (phone === "" || phone === undefined) {
       toast.error("Telefone É obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
-   
-    let phonenomask = phone.replace('_',"");
 
-    if (phonenomask.length < 15 ) {
+    let phonenomask = phone.replace('_', "");
+
+    if (phonenomask.length < 15) {
       toast.error("Telefone é inválido", {
         autoClose: 1000,
       })
       return false;
     }
-  
+
     console.log("entrou valor " + documento)
     if (documento !== '') {
 
@@ -451,7 +499,7 @@ const BusinessForm = (props) => {
     e.preventDefault();
 
     try {
-      if (!doc){
+      if (!doc) {
         return
       }
 
@@ -477,7 +525,7 @@ const BusinessForm = (props) => {
         setNumero(response.data.Addresses[0].number)
         setIdClient(response.data.id)
         setIdAdd(response.data.Addresses[0].id)
-     
+
       }).catch((error) => {
         setIdClient(null)
         toast.error(error.response.data.message)
@@ -503,7 +551,7 @@ const BusinessForm = (props) => {
       }
     }
     ).then((response) => {
-      
+
       setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
 
     })
@@ -512,18 +560,18 @@ const BusinessForm = (props) => {
 
   }
 
-  function calculaDemana(){
+  function calculaDemana() {
     handleGrupoAConsMedio()
-    console.log(potenciaModulo)
-    let placas = Math.floor((geracaoDesejada *12000)/(potenciaConsiderada*potenciaModulo))
+    let placas = Math.floor((geracaoDesejada * 12000) / (potenciaConsiderada * potenciaModulo))
+
     setNplacas(placas)
-    let potSistema = (placas*potenciaModulo)/1000;
+    let potSistema = (placas * potenciaModulo) / 1000;
     var numeroArredondado = Math.round(potSistema * 100) / 100;
     setPotenciaSistema(numeroArredondado)
   }
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
-    if (modalidade ==="Convencional" || modalidade==="Rural" || modalidade==="Outros"){
+    if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
       setGeracaoSugerida(consumoMedio)
       setGeracaoDesejada(consumoMedio)
       return
@@ -535,6 +583,7 @@ const BusinessForm = (props) => {
       setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoDesejada(result)
     }
 
     else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
@@ -543,7 +592,8 @@ const BusinessForm = (props) => {
       setGeracaoDesejada(valor)
       let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
 
-      { result > 0 ?  setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoDesejada(result)
     }
 
     else if (modalidade === "HA" && subgrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
@@ -553,6 +603,7 @@ const BusinessForm = (props) => {
       //GeracaoSugerida
       let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoDesejada(result)
 
 
     }
@@ -562,56 +613,56 @@ const BusinessForm = (props) => {
     }
 
   }
-  
-  async function saveBusiness(sunIndex, number, roof,typeConnection,modality,group,subgroup,
-    demadaFp,energiaFp, demandaP,energiaP,avgconsumption,suggestedGeneration,suggestedDesired,situation, cip,
+
+  async function saveBusiness(sunIndex, number, roof, typeConnection, modality, group, subgroup,
+    demadaFp, energiaFp, demandaP, energiaP, avgconsumption, suggestedGeneration, suggestedDesired, situation, cip,
     flag, syncindex, lost, consideredpower, numberborder, systempower, consumption,
     panelpower, avgmonth, kitprice, complement, project, tax, assembled,
-    sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit, 
-    realProfit, numberInverMicro, validate, AffiliatedId, ClientId, placaId, InversorId, type, UserId){
+    sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit,
+    realProfit, numberInverMicro, validate, AffiliatedId, ClientId, placaId, InversorId, type, UserId) {
 
     const data = {
-      sunIndex: sunIndex,  number: number, roof: roof, typeConnection: typeConnection,
-      modality: modality,  group: group,  subgroup: subgroup,  demadaFp: demadaFp,
+      sunIndex: sunIndex, number: number, roof: roof, typeConnection: typeConnection,
+      modality: modality, group: group, subgroup: subgroup, demadaFp: demadaFp,
       energiaFp: energiaFp, demandaP: demandaP, energiaP: energiaP,
       avgconsumption: avgconsumption, suggestedGeneration: suggestedGeneration,
-      suggestedDesired: suggestedDesired,  situation: situation,
-      cip: cip,   flag: flag, syncindex: syncindex, lost: lost,
+      suggestedDesired: suggestedDesired, situation: situation,
+      cip: cip, flag: flag, syncindex: syncindex, lost: lost,
       consideredpower: consideredpower, numberborder: numberborder,
       systempower: systempower, consumption: consumption,
-      panelpower: panelpower,  avgmonth: avgmonth,
-      kitprice: kitprice,  complement: complement,
-      project: project, tax: tax,  assembled: assembled,
+      panelpower: panelpower, avgmonth: avgmonth,
+      kitprice: kitprice, complement: complement,
+      project: project, tax: tax, assembled: assembled,
       sellercomission: sellercomission, margin: margin,
       amountcost: amountcost, marginCalculate: marginCalculate,
       amount: amount, valuesellercomission: valuesellercomission,
       profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
       validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
-      placaId: placaId, InversorId: InversorId, type: type,  UserId: UserId
-      };
+      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId
+    };
 
-      await api.post('/business/create', data
-          , {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
+    await api.post('/business/create', data
+      , {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
 
-          }).then((response) => {
-            
-          }).catch(
-            (response) => {
-              
-              
-              toast.error(response.response.data.message)
-              throw new Error()
-            }
-          )
+      }).then((response) => {
+
+      }).catch(
+        (response) => {
+
+
+          toast.error(response.response.data.message)
+          throw new Error()
+        }
+      )
 
   }
 
   async function saveClient(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
 
-    
+
     const json = {
       fantasy: name,
       corporatename: corpName,
@@ -636,11 +687,11 @@ const BusinessForm = (props) => {
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
     console.log(saida)
-    
+
     if (await validaCampos(name, phone, documento)) {
 
-      console.log("valor do id " +id)
-      if (id ) {
+      console.log("valor do id " + id)
+      if (id) {
         await api.patch('/client/update/' + id, saida
           , {
             headers: {
@@ -648,7 +699,7 @@ const BusinessForm = (props) => {
             }
 
           }).then((response) => {
-            
+
           }).catch(
             (response) => {
               toast.error(response.response.data.message)
@@ -668,8 +719,8 @@ const BusinessForm = (props) => {
             setIdAdd(response.data.client.Addresses[0].id)
           }).catch(
             (response) => {
-              
-              
+
+
               toast.error(response.response.data.message)
               throw new Error()
             }
@@ -677,95 +728,96 @@ const BusinessForm = (props) => {
       }
     }
   }
-  function handleChangePage( event){
+  function handleChangePage(event) {
     event.preventDefault();
 
-   saveClient(tipoPessoa, name, corporateName,doc,phone,zap,
-    cepData,estado,cidade,rua,bairro,informacoesAdicionais,email,IdClient,idAdd,num).then(
-      ()=>{
-        //setPotenciaSistema(4.8)
-        setNome(name)
-        setUsuario(userName)
-        const today = new Date();
-        const validade =new Date(today.setDate(today.getDate() + 90));
-        const potenciaSistema = 4.8
-        const numberBorard ="1"
-        const placaId = 2;
-        const inversorId =1
-        let demandaFP = 0
-        let energiaPonta = 0
-        let demPonta = 0
-        let energia_FP = 0
-        let geracaoDesejada = 0
-        let perdas = 0
-        let potenciaConsiderada = 0 
-        saveBusiness(fatorSolar,num,tipoTelhado,tipoLigacao,modalidade,grupo,subgrupo,demandaFP,
-          energiaPonta, demPonta,energia_FP,consumoMedio,geracaoSugerida,geracaoDesejada,"Aberta",
-          cip,bandeira,fatorSimult,perdas,potenciaConsiderada,numberBorard,potenciaSistema,consumoMedio,
-          potenciaModulo,mediaMensal,precoKit,complemento,projeto,imposto,montagem,comissao,margem,
-          custo_total, margemCalculada, valorTotalProjeto,valorComissao,lucroProjeto,lucroReal,1,
-          validade,afflitedId,IdClient,placaId,inversorId,tipoSistema,idLogged).then( 
-            ()=>{
-              toast.success("Operação realizada com sucesso!", {
-                autoClose: 1000,
+    saveClient(tipoPessoa, name, corporateName, doc, phone, zap,
+      cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, IdClient, idAdd, num).then(
+        () => {
+          //setPotenciaSistema(4.8)
+          setNome(name)
+          setUsuario(userName)
+          const today = new Date();
+          const validade = new Date(today.setDate(today.getDate() + 90));
+          const potenciaSistema = 4.8
+          const numberBorard = "1"
+          const placaId = 2;
+          const inversorId = 1
+          let demandaFP = 0
+          let energiaPonta = 0
+          let demPonta = 0
+          let energia_FP = 0
+          let geracaoDesejada = 0
+          let perdas = 0
+          let potenciaConsiderada = 0
+          saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
+            energiaPonta, demPonta, energia_FP, consumoMedio, geracaoSugerida, geracaoDesejada, "Aberta",
+            cip, bandeira, fatorSimult, perdas, potenciaConsiderada, numberBorard, potenciaSistema, consumoMedio,
+            potenciaModulo, mediaMensal, precoKit, complemento, projeto, imposto, montagem, comissao, margem,
+            custo_total, margemCalculada, valorTotalProjeto, valorComissao, lucroProjeto, lucroReal, 1,
+            validade, afflitedId, IdClient, placaId, inversorId, tipoSistema, idLogged).then(
+              () => {
+                toast.success("Operação realizada com sucesso!", {
+                  autoClose: 1000,
                 })
-            }
+              }
 
-          ).catch( (error) =>{
-            toast.error(error, {
-              autoClose: 1000,
+            ).catch((error) => {
+              toast.error(error, {
+                autoClose: 1000,
+              })
+
             })
+        }
 
+
+      ).catch(
+        (error) => {
+          toast.error(error, {
+            autoClose: 1000,
           })
-      }
- 
 
-    ).catch(
-      (error)=>{
-        toast.error(error, {
-          autoClose: 1000,
-        })
-        
-      }
-    )
-    
+        }
+      )
+
   }
-  function setMod(e){
-    console.log(e!=="HA" || e !=="HV")
-    if (e==="HA" || e ==="HV") {
-    setDemandasVisible('N')
-    
-  }else{
-    setDemandasVisible('')
-    setDemandaFP('')
-    setEnergia_FP('')
-    setEnergia_ponta('')
-    setDem_ponta('')
-  }
-  
-  calculaDemana()
+  function setMod(e) {
+    console.log(e !== "HA" || e !== "HV")
+    if (e === "HA" || e === "HV") {
+      setDemandasVisible('N')
+
+    } else {
+      setDemandasVisible('')
+      setDemandaFP('')
+      setEnergia_FP('')
+      setEnergia_ponta('')
+      setDem_ponta('')
+    }
+
+    calculaDemana()
   }
 
-  function calculaPotenciaConsidedara(){
+  function calculaPotenciaConsidedara() {
 
-    let f = parseFloat( fatorSolar) *(1-0.07)
+    let f = parseFloat(fatorSolar) * (1 - 0.07)
     if (isNaN(f)) {
       setPotenciaConsiderada(0)
-    }else {
-    setPotenciaConsiderada(Math.ceil(f))
+    } else {
+      setPotenciaConsiderada(Math.ceil(f))
     }
-  let potSistema = 0 ;
-  
+    let potSistema = 0;
+
   }
 
-  function calculaCustos(e){
-    let precoK = parseFloat(precoKitFornecedor) *1.15
+  function calculaCustos(e) {
+    let precoK = parseFloat(precoKitFornecedor) * 1.15
     var numeroArredondado = Math.round(precoK * 100) / 100;
     let fator = afflited.complementCostI
     let tax = afflited.taxI
-    if (tipoSistema==="MicroInversor"){
-      fator =afflited.complementCostM
+    if (tipoSistema === "MicroInversor") {
+      fator = afflited.complementCostM
       tax = afflited.taxM
+
     }
 
     var complement = precoK * fator
@@ -776,7 +828,11 @@ const BusinessForm = (props) => {
 
   }
 
+
+
   return (
+
+
 
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
@@ -800,7 +856,7 @@ const BusinessForm = (props) => {
                   <option value="J">Jurídica</option>
                 </select>
               </div>
-              
+
               <div className="col-md-3"  >
                 <label htmlFor="inputDocumento" className="form-label ">
                   {lbDocument === "" ? "CPF" : lbDocument}
@@ -814,8 +870,8 @@ const BusinessForm = (props) => {
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
-            
-             
+
+
               <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <label htmlFor="inputCorporateName" className="form-label ">
                   Razão Social
@@ -866,11 +922,11 @@ const BusinessForm = (props) => {
               </div>
               <div className="col-md-3">
                 <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-                Número
+                  Número
                 </label>
-                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
+                <input type="number" className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
               </div>
-            
+
               <div className="col-md-3"  >
                 <label htmlFor="email" className="form-label ">
                   Email
@@ -886,467 +942,548 @@ const BusinessForm = (props) => {
             </div>
           </TabPanel>
           <TabPanel>
-          <div className="container">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-5">
+                  <label htmlFor="inputCodigo" className="form-label">
+                    Cliente:
+                  </label>
+                  <input type="text" className="form-control" readOnly id="inputCodigo" value={name} onChange={(e) => setNome(e.target.value)} />
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="inputCodigo" className="form-label">
+                    Usuário:
+                  </label>
+                  <input type="text" className="form-control" id="inputCodigo" readOnly value={userName} onChange={(e) => setUsuario(e.target.value)} />
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="inputCodigo" className="form-label">
+                    Fator Solar:
+                  </label>
+                  <input type="number" className="form-control alinhaDireita" id="inputCodigo" value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="inputCodigo" className="form-label">
+                    Potência Considerada:
+                  </label>
+                  <input type="text" className="form-control alinhaDireita" id="inputCodigo" readOnly value={potenciaConsiderada} onChange={(e) => setPotenciaConsiderada(e.target.value)} />
+                </div>
+                <div className="col-md-2 ">
+                  <label htmlFor="tipoLigacao" className="form-label">
+                    Tipo de Ligação:
+                  </label>
+                  <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
+                    <option value="Trifásico">Trifásico</option>
+                    <option value="Monofásico">Monofásico</option>
+
+                  </select>
+                </div>
+                <div className="col-md-2 ">
+                  <label htmlFor="tipoTelhado" className="form-label">
+                    Tipo de Telhado:
+                  </label>
+
+                  <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={tipoTelhado} onChange={(e) => setTipoTelhado(e.target.value)}>
+                    <option value="Cerâmico">Cerâmico</option>
+                    <option value="Metálico">Metálico</option>
+                    <option value="Em Solo">Solo</option>
+                    <option value="Fibrocimento">Fibrocimento</option>
+                  </select>
+                </div>
+
+                <div className="col-md-2">
+                  <label htmlFor="inputTipoSistema" className="form-label">
+                    Tipo de Sistema:
+                  </label>
+                  {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                    <option value="Invesor">Inversor</option>
+                    <option value="MicroInversor">Microinversor</option>
+                  </select>
+
+                </div>
+
+                <div className="col-md-2">
+                  <label htmlFor="inputTipoSistema" className="form-label">
+                    Potência do Painel:
+                  </label>
+                  {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                  <select className="form-select alinhaDireita" id="inputTipoSistema" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana}  >
+                    <option value="465">465</option>
+                    <option value="470">470</option>
+                    <option value="540">540</option>
+                    <option value="550">550</option>
+                    <option value="590">590</option>
+                    <option value="650">650</option>
+                    <option value="665">665</option>
+                  </select>
+
+                </div>
+
+              </div>
+
+              <br />
+              <div class="card w-100">
+                <div class="card-header">
+                  Informações Complementares
+                </div>
+                <div class="card-body d-flex flex-row ">
+
+                  <div className="row p-2 d-flex flex-column">
+
+
+                    <div className="col-md-3 w-100">
+                      <label htmlFor="modalidade" className="form-label">
+                        Modalidade:
+                      </label>
+                      {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
+                      <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => { setModalidade(e.target.value); setMod(e.target.value); calculaDemana() }}>
+                        <option value="Convencional">Convencional</option>
+                        <option value="HA">Horos. Azul</option>
+                        <option value="HV">Horos. Verde</option>
+                        <option value="Rural">Rural</option>
+
+                      </select>
+                    </div>
+                    <div className="col-md-2 w-100">
+                      <label htmlFor="inputGrupo" className="form-label">
+                        Grupo:
+                      </label>
+
+
+                      <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => { setGrupo(e.target.value); calculaDemana(); }} >
+                        <option value="">Selecione</option>
+                        <option value="A">Grupo A</option>
+                        <option value="B">Grupo B</option>
+                      </select>
+                    </div>
+                    <div className="col-md-3   w-100">
+                      <label htmlFor="inputSubgrupo" className="form-label">
+                        Sub-Grupo:
+                      </label>
+                      <select className="form-select" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} >
+                        <option value="">Selecione</option>
+                        {grupo === "A" ? <>
+                          <option value="A3">A3</option>
+                          <option value="A4">A4</option>
+
+                        </>
+                          :
+                          <>
+                            <option value="B1">B1</option>
+                            <option value="B2">B2</option>
+                            <option value="B3">B3</option>
+                          </>}
+                      </select>
+                    </div>
+
+
+
+                  </div>
+                  <div className="row p-2  d-flex flex-column">
+
+                    <div className="col-md-3  w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputDemandaFP" className="form-label">
+                        Demanda FP(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onBlur={calculaDemana} />
+
+                    </div>
+                    <div className="col-md-3 w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputEnergiaFP" className="form-label">
+                        Energia FP(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
+
+                    </div>
+                    <div className="col-md-3   w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputEnergiaPonta" className="form-label">
+                        Energia Ponta(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={calculaDemana} />
+                    </div>
+
+                  </div>
+
+                  <div className="row p-2  d-flex flex-column" >
+                    <div className="col-md-3  w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputDemandaPonta" className="form-label">
+                        Demanda Ponta(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
+                    </div>
+
+                    <div className="col-md-3  w-100 " id={demandasVisible === "N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
+                        Consumo Médio(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={calculaDemana} onKeyUp={calculaDemana} />
+
+                    </div>
+
+
+                    <div className="col-md-3 w-100">
+                      <label htmlFor="inputGeracaoSugerida" className="form-label">
+                        Geração Sugerida(KWh):
+                      </label>
+                      <input type="text" readOnly className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoSugerida || ''} onChange={(e) => setGeracaoSugerida(e.target.value)} />
+                    </div>
+
+                    <div className="col-md-3 w-100">
+                      <label htmlFor="inputGeracaoSugerida" className="form-label">
+                        Geração Desejada(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)} />
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+              <br />
+
+              <div className='card'>
+                <div className='card-header'>
+                  Rateios
+                </div>
+                
                   <div className="row">
-                    <div className="col-md-5">
-                      <label htmlFor="inputCodigo" className="form-label">
-                        Cliente:
-                      </label>
-                      <input type="text" className="form-control" readOnly id="inputCodigo"  value={name} onChange={(e) => setNome(e.target.value)} />
+                    <div className="mb-3 mb-sm-0">
+                      <div className="card border-light-subtle">
+                        <div className="card-body">
+                          <div className="table-responsive">
+                            <table className="table caption-top table-sm">
+                              <thead>
+                                <tr>
+                                  <th scope="col" className='tamanhoM'>Modalidade</th>
+                                  <th scope="col">Grupo</th>
+                                  <th scope="col">SubGrupo</th>
+                                  <th scope="col" className='alinhaCenter' >Consumo</th>
+                                  <th scope="col" className='alinhaCenter'>G.Sugerida</th>
+                                  <th scope="col" className='alinhaCenter'>C.I.P</th>
+                                  <th scope="col" className='alinhaCenter'>Dem. FP. </th>
+                                  <th scope="col" className='alinhaCenter'>Ener. F. P.</th>
+                                  <th scope="col" className='alinhaCenter'>Dem. P</th>
+                                  <th scope="col" className='alinhaCenter'>Ener. P</th>
+                                  <th scope="col"></th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+                                {dados.map((item) => {
+                                  return (
+                                    <tr key={item.id}>
+                                      <td>
+                                        <select className='form-select tamanhoModalidade' value={item.modality} onChange={e => handleEdit(item.id, 'modality', e.target.value)}>
+                                          <option value="Convencional">Convencional</option>
+                                          <option value="HA">Horos. Azul</option>
+                                          <option value="HV">Horos. Verde</option>
+                                          <option value="Rural">Rural</option>
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <select className="form-select tamanhoTabela" id="inputGrupo" value={item.group} onChange={(e) => { handleEdit(item.id, 'group', e.target.value) }} >
+                                          <option value="A">A </option>
+                                          <option value="B">B </option>
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <select className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
+                                          <option value="">Selecione</option>
+                                          <option value="A3">A3</option>
+                                          <option value="A4">A4</option>
+                                          <option value="B1">B1</option>
+                                          <option value="B2">B2</option>
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.avgconsumption}
+                                          onChange={e => handleEdit(item.id, 'avgconsumption', parseInt(e.target.value))}
+                                        />
+                                        </td>
+                                      <td>
+                                        
+                                      <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.suggestedGeneration}
+                                          onChange={e => handleEdit(item.id, 'suggestedGeneration', parseInt(e.target.value))}
+                                        />
+
+                                        </td>
+                                      <td className='alinhaDireita'>
+                                      <input
+                                          type="text"  pattern="[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.CIP}
+                                          onChange={e => handleEdit(item.id, 'CIP', e.target.value)}
+                                        />
+                                      </td>
+                                      <td className='alinhaDireita'>
+                                      <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.demandaFP}
+                                          onChange={e => handleEdit(item.id, 'demandaFP', parseInt(e.target.value))}
+                                        />
+                                        </td>
+                                      <td className='alinhaDireita'>
+                                        
+                                      <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.energiaFP}
+                                          onChange={e => handleEdit(item.id, 'energiaFP', parseInt(e.target.value))}
+                                        />
+                                        </td>
+                                      <td className='alinhaDireita'>
+                                      <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.demandaP}
+                                          onChange={e => handleEdit(item.id, 'demandaP', parseInt(e.target.value))}
+                                        />
+                                        </td>
+                                      <td className='alinhaDireita'>
+                                      <input
+                                          type="number" className='form-control tamanhoTabela alinhaDireita '
+                                          value={item.energiaP}
+                                          onChange={e => handleEdit(item.id, 'energiaP', parseInt(e.target.value))}
+                                        />
+                                        </td>
+                                      <td>
+
+                                      <div className="d-flex gap-2 justify-content-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={handleAdd}
+                                      >
+                                        <AiOutlinePlus />
+                                      </button>
+                                        
+                                        
+                                        <button 
+                                        type="button"
+                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
+                                      >
+                                        <BsFillTrash3Fill />
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
+                                      </button>
+                                      </div>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-md-4">
-                      <label htmlFor="inputCodigo" className="form-label">
-                        Usuário:
+                
+                </div>
+
+              </div>
+              <br></br>
+              <div class="card">
+                <div class="card-header">
+                  Informações Complementares
+                </div>
+                <div class="card-body">
+                  <div className="row d-flex justify-content-start">
+
+                    <div className="col-md-1">
+                      <label htmlFor="inputGeracaoSugerida" className="form-label">
+                        N. Placas:
                       </label>
-                      <input type="text" className="form-control" id="inputCodigo" readOnly value={userName} onChange={(e) => setUsuario(e.target.value)} />
+                      <input type="text" className="form-control alinhaDireita" readOnly id="inputGeracaoSugerida" value={nPlacas || ''} onChange={(e) => setNplacas(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="col-md-2">
+                      <label htmlFor="inputGeracaoSugerida" className="form-label">
+                        Pot. do Sistema(KWh):
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
                     </div>
                     <div className="col-md-2">
-                      <label htmlFor="inputCodigo" className="form-label">
-                        Fator Solar:
+                      <label htmlFor="inputPreco" className="form-label">
+                        Preço do Kit(Forn):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={calculaPotenciaConsidedara} onKeyUp={calculaPotenciaConsidedara}/>
+                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" onBlur={calculaCustos} value={precoKitFornecedor || ''} onChange={(e) => setPrecoKitForncedor(e.target.value)} />
                     </div>
+
+
+                    <div className="col-md-2">
+                      <label htmlFor="inputFatorSimult" className="form-label" >
+                        Preço do Kit (Cobrado)
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                    </div>
+                    <div className="col-md-2">
+                      <label htmlFor="inputCIP" className="form-label">
+                        CIP:
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
+                    </div>
+                    <div className="col-md-2">
+                      <label htmlFor="inputbandeira" className="form-label">
+                        Bandeira:
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
+                    </div>
+
+
+                  </div>
+
+
+
+                </div>
+              </div>
+              <br></br>
+              <div class="card">
+                <div class="card-header">
+                  Custos
+                </div>
+                <div class="card-body">
+                  <div className="row d-flex justify-content-start">
+
                     <div className="col-md-3">
-                      <label htmlFor="inputCodigo" className="form-label">
-                      Potência Considerada:
+                      <label htmlFor="inputFatorSimult" className="form-label" >
+                        Complemento:
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" readOnly value={potenciaConsiderada} onChange={(e) => setPotenciaConsiderada(e.target.value)} />
+                      <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
                     </div>
-                    <div className="col-md-2 ">
-                      <label htmlFor="tipoLigacao" className="form-label">
-                        Tipo de Ligação:
-                      </label>
-                      <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
-                        <option value="Trifásico">Trifásico</option>
-                        <option value="Monofásico">Monofásico</option>
-
-                      </select>
-                    </div>
-                    <div className="col-md-2 ">
-                      <label htmlFor="tipoTelhado" className="form-label">
-                        Tipo de Telhado:
-                      </label>
-
-                      <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={tipoTelhado} onChange={(e) => setTipoTelhado(e.target.value)}>
-                        <option value="Cerâmico">Cerâmico</option>
-                        <option value="Metálico">Metálico</option>
-                        <option value="Em Solo">Solo</option>
-                        <option value="Fibrocimento">Fibrocimento</option>
-                      </select>
-                    </div>
-
                     <div className="col-md-2">
-                      <label htmlFor="inputTipoSistema" className="form-label">
-                        Tipo de Sistema:
+                      <label htmlFor="inputCIP" className="form-label">
+                        Projeto:
                       </label>
-                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
-                        <option value="Invesor">Inversor</option>
-                        <option value="MicroInversor">Microinversor</option>
-                      </select>
-
+                      <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)} />
                     </div>
-
                     <div className="col-md-2">
-                      <label htmlFor="inputTipoSistema" className="form-label">
-                      Potência do Painel:
+                      <label htmlFor="inputbandeira" className="form-label">
+                        Imposto:
                       </label>
-                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                      <select className="form-select alinhaDireita"  id="inputTipoSistema" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana}  >
-                        <option value="465">465</option>
-                        <option value="470">470</option>
-                        <option value="540">540</option>
-                        <option value="550">550</option>
-                        <option value="590">590</option>
-                        <option value="650">650</option>
-                        <option value="665">665</option>
-                      </select>
-
+                      <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} />
                     </div>
 
-                  </div>
-
-                  <br />
-                  <div class="card w-100">
-                    <div class="card-header">
-                      Informações Complementares
-                    </div>
-                    <div class="card-body d-flex flex-row ">
-
-                      <div className="row p-2 d-flex flex-column">
-
-
-                        <div className="col-md-3 w-100">
-                          <label htmlFor="modalidade" className="form-label">
-                            Modalidade:
-                          </label>
-                          {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
-                          <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => { setModalidade(e.target.value); setMod(e.target.value)}}>
-                            <option value="Convencional">Convencional</option>
-                            <option value="HA">Horos. Azul</option>
-                            <option value="HV">Horos. Verde</option>
-                            <option value="Rural">Rural</option>
-
-                          </select>
-                        </div>
-                        <div className="col-md-2 w-100">
-                          <label htmlFor="inputGrupo" className="form-label">
-                            Grupo:
-                          </label>
-
-
-                          <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => setGrupo(e.target.value)} >
-                            <option value="">Selecione</option>
-                            <option value="A">Grupo A</option>
-                            <option value="B">Grupo B</option>
-                          </select>
-                        </div>
-                        <div className="col-md-3   w-100">
-                          <label htmlFor="inputSubgrupo" className="form-label">
-                            Sub-Grupo:
-                          </label>
-                          <select className="form-select" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} >
-                            <option value="">Selecione</option>
-                            {grupo === "A" ? <>
-                              <option value="A3">A3</option>
-                              <option value="A4">A4</option>
-
-                            </>
-                              :
-                              <>
-                                <option value="B1">B1</option>
-                                <option value="B2">B2</option>
-                                <option value="B3">B3</option>
-                              </>}
-                          </select>
-                        </div>
-
-
-
-                      </div>
-                      <div className="row p-2  d-flex flex-column">
-
-                        <div className="col-md-3  w-100 "  id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                          <label htmlFor="inputDemandaFP" className="form-label">
-                            Demanda FP(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)}  onBlur={calculaDemana}/>
-
-                        </div>
-                        <div className="col-md-3 w-100 " id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                          <label htmlFor="inputEnergiaFP" className="form-label">
-                            Energia FP(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
-
-                        </div>
-                        <div className="col-md-3   w-100" id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                          <label htmlFor="inputEnergiaPonta" className="form-label">
-                            Energia Ponta(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={calculaDemana} />
-                        </div>
-
-                      </div>
-                      
-                      <div className="row p-2  d-flex flex-column" >
-                        <div className="col-md-3  w-100" id={demandasVisible==="" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                          <label htmlFor="inputDemandaPonta" className="form-label">
-                            Demanda Ponta(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
-                        </div>
-
-                        <div className="col-md-3  w-100 " id={demandasVisible==="N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                          <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
-                            Consumo Médio(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={calculaDemana} onKeyUp={calculaDemana}/>
-
-                        </div>
-
-
-                        <div className="col-md-3 w-100">
-                          <label htmlFor="inputGeracaoSugerida" className="form-label">
-                            Geração Sugerida(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoSugerida || ''} onChange={(e) => setGeracaoSugerida(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-3 w-100">
-                          <label htmlFor="inputGeracaoSugerida" className="form-label">
-                            Geração Desejada(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)} />
-                        </div>
-
-                       
-                      </div>
-
-                    </div>
-                  </div>
-                  <br />
-                  <div class="card">
-                    <div class="card-header">
-                      Informações Complementares
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                      
-                      <div className="col-md-1">
-                          <label htmlFor="inputGeracaoSugerida" className="form-label">
-                            N. Placas:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita"  readOnly id="inputGeracaoSugerida" value={nPlacas || ''} onChange={(e) => setNplacas(e.target.value)} 
-                          onKeyUp={calculaDemana} onClick={calculaDemana} />
-                        </div>
-
-                      <div className="col-md-2">
-                          <label htmlFor="inputGeracaoSugerida" className="form-label">
-                            Pot. do Sistema(KWh):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputPreco" className="form-label">
-                            Preço do Kit(Forn):
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputCodigo" onBlur={calculaCustos} value={precoKitFornecedor|| ''} onChange={(e) => setPrecoKitForncedor(e.target.value)}  />
-                        </div>
-
-
-                        <div className="col-md-2">
-                          <label htmlFor="inputFatorSimult" className="form-label" >
-                            Preço do Kit (Cobrado)
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputCIP" className="form-label">
-                            CIP:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputbandeira" className="form-label">
-                            Bandeira:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
-                        </div>
-
-                        
-                      </div>
-
-
-
-                    </div>
-                  </div>
-                  <br></br>
-                  <div class="card">
-                    <div class="card-header">
-                      Custos
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-
-                        <div className="col-md-3">
-                          <label htmlFor="inputFatorSimult" className="form-label" >
-                            Complemento:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputCIP" className="form-label">
-                            Projeto:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)} />
-                        </div>
-                        <div className="col-md-2">
-                          <label htmlFor="inputbandeira" className="form-label">
-                            Imposto:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-3">
-                          <label htmlFor="inputPreco" className="form-label">
-                            Montagem:
-                          </label>
-                          <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagemm(e.target.value)} />
-                        </div>
-                      </div>
-
-
-
+                    <div className="col-md-3">
+                      <label htmlFor="inputPreco" className="form-label">
+                        Montagem:
+                      </label>
+                      <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagemm(e.target.value)} />
                     </div>
                   </div>
 
 
 
                 </div>
+              </div>
+
+
+
+            </div>
           </TabPanel>
           <TabPanel>
-          <div className="container-fluid">
-                  <div className="row ">
-                    <div className="col-md-3">
-                      <label htmlFor="inputTipoSistema" className="form-label">
-                        Tipo de Sistema:
-                      </label>
-                      {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                      <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
-                        <option value="Invesor">Inversor</option>
-                        <option value="MicroInversor">Microinversor</option>
-                      </select>
+            <div className="container-fluid">
+              <div className="row ">
+                <div className="col-md-3">
+                  <label htmlFor="inputTipoSistema" className="form-label">
+                    Tipo de Sistema:
+                  </label>
+                  {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
+                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                    <option value="Invesor">Inversor</option>
+                    <option value="MicroInversor">Microinversor</option>
+                  </select>
 
-                    </div>
+                </div>
 
-                  </div>
-                  <hr />
-                  <br />
-                  <div class="card">
-                    <div class="card-header">
-                      Tipo de Sistema: <strong>{tipoSistema}</strong>
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                        {tipoSistema === 'Inversor' ? <>
+              </div>
+              <hr />
+              <br />
+              <div class="card">
+                <div class="card-header">
+                  Tipo de Sistema: <strong>{tipoSistema}</strong>
+                </div>
+                <div class="card-body">
+                  <div className="row d-flex justify-content-start">
+                    {tipoSistema === 'Inversor' ? <>
 
-                          <div className="col-md-3">
-                            <label htmlFor="inputFatorSimult" className="form-label" >
-                              Marca:
-                            </label>
+                      <div className="col-md-3">
+                        <label htmlFor="inputFatorSimult" className="form-label" >
+                          Marca:
+                        </label>
 
-                            <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca} >
-                              <option value="">Selecionar </option>
-                              {modeloInversor ? modeloInversor.map((option) =>
-                              (<option key={option.id}
-                                value={option.brand} >
-                                {option.brand}</option>)) : ""}
-                            </select>
-
-                          </div>
-
-                          <div className="col-md-4">
-                            <label htmlFor="inputFatorSimult" className="form-label" >
-                              Modelo
-                            </label>
-
-                            <select className="form-select" id="inputModeloInversor" value={selectedInversor} onChange={(e) => setSelectecInversor(e.target.value)}  >
-                              <option value="">Selecione</option>
-                              {modeloInversor && modeloInversor.map((produto) => (
-                                <option key={produto.id} value={produto.description}>{produto.description}</option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div className="col-md-3">
-                            <label htmlFor="inputPotModulos" className="form-label">
-                              Potência:
-                            </label>
-                            <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                          </div>
-
-
-
-                          <div className="col-md-1">
-                            <label htmlFor="inputFatorSimult" className="form-label" >
-                              Qtde:
-                            </label>
-                            <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
-                          </div>
-
-                        </>
-                          :
-                          <>
-
-                            <div className="col-md-3">
-                              <label htmlFor="inputPotModulos" className="form-label">
-                                Marca:
-                              </label>
-
-                              <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
-                                <option value="">Selecionar </option>
-                                {modeloMicroInversor ? modeloMicroInversor.map((option) => (<option key={option.id} value={option.brand} >{option.brand}</option>)) : ""}
-                              </select>
-                            </div>
-                            <div className="col-md-4">
-                              <label htmlFor="inputModeloMicro" className="form-label" >
-                                Modelo
-                              </label>
-
-                              <select className="form-select" id="inputModeloMicro" value={selectedMicroinversor} onChange={(e) => setSelectecMicroinversor(e.target.value)}  >
-                                <option value="">Selecione</option>
-                                {modeloMicroInversor && modeloMicroInversor.map((produto) => (
-                                  <option key={produto.id} value={produto.description}>{produto.description}</option>
-                                ))}
-
-                              </select>
-
-                            </div>
-                            <div className="col-md-3">
-                              <label htmlFor="inputPotModulos" className="form-label">
-                                Potência:
-                              </label>
-                              <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
-                            </div>
-
-
-
-                            <div className="col-md-1">
-                              <label htmlFor="inputFatorSimult" className="form-label" >
-                                Qtde:
-                              </label>
-                              <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
-                            </div>
-
-
-                          </>}
-
-
-
-
-
+                        <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca} >
+                          <option value="">Selecionar </option>
+                          {modeloInversor ? modeloInversor.map((option) =>
+                          (<option key={option.id}
+                            value={option.brand} >
+                            {option.brand}</option>)) : ""}
+                        </select>
 
                       </div>
 
-                    </div>
-                  </div>
-                  <br />
+                      <div className="col-md-4">
+                        <label htmlFor="inputFatorSimult" className="form-label" >
+                          Modelo
+                        </label>
+
+                        <select className="form-select" id="inputModeloInversor" value={selectedInversor} onChange={(e) => setSelectecInversor(e.target.value)}  >
+                          <option value="">Selecione</option>
+                          {modeloInversor && modeloInversor.map((produto) => (
+                            <option key={produto.id} value={produto.description}>{produto.description}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-md-3">
+                        <label htmlFor="inputPotModulos" className="form-label">
+                          Potência:
+                        </label>
+                        <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                      </div>
 
 
 
+                      <div className="col-md-1">
+                        <label htmlFor="inputFatorSimult" className="form-label" >
+                          Qtde:
+                        </label>
+                        <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
+                      </div>
 
-                  <div class="card">
-                    <div class="card-header">
-                      Painéis
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                        <div className="col-md-4">
-                          <label htmlFor="inputFatorSimult" className="form-label" >
-                            Marca
+                    </>
+                      :
+                      <>
+
+                        <div className="col-md-3">
+                          <label htmlFor="inputPotModulos" className="form-label">
+                            Marca:
                           </label>
-                          <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
-                            <option value="">Selecione</option>
-                            {modeloPlaca && modeloPlaca.map((produto) => (
-                              <option key={produto.id} value={produto.brand}>{produto.brand}</option>
-                            ))}
 
-
+                          <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
+                            <option value="">Selecionar </option>
+                            {modeloMicroInversor ? modeloMicroInversor.map((option) => (<option key={option.id} value={option.brand} >{option.brand}</option>)) : ""}
                           </select>
                         </div>
                         <div className="col-md-4">
-                          <label htmlFor="inputComplem" className="form-label">
-                            Modelo do Painel
+                          <label htmlFor="inputModeloMicro" className="form-label" >
+                            Modelo
                           </label>
-                          <select className="form-select" id="inputTipoSistema" value={selectedModeloPainel} onChange={(e) => setSelectedModeloPainel(e.target.value)}  >
+
+                          <select className="form-select" id="inputModeloMicro" value={selectedMicroinversor} onChange={(e) => setSelectecMicroinversor(e.target.value)}  >
                             <option value="">Selecione</option>
-                            {modeloPlaca && modeloPlaca.map((produto) => (
+                            {modeloMicroInversor && modeloMicroInversor.map((produto) => (
                               <option key={produto.id} value={produto.description}>{produto.description}</option>
                             ))}
+
                           </select>
+
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                           <label htmlFor="inputPotModulos" className="form-label">
                             Potência:
                           </label>
@@ -1354,50 +1491,113 @@ const BusinessForm = (props) => {
                         </div>
 
 
+
                         <div className="col-md-1">
-                          <label htmlFor="inputPotModulos" className="form-label">
+                          <label htmlFor="inputFatorSimult" className="form-label" >
                             Qtde:
                           </label>
-                          <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                          <input type="text" className="form-control" id="inputFatorSimult" value={fatorSimult} onChange={(e) => setFatorSimult(e.target.value)} />
                         </div>
-                      </div>
 
-                    </div>
+
+                      </>}
+
+
+
+
+
+
                   </div>
-                  <br />
-                  <div class="card">
-                    <div class="card-header">
-                      Dados do Cliente
-                    </div>
-                    <div class="card-body">
-                      <div className="row d-flex justify-content-start">
-                        <div className="col-md-3">
-                          <label htmlFor="inputConsumo" className="form-label">
-                            Consumo(Kwh):
-                          </label>
-                          <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-3">
-                          <label htmlFor="inputPerda" className="form-label">
-                            Perda:
-                          </label>
-                          <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
-                        </div>
-                        <div className="col-md-3">
-                          <label htmlFor="inputmediaMensal" className="form-label">
-                            Média Mensal(Kwh):
-                          </label>
-                          <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
 
                 </div>
+              </div>
+              <br />
 
-            
+
+
+
+              <div class="card">
+                <div class="card-header">
+                  Painéis
+                </div>
+                <div class="card-body">
+                  <div className="row d-flex justify-content-start">
+                    <div className="col-md-4">
+                      <label htmlFor="inputFatorSimult" className="form-label" >
+                        Marca
+                      </label>
+                      <select className="form-select" id="inputTipoSistema" value={marcaModulo} onChange={(e) => setMarcaModulo(e.target.value)}  >
+                        <option value="">Selecione</option>
+                        {modeloPlaca && modeloPlaca.map((produto) => (
+                          <option key={produto.id} value={produto.brand}>{produto.brand}</option>
+                        ))}
+
+
+                      </select>
+                    </div>
+                    <div className="col-md-4">
+                      <label htmlFor="inputComplem" className="form-label">
+                        Modelo do Painel
+                      </label>
+                      <select className="form-select" id="inputTipoSistema" value={selectedModeloPainel} onChange={(e) => setSelectedModeloPainel(e.target.value)}  >
+                        <option value="">Selecione</option>
+                        {modeloPlaca && modeloPlaca.map((produto) => (
+                          <option key={produto.id} value={produto.description}>{produto.description}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-md-2">
+                      <label htmlFor="inputPotModulos" className="form-label">
+                        Potência:
+                      </label>
+                      <input type="text" className="form-control" id="inputPotModulos" value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} />
+                    </div>
+
+
+                    <div className="col-md-1">
+                      <label htmlFor="inputPotModulos" className="form-label">
+                        Qtde:
+                      </label>
+                      <input type="text" className="form-control" id="inputQtdeModulos" value={qtdeModulos} onChange={(e) => setQtdeModulos(e.target.value)} />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <br />
+              <div class="card">
+                <div class="card-header">
+                  Dados do Cliente
+                </div>
+                <div class="card-body">
+                  <div className="row d-flex justify-content-start">
+                    <div className="col-md-3">
+                      <label htmlFor="inputConsumo" className="form-label">
+                        Consumo(Kwh):
+                      </label>
+                      <input type="text" className="form-control" id="inputConsumo" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} />
+                    </div>
+
+                    <div className="col-md-3">
+                      <label htmlFor="inputPerda" className="form-label">
+                        Perda:
+                      </label>
+                      <input type="text" className="form-control" id="inputPerda" value={perdas} onChange={(e) => serPerdas(e.target.value)} />
+                    </div>
+                    <div className="col-md-3">
+                      <label htmlFor="inputmediaMensal" className="form-label">
+                        Média Mensal(Kwh):
+                      </label>
+                      <input type="text" className="form-control" id="inputCodigo" value={mediaMensal} onChange={(e) => setMediaMensal(e.target.value)} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+
           </TabPanel>
         </Tabs>
         <div className='afflitedsalvar'>
