@@ -30,14 +30,14 @@ export default function TinyBarGainChart() {
       UserId: idLogged
     }
 
-    if (profilelogged == "Admin") {
+    if (profilelogged === "Admin") {
       filtro = {
         situation: "Ganhos",
         AffiliatedId: AffiliatedId
       }
     }
 
-    if (profilelogged == "Root") {
+    if (profilelogged === "Root") {
       filtro = {
         situation: "Ganhos",
 
@@ -54,9 +54,12 @@ export default function TinyBarGainChart() {
 
       }).then(
         (response) => {
+          
 
           if (response.data && response.data.length !== 0) {
             setData(response.data)
+            console.log(response.data)
+            
           } else {
             const currentDate = new Date();
             const currentMonth = currentDate.getMonth() + 1;
@@ -68,6 +71,7 @@ export default function TinyBarGainChart() {
                 amt: 0,
               }]
             setData(data)
+            console.log(data)
           }
           //setData(response.data)
         }

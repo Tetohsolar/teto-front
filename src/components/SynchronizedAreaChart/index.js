@@ -10,32 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "out",
-    amt: 12,
-  },
-  {
-    name: "nov",
-    amt: 36,
-  },
-  {
-    name: "dez",
-    amt: 72,
-  },
-  {
-    name: "jan",
-    amt: 44,
-  },
-  {
-    name: "fev",
-    amt: 80,
-  },
-  {
-    name: "mar",
-    amt: 96,
-  },
-];
 
 export default function SynchronizedAreaChart(props) {
   return (
@@ -43,7 +17,7 @@ export default function SynchronizedAreaChart(props) {
       <p>Número de propostas</p>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={props.data}
           syncId="anyId"
           margin={{
             top: 10,
