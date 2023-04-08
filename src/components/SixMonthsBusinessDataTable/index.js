@@ -103,7 +103,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const currentDate = `${year}-${month}-${'01'}`;
   const lastDay = new Date(year, month, 0).getDate();
   const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
-    const filtro = {
+    let filtro = {
       fantasy: "%",
       document: "%",
       page: 0,
@@ -127,23 +127,7 @@ const SixMonthsBusinessDataTable = (props) => {
       
 
     }
-    if (profilelogged === "User"){
-       
-      filtro = {
-        fantasy: "%",
-        document: "%",
-        page: 0,
-        pageSize: 5, 
-        number: "%",
-        dateSt:currentDate,
-        dateEnd:EndDate,
-        AffiliatedId:afflitedId,
-        UserId:idLogged
-      }
-    }
-
-    
-    
+    console.log(filtro)
   
     
    await api.post('/business/byparam', filtro, {
