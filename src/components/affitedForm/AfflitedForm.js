@@ -83,6 +83,10 @@ const AfflitedForm = (props) => {
   const [projectCostI, setProjetoinv] = useState('')
   const [taxI, setTaxainv] = useState('')
   const [assemblyCostI, setMontagemi] = useState('')
+  const [cip, setCip] = useState('')
+  const [band, setBandeira] = useState('')
+  const [perca, setPerca] = useState('')
+  const [lucro, setLucro] = useState('')
   const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -420,6 +424,7 @@ const AfflitedForm = (props) => {
             <Tab>Informações Básicas</Tab>
             <Tab> Custo Inversor</Tab>
             <Tab> Custo Micro Inversor</Tab>
+            <Tab> Configurações</Tab>
           </TabList>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
@@ -572,6 +577,38 @@ const AfflitedForm = (props) => {
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
               
+            
+
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
+             
+              <div className="col-md-3"  >
+                <label htmlFor="complementCostI" className="form-label ">
+                CIP (R$)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                  className="form-control number" value={complementCostI || ''} onChange={(e) => setCip(e.target.value)} />
+              </div>
+              <div className="col-md-3"  >
+                <label htmlFor="projectCostI" className="form-label ">
+                  Bandeira (R$)
+                </label>
+                <NumericFormat decimalScale={2} decimalSeparator="," placeholder="" className="form-control number" value={projectCostI || ''} onChange={(e) => setBandeira(e.target.value)} />
+              </div>
+              <div className="col-md-3"  >
+                <label htmlFor="assemblyCostI" className="form-label ">
+                  Perca (%)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostI || ''} onChange={(e) => setPerca(e.target.value)} />
+              </div> 
+              <div className="col-md-3"  >
+                <label htmlFor="taxI" className="form-label ">
+                  Lucro (%)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxI || ''} onChange={(e) => setLucro(e.target.value)} />
+              </div>
             </div>
           </TabPanel>
         </Tabs>
