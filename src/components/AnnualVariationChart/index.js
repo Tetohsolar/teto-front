@@ -1,39 +1,47 @@
-import "./style.scss";
-import React from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, } from 'recharts';
 
 const data = [
   {
-    name: "out",
-    amt: 12,
+    name: 'Page A',
+    inversor: 4000,
+    microinversor: 2400,
+    consumo: 2400,
   },
   {
-    name: "nov",
-    amt: 36,
+    name: 'Page B',
+    inversor: 3000,
+    microinversor: 1398,
+    consumo: 2210,
   },
   {
-    name: "dez",
-    amt: 72,
+    name: 'Page C',
+    inversor: 2000,
+    microinversor: 9800,
+    consumo: 2290,
   },
   {
-    name: "jan",
-    amt: 44,
+    name: 'Page D',
+    inversor: 2780,
+    microinversor: 3908,
+    consumo: 2000,
   },
   {
-    name: "fev",
-    amt: 80,
+    name: 'Page E',
+    inversor: 1890,
+    microinversor: 4800,
+    consumo: 2181,
   },
   {
-    name: "mar",
-    amt: 96,
+    name: 'Page F',
+    inversor: 2390,
+    microinversor: 3800,
+    consumo: 2500,
+  },
+  {
+    name: 'Page G',
+    inversor: 3490,
+    microinversor: 4300,
+    consumo: 2100,
   },
 ];
 
@@ -42,27 +50,26 @@ export default function AnnualVariationChart(props) {
     <div style={{ width: "100%", height: 256 }}>
       <p>Número de propostas</p>
       <ResponsiveContainer>
-        <AreaChart
+        <ComposedChart
+          width={500}
+          height={300}
           data={data}
-          syncId="anyId"
           margin={{
-            top: 10,
+            top: 5,
             right: 30,
-            left: 0,
-            bottom: 0,
+            left: 20,
+            bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="amt"
-            stroke={props.strokeColor}
-            fill={props.fillColor}
-          />
-        </AreaChart>
+          <Legend />
+          <Bar dataKey="inversor" fill="#F2811D" />
+          <Bar dataKey="microinversor" fill="#2182BF" />
+          <Line type="monotone" dataKey="consumo" stroke="#21BF7D" />
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );

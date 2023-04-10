@@ -4,7 +4,7 @@ import "./style.scss";
 export default function AnnualVariation(props) {
 
   return (
-    <div className="p-3 mb-3 bg-white rounded-3">
+    <div className="mb-3 bg-white rounded-3">
       <h5 className="card-content-title fw-semibold mb-3">{props.chartTitle}</h5>
       <div className="mb-3 mb-sm-0">
         <div className="card border-light-subtle">
