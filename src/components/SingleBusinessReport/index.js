@@ -1,4 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import SolarSystemDescription from "../SolarSystemDescription";
 
 const data = [
   { name: "Group A", value: 8 },
@@ -32,10 +33,11 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Como a nova taxa impacta sua economia
-          </h5>
+          </h4>
           <div className="row mb-3">
             <div className="col-lg-4 mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -401,33 +403,24 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Descrição do Sistema Solar
-          </h5>
-          <div className="row mb-3">
+          </h4>
             <div className="mb-3">
               <div className="card border-light-subtle">
                 <div className="card-body">
-                  <h6 className="card-title">Com Inversor</h6>
-                  ...
+                  <SolarSystemDescription />
                 </div>
               </div>
-            </div>
-            <div className="mb-3 mb-sm-0">
-              <div className="card border-light-subtle">
-                <div className="card-body">
-                  <h6 className="card-title">Com Microinversor</h6>
-                  ...
-                </div>
-              </div>
-            </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Geração de Preço
-          </h5>
+          </h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -438,10 +431,11 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Variação Anual
-          </h5>
+          </h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -452,8 +446,9 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">Garantias</h5>
+          <h4 className="card-content-title fw-semibold mb-3">Garantias</h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -464,10 +459,11 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Indicadores Financeiros
-          </h5>
+          </h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -478,10 +474,11 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Pagamento à vista
-          </h5>
+          </h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -492,8 +489,9 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">Economia</h5>
+          <h4 className="card-content-title fw-semibold mb-3">Economia</h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -504,8 +502,9 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="mb-5">
-          <h5 className="card-content-title fw-semibold mb-3">Financiamento</h5>
+          <h4 className="card-content-title fw-semibold mb-3">Financiamento</h4>
           <div className="row mb-3">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
@@ -516,10 +515,11 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+        
         <section>
-          <h5 className="card-content-title fw-semibold mb-3">
+          <h4 className="card-content-title fw-semibold mb-3">
             Itens inclusos/não inclusos
-          </h5>
+          </h4>
           <div className="row">
             <div className="mb-3 mb-sm-0">
               <div className="card border-light-subtle">
