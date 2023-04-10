@@ -1,31 +1,38 @@
 import "./style.scss";
 import { useState } from "react";
 
+const address = "Varjota";
+
 const generationAndPriceData = [
   {
-    id: 6541654561,
-    name: "Painel solar Jinko 465W",
-    amount: 15,
+    id: 5465,
+    name: "Geração esperada",
+    inversor: "854 kWh",
+    microInversor: "808 kWh",
   },
   {
-    id: 2165165564,
-    name: "Inversor Growatt MIN 5000TL-X",
-    amount: 1,
+    id: 4984,
+    name: "Área necessária",
+    inversor: "20 m²",
+    microInversor: "19 m²",
   },
   {
-    id: 9546198496,
-    name: "Estrutura para Telhado Cerâmico",
-    amount: "Incluso",
+    id: 6858,
+    name: "Peso do sistema",
+    inversor: "349 kg",
+    microInversor: "330 kg",
   },
   {
-    id: 6541984654,
-    name: "Geração média mensal (1ºano)",
-    amount: "854 kWh",
+    id: 8971,
+    name: "Porc. atendida",
+    inversor: "100%",
+    microInversor: "95%",
   },
   {
-    id: 6549846546,
+    id: 6549,
     name: "Valor Total",
-    amount: "R$ 26.700,00",
+    inversor: "R$ 26.700,00",
+    microInversor: "R$ 27.000,00",
   },
 ];
 
@@ -41,8 +48,9 @@ export default function GenerationAndPriceDataTable(props) {
                 <table className="table caption-top table-sm">
                   <thead>
                     <tr>
-                      <th scope="col">6,98 kWp</th>
-                      <th scope="col">Quantiddade</th>
+                      <th scope="col">{address}</th>
+                      <th scope="col">Inversor</th>
+                      <th scope="col">Micro</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -50,7 +58,8 @@ export default function GenerationAndPriceDataTable(props) {
                       return (
                         <tr key={item.id}>
                           <td>{item.name}</td>
-                          <td>{item.amount}</td>
+                          <td>{item.inversor}</td>
+                          <td>{item.microInversor}</td>
                         </tr>
                       );
                     })}
