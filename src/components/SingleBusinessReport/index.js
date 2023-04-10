@@ -1,5 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import SolarSystemDescription from "../SolarSystemDescription";
+import GenerationAndPrice from "../GenerationAndPrice";
 
 const data = [
   { name: "Group A", value: 8 },
@@ -421,15 +422,7 @@ export default function SingleBusinessReport() {
           <h4 className="card-content-title fw-semibold mb-3">
             Geração de Preço
           </h4>
-          <div className="row mb-3">
-            <div className="mb-3 mb-sm-0">
-              <div className="card border-light-subtle">
-                <div className="card-body">
-                  <h6 className="card-title">Tabela</h6>
-                </div>
-              </div>
-            </div>
-          </div>
+          <GenerationAndPrice />
         </section>
 
         <section className="mb-5">
