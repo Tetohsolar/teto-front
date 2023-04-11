@@ -6,7 +6,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import Pagination from '../pagination/Pagination';
 import {BsFillSendFill, BsPencilFill } from "react-icons/bs";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,7 +20,8 @@ const SixMonthsBusinessDataTable = (props) => {
     currency: 'BRL'
   })
   const [currentPage, setCurrentPage] = useState(1);
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
 
     list("%");
@@ -152,7 +153,8 @@ const SixMonthsBusinessDataTable = (props) => {
   }  
 
   function edit(id) {
-    Navigate("/business/view" + id)
+    navigate("/business/view" + id)
+    console.log (id)
   }
 
   const totalValue = totalPages
