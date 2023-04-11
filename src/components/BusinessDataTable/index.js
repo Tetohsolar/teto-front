@@ -56,7 +56,12 @@ const BusinessDataTable = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [objs, setObjects] = useState([])
   const [totalPages, setTotalPages] = useState([])
+
   const { token } = useContext(AuthContext)
+
+  const [idSelected, setIdSelected] = useState([])
+  const { token,  profilelogged,  afflitedId,idLogged } = useContext(AuthContext)
+
   const [name, setName] = useState([])
   const [data, setData] = useState([])
   const [numero, setNumero] = useState([])
@@ -246,6 +251,20 @@ const BusinessDataTable = (props) => {
       situation: `${situation}`
     }
 
+    if (profilelogged !== "Root"){
+
+      filtro = {
+
+        fantasy: "%" + name + "%",
+        document: "%",
+        page: data - 1,
+        pageSize: 5,
+        number: numero,
+        dateSt: datanova,
+        situation: `${situation}`,
+        AffiliatedId:afflitedId
+      }
+    }
 
     await api.post('/business/byparam', filtro, {
       headers: {
@@ -276,7 +295,8 @@ const BusinessDataTable = (props) => {
       datanova = dateObject
     }
 
-    const filtro = {
+    let filtro = {
+
       fantasy: "%" + name + "%",
       document: "%",
       page: data - 1,
@@ -284,6 +304,21 @@ const BusinessDataTable = (props) => {
       number: numero,
       dateSt: datanova,
       situation: `${situation}`
+    }
+
+    if (profilelogged !== "Root"){
+
+      filtro = {
+
+        fantasy: "%" + name + "%",
+        document: "%",
+        page: data - 1,
+        pageSize: 5,
+        number: numero,
+        dateSt: datanova,
+        situation: `${situation}`,
+        AffiliatedId:afflitedId
+      }
     }
 
     api.post('/business/byparam', filtro, {
