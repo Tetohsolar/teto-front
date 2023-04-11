@@ -57,9 +57,7 @@ const BusinessDataTable = (props) => {
   const [objs, setObjects] = useState([])
   const [totalPages, setTotalPages] = useState([])
 
-  const { token } = useContext(AuthContext)
-
-  const [idSelected, setIdSelected] = useState([])
+  
   const { token,  profilelogged,  afflitedId,idLogged } = useContext(AuthContext)
 
   const [name, setName] = useState([])
