@@ -223,7 +223,7 @@ const ProductForm = (props) => {
           <option value="">Selecionar</option>
             <option value="Placa">Placa</option>
             <option value="Inversor">Inversor</option>
-            <option value="Microinversor">Microninversor</option>
+            <option value="Microinversor">Microinversor</option>
             
           </select>
         </div>
@@ -268,7 +268,7 @@ const ProductForm = (props) => {
          <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
           Potência
           </label>
-         <input type="number"  maxLength={5} className="form-control" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
+         <input type="number"  maxLength={5} className="form-control number" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
           </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">

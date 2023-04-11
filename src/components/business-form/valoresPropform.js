@@ -1,13 +1,19 @@
+import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import Navbar from '../../components/navbar/Navbar';
+import Sidebar from '../../components/sidebar/Sidebar';
+import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
+import { ToastContainer } from 'react-toastify';
+import { useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import './profileform.scss';
-import { useState, useContext, useEffect } from 'react'
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import api from '../../api';
 import InputMask from 'react-input-mask';
 
-const EditProfileForm = (props) => {
+
+
+const ValoresProposta = (props) => {
+  const { sidebarWrapper } = useContext(SidebarWrapperContext);
+  const pageTitle = "Informações do usuário";
+  const { userId } = useParams();
   const { token, } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -21,70 +27,18 @@ const EditProfileForm = (props) => {
   const [filiados, setFiliados] = useState([])
   const [idfiliado, setIdfiliado] = useState(null) 
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    
-    findUserById()
-  }, [reloadPage])
-
-  async function findUserById() {
-    
-    await loadfiliados();
-
-    await api.get(`/user/get/${props.userId}`, {
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-    })
-      .then((response) => {
-        setId(props.userId)
-        setName(response.data.name)
-        setEmail(response.data.email)
-        setPhone(response.data.phone)
-        setTipo(response.data.tipo)
-        setHabilitar(response.data.enabled)
-        console.log(response.data)
-        setIdfiliado(response.data.AffiliatedId
-)
-      })
-  }
-
-  async function loadfiliados(){
-  
-    await api.get('/afflited/all',{
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-    }).then(response=>{
-      //console.log(response.data.affiliated)
-      setFiliados(response.data.affiliated)
-
-     
-    }).catch(error=>{
-      console.log(" d eu errado")
-    })
-  }
-  async function handleUpdateUser(e) {
-    setReloadPage(true)
-    e.preventDefault()
-    console.log(idfiliado)
-    try {
-
-      await updateUser(id, name, phone, email, tipo, habilitar,idfiliado)
-      setReloadPage(false)
-      navigate("/users/")
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
   return (
-    <div className="p-3 mb-3 bg-white border rounded-3">
+    <div>
+      <Navbar />
+      <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
+        <Sidebar activeButtonProfile="active" />
+        <div id="page-content-wrapper" className="container-fluid bg-home py-4">
+          <h5 className="pb-3">{pageTitle}</h5>
+          <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
-     <form className="row g-3" onSubmit={handleUpdateUser}>
+     <form className="row g-3">
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
             Nome
@@ -119,7 +73,7 @@ const EditProfileForm = (props) => {
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-            
+            <option value="Root">Root</option>
           </select>
         </div>
         <div className="col-md-4">
@@ -156,9 +110,10 @@ const EditProfileForm = (props) => {
         </div>
       </form>
     </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default EditProfileForm;
-
-
+export default ValoresProposta;
