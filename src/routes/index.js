@@ -26,7 +26,11 @@ import SingleBusiness from '../pages/business/single';
 import ViewBusiness from '../pages/business/view';
 import EditPersonalData from "../pages/business/view/editpersonal"
 import EditBusiness from '../pages/business/proporse';
+
+import PasswordRecover from '../pages/login/PasswordRecover';
+
 import ValoresProposta from '../components/business-form/valoresPropform';
+
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -43,6 +47,7 @@ const RoutesApp = () => {
             />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="passwordRecover" element={<PasswordRecover />} />
             <Route path="customers">
               <Route
                 index
@@ -67,14 +72,18 @@ const RoutesApp = () => {
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
               <Route path="create" element={token ? <EditBusiness /> : <Navigate to="/login" />} />
+
+              <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
+              <Route path="view/editpersonal:clientId" element={<EditPersonalData />} />
+
               <Route path="view/:businessId" element={token ?<ViewBusiness /> : <Navigate to="/login"/>} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta/>}  />
+
             </Route>
 
             <Route path="sizings">
               <Route
                 index
-                element={token ? <SizingList /> : <Navigate to="/login" />}
               />
               <Route
                 path="new"
