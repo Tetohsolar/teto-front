@@ -10,7 +10,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import EditPersonalData from './editpersonal';
@@ -79,6 +79,7 @@ const ViewBusiness = () => {
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
   const [idSelected,setIdSelected] = useState('');
+  const navigate = useNavigate();
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -116,6 +117,9 @@ const ViewBusiness = () => {
       })
   }
 
+  function editbussinesvalue(id) {
+   navigate("/business/view/editvaluebussines/" + id)
+  }
   async function loadAdd(Id) {
 
     await api.get('/client/get/' + Id, {
@@ -146,6 +150,11 @@ const ViewBusiness = () => {
 
   function salvar(t) {
     console.log(t)
+  }
+
+  function editPessoa(id) {
+    navigate("/customers/edit/" + id)
+    console.log (id)
   }
 
   async function loadbId(id) {
@@ -269,12 +278,14 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdropMateus" onClick={() => {
-
-                    }}>
-                      <BsFillPencilFill />
-
-                    </button>
+                    <button
+                                type="button"
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                  editPessoa(ClientId)
+                                }}
+                              >
+                                <BsPencilFill />
+                              </button>
 
                   </div>
 
@@ -393,7 +404,7 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { editbussinesvalue(businessId)
 
                     }}>
                       <BsFillPencilFill />
