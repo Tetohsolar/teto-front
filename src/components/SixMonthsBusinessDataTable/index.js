@@ -6,6 +6,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import Pagination from '../pagination/Pagination';
 import {BsFillSendFill, BsPencilFill } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -13,13 +14,14 @@ const SixMonthsBusinessDataTable = (props) => {
   const PageSize= 5
   const [objs, setObjects] = useState([])
   const [totalPages, setTotalPages] = useState([])
-  const { token } = useContext(AuthContext)
+  const { token,afflitedId,profilelogged,idLogged } = useContext(AuthContext)
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
   })
   const [currentPage, setCurrentPage] = useState(1);
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
 
     list("%");
@@ -29,6 +31,8 @@ const SixMonthsBusinessDataTable = (props) => {
  
  
  }, [])
+
+ 
 
  function onPageChanged(data) {
 
@@ -40,7 +44,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const currentDate = `${year}-${month}-${'01'}`;
   const lastDay = new Date(year, month, 0).getDate();
   const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
-    const filtro = {
+    let filtro = {
       fantasy: "%",
       document: "%",
       page: data-1,
@@ -50,6 +54,35 @@ const SixMonthsBusinessDataTable = (props) => {
       dateEnd:EndDate
     }
 
+    if (profilelogged !== "Root"){
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: data-1,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId
+      }
+      
+
+    }
+    if (profilelogged === "User"){
+       
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: data-1,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId,
+        UserId:idLogged
+      }
+    }
+  console.log(filtro)
   api.post('/business/byparam', filtro, {
     headers: {
       'Authorization': `Basic ${token}`
@@ -65,6 +98,9 @@ const SixMonthsBusinessDataTable = (props) => {
     setCurrentPage(data);
 
 }
+
+
+
  async function list(){
 
   const today = new Date();
@@ -74,7 +110,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const currentDate = `${year}-${month}-${'01'}`;
   const lastDay = new Date(year, month, 0).getDate();
   const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
-    const filtro = {
+    let filtro = {
       fantasy: "%",
       document: "%",
       page: 0,
@@ -83,7 +119,22 @@ const SixMonthsBusinessDataTable = (props) => {
       dateSt:currentDate,
       dateEnd:EndDate
     }
-    
+
+    if (profilelogged !== "Root"){
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: 0,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId
+      }
+      
+
+    }
+    console.log(filtro)
   
     
    await api.post('/business/byparam', filtro, {
@@ -100,6 +151,11 @@ const SixMonthsBusinessDataTable = (props) => {
       })
   
   }  
+
+  function edit(id) {
+    navigate("/business/view" + id)
+    console.log (id)
+  }
 
   const totalValue = totalPages
   return (
@@ -144,9 +200,11 @@ const SixMonthsBusinessDataTable = (props) => {
                               </button>
                               <button
                                 type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                  edit(item.id)
+                                }}
                               >
-                                <BsPencilFill/>
+                                <BsPencilFill />
                               </button>
                             </div>
                           </td>

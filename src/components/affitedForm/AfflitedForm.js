@@ -83,6 +83,10 @@ const AfflitedForm = (props) => {
   const [projectCostI, setProjetoinv] = useState('')
   const [taxI, setTaxainv] = useState('')
   const [assemblyCostI, setMontagemi] = useState('')
+  const [cip, setCip] = useState('')
+  const [flag, setBandeira] = useState('')
+  const [lost, setPerca] = useState('')
+  const [profit, setLucro] = useState('')
   const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -140,6 +144,13 @@ const AfflitedForm = (props) => {
         setTaxam(response.data.taxM)
         setMontagemm(response.data.assemblyCostM)
         setNumero(response.data.Addresses[0].number)
+        setCip(response.data.cip)
+        setBandeira(response.data.flag)
+        setLucro(response.data.profit)
+        setPerca(response.data.lost)
+
+
+
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -168,6 +179,10 @@ const AfflitedForm = (props) => {
     setBairro("")
     setCidades("")
     handleEstadoValue("")
+    setCip("")
+    setBandeira("")
+    setLucro("")
+    setPerca("")
   }
 
   function validaCampos(name, phone, documento, cep, zap) {
@@ -196,7 +211,7 @@ const AfflitedForm = (props) => {
       return false;
     }
   
-    console.log("entrou valor " + documento)
+   
     if (documento !== '') {
 
       if (documento.length <= 14 && !cpf.isValid(documento)) {
@@ -304,7 +319,7 @@ const AfflitedForm = (props) => {
     complementCostI,
     projectCostI,
     taxI,
-    assemblyCostI, num) {
+    assemblyCostI, num, flag, cip, profit, lost) {
 
     const json = {
       fantasy: name,
@@ -327,7 +342,10 @@ const AfflitedForm = (props) => {
       projectCostI: parseFloat(String(projectCostI).replace(',', '.')),
       taxI: parseFloat(String(taxI).replace(',', '.')),
       assemblyCostI: parseFloat('' + String(assemblyCostI).replace(',', '.')),
-
+      flag: parseFloat(String(flag).replace(',', '.')),
+      cip: parseFloat(String(cip).replace(',', '.')),
+      profit: parseFloat(String(profit).replace(',', '.')),
+      lost: parseFloat(String(lost).replace(',', '.')),
       Addresses: [
         {
           id: idAdd ? idAdd : undefined,
@@ -384,6 +402,7 @@ const AfflitedForm = (props) => {
 
     const valida = validaCampos(name, phone, doc,cepData,zap);
     if (valida) {
+
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,
@@ -395,7 +414,7 @@ const AfflitedForm = (props) => {
           complementCostI,
           projectCostI,
           taxI,
-          assemblyCostI, num)
+          assemblyCostI, num, flag, cip, profit, lost)
         navigate("/affliteds");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -419,6 +438,7 @@ const AfflitedForm = (props) => {
             <Tab>Informações Básicas</Tab>
             <Tab> Custo Inversor</Tab>
             <Tab> Custo Micro Inversor</Tab>
+            <Tab> Configurações</Tab>
           </TabList>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
@@ -571,6 +591,38 @@ const AfflitedForm = (props) => {
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
               
+            
+
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
+             
+              <div className="col-md-3"  >
+                <label htmlFor="cip" className="form-label ">
+                CIP (R$)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                  className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
+              </div>
+              <div className="col-md-3"  >
+                <label htmlFor="flag" className="form-label ">
+                  Bandeira (R$)
+                </label>
+                <NumericFormat decimalScale={2} decimalSeparator="," placeholder="" className="form-control number" value={flag || ''} onChange={(e) => setBandeira(e.target.value)} />
+              </div>
+              <div className="col-md-3"  >
+                <label htmlFor="lost" className="form-label ">
+                  Perca (%)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={lost || ''} onChange={(e) => setPerca(e.target.value)} />
+              </div> 
+              <div className="col-md-3"  >
+                <label htmlFor="profit" className="form-label ">
+                  Lucro (%)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={profit || ''} onChange={(e) => setLucro(e.target.value)} />
+              </div>
             </div>
           </TabPanel>
         </Tabs>
