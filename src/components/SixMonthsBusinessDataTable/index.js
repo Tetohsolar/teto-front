@@ -6,6 +6,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import Pagination from '../pagination/Pagination';
 import {BsFillSendFill, BsPencilFill } from "react-icons/bs";
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -29,6 +30,8 @@ const SixMonthsBusinessDataTable = (props) => {
  
  
  }, [])
+
+ 
 
  function onPageChanged(data) {
 
@@ -94,6 +97,9 @@ const SixMonthsBusinessDataTable = (props) => {
     setCurrentPage(data);
 
 }
+
+
+
  async function list(){
 
   const today = new Date();
@@ -145,6 +151,10 @@ const SixMonthsBusinessDataTable = (props) => {
   
   }  
 
+  function edit(id) {
+    Navigate("/business/view" + id)
+  }
+
   const totalValue = totalPages
   return (
     <div className="p-3 mb-3 bg-white rounded-3">
@@ -188,9 +198,11 @@ const SixMonthsBusinessDataTable = (props) => {
                               </button>
                               <button
                                 type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                  edit(item.id)
+                                }}
                               >
-                                <BsPencilFill/>
+                                <BsPencilFill />
                               </button>
                             </div>
                           </td>

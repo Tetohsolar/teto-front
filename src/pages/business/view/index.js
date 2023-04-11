@@ -261,9 +261,7 @@ const ViewBusiness = () => {
           <div className="container-fluid bg-home  ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container  " >
               <h5 className="pb-3">Detalhes do negócio</h5>
-              <div>
-
-              </div>
+              
               <br></br>
 
               <div className='conteinerCards'>
@@ -319,7 +317,7 @@ const ViewBusiness = () => {
                       Telefone
                       <td>
                       </td>
-                      <td>
+                      <td >
                         <label> {telefone} </label>
                       </td>
                     </tr>
@@ -855,6 +853,7 @@ const ViewBusiness = () => {
                                         }}
                                       >
                                         <BsFillTrash3Fill />
+                                        
                                         <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
                                       </button>
                                     </div>
