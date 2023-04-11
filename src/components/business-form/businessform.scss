@@ -11,6 +11,13 @@
 #divRazaoVisvel{
     display: block;
 }
+
+#divDemandaEscondida{
+    display: none;
+}
+#divDemandaVisvel{
+    display: block;
+}
 .divendereco{
  display: flex;
  flex-direction: row;
@@ -41,4 +48,23 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.demanadVisble{
+    visibility: 'hidden'
+}
+
+.alinhaDireita{
+    text-align: right;
+}
+.alinhaCenter{
+    text-align: center;
+}
+
+.tamanhoTabela{
+    width: 92px;
+}
+
+.tamanhoM{
+    width: 90px;
 }

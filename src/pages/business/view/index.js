@@ -14,6 +14,8 @@ import { useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import EditPersonalData from './editpersonal';
+import MyModal from '../../../components/communs/ModalDelete';
+import { toast } from 'react-toastify';
 
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
@@ -76,6 +78,7 @@ const ViewBusiness = () => {
   const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
+  const [idSelected,setIdSelected] = useState('');
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -95,9 +98,25 @@ const ViewBusiness = () => {
 
   }, [])
 
+  async function handleAfterDel(e) {
+
+
+    await api.delete('/business/delete/share/' + idSelected, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    })
+      .then((response) => {
+        loadbId(businessId)
+        toast.success("Operação realizada com sucesso!", {
+          autoClose: 1000,
+        })
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
 
   async function loadAdd(Id) {
-
 
     await api.get('/client/get/' + Id, {
       headers: {
@@ -123,17 +142,13 @@ const ViewBusiness = () => {
 
     })
 
-    
-
-
   }
 
-  function salvar(t){
+  function salvar(t) {
     console.log(t)
   }
 
   async function loadbId(id) {
-
 
     await api.get('/business/get/' + id, {
       headers: {
@@ -193,7 +208,6 @@ const ViewBusiness = () => {
       setBusiness(response.data.shares)
       setClientId(response.data.ClientId)
 
-
     }).catch((error) => { console.log(error) })
 
   }
@@ -217,11 +231,12 @@ const ViewBusiness = () => {
                   <span className="badge rounded-pill text-bg-lightblue text-primary">{status}</span>
                 </div>
                 <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">Número da proposta </h6>
+                  <h6 class="card-content-title mb-3 fw-semibold">N da proposta </h6>
 
                   <label> {numberP}</label>
 
                 </div>
+
                 <div className="col-lg-4 card-mateus rounded-3">
                   <h6 class="card-content-title mb-3 fw-semibold">Orçamento </h6>
 
@@ -260,11 +275,11 @@ const ViewBusiness = () => {
 
                     }}>
                       <BsFillPencilFill />
-                      
+
                     </button>
-                    
+
                   </div>
-                  
+
                   <EditPersonalData client={client} uc="Cliente" onEnd={salvar} />
 
                   <table className='table_view'>
@@ -372,20 +387,8 @@ const ViewBusiness = () => {
                         <label> {cidade} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Consumo
-                      <td>
-                      </td>
-                      <td>
-                        <label> {consumo} </label>
-                      </td>
-                    </tr>
-
-
-
 
                   </table>
-
 
                 </div>
 
@@ -399,101 +402,109 @@ const ViewBusiness = () => {
                     </button>
                   </div>
                   <table className='table_view'>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Consumo
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {consumo} </label>
+                      </td>
+                    </tr>
 
                     <tr className='linhabaixo tamanho-tr'>
                       Geração sugerida
                       <td>
                       </td>
-                      <td>
-                        <label> {geracaoSu} </label>
+                      <td className='alinhaDireita'>
+                        <label > {geracaoSu} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Preço do kit
                       <td>
                       </td>
-                      <td>
-                        <label> {precoKit} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(precoKit)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Complemento
                       <td>
                       </td>
-                      <td>
-                        <label> {precoKit} </label>
+                      <td className='alinhaDireita'>
+                        <label> {complemento} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Projeto
                       <td>
                       </td>
-                      <td>
-                        <label> {projeto} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(projeto)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Imposto
                       <td>
                       </td>
-                      <td>
-                        <label> {complemento} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(complemento)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Montagem
                       <td>
                       </td>
-                      <td>
-                        <label> {montagem} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(montagem)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Comissão do vendedor/Valor da comissão
                       <td>
                       </td>
-                      <td>
-                        <label> {comissaoVe} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(comissaoVe)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Margem/ Margem calculada
                       <td>
                       </td>
-                      <td>
-                        <label> {margem} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(margem)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Total de Custo
                       <td>
                       </td>
-                      <td>
-                        <label> {totalLu} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(totalLu)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Lucro (%)
                       <td>
                       </td>
-                      <td>
-                        <label> {lucroReal} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(lucroReal)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Valor total do projeto
                       <td>
                       </td>
-                      <td>
-                        <label> {valorTotal} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(valorTotal)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Lucro do projeto ($)
                       <td>
                       </td>
-                      <td>
-                        <label> {lucroProjeto} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(lucroProjeto)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -513,18 +524,12 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
 
-
                   </table>
-
-
-
 
                 </div>
 
               </div>
             </div>
-
-
 
           </div>
           <div className="container-fluid bg-home py-4 ">
@@ -655,10 +660,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
 
-
-
                   </table>
-
 
                 </div>
                 <div className='cards border rounded-3'>
@@ -714,7 +716,6 @@ const ViewBusiness = () => {
                     </tr>
                   </table>
 
-
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
@@ -766,11 +767,7 @@ const ViewBusiness = () => {
                     </tr>
                   </table>
 
-
-
-
                 </div>
-
 
               </div>
 
@@ -794,7 +791,6 @@ const ViewBusiness = () => {
                   Novo rateio
                 </button>
               </div>
-
 
               <hr className="my-3 text-body-tertiary" />
               <div className="d-flex flex-column flex-md-row justify-content-end">
@@ -851,11 +847,15 @@ const ViewBusiness = () => {
                                       >
                                         <BsPencilFill />
                                       </button>
-                                      <button
+                                      <button 
                                         type="button"
                                         className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
                                       >
                                         <BsFillTrash3Fill />
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
                                       </button>
                                     </div>
                                   </td>

@@ -10,8 +10,6 @@ import { VscNewFile, VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
 
-
-
 //PAGINATION
 let PageSize = 5;
 
@@ -23,16 +21,10 @@ const ProductsDataTable = (props) => {
   const [idSelected, setIdSelected] = useState([])
   const [brand, setBrand] = useState([])
   const [category, setCategory] = useState([])
-
-
-
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
-
-
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -61,7 +53,6 @@ const ProductsDataTable = (props) => {
     setCurrentPage(data);
 
   };
-
 
   function edit(id) {
     navigate("/products/edit/" + id)

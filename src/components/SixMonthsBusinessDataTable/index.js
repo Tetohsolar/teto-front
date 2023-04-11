@@ -13,7 +13,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const PageSize= 5
   const [objs, setObjects] = useState([])
   const [totalPages, setTotalPages] = useState([])
-  const { token } = useContext(AuthContext)
+  const { token,afflitedId,profilelogged,idLogged } = useContext(AuthContext)
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
@@ -40,7 +40,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const currentDate = `${year}-${month}-${'01'}`;
   const lastDay = new Date(year, month, 0).getDate();
   const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
-    const filtro = {
+    let filtro = {
       fantasy: "%",
       document: "%",
       page: data-1,
@@ -50,6 +50,35 @@ const SixMonthsBusinessDataTable = (props) => {
       dateEnd:EndDate
     }
 
+    if (profilelogged !== "Root"){
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: data-1,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId
+      }
+      
+
+    }
+    if (profilelogged === "User"){
+       
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: data-1,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId,
+        UserId:idLogged
+      }
+    }
+  console.log(filtro)
   api.post('/business/byparam', filtro, {
     headers: {
       'Authorization': `Basic ${token}`
@@ -74,7 +103,7 @@ const SixMonthsBusinessDataTable = (props) => {
   const currentDate = `${year}-${month}-${'01'}`;
   const lastDay = new Date(year, month, 0).getDate();
   const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
-    const filtro = {
+    let filtro = {
       fantasy: "%",
       document: "%",
       page: 0,
@@ -83,7 +112,22 @@ const SixMonthsBusinessDataTable = (props) => {
       dateSt:currentDate,
       dateEnd:EndDate
     }
-    
+
+    if (profilelogged !== "Root"){
+      filtro = {
+        fantasy: "%",
+        document: "%",
+        page: 0,
+        pageSize: 5, 
+        number: "%",
+        dateSt:currentDate,
+        dateEnd:EndDate,
+        AffiliatedId:afflitedId
+      }
+      
+
+    }
+    console.log(filtro)
   
     
    await api.post('/business/byparam', filtro, {

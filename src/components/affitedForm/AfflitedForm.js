@@ -402,7 +402,7 @@ const AfflitedForm = (props) => {
 
     const valida = validaCampos(name, phone, doc,cepData,zap);
     if (valida) {
-     
+
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,

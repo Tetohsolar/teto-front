@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import NewBusiness from '../../pages/business/new';
 import './sidebar.scss';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 
 
 const Sidebar = (props) => {
+  const {   profilelogged   } = useContext(AuthContext)
   return (
     <div className="d-flex flex-nowrap" id="sidebar-wrapper">
       <div className="d-flex flex-column flex-shrink-0 px-3 pt-4 sidebar">
@@ -38,44 +41,17 @@ const Sidebar = (props) => {
           </li>
           <span className='my-2 fw-semibold sidebar-sections'>NEGÓCIOS</span>
           <li className='my-1'>
-            {/* Modal */}
-            {/* <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
-                    ...
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Understood</button>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-            {/*END MODAL*/}
-            <NewBusiness />
-
-            {/* <button
-              className="btn btn-primary text-light d-flex align-items-center gap-2"
-              type="submit"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            > */}
-            {/* Button trigger modal*/}
-            <button className={`nav-link ${props.activeButtonSingleBusiness}`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+             <Link to={"/business/create"} className={`nav-link ${props.activeButtonProfile}`}>
               <div className='d-flex align-items-center gap-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                 </svg>Novo negócio
               </div>
-            </button>
+            
+            </Link>
           </li>
           <li className='my-1'>
-            <Link to={"/business"} className={`nav-link ${props.activeButtonBusiness}`}>
+            <Link to={"/business/"} className={`nav-link ${props.activeButtonBusiness}`}>
               <div className='d-flex align-items-center gap-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-folder-fill" viewBox="0 0 16 16">
                   <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
@@ -84,6 +60,7 @@ const Sidebar = (props) => {
             </Link>
           </li>
           <span className='my-2 fw-semibold sidebar-sections'>OPÇÕES</span>
+          {profilelogged === "Root"?
           <li className='my-1'>
             <Link to={"/affliteds"} className={`nav-link ${props.activeButtonAffliteds}`}>
               <div className='d-flex align-items-center gap-2'>
@@ -94,6 +71,7 @@ const Sidebar = (props) => {
               </div>
             </Link>
           </li>
+          :""}
           <li className='my-1'>
             <Link to={"/users"} className={`nav-link ${props.activeButtonUsers}`}>
               <div className='d-flex align-items-center gap-2'>
