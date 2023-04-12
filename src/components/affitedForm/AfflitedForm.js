@@ -14,6 +14,9 @@ import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
 import { NumericFormat } from 'react-number-format';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+import NumberFormat from 'react-number-format';
+import numeral from 'numeral';
+
 
 function PhoneInput(props) {
   return (
@@ -87,6 +90,7 @@ const AfflitedForm = (props) => {
   const [flag, setBandeira] = useState('')
   const [lost, setPerca] = useState('')
   const [profit, setLucro] = useState('')
+  const [commission, setComissao] = useState('')
   const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -148,6 +152,7 @@ const AfflitedForm = (props) => {
         setBandeira(response.data.flag)
         setLucro(response.data.profit)
         setPerca(response.data.lost)
+        setComissao(response.data.commission)
 
 
 
@@ -183,6 +188,7 @@ const AfflitedForm = (props) => {
     setBandeira("")
     setLucro("")
     setPerca("")
+    setComissao("")
   }
 
   function validaCampos(name, phone, documento, cep, zap) {
@@ -319,7 +325,7 @@ const AfflitedForm = (props) => {
     complementCostI,
     projectCostI,
     taxI,
-    assemblyCostI, num, flag, cip, profit, lost) {
+    assemblyCostI, num, flag, cip, profit, lost, commission) {
 
     const json = {
       fantasy: name,
@@ -346,6 +352,7 @@ const AfflitedForm = (props) => {
       cip: parseFloat(String(cip).replace(',', '.')),
       profit: parseFloat(String(profit).replace(',', '.')),
       lost: parseFloat(String(lost).replace(',', '.')),
+      commission: parseFloat(String(commission).replace(',', '.')),
       Addresses: [
         {
           id: idAdd ? idAdd : undefined,
@@ -414,7 +421,7 @@ const AfflitedForm = (props) => {
           complementCostI,
           projectCostI,
           taxI,
-          assemblyCostI, num, flag, cip, profit, lost)
+          assemblyCostI, num, flag, cip, profit, lost, commission)
         navigate("/affliteds");
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
@@ -602,14 +609,14 @@ const AfflitedForm = (props) => {
                 <label htmlFor="cip" className="form-label ">
                 CIP (R$)
                 </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," step="0.001"
+                  className="form-control number"  value={cip || ''} onChange={(e) => setCip(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="flag" className="form-label ">
                   Bandeira (R$)
                 </label>
-                <NumericFormat decimalScale={2} decimalSeparator="," placeholder="" className="form-control number" value={flag || ''} onChange={(e) => setBandeira(e.target.value)} />
+                <NumericFormat decimalScale={5} decimalSeparator="," placeholder="" className="form-control number" value={flag || ''} onChange={(e) => setBandeira(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="lost" className="form-label ">
@@ -622,6 +629,13 @@ const AfflitedForm = (props) => {
                   Lucro (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={profit || ''} onChange={(e) => setLucro(e.target.value)} />
+              </div>
+              <div className="col-md-3"  >
+                <label htmlFor="commission" className="form-label ">
+                Comissão padrão(%)
+                </label>
+                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," step="0.001"
+                  className="form-control number" value={commission || ''} onChange={(e) => setComissao(e.target.value)} />
               </div>
             </div>
           </TabPanel>
