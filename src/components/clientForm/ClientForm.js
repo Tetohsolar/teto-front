@@ -209,13 +209,13 @@ const ClientForm = (props) => {
    
     if (documento !== '') {
       if (documento.length <= 14 && !cpf.isValid(documento)) {
-        toast.error("CPF inválido", {
+        toast.error(lbDocument +" inválido", {
           autoClose: 1000,
         }
         ); throw new Error;
 
       } else if (documento.length > 14 && !cnpj.isValid(documento)) {
-        toast.error("CNPJ inválido", {
+        toast.error(lbDocument +" inválido", {
           autoClose: 1000,
         });
         throw new Error;
