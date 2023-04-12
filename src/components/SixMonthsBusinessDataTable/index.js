@@ -82,7 +82,7 @@ const SixMonthsBusinessDataTable = (props) => {
         UserId:idLogged
       }
     }
-  console.log(filtro)
+  //console.log(filtro)
   api.post('/business/byparam', filtro, {
     headers: {
       'Authorization': `Basic ${token}`
@@ -153,7 +153,7 @@ const SixMonthsBusinessDataTable = (props) => {
   }  
 
   function edit(id) {
-    navigate("/business/view" + id)
+    navigate("/business/view/" + id)
     console.log (id)
   }
 

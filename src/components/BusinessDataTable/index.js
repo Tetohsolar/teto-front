@@ -120,7 +120,7 @@ const BusinessDataTable = (props) => {
   const [lucroReal, setLucroReal] = useState('')
   const [lucroProjeto, setLucroProjeto] = useState('')
   const [complemento, setcomplemento] = useState('')
-  const [situation, setSituation] = useState([]);
+  const [situation, setSituation] = useState('Aberta');
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
   const [idSelected,setIdSelected] = useState('');
@@ -239,14 +239,14 @@ const BusinessDataTable = (props) => {
       datanova = dateObject
     }
 
-    const filtro = {
+    let filtro = {
       fantasy: "%" + name + "%",
       document: "%",
       page: 0,
       pageSize: 5,
       number: numero,
-      dateSt: datanova,
-      situation: `${situation}`
+      situation: `${situation}`,
+      dateSt:datanova,
     }
 
     if (profilelogged !== "Root"){
@@ -255,14 +255,15 @@ const BusinessDataTable = (props) => {
 
         fantasy: "%" + name + "%",
         document: "%",
-        page: data - 1,
+        page: 0,
         pageSize: 5,
         number: numero,
-        dateSt: datanova,
         situation: `${situation}`,
-        AffiliatedId:afflitedId
+        AffiliatedId:afflitedId,
+        dateSt:datanova,
       }
     }
+   
 
     await api.post('/business/byparam', filtro, {
       headers: {
