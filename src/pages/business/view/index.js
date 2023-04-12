@@ -80,6 +80,10 @@ const ViewBusiness = () => {
   const [client, setClient] = useState([]);
   const [idSelected,setIdSelected] = useState('');
   const navigate = useNavigate();
+  const[products,setProducts] = useState([]);
+  const[geracaoDesejada,setGeracaoDesejada] = useState('');
+  const[cip,setCip] = useState('');
+  const[bandeira,setBandeira] = useState('');
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -216,6 +220,11 @@ const ViewBusiness = () => {
       setcomplemento(response.data.complement)
       setBusiness(response.data.shares)
       setClientId(response.data.ClientId)
+      setProducts(response.data.products)
+      setGeracaoDesejada(response.data.suggestedDesired)
+      setCip(response.data.cip)
+      setBandeira(response.data.flag)
+      
 
     }).catch((error) => { console.log(error) })
 
@@ -396,6 +405,7 @@ const ViewBusiness = () => {
                         <label> {cidade} </label>
                       </td>
                     </tr>
+                   
 
                   </table>
 
@@ -411,7 +421,7 @@ const ViewBusiness = () => {
                     </button>
                   </div>
                   <table className='table_view'>
-                    <tr className='linhabaixo tamanho-tr'>
+                  <tr className='linhabaixo tamanho-tr'>
                       Consumo
                       <td>
                       </td>
@@ -419,13 +429,20 @@ const ViewBusiness = () => {
                         <label> {consumo} </label>
                       </td>
                     </tr>
-
                     <tr className='linhabaixo tamanho-tr'>
                       Geração sugerida
                       <td>
                       </td>
                       <td className='alinhaDireita'>
                         <label > {geracaoSu} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Geração desejada
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{geracaoDesejada} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -441,7 +458,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {complemento} </label>
+                        <label> {formatter.format(complemento)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -457,7 +474,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {formatter.format(complemento)} </label>
+                        <label> {formatter.format(imposto)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -469,19 +486,35 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Comissão do vendedor/Valor da comissão
+                      Comissão do vendedor
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {formatter.format(comissaoVe)} </label>
+                        <label> {comissaoVe + ' %' }    </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Margem/ Margem calculada
+                    Valor da comissão
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {formatter.format(margem)} </label>
+                        <label> {formatter.format(valorComissao)}  </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Margem
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {margem +' %'}  </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Margem calculada
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(margemCa)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -497,7 +530,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {formatter.format(lucroReal)} </label>
+                        <label> {lucroReal + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -509,30 +542,14 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Lucro do projeto ($)
+                      Lucro do projeto (R$)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
                         <label> {formatter.format(lucroProjeto)} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Projeto desconto 2%/ Lucro 2%/ Margem 2%
-                      <td>
-                      </td>
-                      <td>
-                        <label> {rua} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Projeto desconto 4%/Lucro 4%/Margem 4%
-                      <td>
-                      </td>
-                      <td>
-                        <label> {rua} </label>
-                      </td>
-                    </tr>
-
+                    
                   </table>
 
                 </div>
@@ -540,6 +557,92 @@ const ViewBusiness = () => {
               </div>
             </div>
 
+          </div>
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Valores com descontos</h5>
+
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                      <h6 className="card-title">Valores com descontos de 2% / 4%</h6>
+                      <div className="table-responsive">
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">Projeto desconto 2% </th>
+                              <th scope="col" >Lucro 2%</th>
+                              <th scope="col" >Margem 2%</th>
+                              <th scope="col" >Projeto desconto 4%</th>
+                              <th scope="col" >Lucro 4%</th>
+                              <th scope="col" >Margem4%</th>
+                              
+                              
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                            { products? products.map((item) => {
+                              return (
+                                <tr key={item.id}>
+                              
+                                  <td className='alinhaDireita'>{item.type}</td>
+                                  <td className='alinhaDireita'>{item.brand}</td>
+                                  <td className='alinhaDireita'>{item.model}</td>
+                                  <td className='alinhaDireita'>{item.power}</td>
+                                  <td className='alinhaDireita'>{item.qtd}</td>
+                                 
+                                  <td>
+                                    <div className="d-flex gap-2 justify-content-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                      >
+                                        <BsPencilFill />
+                                      </button>
+                                      <button 
+                                        type="button"
+                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
+                                      >
+                                        <BsFillTrash3Fill />
+                                        
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            }) : ''}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
           <div className="container-fluid bg-home py-4 ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
@@ -584,7 +687,7 @@ const ViewBusiness = () => {
                       Fator Solar
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {fatorS} </label>
                       </td>
                     </tr>
@@ -604,14 +707,7 @@ const ViewBusiness = () => {
                         <label> {tipoL} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Rateios
-                      <td>
-                      </td>
-                      <td>
-                        Rateio x
-                      </td>
-                    </tr>
+                  
                     <tr className='linhabaixo tamanho-tr'>
                       Modalidade
                       <td>
@@ -640,7 +736,7 @@ const ViewBusiness = () => {
                       Demanda fora ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {demandaFp} </label>
                       </td>
                     </tr>
@@ -648,7 +744,7 @@ const ViewBusiness = () => {
                       Energia fora ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {energiaFp} </label>
                       </td>
                     </tr>
@@ -656,7 +752,7 @@ const ViewBusiness = () => {
                       Demanda ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {demandaP} </label>
                       </td>
                     </tr>
@@ -664,7 +760,7 @@ const ViewBusiness = () => {
                       Energia ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {energiaP} </label>
                       </td>
                     </tr>
@@ -674,7 +770,7 @@ const ViewBusiness = () => {
                 </div>
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Informações do sistema</h6>
+                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
                     }}>
@@ -695,7 +791,7 @@ const ViewBusiness = () => {
                       Potência do painel
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{painelP} </label>
                       </td>
                     </tr>
@@ -703,7 +799,7 @@ const ViewBusiness = () => {
                       Número de placas
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{numeroP} </label>
                       </td>
                     </tr>
@@ -711,7 +807,7 @@ const ViewBusiness = () => {
                       Média mensal
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{media} </label>
                       </td>
                     </tr>
@@ -719,65 +815,127 @@ const ViewBusiness = () => {
                       Potência do sistema
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{potenciaS} </label>
                       </td>
                     </tr>
-                  </table>
-
-                  <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                    }}>
-                      <BsFillPencilFill />
-                    </button>
-                  </div>
-                  <table className='table_view'>
+                    
                     <tr className='linhabaixo tamanho-tr'>
+                      CIP
                       <td>
-                        Marca da placa
                       </td>
-                      <td>
-                        <label> {marcaP} </label>
+                      <td className='alinhaDireita'>
+                        <label>{cip} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
+                      Bandeira
                       <td>
-                        Modelo da placa
                       </td>
-                      <td>
-                        <label> {modeloP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Marca do Inversor
-                      </td>
-                      <td>
-                        <label> {inversorMa} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Modelo do Inversor
-                      </td>
-                      <td>
-                        <label> {inversorMo} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Número de Inversores
-                      </td>
-                      <td>
-                        <label> {numeroInv} </label>
+                      <td className='alinhaDireita'>
+                        <label>{bandeira} </label>
                       </td>
                     </tr>
                   </table>
+
 
                 </div>
 
+              </div>
+
+            </div>
+          </div>
+
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Produtos</h5>
+
+                <button
+                  className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
+                  type="submit"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                >
+                  <AiFillPlusSquare />
+                  Adicionar produto
+                </button>
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                      <h6 className="card-title">Produtos que compoem o kit</h6>
+                      <div className="table-responsive">
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">Tipo</th>
+                              <th scope="col">Marca</th>
+                              <th scope="col">Modelo</th>
+                              <th scope="col" className='alinhadaDireita' >Potência</th>
+                              <th scope="col" className='alinhadaDireita'>Quantidade</th>
+                              
+                              
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                            { products? products.map((item) => {
+                              return (
+                                <tr key={item.id}>
+                              
+                                  <td className='alinhaDireita'>{item.type}</td>
+                                  <td className='alinhaDireita'>{item.brand}</td>
+                                  <td className='alinhaDireita'>{item.model}</td>
+                                  <td className='alinhaDireita'>{item.power}</td>
+                                  <td className='alinhaDireita'>{item.qtd}</td>
+                                 
+                                  <td>
+                                    <div className="d-flex gap-2 justify-content-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                      >
+                                        <BsPencilFill />
+                                      </button>
+                                      <button 
+                                        type="button"
+                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
+                                      >
+                                        <BsFillTrash3Fill />
+                                        
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            }) : ''}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
