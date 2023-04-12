@@ -142,7 +142,7 @@ const BusinessForm = (props) => {
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
-  const [tipoSistema, setTipoSistema] = useState('Invesor')
+  const [tipoSistema, setTipoSistema] = useState('Inversor')
 
   const [perdas, serPerdas] = useState('')
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
@@ -958,7 +958,7 @@ const BusinessForm = (props) => {
 
           saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
             energiaPonta, demPonta, energia_FP, consumoMedio, geracaoSugerida, geracaoDesejada, "Aberta",
-            cip1, flag, fatorSimult, perdas, potenciaConsiderada, nPlacas, geracaoSugerida, potenciaModulo,
+            cip1, flag, fatorSimult, perdas, potenciaConsiderada, nPlacas, potenciaSistema, potenciaModulo,
             potenciaModulo, geracaoSugerida, precoK, comp, proje, imp, monta, comissao, margem,
             ct, mg, vt, vc, lp, lr, 1,
             validade, afflitedId, IdClient, placaId, inversorId, tipoSistema, idLogged).then(
@@ -1286,7 +1286,7 @@ const BusinessForm = (props) => {
                   </label>
                   {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
                   <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
-                    <option value="Invesor">Inversor</option>
+                    <option value="Inversor">Inversor</option>
                     <option value="MicroInversor">Microinversor</option>
                   </select>
 

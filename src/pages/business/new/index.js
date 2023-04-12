@@ -7,15 +7,7 @@ import ExibeItens from './exibeItens';
 
 
 
-
-
-
-
 export default function NewBusiness(prop) {
-
-
-
-
 
   const [tipoPessoa, setTipoPessoa] = useState('')
   const [nome, setNome] = useState('')
