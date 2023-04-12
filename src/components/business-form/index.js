@@ -1608,7 +1608,7 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         Ger. Desejada(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" readOnly id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)}
+                      <input type="text" className="form-control alinhaDireita"  id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)}
                       />
                     </div>
 

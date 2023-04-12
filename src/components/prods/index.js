@@ -12,7 +12,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                     <th scope="col">Tipo</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
-                    <th scope="col">Potencia</th>
+                    <th scope="col">Potência</th>
                     <th scope="col">Qtde</th>
                     <th scope="col"></th>
                 </tr>
@@ -57,7 +57,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                             <td>
                                 <input
                                     type="text" className='form-control tamanhoTabela alinhaDireita '
-                                    value={item.power}
+                                    value={item.power} readOnly
                                     onChange={e => handleEdit(item.id, 'power', e.target.value)}
                                 />
                             </td>
