@@ -14,8 +14,6 @@ import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
 import { NumericFormat } from 'react-number-format';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
-import NumberFormat from 'react-number-format';
-import numeral from 'numeral';
 
 
 function PhoneInput(props) {
