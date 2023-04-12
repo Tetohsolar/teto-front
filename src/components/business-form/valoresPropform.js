@@ -39,9 +39,10 @@ const ValoresProposta = (props) => {
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
      <form className="row g-3">
+      
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
-            Nome
+            Darla
           </label>
           <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
