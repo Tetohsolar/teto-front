@@ -9,7 +9,7 @@ export default function GenerationAndPrice(props) {
         <div className="mb-3">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Informações da geração e preço</h6>
+              <h5 className="card-title">Informações da geração e preço</h5>
               <div className="table-responsive">
                 <GenerationAndPriceDataTable />
               </div>

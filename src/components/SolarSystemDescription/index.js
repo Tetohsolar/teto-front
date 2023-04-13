@@ -27,13 +27,13 @@ export default function SolarSystemDescription(props) {
       <h5 className="card-content-title mb-3 fw-semibold">{props.title}</h5>
       <div className="row">
         <div className="mb-3 col-xxl-6">
-              <h6 className="card-title">Com Inversor</h6>
+              <h5 className="card-title">Com Inversor</h5>
               <div className="table-responsive">
                 <WithInversor />
               </div>
         </div>
         <div className="mb-3 col-xxl-6">
-              <h6 className="card-title">Com Microinversor</h6>
+              <h5 className="card-title">Com Microinversor</h5>
               <div className="table-responsive">
                 <WithMicroinversor />
               </div>
