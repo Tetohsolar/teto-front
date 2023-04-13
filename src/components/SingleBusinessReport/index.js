@@ -1,10 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import {toast} from 'react-toastify'
 import SolarSystemDescription from "../SolarSystemDescription";
 import GenerationAndPrice from "../GenerationAndPrice";
 import AnnualVariation from "../AnnualVariation";
-import "./single-business-report.scss";
 import bgReport from "../../assets/img/teto-solar-visual-signature.png";
 import reportHouseIlustration from "../../assets/img/report-house-illustration.png";
+import "./single-business-report.scss";
 
 const data = [
   { name: "Group A", value: 8 },
@@ -20,9 +23,26 @@ const renderCustomizedLabel = ({ percent }) => {
 };
 
 export default function SingleBusinessReport() {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+      content: ()=> componentRef.current,
+      documentTitle:"emp-data",
+      onAfterPrint: () => toast.success("Relatório salvo.")
+    }
+  )
+
   return (
     <div className="p-3 mb-4 bg-white rounded-3">
-      <article>
+      <div className="d-flex flex-column flex-sm-row justify-content-end mb-3">
+        <button onClick={handlePrint} className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+            <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+            <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+          </svg>
+          Imprimir
+        </button>
+      </div>
+      <article ref={componentRef}>
         <section className="mb-5">
           <div className="row">
             <div className="mb-3 mb-sm-0">
