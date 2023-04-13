@@ -865,6 +865,7 @@ const BusinessForm = (props) => {
       tipo: tipoPesoa,
       zap: zap,
       addInformation: inform,
+      AffiliatedId:afflitedId,
       Addresses: [
         {
           id: idAdd ? idAdd : undefined,
@@ -879,7 +880,7 @@ const BusinessForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
-    console.log(saida)
+    //console.log(saida)
 
     if (await validaCampos(name, phone, documento)) {
 
@@ -893,6 +894,8 @@ const BusinessForm = (props) => {
 
           }).then((response) => {
 
+            return id
+            
           }).catch(
             (response) => {
               toast.error(response.response.data.message)
@@ -909,7 +912,11 @@ const BusinessForm = (props) => {
 
           }).then((response) => {
             setIdClient(response.data.client.id)
-            setIdAdd(response.data.client.Addresses[0].id)
+            if (response.data.client.Addresses.length>0){
+              setIdAdd(response.data.client.Addresses[0].id)
+            }
+            console.log("aqui create cliente" + response.data.id)
+            return (response.data.id)
           }).catch(
             (response) => {
 
@@ -928,6 +935,7 @@ const BusinessForm = (props) => {
     await saveClient(tipoPessoa, name, corporateName, doc, phone, zap,
       cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, IdClient, idAdd, num).then(
         () => {
+          console.log("cliente id aqui carai"+ IdClient)
           //setPotenciaSistema(4.8)
           setNome(name)
           setUsuario(userName)
