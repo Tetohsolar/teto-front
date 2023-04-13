@@ -6,7 +6,7 @@ import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 import { ToastContainer } from 'react-toastify';
 import { useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import InputMask from 'react-input-mask';
+
 import api from '../../api';
 import { NumericFormat } from 'react-number-format';
 const ValoresProposta = () =>   {
