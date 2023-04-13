@@ -158,9 +158,9 @@ const BusinessForm = (props) => {
   const [complemento, setComplemento] = useState(afflited.complementCostI)
   const [projeto, setprojeto] = useState(afflited.projectCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [imposto, setImposto] = useState(afflited.taxI)
-  const [montagem, seMontagem] = useState(afflited.assemblyCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+  const [montagem, setMontagem] = useState(afflited.assemblyCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [comissao, setComissao] = useState(afflited.profitCost)
-  const [margem, setMargem] = useState(0)
+  const [margem, setMargem] = useState(afflited.profitCost+afflited.profit)
   const [custo_total, setCustoTotal] = useState(0)
   const [margemCalculada, setMargemCalculada] = useState(0)
   const [valorTotalProjeto, setValorTotalProjeto] = useState(0)
@@ -378,6 +378,7 @@ const BusinessForm = (props) => {
     if (BId) {
       loadClienById(BId)
       loadBrandByProduct("P")
+      console.log("id"+idLogged)
     }
     return () => { }
 
@@ -827,10 +828,12 @@ const BusinessForm = (props) => {
       amount: amount, valuesellercomission: valuesellercomission,
       profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
       validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
-      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId, shares: dados
+      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId, shares: dados, products:dadosProdutos
 
     };
 
+    
+    console.log(data)
     await api.post('/business/create', data
       , {
         headers: {
@@ -1717,7 +1720,7 @@ const BusinessForm = (props) => {
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Preço do Kit (R$)
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                    <input type="text" readOnly className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
                   </div>
 
                   <div className="col-md-2">
@@ -1739,26 +1742,26 @@ const BusinessForm = (props) => {
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Complemento:
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
+                    <input type="text" readOnly className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
                   </div>
                   <div className="col-md-2">
                     <label htmlFor="inputCIP" className="form-label">
                       Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)} />
+                    <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)}  onKeyDown={calculaCustos}/>
                   </div>
                   <div className="col-md-2">
                     <label htmlFor="inputbandeira" className="form-label">
                       Imposto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} />
+                    <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} readOnly />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Montagem(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagemm(e.target.value)} />
+                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagem(e.target.value)} />
                   </div>
 
                   <div className="col-md-2">

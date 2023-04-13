@@ -47,7 +47,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                 <select className="form-select tamanhoModalidade" id="inputGrupo" value={item.model} onChange={(e) => { handleEdit(item.id, 'model', e.target.value) } } >
                                     <option value="">Selecione</option>
                                     {item.products?item.products.map((opcao, indice) => (
-                                        <option key={indice} value={opcao.id}>
+                                        <option key={indice} value={opcao.description}>
                                             {opcao.description}
                                         </option>
                                     )):""}
