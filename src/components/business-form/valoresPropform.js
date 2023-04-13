@@ -1,16 +1,18 @@
 import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 import api from '../../api';
 import { NumericFormat } from 'react-number-format';
+import { async } from 'q';
+import { id } from 'date-fns/locale';
 const ValoresProposta = () =>   {
-  const { token } = useContext(AuthContext)
+  const { token, afflited } = useContext(AuthContext)
   const { sidebarWrapper } = useContext(SidebarWrapperContext)
   const pageTitle = "Informações do usuário"
  
@@ -31,6 +33,8 @@ const ValoresProposta = () =>   {
   const [margemCa, setMargemCa] = useState('')
   const [complemento, setComplemento] = useState('')
   const [valorComissao, setValorComissao] = useState('')
+  const [tipoSistema, setTipoSistema] = useState('')
+  const navigate = useNavigate();
   
   
   const { businessId } = useParams();
@@ -71,27 +75,124 @@ const ValoresProposta = () =>   {
      // setValor(formatter.format(response.data.amount))
       setConsumo(response.data.avgconsumption)
       setGeracaoSu(response.data.suggestedGeneration)
+      setGeracaoDesejada(response.data.suggestedDesired)
+      setComplemento(response.data.complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      setValorTotal(response.data.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+     
       setPrecoKit(response.data.kitprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setProjeto(response.data.project.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setImposto(response.data.tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setMontagem(response.data.assembled.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setComissaoVe(response.data.sellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setMargem(response.data.margin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      if (response.data.amountcost){
       setTotalLu(response.data.amountcost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      }
       setMargemCa(response.data.marginCalculate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setValorTotal(response.data.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setValorComissao(response.data.valuesellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setLucroProjeto(response.data.profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setLucroReal(response.data.realProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setComplemento(response.data.complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setGeracaoDesejada(response.data.suggestedDesired.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      
       setTotalCusto(response.data.amountcost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
      
-      
+      setTipoSistema(response.data.type)
 
     }).catch((error) => { console.log(error) })
 
   }
+
+  function calculaCustos(e) {
+    let precoK = parseFloat(precoKit)
+    var numeroArredondado = precoK.toFixed(2)
+    let fator = afflited.complementCostI
+    let tax = afflited.taxI
+    if (tipoSistema === "MicroInversor") {
+      fator = afflited.complementCostM
+      tax = afflited.taxM
+    }
+
+    var complement = precoK * (fator / 100)
+    var imp = precoK * (tax / 100)
+    const numeroFormatado = precoK.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  //  setPrecoKit(numeroFormatado)
+    setComplemento(complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    setImposto(imp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    const projet = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
+    const mont = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
+    var total = precoK + complement + imp + projet + mont
+    setTotalCusto(total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    const mgsV = parseFloat(String(margem).replace(/\./g, '').replace(',', '.'));
+    const comsV = parseFloat(String(comissaoVe).replace(/\./g, '').replace(',', '.'));
+   
+    const comsV4 = parseFloat(String(comissaoVe).replace(/\./g, '').replace(',', '.') - 1);
+
+    var mar = (mgsV / 100) * precoK;
+    var totalProjeto = 100 * (parseInt((total + mar) / 100))
+    var totalProjetoS = parseFloat(total + mar)
+    var com = (comsV / 100) * totalProjeto
+    var lucro = mar - com
+    var lucroR = (lucro / parseFloat(totalProjeto)) * 100
+
+
+    setMargemCa(mar.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    setValorComissao(com.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    setValorTotal(totalProjeto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    setLucroProjeto(lucro.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    setLucroReal(lucroR.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+  }
+
+  async function salvar (e) {
+
+    e.preventDefault();
+    const precoK = parseFloat(precoKit.replace(/\./g, '').replace(',', '.'));
+    const comp = parseFloat(complemento.replace(/\./g, '').replace(',', '.'));
+    const proje = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
+    const imp = parseFloat(imposto.replace(/\./g, '').replace(',', '.'));
+    const monta = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
+    const ct = parseFloat(totalCusto.replace(/\./g, '').replace(',', '.'));
+    const mg = parseFloat(margemCa.replace(/\./g, '').replace(',', '.'));
+    const vt = parseFloat(valorTotal.replace(/\./g, '').replace(',', '.'));
+    const vc = parseFloat(valorComissao.replace(/\./g, '').replace(',', '.'));
+    const lp = parseFloat(lucroProjeto.replace(/\./g, '').replace(',', '.'));
+    const lr = parseFloat(lucroReal.replace(/\./g, '').replace(',', '.'));
+    const mg1 = parseFloat(margem.replace(/\./g, '').replace(',', '.'));
+    const cmv = parseFloat(comissaoVe.replace(/\./g, '').replace(',', '.'));
+
+    const data = {
+      avgconsumption: consumo, suggestedGeneration:  geracaoSu,
+      suggestedDesired: geracaoDesejada,
+      consumption: consumo,
+      avgmonth: consumo,
+      kitprice: precoK, complement: comp,
+      project: proje, tax: imp, assembled: monta,
+      sellercomission: cmv, margin: mg1,
+      amountcost: ct, marginCalculate: mg,
+      amount: vt, valuesellercomission: vc,
+      profit: lp, realProfit: lr, 
+      
+    };
+
+    console.log(token)
+    await api.patch('/business/update/' + businessId, data
+      , {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+
+      
+        navigate("/business/view/" + businessId)
+      }).catch(
+        (response) => {
+          toast.error(response.response.data.message)
+          throw new Error()
+        }
+      )
+
+  
+  }
+
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
@@ -107,7 +208,8 @@ const ValoresProposta = () =>   {
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{"Editar Negocio"}</h5>
       <hr className="my-4" />
-     <form className="row g-3">
+
+     <form className="row g-3" onSubmit={salvar} >
       
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
@@ -134,7 +236,7 @@ const ValoresProposta = () =>   {
            Preço do kit (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={precoKit || ''} onChange={(e) => setPrecoKit(e.target.value)} />
+                  className="form-control number" value={precoKit || ''} onChange={(e) => setPrecoKit(e.target.value)} onKeyUp={calculaCustos} />
         </div>
         
         <div className="col-md-3">
