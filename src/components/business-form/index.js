@@ -141,7 +141,7 @@ const BusinessForm = (props) => {
   const [potenciaSistema, setPotenciaSistema] = useState(0)
   const [mediaMensal, setMediaMensal] = useState('')
   const [cip, setCip] = useState(afflited.cip.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-  const [bandeira, setbandeira] = useState(afflited.flag.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+  const [bandeira, setbandeira] = useState(afflited.flag.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 }))
   const [fatorSimult, setFatorSimult] = useState(0)
   const [precoKit, setPrecoKit] = useState('')
   const [precoKitFornecedor, setPrecoKitForncedor] = useState(0)
