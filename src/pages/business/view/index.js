@@ -84,6 +84,7 @@ const ViewBusiness = () => {
   const[geracaoDesejada,setGeracaoDesejada] = useState('');
   const[cip,setCip] = useState('');
   const[bandeira,setBandeira] = useState('');
+  const[total2,setTotal2] = useState('');
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -224,6 +225,7 @@ const ViewBusiness = () => {
       setGeracaoDesejada(response.data.suggestedDesired)
       setCip(response.data.cip)
       setBandeira(response.data.flag)
+      setTotal2(response.data.total2);
       
 
     }).catch((error) => { console.log(error) })
@@ -586,7 +588,7 @@ const ViewBusiness = () => {
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                              <th scope="col">Projeto desconto 2% </th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto 2% </th>
                               <th scope="col" >Lucro 2%</th>
                               <th scope="col" >Margem 2%</th>
                               <th scope="col" >Projeto desconto 4%</th>
@@ -600,41 +602,16 @@ const ViewBusiness = () => {
 
                           <tbody>
                             
-                            { products? products.map((item) => {
-                              return (
-                                <tr key={item.id}>
+                                <tr key={businessId}>
                               
-                                  <td className='alinhaDireita'>{item.type}</td>
-                                  <td className='alinhaDireita'>{item.brand}</td>
-                                  <td className='alinhaDireita'>{item.model}</td>
-                                  <td className='alinhaDireita'>{item.power}</td>
-                                  <td className='alinhaDireita'>{item.qtd}</td>
-                                 
-                                  <td>
-                                    <div className="d-flex gap-2 justify-content-end">
-                                      <button
-                                        type="button"
-                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
-                                      >
-                                        <BsPencilFill />
-                                      </button>
-                                      <button 
-                                        type="button"
-                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                          setIdSelected(item.id)
-                                        }}
-                                      >
-                                        <BsFillTrash3Fill />
-                                        
-                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
-                                      </button>
-                                    </div>
-                                  </td>
+                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{total2}</td>
                                 </tr>
-                              );
-                            }) : ''}
-                          </tbody>
+                              </tbody>
                         </table>
                       </div>
                     </div>
