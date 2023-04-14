@@ -20,7 +20,6 @@ import { toast } from 'react-toastify';
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
-  const [logradouro, setLogradouro] = useState('')
   const [status, setStatus] = useState('')
   const [donoN, setDonoN] = useState('')
   const [numberP, setNumberP] = useState('')
@@ -241,13 +240,13 @@ const ViewBusiness = () => {
       setMarg2(response.data.marg2)
       setComiss2(response.data.comiss2)
       setProf2(response.data.prof2)
-      setProfitR2(response.data.profit2)
+      setProfitR2(response.data.profitR2)
       setMargR2 (response.data.margR2)
-      setTotal4(response.data.setTotal4)
+      setTotal4(response.data.total4)
       setMarg4(response.data.marg4)
       setComiss4(response.data.comiss4)
       setProf4(response.data.prof4)
-      setProfitR4(response.data.profit4)
+      setProfitR4(response.data.profitR4)
       setMargtR4(response.data.margtR4)
       
 
