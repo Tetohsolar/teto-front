@@ -96,7 +96,7 @@ const BusinessForm = (props) => {
   const [lbFantasia, setLbFantasia] = useState('')
   const [lbDocument, setLbDocument] = useState('')
   const [exibeCorporateName, setExibeCorporateName] = useState('')
-  const [tipoPessoa, setTipoPessoa] = useState('')
+  const [tipoPessoa, setTipoPessoa] = useState('F')
   const [corporateName, setCorporateName] = useState('')
   const [doc, setDoc] = useState('')
   const [email, setEmail] = useState('')
@@ -110,16 +110,7 @@ const BusinessForm = (props) => {
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
-  const [kitM, setKitmicro] = useState('')
-  const [complementCostM, setcustoComplementarm] = useState('')
-  const [projectCostM, setProjetom] = useState('')
   const [taxM, setTaxam] = useState('')
-  const [assemblyCostM, setMontagemm] = useState('')
-  const [kitI, setKitinv] = useState('')
-  const [complementCostI, setcustoComplementari] = useState('')
-  const [projectCostI, setProjetoinv] = useState('')
-  const [taxI, setTaxainv] = useState('')
-  const [assemblyCostI, setMontagemi] = useState('')
   const { token, userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -144,7 +135,7 @@ const BusinessForm = (props) => {
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const [tipoSistema, setTipoSistema] = useState('Inversor')
 
-  const [perdas, serPerdas] = useState('')
+  const [perdas, serPerdas] = useState(afflited.lost/100)
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
   const [qtdeModulos, setQtdeModulos] = useState('')
   const [potenciaSistema, setPotenciaSistema] = useState(0)
@@ -182,6 +173,7 @@ const BusinessForm = (props) => {
   const [marca, setMarca] = useState()
   const [marcas, setMarcas] = useState([])
   const [IdClient, setIdClient] = useState('')
+  
   const [demandasVisible, setDemandasVisible] = useState('')
   const [nPlacas, setNplacas] = useState(0)
   const [idRateio, setIdRateio] = useState(1)
@@ -255,6 +247,27 @@ const BusinessForm = (props) => {
     });
   };
 
+  async function carregaPotencia(item){
+
+    console.log(item.model)
+    const filtro ={
+      codef:item.model.trim()
+    }
+    await api.post('/products/getpowerbycod/',filtro, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }).then((response) => {
+
+      setDadosProdutos(prevDados => {
+        const novoDados = [...prevDados];
+        const index = novoDados.findIndex(it => it.id === item.id);
+        novoDados[index]["power"] = response.data.power;
+        return novoDados;
+      });
+    })
+
+  }
   async function onBlurProdutoMarca(item){
 
     let category = "Nenhum"
@@ -504,16 +517,6 @@ const BusinessForm = (props) => {
         setInformacoesAdicionais(response.data.addInformation)
         setId(response.data.id)
         setEmail(response.data.email)
-        setKitinv(response.data.kitI)
-        setcustoComplementari(response.data.complementCostI)
-        setProjetoinv(response.data.projectCostI)
-        setTaxainv(response.data.taxI)
-        setMontagemi(response.data.assemblyCostI)
-        setKitmicro(response.data.kitM)
-        setcustoComplementarm(response.data.complementCostM)
-        setProjetom(response.data.projectCostM)
-        setTaxam(response.data.taxM)
-        setMontagemm(response.data.assemblyCostM)
         setNumero(response.data.Addresses[0].number)
 
       }).catch((error) => {
@@ -809,7 +812,9 @@ const BusinessForm = (props) => {
     flag, syncindex, lost, consideredpower, numberborder, systempower, consumption,
     panelpower, avgmonth, kitprice, complement, project, tax, assembled,
     sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit,
-    realProfit, numberInverMicro, validate, AffiliatedId, ClientId, placaId, InversorId, type, UserId) {
+    realProfit, numberInverMicro, validate, AffiliatedId, ClientId,  type, UserId, clientData) {
+    
+    console.log(clientData)
 
     const data = {
       sunIndex: sunIndex, number: number, roof: roof, typeConnection: typeConnection,
@@ -828,7 +833,7 @@ const BusinessForm = (props) => {
       amount: amount, valuesellercomission: valuesellercomission,
       profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
       validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
-      placaId: placaId, InversorId: InversorId, type: type, UserId: UserId, shares: dados, products:dadosProdutos
+      type: type, UserId: UserId, shares: dados, products:dadosProdutos, ClientData:clientData
 
     };
 
@@ -854,31 +859,8 @@ const BusinessForm = (props) => {
   }
 
   async function saveClient(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
-
-
-    const json = {
-      fantasy: name,
-      corporatename: corpName,
-      phone: phone,
-      document: documento,
-      email: email,
-      tipo: tipoPesoa,
-      zap: zap,
-      addInformation: inform,
-      AffiliatedId:afflitedId,
-      Addresses: [
-        {
-          id: idAdd ? idAdd : undefined,
-          street: logradouro,
-          postcode: cep,
-          city: cidade,
-          state: estado,
-          neighborhood: bairro,
-          number: num
-        }
-      ]
-    }
-    const t = JSON.stringify(json);
+  
+    /*const t = JSON.stringify(json);
     const saida = JSON.parse(t);
     //console.log(saida)
 
@@ -894,8 +876,8 @@ const BusinessForm = (props) => {
 
           }).then((response) => {
 
-            return id
-            
+
+ 
           }).catch(
             (response) => {
               toast.error(response.response.data.message)
@@ -911,12 +893,15 @@ const BusinessForm = (props) => {
             }
 
           }).then((response) => {
+            
             setIdClient(response.data.client.id)
             if (response.data.client.Addresses.length>0){
               setIdAdd(response.data.client.Addresses[0].id)
             }
             console.log("aqui create cliente" + response.data.id)
-            return (response.data.id)
+            
+
+
           }).catch(
             (response) => {
 
@@ -926,45 +911,65 @@ const BusinessForm = (props) => {
             }
           )
       }
-    }
+    }*/
   }
 
   async function handleChangePage(event) {
     event.preventDefault();
 
-    await saveClient(tipoPessoa, name, corporateName, doc, phone, zap,
-      cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, IdClient, idAdd, num).then(
-        () => {
-          console.log("cliente id aqui carai"+ IdClient)
-          //setPotenciaSistema(4.8)
+         if (!validaCampos(name,phone,doc,cepData,zap)){
+          return
+         }
+
+          const clientData = {
+            id:IdClient,
+            fantasy: name,
+            corporatename: corporateName,
+            phone: phone,
+            document: doc,
+            email: email,
+            tipo: tipoPessoa,
+            zap: zap,
+            addInformation: informacoesAdicionais,
+            AffiliatedId:afflitedId,
+            Addresses: [
+              {
+                id: idAdd ? idAdd : undefined,
+                street: rua,
+                postcode: cepData,
+                city: cidade,
+                state: estado,
+                neighborhood: bairro,
+                number: num
+              }
+            ]
+          }
+
           setNome(name)
           setUsuario(userName)
           const today = new Date();
           const validade = new Date(today.setDate(today.getDate() + 90));
 
-
-          const placaId = 2;
-          const inversorId = 1
           let demandaFP = 0
           let energiaPonta = 0
           let demPonta = 0
           let energia_FP = 0
 
           let perdas = 0
-          const precoK = parseFloat(precoKit.replace(/\./g, '').replace(',', '.'));
-          const comp = parseFloat(complemento.replace(/\./g, '').replace(',', '.'));
-          const proje = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
-          const imp = parseFloat(imposto.replace(/\./g, '').replace(',', '.'));
-          const monta = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
-          const ct = parseFloat(custo_total.replace(/\./g, '').replace(',', '.'));
-          const mg = parseFloat(margemCalculada.replace(/\./g, '').replace(',', '.'));
-          const vt = parseFloat(valorTotalProjeto.replace(/\./g, '').replace(',', '.'));
-          const vc = parseFloat(valorComissao.replace(/\./g, '').replace(',', '.'));
-          const lp = parseFloat(lucroProjeto.replace(/\./g, '').replace(',', '.'));
-          const lr = parseFloat(lucroReal.replace(/\./g, '').replace(',', '.'));
-          const cip1 = parseFloat(cip.replace(/\./g, '').replace(',', '.'));
+          const precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'));
+          const comp = parseFloat(String(complemento).replace(/\./g, '').replace(',', '.'));
+          const proje = parseFloat(String(projeto).replace(/\./g, '').replace(',', '.'));
+          const imp = parseFloat(String(imposto).replace(/\./g, '').replace(',', '.'));
+          const monta = parseFloat(String(montagem).replace(/\./g, '').replace(',', '.'));
+          const ct = parseFloat(String(custo_total).replace(/\./g, '').replace(',', '.'));
+          const mg = parseFloat(String(margemCalculada).replace(/\./g, '').replace(',', '.'));
+          const vt = parseFloat(String(valorTotalProjeto).replace(/\./g, '').replace(',', '.'));
+          const vc = parseFloat(String(valorComissao).replace(/\./g, '').replace(',', '.'));
+          const lp = parseFloat(String(lucroProjeto).replace(/\./g, '').replace(',', '.'));
+          const lr = parseFloat(String(lucroReal).replace(/\./g, '').replace(',', '.'));
+          const cip1 = parseFloat(String(cip).replace(/\./g, '').replace(',', '.'));
 
-          const flag = parseFloat(bandeira.replace(/\./g, '').replace(',', '.'));
+          const flag = parseFloat(String(bandeira).replace(/\./g, '').replace(',', '.'));
 
 
           saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
@@ -972,7 +977,7 @@ const BusinessForm = (props) => {
             cip1, flag, fatorSimult, perdas, potenciaConsiderada, nPlacas, potenciaSistema, potenciaModulo,
             potenciaModulo, geracaoSugerida, precoK, comp, proje, imp, monta, comissao, margem,
             ct, mg, vt, vc, lp, lr, 1,
-            validade, afflitedId, IdClient, placaId, inversorId, tipoSistema, idLogged).then(
+            validade, afflitedId, IdClient, tipoSistema, idLogged, clientData).then(
               () => {
                 toast.success("Operação realizada com sucesso!", {
                   autoClose: 1000,
@@ -987,17 +992,10 @@ const BusinessForm = (props) => {
               })
 
             })
-        }
+        
 
 
-      ).catch(
-        (error) => {
-          toast.error(error, {
-            autoClose: 1000,
-          })
-
-        }
-      )
+      
 
   }
   function setMod(e) {
@@ -1018,7 +1016,7 @@ const BusinessForm = (props) => {
 
   function calculaPotenciaConsidedara() {
 
-    let f = parseFloat(fatorSolar) * (1 - 0.07)
+    let f = parseFloat(fatorSolar) * (1 - perdas)
     if (isNaN(f)) {
       setPotenciaConsiderada(0)
     } else {
@@ -1681,7 +1679,7 @@ const BusinessForm = (props) => {
                   <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds} 
                    handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
                    handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
-                   onBlurBrand={onBlurProdutoMarca}
+                   onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
                    />
                   </div>
                   </div>
