@@ -450,7 +450,7 @@ const ViewBusiness = () => {
                   </div>
                   <table className='table_view'>
                   <tr className='linhabaixo tamanho-tr'>
-                      Consumo
+                      Consumo (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -458,7 +458,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração sugerida
+                      Geração sugerida (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -466,7 +466,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração desejada
+                      Geração desejada (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
