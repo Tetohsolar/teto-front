@@ -85,6 +85,17 @@ const ViewBusiness = () => {
   const[cip,setCip] = useState('');
   const[bandeira,setBandeira] = useState('');
   const[total2,setTotal2] = useState('');
+  const[marg2,setMarg2] = useState('');
+  const[comiss2,setComiss2] = useState('');
+  const[prof2,setProf2] = useState ('')
+  const[profitR2,setProfitR2] = useState('')
+  const [margR2,setMargR2] =useState ('')
+  const[total4,setTotal4] = useState('');
+  const[marg4,setMarg4] = useState('');
+  const[comiss4,setComiss4] = useState('');
+  const[prof4,setProf4] = useState ('')
+  const[profitR4,setProfitR4] = useState('')
+  const [margtR4,setMargtR4] =useState ('')
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -125,6 +136,7 @@ const ViewBusiness = () => {
   function editbussinesvalue(id) {
    navigate("/business/view/editvaluebussines/" + id)
   }
+  
   async function loadAdd(Id) {
 
     await api.get('/client/get/' + Id, {
@@ -226,6 +238,17 @@ const ViewBusiness = () => {
       setCip(response.data.cip)
       setBandeira(response.data.flag)
       setTotal2(response.data.total2);
+      setMarg2(response.data.marg2)
+      setComiss2(response.data.comiss2)
+      setProf2(response.data.prof2)
+      setProfitR2(response.data.profit2)
+      setMargR2 (response.data.margR2)
+      setTotal4(response.data.setTotal4)
+      setMarg4(response.data.marg4)
+      setComiss4(response.data.comiss4)
+      setProf4(response.data.prof4)
+      setProfitR4(response.data.profit4)
+      setMargtR4(response.data.margtR4)
       
 
     }).catch((error) => { console.log(error) })
@@ -565,7 +588,7 @@ const ViewBusiness = () => {
 
               <div className='conteinerCards espaco_button'>
 
-                <h5 className="pb-3">Valores com descontos</h5>
+                <h5 className="pb-3">Valores</h5>
 
               </div>
 
@@ -588,14 +611,13 @@ const ViewBusiness = () => {
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                              <th scope="col" className='alinhaCentro'>Projeto desconto 2% </th>
-                              <th scope="col" >Lucro 2%</th>
-                              <th scope="col" >Margem 2%</th>
-                              <th scope="col" >Projeto desconto 4%</th>
-                              <th scope="col" >Lucro 4%</th>
-                              <th scope="col" >Margem4%</th>
-                              
-                              
+                              <th scope="col" className='alinhaCentro'>Lucro (R$) 2%</th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) 2%</th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$) 2%  </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%) 2%  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) 2%</th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$) 2%</th>
+                 
                               <th scope="col"></th>
                             </tr>
                           </thead>
@@ -604,12 +626,39 @@ const ViewBusiness = () => {
                             
                                 <tr key={businessId}>
                               
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
+                                  <td className='alinhaDireita'>{formatter.format(prof2)} </td>
+                                  <td className='alinhaDireita'>{profitR2}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg2)}</td>
+                                  <td className='alinhaDireita'>{margR2}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
+                                  <td className='alinhaDireita'> {formatter.format(total2)}</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                            <th scope="col" className='alinhaCentro'>Lucro (R$) 4%</th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) 4%</th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$) 4%  </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%) 4%  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) 4%</th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$) 4%</th>
+                       
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                                <tr key={businessId}>
+                                  
+                                  <td className='alinhaDireita'>{formatter.format(prof4)}</td>
+                                  <td className='alinhaDireita'>{profitR4}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg4)}</td>
+                                  <td className='alinhaDireita'>{margtR4}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(total4)}</td>
                                 </tr>
                               </tbody>
                         </table>
@@ -860,11 +909,11 @@ const ViewBusiness = () => {
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                              <th scope="col">Tipo</th>
-                              <th scope="col">Marca</th>
-                              <th scope="col">Modelo</th>
-                              <th scope="col" className='alinhadaDireita' >Potência</th>
-                              <th scope="col" className='alinhadaDireita'>Quantidade</th>
+                              <th scope="col" className='alinhaCentro'>Tipo</th>
+                              <th scope="col" className='alinhaCentro'>Marca</th>
+                              <th scope="col" className='alinhaCentro'>Modelo</th>
+                              <th scope="col" className='alinhaCentro' >Potência</th>
+                              <th scope="col" className='alinhaCentro'>Quantidade</th>
                               
                               
                               <th scope="col"></th>
@@ -877,9 +926,9 @@ const ViewBusiness = () => {
                               return (
                                 <tr key={item.id}>
                               
-                                  <td className='alinhaDireita'>{item.type}</td>
-                                  <td className='alinhaDireita'>{item.brand}</td>
-                                  <td className='alinhaDireita'>{item.model}</td>
+                                  <td>{item.type}</td>
+                                  <td>{item.brand}</td>
+                                  <td>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
                                   <td className='alinhaDireita'>{item.qtd}</td>
                                  
