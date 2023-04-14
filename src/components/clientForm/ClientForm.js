@@ -57,7 +57,7 @@ const ClientForm = (props) => {
   const [num, setNumero] = useState('')
   const [id, setId] = useState('')
   const [lbFantasia, setLbFantasia] = useState('')
-  const [lbDocument, setLbDocument] = useState('')
+  const [lbDocument, setLbDocument] = useState('CPF')
   const [exibeCorporateName, setExibeCorporateName] = useState('')
   const [tipoPessoa, setTipoPessoa] = useState('')
   const [corporateName, setCorporateName] = useState('')
