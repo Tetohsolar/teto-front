@@ -912,8 +912,8 @@ const ViewBusiness = () => {
                               <th scope="col" className='alinhaCentro'>Tipo</th>
                               <th scope="col" className='alinhaCentro'>Marca</th>
                               <th scope="col" className='alinhaCentro'>Modelo</th>
-                              <th scope="col" className='alinhadaDireita' >Potência</th>
-                              <th scope="col" className='alinhadaDireita'>Quantidade</th>
+                              <th scope="col" className='alinhaCentro' >Potência</th>
+                              <th scope="col" className='alinhaCentro'>Quantidade</th>
                               
                               
                               <th scope="col"></th>
