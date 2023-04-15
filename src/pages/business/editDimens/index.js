@@ -57,7 +57,7 @@ const EditDimensionamento = () => {
               </div>
               <div className="col-md-2">
                 <label htmlFor="inputFirstName" className="form-label">
-                  Fator Solar :
+                  Fator Solar:
                 </label>
                 <input type="text" className="form-control" id="inputFirstName" value={data.fatorSolar} />
               </div>
