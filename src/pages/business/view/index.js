@@ -21,7 +21,6 @@ import EditDimensionamento from '../editDimens';
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
-  const [logradouro, setLogradouro] = useState('')
   const [status, setStatus] = useState('')
   const [donoN, setDonoN] = useState('')
   const [numberP, setNumberP] = useState('')
@@ -81,16 +80,32 @@ const ViewBusiness = () => {
   const [client, setClient] = useState([]);
   const [idSelected, setIdSelected] = useState('');
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-  const [geracaoDesejada, setGeracaoDesejada] = useState('');
-  const [cip, setCip] = useState('');
-  const [bandeira, setBandeira] = useState('');
-  const [total2, setTotal2] = useState('');
+  const[products,setProducts] = useState([]);
+  const[geracaoDesejada,setGeracaoDesejada] = useState('');
+  const[cip,setCip] = useState('');
+  const[bandeira,setBandeira] = useState('');
+  const[total2,setTotal2] = useState('');
+  const[marg2,setMarg2] = useState('');
+  const[comiss2,setComiss2] = useState('');
+  const[prof2,setProf2] = useState ('')
+  const[profitR2,setProfitR2] = useState('')
+  const [margR2,setMargR2] =useState ('')
+  const[total4,setTotal4] = useState('');
+  const[marg4,setMarg4] = useState('');
+  const[comiss4,setComiss4] = useState('');
+  const[prof4,setProf4] = useState ('')
+  const[profitR4,setProfitR4] = useState('')
+  const [margtR4,setMargtR4] =useState ('')
+
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
   })
+  const numeroFormatado = Intl.NumberFormat("pt-BR", {
+    style: "decimal",
+    maximumFractionDigits: 2
+  });
 
 
   useEffect(() => {
@@ -126,6 +141,7 @@ const ViewBusiness = () => {
   function editbussinesvalue(id) {
     navigate("/business/view/editvaluebussines/" + id)
   }
+  
   async function loadAdd(Id) {
 
     await api.get('/client/get/' + Id, {
@@ -227,6 +243,18 @@ const ViewBusiness = () => {
       setCip(response.data.cip)
       setBandeira(response.data.flag)
       setTotal2(response.data.total2);
+      setMarg2(response.data.marg2)
+      setComiss2(response.data.comiss2)
+      setProf2(response.data.prof2)
+      setProfitR2(response.data.profitR2)
+      setMargR2 (response.data.margR2)
+      setTotal4(response.data.total4)
+      setMarg4(response.data.marg4)
+      setComiss4(response.data.comiss4)
+      setProf4(response.data.prof4)
+      setProfitR4(response.data.profitR4)
+      setMargtR4(response.data.margtR4)
+      
 
 
     }).catch((error) => { console.log(error) })
@@ -447,8 +475,8 @@ const ViewBusiness = () => {
                     </button>
                   </div>
                   <table className='table_view'>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Consumo
+                  <tr className='linhabaixo tamanho-tr'>
+                      Consumo (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -456,7 +484,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração sugerida
+                      Geração sugerida (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -464,7 +492,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração desejada
+                      Geração desejada (kWh)
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -516,7 +544,8 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {comissaoVe + ' %'}    </label>
+
+                        <label> {numeroFormatado.format(comissaoVe) + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -532,7 +561,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {margem + ' %'}  </label>
+                        <label> {numeroFormatado.format(margem)+' %'}  </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -556,7 +585,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {lucroReal + ' %'} </label>
+                        <label> {numeroFormatado.format(lucroReal) + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -589,7 +618,7 @@ const ViewBusiness = () => {
 
               <div className='conteinerCards espaco_button'>
 
-                <h5 className="pb-3">Valores com descontos</h5>
+                <h5 className="pb-3">Valores com 2% de desconto </h5>
 
               </div>
 
@@ -607,35 +636,96 @@ const ViewBusiness = () => {
                 <div className="mb-3 mb-sm-0">
                   <div className="card border-light-subtle">
                     <div className="card-body">
-                      <h6 className="card-title">Valores com descontos de 2% / 4%</h6>
+                     
                       <div className="table-responsive">
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                              <th scope="col" className='alinhaCentro'>Projeto desconto 2% </th>
-                              <th scope="col" >Lucro 2%</th>
-                              <th scope="col" >Margem 2%</th>
-                              <th scope="col" >Projeto desconto 4%</th>
-                              <th scope="col" >Lucro 4%</th>
-                              <th scope="col" >Margem4%</th>
-
-
+                              <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$)  </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$) </th>
+        
                               <th scope="col"></th>
                             </tr>
                           </thead>
 
                           <tbody>
+                            
+                                <tr key={businessId}>
+                              
+                                  <td className='alinhaDireita'>{formatter.format(prof2)} </td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR2)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg2)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(margR2)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
+                                  <td className='alinhaDireita'> {formatter.format(total2)}</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                            <tr key={businessId}>
+            </div>
+          </div>
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
 
-                              <td className='alinhaDireita'>{total2}</td>
-                              <td className='alinhaDireita'>{total2}</td>
-                              <td className='alinhaDireita'>{total2}</td>
-                              <td className='alinhaDireita'>{total2}</td>
-                              <td className='alinhaDireita'>{total2}</td>
-                              <td className='alinhaDireita'>{total2}</td>
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Valores com 4% de desconto </h5>
+
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                     
+                      <div className="table-responsive">
+                        
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                            <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$)</th>
+                       
+                              <th scope="col"></th>
                             </tr>
-                          </tbody>
+                          </thead>
+
+                          <tbody>
+                            
+                                <tr key={businessId}>
+                                  
+                                  <td className='alinhaDireita'>{formatter.format(prof4)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg4)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(margtR4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(total4)}</td>
+                                </tr>
+                              </tbody>
                         </table>
                       </div>
                     </div>
@@ -883,13 +973,12 @@ const ViewBusiness = () => {
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                              <th scope="col">Tipo</th>
-                              <th scope="col">Marca</th>
-                              <th scope="col">Modelo</th>
-                              <th scope="col" className='alinhadaDireita' >Potência</th>
-                              <th scope="col" className='alinhadaDireita'>Quantidade</th>
-
-
+                              <th scope="col" >Tipo</th>
+                              <th scope="col" >Marca</th>
+                              <th scope="col" >Modelo</th>
+                              <th scope="col" className='alinhaDireita' >Potência</th>
+                              <th scope="col" className='alinhaDireita'>Quantidade</th>
+                           
                               <th scope="col"></th>
                             </tr>
                           </thead>
@@ -900,9 +989,10 @@ const ViewBusiness = () => {
                               return (
                                 <tr key={item.id}>
 
-                                  <td className='alinhaDireita'>{item.type}</td>
-                                  <td className='alinhaDireita'>{item.brand}</td>
-                                  <td className='alinhaDireita'>{item.model}</td>
+                              
+                                  <td>{item.type==='P'?"Placa": item.type==="M"?"MicroInversor":"Inversor" }</td>
+                                  <td>{item.brand}</td>
+                                  <td>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
                                   <td className='alinhaDireita'>{item.qtd}</td>
 
