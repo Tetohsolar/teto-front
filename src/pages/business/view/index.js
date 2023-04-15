@@ -10,12 +10,13 @@ import { AuthContext } from '../../../context/AuthContext';
 import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, redirect, useNavigate, useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import EditPersonalData from './editpersonal';
 import MyModal from '../../../components/communs/ModalDelete';
 import { toast } from 'react-toastify';
+import EditDimensionamento from '../editDimens';
 
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
@@ -78,13 +79,13 @@ const ViewBusiness = () => {
   const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
-  const [idSelected,setIdSelected] = useState('');
+  const [idSelected, setIdSelected] = useState('');
   const navigate = useNavigate();
-  const[products,setProducts] = useState([]);
-  const[geracaoDesejada,setGeracaoDesejada] = useState('');
-  const[cip,setCip] = useState('');
-  const[bandeira,setBandeira] = useState('');
-  const[total2,setTotal2] = useState('');
+  const [products, setProducts] = useState([]);
+  const [geracaoDesejada, setGeracaoDesejada] = useState('');
+  const [cip, setCip] = useState('');
+  const [bandeira, setBandeira] = useState('');
+  const [total2, setTotal2] = useState('');
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -123,7 +124,7 @@ const ViewBusiness = () => {
   }
 
   function editbussinesvalue(id) {
-   navigate("/business/view/editvaluebussines/" + id)
+    navigate("/business/view/editvaluebussines/" + id)
   }
   async function loadAdd(Id) {
 
@@ -159,7 +160,7 @@ const ViewBusiness = () => {
 
   function editPessoa(id) {
     navigate("/customers/edit/" + id)
-    console.log (id)
+    console.log(id)
   }
 
   async function loadbId(id) {
@@ -226,9 +227,31 @@ const ViewBusiness = () => {
       setCip(response.data.cip)
       setBandeira(response.data.flag)
       setTotal2(response.data.total2);
-      
+
 
     }).catch((error) => { console.log(error) })
+
+  }
+
+  function updateDimensionamento() {
+    let data = {
+      cliente: name,
+      usuario: donoN,
+      fatorSolar: fatorS,
+      tipoTelhado: telhado,
+      tipoLigacao: tipoL,
+      modalidade: modalidade,
+      grupo: grupo,
+      subgrupo: subgrupo,
+      demFP: demandaFp,
+      energiaFp: energiaFp,
+      demandaP: demandaP,
+      energiaP: energiaP
+
+
+    }
+    navigate("/business/editDimens", { state: { data } })
+    data = {}
 
   }
 
@@ -281,7 +304,7 @@ const ViewBusiness = () => {
           <div className="container-fluid bg-home  ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container  " >
               <h5 className="pb-3">Detalhes do negócio</h5>
-              
+
               <br></br>
 
               <div className='conteinerCards'>
@@ -290,13 +313,13 @@ const ViewBusiness = () => {
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
                     <button
-                                type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
-                                  editPessoa(ClientId)
-                                }}
-                              >
-                                <BsPencilFill />
-                              </button>
+                      type="button"
+                      className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                        editPessoa(ClientId)
+                      }}
+                    >
+                      <BsPencilFill />
+                    </button>
 
                   </div>
 
@@ -407,7 +430,7 @@ const ViewBusiness = () => {
                         <label> {cidade} </label>
                       </td>
                     </tr>
-                   
+
 
                   </table>
 
@@ -416,14 +439,15 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { editbussinesvalue(businessId)
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                      editbussinesvalue(businessId)
 
                     }}>
                       <BsFillPencilFill />
                     </button>
                   </div>
                   <table className='table_view'>
-                  <tr className='linhabaixo tamanho-tr'>
+                    <tr className='linhabaixo tamanho-tr'>
                       Consumo
                       <td>
                       </td>
@@ -492,11 +516,11 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {comissaoVe + ' %' }    </label>
+                        <label> {comissaoVe + ' %'}    </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                    Valor da comissão
+                      Valor da comissão
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -508,7 +532,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {margem +' %'}  </label>
+                        <label> {margem + ' %'}  </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -551,7 +575,7 @@ const ViewBusiness = () => {
                         <label> {formatter.format(lucroProjeto)} </label>
                       </td>
                     </tr>
-                    
+
                   </table>
 
                 </div>
@@ -594,24 +618,24 @@ const ViewBusiness = () => {
                               <th scope="col" >Projeto desconto 4%</th>
                               <th scope="col" >Lucro 4%</th>
                               <th scope="col" >Margem4%</th>
-                              
-                              
+
+
                               <th scope="col"></th>
                             </tr>
                           </thead>
 
                           <tbody>
-                            
-                                <tr key={businessId}>
-                              
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                  <td className='alinhaDireita'>{total2}</td>
-                                </tr>
-                              </tbody>
+
+                            <tr key={businessId}>
+
+                              <td className='alinhaDireita'>{total2}</td>
+                              <td className='alinhaDireita'>{total2}</td>
+                              <td className='alinhaDireita'>{total2}</td>
+                              <td className='alinhaDireita'>{total2}</td>
+                              <td className='alinhaDireita'>{total2}</td>
+                              <td className='alinhaDireita'>{total2}</td>
+                            </tr>
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -636,9 +660,8 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                    }}>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento() }}>
+                      Edit Dimens
                       <BsFillPencilFill />
                     </button>
                   </div>
@@ -684,7 +707,7 @@ const ViewBusiness = () => {
                         <label> {tipoL} </label>
                       </td>
                     </tr>
-                  
+
                     <tr className='linhabaixo tamanho-tr'>
                       Modalidade
                       <td>
@@ -796,7 +819,7 @@ const ViewBusiness = () => {
                         <label>{potenciaS} </label>
                       </td>
                     </tr>
-                    
+
                     <tr className='linhabaixo tamanho-tr'>
                       CIP
                       <td>
@@ -865,24 +888,24 @@ const ViewBusiness = () => {
                               <th scope="col">Modelo</th>
                               <th scope="col" className='alinhadaDireita' >Potência</th>
                               <th scope="col" className='alinhadaDireita'>Quantidade</th>
-                              
-                              
+
+
                               <th scope="col"></th>
                             </tr>
                           </thead>
 
                           <tbody>
-                            
-                            { products? products.map((item) => {
+
+                            {products ? products.map((item) => {
                               return (
                                 <tr key={item.id}>
-                              
+
                                   <td className='alinhaDireita'>{item.type}</td>
                                   <td className='alinhaDireita'>{item.brand}</td>
                                   <td className='alinhaDireita'>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
                                   <td className='alinhaDireita'>{item.qtd}</td>
-                                 
+
                                   <td>
                                     <div className="d-flex gap-2 justify-content-end">
                                       <button
@@ -891,7 +914,7 @@ const ViewBusiness = () => {
                                       >
                                         <BsPencilFill />
                                       </button>
-                                      <button 
+                                      <button
                                         type="button"
                                         className="btn btn-light btn-sm text-danger d-flex align-items-center"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
@@ -899,7 +922,7 @@ const ViewBusiness = () => {
                                         }}
                                       >
                                         <BsFillTrash3Fill />
-                                        
+
                                         <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
                                       </button>
                                     </div>
@@ -991,7 +1014,7 @@ const ViewBusiness = () => {
                                       >
                                         <BsPencilFill />
                                       </button>
-                                      <button 
+                                      <button
                                         type="button"
                                         className="btn btn-light btn-sm text-danger d-flex align-items-center"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
@@ -999,7 +1022,7 @@ const ViewBusiness = () => {
                                         }}
                                       >
                                         <BsFillTrash3Fill />
-                                        
+
                                         <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
                                       </button>
                                     </div>
