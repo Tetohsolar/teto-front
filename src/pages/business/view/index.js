@@ -141,6 +141,9 @@ const ViewBusiness = () => {
   function editbussinesvalue(id) {
     navigate("/business/view/editvaluebussines/" + id)
   }
+  function editypebusiness(id) {
+    navigate("/business/view/edittypebusiness/" + id)
+  }
   
   async function loadAdd(Id) {
 
@@ -751,7 +754,7 @@ const ViewBusiness = () => {
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento() }}>
-                      Edit Dimens
+                      
                       <BsFillPencilFill />
                     </button>
                   </div>
@@ -860,10 +863,11 @@ const ViewBusiness = () => {
                 </div>
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
+                    <h6 class="card-content-title mb-3 fw-semibold">Tipo do sistema</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                    }}>
+                  editypebusiness(businessId)
+}}>
                       <BsFillPencilFill />
                     </button>
                   </div>
