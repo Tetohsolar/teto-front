@@ -6,9 +6,12 @@ import AnnualVariation from "../AnnualVariation";
 import bgReport from "../../assets/img/teto-solar-visual-signature.png";
 import tetoSolarInfographic from "../../assets/img/teto-solar-infographic.png";
 import {
+  BsArrowRight,
+  BsFillCheckCircleFill,
   BsFillPencilFill,
   BsFillPrinterFill,
   BsFillStarFill,
+  BsFillXCircleFill,
 } from "react-icons/bs";
 
 import "./single-business-report.scss";
@@ -93,7 +96,7 @@ export default function SingleBusinessReport() {
 
         <section className="report-section-height">
           <div className="report-image-header py-4"></div>
-          <div className="my-3 d-flex flex-column align-items-center">
+          <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold mb-5 text-primary text-center mt-4">
               Como funciona a Energia Solar?
             </h4>
@@ -104,10 +107,10 @@ export default function SingleBusinessReport() {
             />
           </div>
           <div className="d-flex justify-content-center">
-            <div className="row mb-3 report-print-width report-cards">
+            <div className="row my-4 report-print-width report-cards">
               <div className="col-lg-6 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
-                  <div className="card-body">
+                  <div className="card-body py-4">
                     <div className="d-flex align-items-start gap-3 mb-4">
                       <BsFillStarFill className="fs-4 report-icon-star text-warning" />
                       <div>
@@ -151,7 +154,7 @@ export default function SingleBusinessReport() {
 
               <div className="col-lg-6 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
-                  <div className="card-body">
+                  <div className="card-body py-4">
                     <div className="d-flex align-items-start gap-3 mb-4">
                       <BsFillStarFill className="fs-4 report-icon-star text-warning" />
                       <div>
@@ -192,9 +195,10 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
         <section className="report-section-height">
           <div className="report-image-header py-4"></div>
-          <div className="my-3 d-flex flex-column align-items-center">
+          <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center mt-4">
               Detalhes do Sistema Solar
             </h4>
@@ -204,6 +208,9 @@ export default function SingleBusinessReport() {
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
                   <div className="card-body">
+                    <p>
+                      <span>Cabeçalho da tabela</span>
+                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -238,7 +245,7 @@ export default function SingleBusinessReport() {
             </div>
           </div>
 
-          <div className="my-3 d-flex flex-column align-items-center">
+          <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center">
               Características
             </h4>
@@ -248,6 +255,9 @@ export default function SingleBusinessReport() {
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
                   <div className="card-body">
+                    <p>
+                      <span>Cabeçalho da tabela</span>
+                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -277,17 +287,21 @@ export default function SingleBusinessReport() {
               </div>
             </div>
           </div>
+        </section>
 
-          <div className="my-3 d-flex flex-column align-items-center">
-            <h4 className="fw-semibold text-primary text-center">
-              Garantias
-            </h4>
+        <section className="report-section-height">
+          <div className="report-image-header py-4"></div>
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center">Garantias</h4>
           </div>
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
                   <div className="card-body">
+                    <p>
+                      <span>Cabeçalho da tabela</span>
+                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -315,6 +329,374 @@ export default function SingleBusinessReport() {
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center mt-4">
+              Variação Anual
+            </h4>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="row mb-3 report-print-width report-cards">
+              <div className="col mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body mb-4">
+                    <AnnualVariation />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="report-section-height">
+          <div className="report-image-header py-4"></div>
+
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center">
+              Indicadores Financeiros
+            </h4>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="row mb-3 report-print-width report-cards">
+              <div className="col mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body">
+                    <p>
+                      Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                          </tr>
+                          <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                          </tr>
+                          <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center">
+              Pagamento à vista (sugestão)
+            </h4>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="row mb-3 report-print-width report-cards">
+              <div className="col mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body">
+                    <p>
+                      Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            <td>@mdo</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="report-section-height">
+          <div className="report-image-header py-4"></div>
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center">
+              Economia
+            </h4>
+          </div>
+
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <div className="row my-2 report-print-width report-cards">
+              <h6>asdasdsa</h6>
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>asdasdsa</h6>
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>asdasdsa</h6>
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>asdasdsa</h6>
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>asdasdsa</h6>
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sustentabilidade</h6>
+                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="report-section-height">
+          <div className="report-image-header py-4"></div>
+          <div className="my-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold mb-5 text-primary text-center mt-4">
+              Financiamento
+            </h4>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="row my-4 report-print-width report-cards">
+              <div className="col-lg-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <p>Itens inclusos</p>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <h6 className="fw-bold">Sustentabilidade</h6>
+                        <p className="mb-0">
+                          Energia limpa, ambiente amigável.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <h6 className="fw-bold">Renovável</h6>
+                        <p className="mb-0">
+                          Energia abundante, acessível e inesgotável.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <h6 className="fw-bold">Retorno de investimento</h6>
+                        <p className="mb-0">
+                          Garantia de retorno de iinvestimento.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <h6 className="fw-bold">Valorização do imóvel</h6>
+                        <p className="mb-0">
+                          Valorização imediata em cecrca de 8% sobre o valor do
+                          imóvel.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body py-4">
+                    <p>Itens não inclusos</p>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
+                      <div>
+                        <h6 className="fw-bold">Baixo custo de manutenção</h6>
+                        <p className="mb-0">
+                          Sistemas fotovoltaicos demandam baixa manutenção.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
+                      <div>
+                        <h6 className="fw-bold">Economia</h6>
+                        <p className="mb-0">
+                          Economia de até 95% da conta de energia.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3 mb-4">
+                      <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
+                      <div>
+                        <h6 className="fw-bold">Otimização do espaço</h6>
+                        <p className="mb-0">Instalações simples e rápidas.</p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-start gap-3">
+                      <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
+                      <div>
+                        <h6 className="fw-bold">Durabilidade</h6>
+                        <p className="mb-0">
+                          Garantia de performance de 25 anos.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

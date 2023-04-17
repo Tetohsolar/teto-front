@@ -1,4 +1,5 @@
 import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, } from 'recharts';
+import './style.scss'
 
 const data = [
   {
@@ -47,8 +48,8 @@ const data = [
 
 export default function AnnualVariationChart(props) {
   return (
-    <div style={{ width: "100%", height: 256 }}>
-      <p>Número de propostas</p>
+    <div className='annual-variation-chart annual-variation' style={{height: 256 }}>
+      <p>Estimativa de Geração Inversor X Microinversor</p>
       <ResponsiveContainer>
         <ComposedChart
           width={500}
