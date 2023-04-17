@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 import {BsHandThumbsUpFill, BsFillWalletFill, BsBasket3Fill} from "react-icons/bs";
 
-const Widget = ({ type }) => {
+const Widget = ({ type,valor }) => {
+  
 
   let data = {};
 
@@ -17,7 +18,7 @@ const Widget = ({ type }) => {
           <BsHandThumbsUpFill size={25}/>
           </div>
         ),
-        amount: 999.999,
+        amount: valor,
       };
       break;
 
@@ -31,7 +32,7 @@ const Widget = ({ type }) => {
             <BsFillWalletFill size={25}/>
           </div>
         ),
-        amount: 123.999,
+        amount: valor,
       };
       break;
 
@@ -45,7 +46,7 @@ const Widget = ({ type }) => {
             <BsBasket3Fill size={25}/>
           </div>
         ),
-        amount: 123,
+        amount: valor,
       };
       break;
     default:
@@ -77,7 +78,7 @@ const Widget = ({ type }) => {
       <h6 className="card-content-title mb-3 fw-semibold">{data.title}</h6>
       <div className="widget">
         <div>
-          <h2 className="fw-light">{ data.isMoney && "R$"} {data.amount}</h2>
+          <h2 className="fw-light alinhaDireita">{ data.isMoney && "R$"} {data.amount}</h2>
         </div>
         <div className="d-flex justify-content-between align-items-end">
           <div>{data.link}</div>

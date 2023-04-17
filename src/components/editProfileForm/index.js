@@ -68,6 +68,7 @@ const EditProfileForm = (props) => {
   async function handleUpdateUser(e) {
     setReloadPage(true)
     e.preventDefault()
+    console.log(idfiliado)
     try {
 
       await updateUser(id, name, phone, email, tipo, habilitar,idfiliado)
@@ -118,7 +119,7 @@ const EditProfileForm = (props) => {
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-            <option value="Root">Root</option>
+            
           </select>
         </div>
         <div className="col-md-4">

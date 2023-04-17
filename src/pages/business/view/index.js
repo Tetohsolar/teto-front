@@ -10,13 +10,17 @@ import { AuthContext } from '../../../context/AuthContext';
 import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
-import { useParams } from 'react-router-dom';
+import { Navigate, redirect, useNavigate, useParams } from 'react-router-dom';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import EditPersonalData from './editpersonal';
+import MyModal from '../../../components/communs/ModalDelete';
+import { toast } from 'react-toastify';
+import EditDimensionamento from '../editDimens';
 
 const ViewBusiness = () => {
+  const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
-  const [logradouro, setLogradouro] = useState('')
   const [status, setStatus] = useState('')
   const [donoN, setDonoN] = useState('')
   const [numberP, setNumberP] = useState('')
@@ -73,11 +77,35 @@ const ViewBusiness = () => {
   const [complemento, setcomplemento] = useState('')
   const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
+  const [client, setClient] = useState([]);
+  const [idSelected, setIdSelected] = useState('');
+  const navigate = useNavigate();
+  const[products,setProducts] = useState([]);
+  const[geracaoDesejada,setGeracaoDesejada] = useState('');
+  const[cip,setCip] = useState('');
+  const[bandeira,setBandeira] = useState('');
+  const[total2,setTotal2] = useState('');
+  const[marg2,setMarg2] = useState('');
+  const[comiss2,setComiss2] = useState('');
+  const[prof2,setProf2] = useState ('')
+  const[profitR2,setProfitR2] = useState('')
+  const [margR2,setMargR2] =useState ('')
+  const[total4,setTotal4] = useState('');
+  const[marg4,setMarg4] = useState('');
+  const[comiss4,setComiss4] = useState('');
+  const[prof4,setProf4] = useState ('')
+  const[profitR4,setProfitR4] = useState('')
+  const [margtR4,setMargtR4] =useState ('')
+
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
   })
+  const numeroFormatado = Intl.NumberFormat("pt-BR", {
+    style: "decimal",
+    maximumFractionDigits: 2
+  });
 
 
   useEffect(() => {
@@ -92,15 +120,46 @@ const ViewBusiness = () => {
 
   }, [])
 
+  async function handleAfterDel(e) {
 
+
+    await api.delete('/business/delete/share/' + idSelected, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    })
+      .then((response) => {
+        loadbId(businessId)
+        toast.success("Operação realizada com sucesso!", {
+          autoClose: 1000,
+        })
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function editbussinesvalue(id) {
+    navigate("/business/view/editvaluebussines/" + id)
+  }
+  
   async function loadAdd(Id) {
+
+    await api.get('/client/get/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setClient(response.data)
+      console.log(response.data.document)
+    })
+
     await api.get('/client/get/add/' + Id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
-      console.log(response.data)
       setRua(response.data.street)
       setBairro(response.data.neighborhood)
       setCep(response.data.postcode)
@@ -111,8 +170,16 @@ const ViewBusiness = () => {
 
   }
 
-  async function loadbId(id) {
+  function salvar(t) {
+    console.log(t)
+  }
 
+  function editPessoa(id) {
+    navigate("/customers/edit/" + id)
+    console.log(id)
+  }
+
+  async function loadbId(id) {
 
     await api.get('/business/get/' + id, {
       headers: {
@@ -121,7 +188,6 @@ const ViewBusiness = () => {
 
     }).then((response) => {
       setName(response.data["Client.fantasy"])
-      console.log(response.data)
       setStatus(response.data.situation)
       setNumberP(response.data.number)
       setDonoN(response.data['User.name'])
@@ -171,9 +237,49 @@ const ViewBusiness = () => {
       setLucroReal(response.data.realProfit)
       setcomplemento(response.data.complement)
       setBusiness(response.data.shares)
+      setClientId(response.data.ClientId)
+      setProducts(response.data.products)
+      setGeracaoDesejada(response.data.suggestedDesired)
+      setCip(response.data.cip)
+      setBandeira(response.data.flag)
+      setTotal2(response.data.total2);
+      setMarg2(response.data.marg2)
+      setComiss2(response.data.comiss2)
+      setProf2(response.data.prof2)
+      setProfitR2(response.data.profitR2)
+      setMargR2 (response.data.margR2)
+      setTotal4(response.data.total4)
+      setMarg4(response.data.marg4)
+      setComiss4(response.data.comiss4)
+      setProf4(response.data.prof4)
+      setProfitR4(response.data.profitR4)
+      setMargtR4(response.data.margtR4)
+      
 
 
     }).catch((error) => { console.log(error) })
+
+  }
+
+  function updateDimensionamento() {
+    let data = {
+      cliente: name,
+      usuario: donoN,
+      fatorSolar: fatorS,
+      tipoTelhado: telhado,
+      tipoLigacao: tipoL,
+      modalidade: modalidade,
+      grupo: grupo,
+      subgrupo: subgrupo,
+      demFP: demandaFp,
+      energiaFp: energiaFp,
+      demandaP: demandaP,
+      energiaP: energiaP
+
+
+    }
+    navigate("/business/editDimens", { state: { data } })
+    data = {}
 
   }
 
@@ -196,11 +302,12 @@ const ViewBusiness = () => {
                   <span className="badge rounded-pill text-bg-lightblue text-primary">{status}</span>
                 </div>
                 <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">Número da proposta </h6>
+                  <h6 class="card-content-title mb-3 fw-semibold">N da proposta </h6>
 
                   <label> {numberP}</label>
 
                 </div>
+
                 <div className="col-lg-4 card-mateus rounded-3">
                   <h6 class="card-content-title mb-3 fw-semibold">Orçamento </h6>
 
@@ -225,9 +332,7 @@ const ViewBusiness = () => {
           <div className="container-fluid bg-home  ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container  " >
               <h5 className="pb-3">Detalhes do negócio</h5>
-              <div>
 
-              </div>
               <br></br>
 
               <div className='conteinerCards'>
@@ -235,12 +340,18 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                    }}>
-                      <BsFillPencilFill />
+                    <button
+                      type="button"
+                      className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                        editPessoa(ClientId)
+                      }}
+                    >
+                      <BsPencilFill />
                     </button>
+
                   </div>
+
+                  <EditPersonalData client={client} uc="Cliente" onEnd={salvar} />
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
@@ -279,7 +390,7 @@ const ViewBusiness = () => {
                       Telefone
                       <td>
                       </td>
-                      <td>
+                      <td >
                         <label> {telefone} </label>
                       </td>
                     </tr>
@@ -347,20 +458,9 @@ const ViewBusiness = () => {
                         <label> {cidade} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Consumo
-                      <td>
-                      </td>
-                      <td>
-                        <label> {consumo} </label>
-                      </td>
-                    </tr>
-
-
 
 
                   </table>
-
 
                 </div>
 
@@ -368,139 +468,272 @@ const ViewBusiness = () => {
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Valores da proposta</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+                      editbussinesvalue(businessId)
 
                     }}>
                       <BsFillPencilFill />
                     </button>
                   </div>
                   <table className='table_view'>
-
-                    <tr className='linhabaixo tamanho-tr'>
-                      Geração sugerida
+                  <tr className='linhabaixo tamanho-tr'>
+                      Consumo (kWh)
                       <td>
                       </td>
+                      <td className='alinhaDireita'>
+                        <label> {consumo} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Geração sugerida (kWh)
                       <td>
-                        <label> {geracaoSu} </label>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label > {geracaoSu} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Geração desejada (kWh)
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{geracaoDesejada} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Preço do kit
                       <td>
                       </td>
-                      <td>
-                        <label> {precoKit} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(precoKit)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Complemento
                       <td>
                       </td>
-                      <td>
-                        <label> {precoKit} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(complemento)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Projeto
                       <td>
                       </td>
-                      <td>
-                        <label> {projeto} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(projeto)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Imposto
                       <td>
                       </td>
-                      <td>
-                        <label> {complemento} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(imposto)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Montagem
                       <td>
                       </td>
-                      <td>
-                        <label> {montagem} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(montagem)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Comissão do vendedor/Valor da comissão
+                      Comissão do vendedor
                       <td>
                       </td>
-                      <td>
-                        <label> {comissaoVe} </label>
+                      <td className='alinhaDireita'>
+
+                        <label> {numeroFormatado.format(comissaoVe) + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Margem/ Margem calculada
+                      Valor da comissão
                       <td>
                       </td>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(valorComissao)}  </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Margem
                       <td>
-                        <label> {margem} </label>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {numeroFormatado.format(margem)+' %'}  </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Margem calculada
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(margemCa)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Total de Custo
                       <td>
                       </td>
-                      <td>
-                        <label> {totalLu} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(totalLu)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Lucro (%)
                       <td>
                       </td>
-                      <td>
-                        <label> {lucroReal} </label>
+                      <td className='alinhaDireita'>
+                        <label> {numeroFormatado.format(lucroReal) + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
                       Valor total do projeto
                       <td>
                       </td>
-                      <td>
-                        <label> {valorTotal} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(valorTotal)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Lucro do projeto ($)
+                      Lucro do projeto (R$)
                       <td>
                       </td>
-                      <td>
-                        <label> {lucroProjeto} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Projeto desconto 2%/ Lucro 2%/ Margem 2%
-                      <td>
-                      </td>
-                      <td>
-                        <label> {rua} </label>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(lucroProjeto)} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Projeto desconto 4%/Lucro 4%/Margem 4%
-                      <td>
-                      </td>
-                      <td>
-                        <label> {rua} </label>
-                      </td>
-                    </tr>
-
 
                   </table>
-
-
-
 
                 </div>
 
               </div>
             </div>
 
+          </div>
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
 
+              <div className='conteinerCards espaco_button'>
 
+                <h5 className="pb-3">Valores com 2% de desconto </h5>
+
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                     
+                      <div className="table-responsive">
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$)  </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$) </th>
+        
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                                <tr key={businessId}>
+                              
+                                  <td className='alinhaDireita'>{formatter.format(prof2)} </td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR2)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg2)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(margR2)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
+                                  <td className='alinhaDireita'> {formatter.format(total2)}</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Valores com 4% de desconto </h5>
+
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                     
+                      <div className="table-responsive">
+                        
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                            <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
+                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$)</th>
+                       
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                                <tr key={businessId}>
+                                  
+                                  <td className='alinhaDireita'>{formatter.format(prof4)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(marg4)}</td>
+                                  <td className='alinhaDireita'>{numeroFormatado.format(margtR4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
+                                  <td className='alinhaDireita'>{formatter.format(total4)}</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
           <div className="container-fluid bg-home py-4 ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
@@ -517,9 +750,8 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                    }}>
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento() }}>
+                      Edit Dimens
                       <BsFillPencilFill />
                     </button>
                   </div>
@@ -545,7 +777,7 @@ const ViewBusiness = () => {
                       Fator Solar
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {fatorS} </label>
                       </td>
                     </tr>
@@ -565,14 +797,7 @@ const ViewBusiness = () => {
                         <label> {tipoL} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Rateios
-                      <td>
-                      </td>
-                      <td>
-                        Rateio x
-                      </td>
-                    </tr>
+
                     <tr className='linhabaixo tamanho-tr'>
                       Modalidade
                       <td>
@@ -601,7 +826,7 @@ const ViewBusiness = () => {
                       Demanda fora ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {demandaFp} </label>
                       </td>
                     </tr>
@@ -609,7 +834,7 @@ const ViewBusiness = () => {
                       Energia fora ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {energiaFp} </label>
                       </td>
                     </tr>
@@ -617,7 +842,7 @@ const ViewBusiness = () => {
                       Demanda ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {demandaP} </label>
                       </td>
                     </tr>
@@ -625,20 +850,17 @@ const ViewBusiness = () => {
                       Energia ponta
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label> {energiaP} </label>
                       </td>
                     </tr>
 
-
-
                   </table>
-
 
                 </div>
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Informações do sistema</h6>
+                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
                     }}>
@@ -659,7 +881,7 @@ const ViewBusiness = () => {
                       Potência do painel
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{painelP} </label>
                       </td>
                     </tr>
@@ -667,7 +889,7 @@ const ViewBusiness = () => {
                       Número de placas
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{numeroP} </label>
                       </td>
                     </tr>
@@ -675,7 +897,7 @@ const ViewBusiness = () => {
                       Média mensal
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{media} </label>
                       </td>
                     </tr>
@@ -683,70 +905,127 @@ const ViewBusiness = () => {
                       Potência do sistema
                       <td>
                       </td>
-                      <td>
+                      <td className='alinhaDireita'>
                         <label>{potenciaS} </label>
                       </td>
                     </tr>
-                  </table>
 
-
-                  <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Descrição do sistema</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                    }}>
-                      <BsFillPencilFill />
-                    </button>
-                  </div>
-                  <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
+                      CIP
                       <td>
-                        Marca da placa
                       </td>
-                      <td>
-                        <label> {marcaP} </label>
+                      <td className='alinhaDireita'>
+                        <label>{cip} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
+                      Bandeira
                       <td>
-                        Modelo da placa
                       </td>
-                      <td>
-                        <label> {modeloP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Marca do Inversor
-                      </td>
-                      <td>
-                        <label> {inversorMa} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Modelo do Inversor
-                      </td>
-                      <td>
-                        <label> {inversorMo} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      <td>
-                        Número de Inversores
-                      </td>
-                      <td>
-                        <label> {numeroInv} </label>
+                      <td className='alinhaDireita'>
+                        <label>{bandeira} </label>
                       </td>
                     </tr>
                   </table>
-
-
 
 
                 </div>
 
+              </div>
 
+            </div>
+          </div>
+
+          <div className="container-fluid bg-home py-4 ">
+            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
+
+              <div className='conteinerCards espaco_button'>
+
+                <h5 className="pb-3">Produtos</h5>
+
+                <button
+                  className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
+                  type="submit"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                >
+                  <AiFillPlusSquare />
+                  Adicionar produto
+                </button>
+              </div>
+
+              <hr className="my-3 text-body-tertiary" />
+              <div className="d-flex flex-column flex-md-row justify-content-end">
+                <form className="mb-3 justify-content-end">
+                  <div className="row">
+                    <div className="col-md-auto">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="row">
+                <div className="mb-3 mb-sm-0">
+                  <div className="card border-light-subtle">
+                    <div className="card-body">
+                      <h6 className="card-title">Produtos que compoem o kit</h6>
+                      <div className="table-responsive">
+                        <table className="table caption-top table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col" >Tipo</th>
+                              <th scope="col" >Marca</th>
+                              <th scope="col" >Modelo</th>
+                              <th scope="col" className='alinhaDireita' >Potência</th>
+                              <th scope="col" className='alinhaDireita'>Quantidade</th>
+                           
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+
+                            {products ? products.map((item) => {
+                              return (
+                                <tr key={item.id}>
+
+                              
+                                  <td>{item.type==='P'?"Placa": item.type==="M"?"MicroInversor":"Inversor" }</td>
+                                  <td>{item.brand}</td>
+                                  <td>{item.model}</td>
+                                  <td className='alinhaDireita'>{item.power}</td>
+                                  <td className='alinhaDireita'>{item.qtd}</td>
+
+                                  <td>
+                                    <div className="d-flex gap-2 justify-content-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
+                                      >
+                                        <BsPencilFill />
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
+                                      >
+                                        <BsFillTrash3Fill />
+
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            }) : ''}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -769,7 +1048,6 @@ const ViewBusiness = () => {
                   Novo rateio
                 </button>
               </div>
-
 
               <hr className="my-3 text-body-tertiary" />
               <div className="d-flex flex-column flex-md-row justify-content-end">
@@ -829,8 +1107,13 @@ const ViewBusiness = () => {
                                       <button
                                         type="button"
                                         className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                          setIdSelected(item.id)
+                                        }}
                                       >
                                         <BsFillTrash3Fill />
+
+                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
                                       </button>
                                     </div>
                                   </td>

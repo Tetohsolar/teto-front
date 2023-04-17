@@ -3,7 +3,7 @@ import './login.scss';
 import { useState, useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
 import logoTetoSolar from '../../assets/img/teto-solar-visual-signature.png'
-
+import { Link } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -55,7 +55,7 @@ const Login = () => {
               <button className="w-100 btn btn-primary" type="submit">Entrar</button>
             </div>
             <div className="m-3">
-              <p className="mb-2 text-center"><a href="http://54.84.76.212:3000/">Recuperar senha</a></p>
+              <p className="mb-2 text-center"><Link to={"/passwordRecover"}>Recuperar Senha</Link></p>
             </div>
           </form>
         </div>

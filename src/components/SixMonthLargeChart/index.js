@@ -8,7 +8,7 @@ export default function SixMonthLargeChart(props) {
       <div className="mb-3 mb-sm-0">
         <div className="card border-light-subtle">
           <div className="card-body pb-5">
-            <SynchronizedAreaChart strokeColor="#A6CDE5" fillColor="#A6CDE5"/>
+            <SynchronizedAreaChart data={props.data} strokeColor="#A6CDE5" fillColor="#A6CDE5"/>
           </div>
         </div>
       </div>
