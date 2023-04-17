@@ -31,6 +31,7 @@ import PasswordRecover from '../pages/login/PasswordRecover';
 
 import ValoresProposta from '../components/business-form/valoresPropform';
 import EditDimensionamento from '../pages/business/editDimens';
+import SystemTypeform from '../components/business-form/systemTypeform';
 
 
 const RoutesApp = () => {
@@ -80,6 +81,7 @@ const RoutesApp = () => {
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta />} />
+              <Route path="view/edittypebusiness/:businessId" element={<SystemTypeform />} />
 
 
 
