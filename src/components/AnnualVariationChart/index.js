@@ -1,54 +1,97 @@
-import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, } from 'recharts';
-import './style.scss'
+import {
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ComposedChart,
+  Line,
+} from "recharts";
+import "./style.scss";
 
 const data = [
   {
-    name: 'Page A',
-    inversor: 4000,
-    microinversor: 2400,
-    consumo: 2400,
+    name: "1",
+    inversor: 2600,
+    microinversor: 2500,
+    consumo: 2600,
   },
   {
-    name: 'Page B',
+    name: "2",
+    inversor: 2500,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "3",
+    inversor: 2600,
+    microinversor: 2800,
+    consumo: 2600,
+  },
+  {
+    name: "4",
+    inversor: 2500,
+    microinversor: 2600,
+    consumo: 2600,
+  },
+  {
+    name: "5",
+    inversor: 2700,
+    microinversor: 2500,
+    consumo: 2600,
+  },
+  {
+    name: "6",
+    inversor: 2700,
+    microinversor: 2600,
+    consumo: 2600,
+  },
+  {
+    name: "7",
+    inversor: 2600,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "8",
+    inversor: 2800,
+    microinversor: 2900,
+    consumo: 2600,
+  },
+  {
+    name: "9",
+    inversor: 2900,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "10",
     inversor: 3000,
-    microinversor: 1398,
-    consumo: 2210,
+    microinversor: 2900,
+    consumo: 2600,
   },
   {
-    name: 'Page C',
-    inversor: 2000,
-    microinversor: 9800,
-    consumo: 2290,
+    name: "11",
+    inversor: 2100,
+    microinversor: 2200,
+    consumo: 2600,
   },
   {
-    name: 'Page D',
-    inversor: 2780,
-    microinversor: 3908,
-    consumo: 2000,
-  },
-  {
-    name: 'Page E',
-    inversor: 1890,
-    microinversor: 4800,
-    consumo: 2181,
-  },
-  {
-    name: 'Page F',
-    inversor: 2390,
-    microinversor: 3800,
-    consumo: 2500,
-  },
-  {
-    name: 'Page G',
-    inversor: 3490,
-    microinversor: 4300,
-    consumo: 2100,
+    name: "12",
+    inversor: 3000,
+    microinversor: 3100,
+    consumo: 2600,
   },
 ];
 
 export default function AnnualVariationChart(props) {
   return (
-    <div className='annual-variation-chart annual-variation' style={{height: 256 }}>
+    <div
+      className="annual-variation-chart annual-variation"
+      style={{ height: 256 }}
+    >
       <ResponsiveContainer>
         <ComposedChart
           width={500}

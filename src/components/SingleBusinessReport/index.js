@@ -1,14 +1,10 @@
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import SolarSystemDescription from "../SolarSystemDescription";
-import GenerationAndPrice from "../GenerationAndPrice";
 import AnnualVariation from "../AnnualVariation";
 import bgReport from "../../assets/img/teto-solar-visual-signature.png";
 import tetoSolarInfographic from "../../assets/img/teto-solar-infographic.png";
 import {
-  BsArrowRight,
   BsFillCheckCircleFill,
-  BsFillPencilFill,
   BsFillPrinterFill,
   BsFillStarFill,
   BsFillXCircleFill,
@@ -16,24 +12,101 @@ import {
 
 import "./single-business-report.scss";
 
-const data = [
-  { name: "Group A", value: 8 },
-  { name: "Group B", value: 84 },
-  { name: "Group C", value: 5 },
-  { name: "Group D", value: 3 },
+const proposta = "202303129";
+const inversor = "237,60 kWp";
+const cidade = "Caucaia";
+
+const detalhesSistemaSolarData = [
+  { id: 15465, name: "Painel solar J.A. 550W", value: 432 },
+  { id: 14656, name: " Inversor Growatt MAC 60KTL3-X LV", value: 3 },
+  { id: 15588, name: "Estrutura para Estrutura em Solo", value: "Incluso" },
+  { id: 16565, name: "Geração média mensal (1ºano)", value: "30.015 kWh" },
 ];
 
-const COLORS = ["#1b6b9d", "#198754", "#ffc107", "#dc3545"];
+const caracteristicasData = [
+  { id: 26449, name: "Área necessária", value: "689 m²" },
+  { id: 24654, name: " Peso do sistema", value: "11.880 kg" },
+  { id: 25616, name: "Porc. atendida", value: "91%" },
+];
 
-const renderCustomizedLabel = ({ percent }) => {
-  return `${(percent * 100).toFixed(0)}%`;
+const garantiasData = [
+  { id: 36584, name: "Painel Solar (eficiência)", value: "25 anos" },
+  { id: 35848, name: "Painel Solar (defeitos)", value: "12 anos" },
+  { id: 39494, name: "Inversor", value: "10 anos" },
+  { id: 33649, name: "Instalação", value: "1 ano" },
+];
+
+const indicadoresFinanceirosData = [
+  { id: 45166, name: "Caixa Acum.", value: "R$ 59.817.265,54" },
+  { id: 48499, name: "V.P.L.", value: "R$ 1.711.892,79" },
+  { id: 44848, name: "T.I.R.", value: "27%" },
+  { id: 48484, name: "PayBack", value: "4 anos e 1 Meses" },
+];
+
+const pagamentoData = {
+  value1: "R$ 718.880,00",
+  value2: "R$ 89.860,00",
+  value3: "R$ 89.860,00",
 };
+
+const economiaData = [
+  {
+    id: 56565,
+    ano: "2023",
+    id: 56546,
+    enel: "R$ 19.907,59",
+    id: 58554,
+    tetoSolar: "R$ 2.662,89",
+    id: 50515,
+    economia: "R$ 16.996,00",
+  },
+  {
+    id: 56546,
+    ano: "2024",
+    id: 55110,
+    enel: "R$ 20.902,97",
+    id: 50654,
+    tetoSolar: "R$ 2.931,85",
+    id: 50487,
+    economia: "R$ 17.722,41",
+  },
+  {
+    id: 50640,
+    ano: "2025",
+    id: 50708,
+    enel: "R$ 21.948,12",
+    id: 50571,
+    tetoSolar: "R$ 3.221,06",
+    id: 51817,
+    economia: "R$ 18.478,36",
+  },
+  {
+    id: 58745,
+    ano: "2026",
+    id: 51978,
+    enel: "R$ 23.045,52",
+    id: 51989,
+    tetoSolar: "R$ 3.531,84",
+    id: 50564,
+    economia: "R$ 19.264,99",
+  },
+  {
+    id: 59789,
+    ano: "2027",
+    id: 50645,
+    enel: "R$ 24.197,80",
+    id: 50659,
+    tetoSolar: "R$ 3.865,65",
+    id: 509594,
+    economia: "R$ 20.083,44",
+  },
+];
 
 export default function SingleBusinessReport() {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: "emp-data",
+    documentTitle: `teto_solar_proposta_${proposta}`,
   });
 
   return (
@@ -78,8 +151,8 @@ export default function SingleBusinessReport() {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>202303129</td>
-                        <td>237,60 kWp</td>
+                        <td>{proposta}</td>
+                        <td>{inversor}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -111,7 +184,7 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row my-4 report-print-width report-cards">
               <div className="col-lg-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div className="card-body py-4">
                     <div className="d-flex align-items-start gap-3 mb-4">
                       <BsFillStarFill className="fs-4 report-icon-star text-warning" />
@@ -155,7 +228,7 @@ export default function SingleBusinessReport() {
               </div>
 
               <div className="col-lg-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div className="card-body py-4">
                     <div className="d-flex align-items-start gap-3 mb-4">
                       <BsFillStarFill className="fs-4 report-icon-star text-warning" />
@@ -210,36 +283,28 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Estimativa de Geração Inversor X Microinversor
+                    Descrição do Sistema Solar
                   </div>
                   <div className="card-body">
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
+                            <th scope="col">{inversor}</th>
+                            <th scope="col">Quantidade</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
+                          {detalhesSistemaSolarData.map((item) => {
+                            return (
+                              <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.value}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -257,32 +322,28 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Estimativa de Geração Inversor X Microinversor
+                    Características do Sistema Solar
                   </div>
                   <div className="card-body">
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
+                            <th scope="col">{cidade}</th>
+                            <th scope="col">Valor</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
+                          {caracteristicasData.map((item) => {
+                            return (
+                              <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.value}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -303,36 +364,28 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Estimativa de Geração Inversor X Microinversor
+                    Garantias do Sistema Solar
                   </div>
                   <div className="card-body">
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Período</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
+                          {garantiasData.map((item) => {
+                            return (
+                              <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.value}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -350,7 +403,7 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
                     Estimativa de Geração Inversor X Microinversor
                   </div>
@@ -375,7 +428,7 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
                     Valor do Investimento: <span>{`R$ 898.600,00`}</span>
                   </div>
@@ -384,27 +437,19 @@ export default function SingleBusinessReport() {
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Valor</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
+                          {indicadoresFinanceirosData.map((item) => {
+                            return (
+                              <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.value}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -414,40 +459,46 @@ export default function SingleBusinessReport() {
             </div>
           </div>
 
-          <div className="my-4 d-flex flex-column align-items-center">
+          <div className="mt-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center">
               Pagamento à vista (sugestão)
             </h4>
           </div>
-          <div className="d-flex justify-content-center">
-            <div className="row mb-3 report-print-width report-cards">
-              <div className="col mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <div className="row my-2 report-print-width report-cards">
+              <h6>Sugestão de paganto</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ENTRADA
                   </div>
-                  <div className="card-body">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@mdo</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div className="card-body py-4">
+                    <h3 className="fw-bold text-warning fs-1">80%</h3>
+                    <p className="mb-0 fs-4">{pagamentoData.value1}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    30 DIAS
+                  </div>
+                  <div className="card-body py-4">
+                    <h3 className="fw-bold text-warning fs-1">10%</h3>
+                    <p className="mb-0 fs-4">{pagamentoData.value2}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    60 DIAS
+                  </div>
+                  <div className="card-body py-4">
+                    <h3 className="fw-bold text-warning fs-1">10%</h3>
+                    <p className="mb-0 fs-4">{pagamentoData.value3}</p>
                   </div>
                 </div>
               </div>
@@ -464,200 +515,51 @@ export default function SingleBusinessReport() {
           </div>
 
           <div className="d-flex flex-column align-items-center justify-content-center">
-            <div className="row my-2 report-print-width report-cards">
-              <h6>2023</h6>
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    ENEL
+            {economiaData.map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  className="row my-2 report-print-width report-cards"
+                >
+                  <h6>{item.ano}</h6>
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        ENEL
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura mensal</h6>
+                        <p className="mb-0">{item.enel}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 19.907,59`}</p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    TETO SOLAR
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        TETO SOLAR
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura mensal</h6>
+                        <p className="mb-0">{item.tetoSolar}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 2.662,89`}</p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg-yellow text-light border-0">
-                    ECONOMIA
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sua economia mensal</h6>
-                    <p className="mb-0">{`R$ 16.996,00`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>2024</h6>
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    ENEL
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  <div className="col-lg-4 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg-green text-light border-0">
+                        ECONOMIA
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Sua economia mensal</h6>
+                        <p className="mb-0">{item.economia}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    TETO SOLAR
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 2.662,89`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg-yellow text-light border-0">
-                    ECONOMIA
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sua economia mensal</h6>
-                    <p className="mb-0">{`R$ 16.996,00`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>2025</h6>
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    ENEL
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 19.907,59`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    TETO SOLAR
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 2.662,89`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg-yellow text-light border-0">
-                    ECONOMIA
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sua economia mensal</h6>
-                    <p className="mb-0">{`R$ 16.996,00`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>2026</h6>
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    ENEL
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 19.907,59`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    TETO SOLAR
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 2.662,89`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg-yellow text-light border-0">
-                    ECONOMIA
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sua economia mensal</h6>
-                    <p className="mb-0">{`R$ 16.996,00`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>2027</h6>
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    ENEL
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 19.907,59`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg text-light border-0">
-                    TETO SOLAR
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Fatura mensal</h6>
-                    <p className="mb-0">{`R$ 2.662,89`}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div class="card-header report-card-bg-yellow text-light border-0">
-                    ECONOMIA
-                  </div>
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sua economia mensal</h6>
-                    <p className="mb-0">{`R$ 16.996,00`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </section>
 
@@ -673,43 +575,58 @@ export default function SingleBusinessReport() {
           <div className="d-flex justify-content-center">
             <div className="row my-4 report-print-width report-cards">
               <div className="col-lg-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div className="card-body py-4">
-                    <p>Itens inclusos</p>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <p className="fw-semibold">Itens inclusos</p>
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
                       <div>
-                        <h6 className="fw-bold">Sustentabilidade</h6>
                         <p className="mb-0">
-                          Energia limpa, ambiente amigável.
+                          Projeto da instalação, incluindo informações sobre os
+                          esforços do sistema sobre a estrutura do imóvel.
                         </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
                       <div>
-                        <h6 className="fw-bold">Renovável</h6>
                         <p className="mb-0">
-                          Energia abundante, acessível e inesgotável.
+                          Painéis fotovoltaicos, inversores ou microinversores,
+                          dispositivos de proteção e quadros de conexão.
                         </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
                       <div>
-                        <h6 className="fw-bold">Retorno de investimento</h6>
                         <p className="mb-0">
-                          Garantia de retorno de iinvestimento.
+                          suportes para painéis fotovoltaicos, para instalação
+                          no telhado
                         </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
                       <div>
-                        <h6 className="fw-bold">Valorização do imóvel</h6>
                         <p className="mb-0">
-                          Valorização imediata em cecrca de 8% sobre o valor do
-                          imóvel.
+                          Suporte técnico para o processo de conexão à rede
+                          junto à concessionária.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-3 mb-4">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <p className="mb-0">
+                          Manual de instalação, operação e manutenção
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-3 mb-4">
+                      <BsFillCheckCircleFill className="fs-4 report-icon-star text-success" />
+                      <div>
+                        <p className="mb-0">
+                          Transporte do material até o local da instalação.
                         </p>
                       </div>
                     </div>
@@ -718,40 +635,51 @@ export default function SingleBusinessReport() {
               </div>
 
               <div className="col-lg-6 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
+                <div className="card border-light">
                   <div className="card-body py-4">
-                    <p>Itens não inclusos</p>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <p className="fw-semibold">Itens não inclusos</p>
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
                       <div>
-                        <h6 className="fw-bold">Baixo custo de manutenção</h6>
                         <p className="mb-0">
-                          Sistemas fotovoltaicos demandam baixa manutenção.
+                          Possíveis adequações necessárias ao peso dos
+                          equipamentos, incluindo-se a construção de bases no
+                          terreno.
                         </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
                       <div>
-                        <h6 className="fw-bold">Economia</h6>
                         <p className="mb-0">
-                          Economia de até 95% da conta de energia.
+                          Adequação das instalações existentes para os
+                          requisitos da concessionária.
                         </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
                       <div>
-                        <h6 className="fw-bold">Otimização do espaço</h6>
-                        <p className="mb-0">Instalações simples e rápidas.</p>
+                        <p className="mb-0">
+                          Sistema de Para-raios e aterramentos, mesmo que
+                          adequação de sistemas exixtentes.
+                        </p>
                       </div>
                     </div>
-                    <div className="d-flex align-items-start gap-3">
+                    <div className="d-flex align-items-center gap-3 mb-4">
                       <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
                       <div>
-                        <h6 className="fw-bold">Durabilidade</h6>
                         <p className="mb-0">
-                          Garantia de performance de 25 anos.
+                          Licenças ambientais, se necessáio.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-3 mb-4">
+                      <BsFillXCircleFill className="fs-4 report-icon-star text-danger" />
+                      <div>
+                        <p className="mb-0">
+                          Quaisquer outros itens não mencionados claramente
+                          nesta proposta.
                         </p>
                       </div>
                     </div>
