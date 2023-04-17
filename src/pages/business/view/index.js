@@ -17,6 +17,7 @@ import EditPersonalData from './editpersonal';
 import MyModal from '../../../components/communs/ModalDelete';
 import { toast } from 'react-toastify';
 import EditDimensionamento from '../editDimens';
+import EditSituationBusiness from '../../../components/modalSituation';
 
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
@@ -140,6 +141,9 @@ const ViewBusiness = () => {
 
   function editbussinesvalue(id) {
     navigate("/business/view/editvaluebussines/" + id)
+  }
+  function editypebusiness(id) {
+    navigate("/business/view/edittypebusiness/" + id)
   }
   
   async function loadAdd(Id) {
@@ -270,6 +274,10 @@ const ViewBusiness = () => {
 
   }
 
+  function hanndlerChangeSituation(){
+
+  }
+
   return (
     <div className="home ">
       <Navbar />
@@ -284,12 +292,21 @@ const ViewBusiness = () => {
 
               <div className="row topResume">
                 <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">Status </h6>
+                  <h6 class="card-content-title mb-3 fw-semibold">  Status  </h6> 
 
-                  <span className="badge rounded-pill text-bg-lightblue text-primary">{status}</span>
+                  <span className="badge rounded-pill text-bg-lightblue text-primary">{status} 
+                  <button onClick={hanndlerChangeSituation} 
+                  className="btn btn-light btn-sm text-primary " data-bs-toggle="modal" data-bs-target="#modalTypeSituation">
+                     <BsFillPencilFill/></button> </span> 
+
+                     <EditSituationBusiness  setStatus={setStatus} situation = {status} businessId={businessId} uc=" o rateio" onClick={handleAfterDel} />
+                     
                 </div>
+
+               
+
                 <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">N da proposta </h6>
+                  <h6 class="card-content-title mb-3 fw-semibold">Nº da proposta </h6>
 
                   <label> {numberP}</label>
 
@@ -342,7 +359,7 @@ const ViewBusiness = () => {
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
-                      Criado/Modificado em
+                      Criado/Modificado em:
                       <td>
                       </td>
                       <td >
@@ -350,7 +367,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Nome
+                      Nome:
                       <td>
                       </td>
                       <td>
@@ -358,7 +375,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Tipo de pessoa
+                      Tipo de pessoa:
                       <td>
                       </td>
                       <td>
@@ -366,7 +383,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      CPF/CNPJ
+                      CPF/CNPJ:
                       <td>
                       </td>
                       <td>
@@ -374,7 +391,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Telefone
+                      Telefone:
                       <td>
                       </td>
                       <td >
@@ -382,7 +399,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      WhatsApp
+                      WhatsApp:
                       <td>
                       </td>
                       <td>
@@ -390,7 +407,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Email
+                      Email:
                       <td>
                       </td>
                       <td>
@@ -398,7 +415,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Informações adicionais
+                      Inf. Adicionais
                       <td>
                       </td>
                       <td>
@@ -406,7 +423,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Rua
+                      Rua:
                       <td>
                       </td>
                       <td>
@@ -414,7 +431,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Bairro
+                      Bairro:
                       <td>
                       </td>
                       <td>
@@ -422,7 +439,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      CEP
+                      CEP:
                       <td>
                       </td>
                       <td>
@@ -430,7 +447,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Estado
+                      Estado:
                       <td>
                       </td>
                       <td>
@@ -438,7 +455,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Cidade
+                      Cidade:
                       <td>
                       </td>
                       <td>
@@ -463,7 +480,7 @@ const ViewBusiness = () => {
                   </div>
                   <table className='table_view'>
                   <tr className='linhabaixo tamanho-tr'>
-                      Consumo (kWh)
+                      Consumo (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -471,7 +488,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração sugerida (kWh)
+                      Geração sugerida (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -479,7 +496,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Geração desejada (kWh)
+                      Geração desejada (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -487,7 +504,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Preço do kit
+                      Preço do kit (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -495,7 +512,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Complemento
+                      Complemento (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -503,7 +520,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Projeto
+                      Projeto (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -511,7 +528,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Imposto
+                      Imposto (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -519,7 +536,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Montagem
+                      Montagem (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -527,7 +544,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Comissão do vendedor
+                      Comissão do vendedor (%):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -536,7 +553,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Valor da comissão
+                      Valor da comissão (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -544,7 +561,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Margem
+                      Margem (%):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -552,7 +569,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Margem calculada
+                      Margem calculada (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -560,7 +577,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Total de Custo
+                      Total de Custo (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -568,7 +585,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Lucro (%)
+                      Lucro (%):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -576,7 +593,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Valor total do projeto
+                      Valor total do projeto (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -584,7 +601,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Lucro do projeto (R$)
+                      Lucro do projeto (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -739,13 +756,14 @@ const ViewBusiness = () => {
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento(businessId) }}>
 
+
                       <BsFillPencilFill />
                     </button>
                   </div>
 
                   <table className='table_view'>
                     <tr className='linhabaixo tamanho-tr'>
-                      Cliente
+                      Cliente:
                       <td>
                       </td>
                       <td >
@@ -753,7 +771,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Usuário
+                      Usuário:
                       <td>
                       </td>
                       <td>
@@ -761,7 +779,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Fator Solar
+                      Fator Solar:
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -769,7 +787,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Tipo de Telhado
+                      Tipo de Telhado:
                       <td>
                       </td>
                       <td>
@@ -777,7 +795,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Tipo de Ligação
+                      Tipo de Ligação:
                       <td>
                       </td>
                       <td>
@@ -786,7 +804,7 @@ const ViewBusiness = () => {
                     </tr>
 
                     <tr className='linhabaixo tamanho-tr'>
-                      Modalidade
+                      Modalidade:
                       <td>
                       </td>
                       <td>
@@ -794,7 +812,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Grupo
+                      Grupo:
                       <td>
                       </td>
                       <td>
@@ -802,7 +820,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      SubGrupo
+                      SubGrupo:
                       <td>
                       </td>
                       <td>
@@ -810,7 +828,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Demanda fora ponta
+                      Demanda fora ponta (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -818,7 +836,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Energia fora ponta
+                      Energia fora ponta (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -826,7 +844,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Demanda ponta
+                      Demanda ponta (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -834,7 +852,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Energia ponta
+                      Energia ponta (Kwh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -847,17 +865,18 @@ const ViewBusiness = () => {
                 </div>
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
+                    <h6 class="card-content-title mb-3 fw-semibold">Tipo do sistema</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                    }}>
+                  editypebusiness(businessId)
+}}>
                       <BsFillPencilFill />
                     </button>
                   </div>
                   <table className='table_view'>
 
                     <tr className='linhabaixo tamanho-tr'>
-                      Tipo de sistema
+                      Tipo de sistema: 
                       <td>
                       </td>
                       <td>
@@ -865,7 +884,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Potência do painel
+                      Potência do painel (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -873,7 +892,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Número de placas
+                      Número de placas (Und):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -881,7 +900,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Média mensal
+                      Média mensal (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -889,7 +908,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Potência do sistema
+                      Potência do sistema (kWh):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -898,7 +917,7 @@ const ViewBusiness = () => {
                     </tr>
 
                     <tr className='linhabaixo tamanho-tr'>
-                      CIP
+                      CIP (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
@@ -906,7 +925,7 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Bandeira
+                      Bandeira (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
