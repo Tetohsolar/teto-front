@@ -255,49 +255,49 @@ const ValoresProposta = () =>   {
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-           Imposto
+           Imposto (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
                   className="form-control number" value={imposto|| ''} onChange={(e) => setImposto(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-          Montagem
+          Montagem (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
                   className="form-control number" value={montagem|| ''} onChange={(e) => setMontagem(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-           Comissão do vendedor
+           Comissão do vendedor (%)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
                   className="form-control number" value={comissaoVe|| ''} onChange={(e) => setComissaoVe(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-           Valor da Comissão
+           Valor da Comissão (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
                   className="form-control number" value={valorComissao|| ''} onChange={(e) => setValorComissao(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-          Margem
+          Margem (%)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
                   className="form-control number" value={margem|| ''} onChange={(e) => setMargem(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-          Margem calculada
+          Margem calculada (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
                   className="form-control number" value={margemCa|| ''} onChange={(e) => setMargemCa(e.target.value)} />
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-          Total de custo
+          Total de custo (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
                   className="form-control number" value={totalCusto|| ''} onChange={(e) => setTotalCusto(e.target.value)} />
@@ -310,7 +310,7 @@ const ValoresProposta = () =>   {
         </div>
         <div className="col-md-3">
           <label htmlFor="inputFirstName" className="form-label">
-          Valor total do projeto
+          Valor total do projeto (R$)
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
                   className="form-control number" value={valorTotal|| ''} onChange={(e) => setValorTotal(e.target.value)} />

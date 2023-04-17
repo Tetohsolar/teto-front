@@ -17,7 +17,7 @@ const SystemTypeform = () =>   {
   const [potenciaPainel, setPotenciaPainel] = useState('')
   const [potenciaSistema,setPotenciaSistema] = useState('')
   const [cip,setCip] = useState ('')
-  const [bandeira,SetBandeira] = useState('')
+  const [bandeira,setBandeira] = useState('')
   const [numeroPlaca, setNumeroPlaca] = useState('')
   const [mediaMensal, setMediaMensal] = useState('')
   const [tipoSistema, setTipoSistema] = useState('')
@@ -27,18 +27,8 @@ const SystemTypeform = () =>   {
   const { businessId } = useParams();
 
 
-
-  /*
-
-  const [complemento,setComplemento] = useContext('')
-  const [business,setBusiness] = useContext('')
-  const [geracaoDesejada,setGeracaoDesajada] = useContext('')
-  const [totalCusto,setTotalCusto] = useContext('')
-
-*/
   useEffect(() => {
 
-    //const businessId = 1
 
     if (businessId) {
       loadbId(businessId)
@@ -58,22 +48,19 @@ const SystemTypeform = () =>   {
 
     }).then((response) => {
      
-    
-     // setValor(formatter.format(response.data.amount))
      setPotenciaPainel(response.data.panelpower) 
      setNumeroPlaca(response.data.numberborder)
      setMediaMensal(response.data.avgmonth)
      setPotenciaSistema(response.data.systempower)
-     setCip (formatter.format(response.data.cip))
-     SetBandeira(response.data.flag)
-      setTipoSistema(response.data.type)
+     setCip(response.data.cip.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })) 
+     setBandeira(response.data.flag)
+    setTipoSistema(response.data.type)
 
     }).catch((error) => { console.log(error) })
 
   }
 
  
-
   async function salvar (e) {
 
     e.preventDefault();
@@ -90,7 +77,6 @@ const SystemTypeform = () =>   {
       
     };
 
-    console.log(token)
     await api.patch('/business/update/' + businessId, data
       , {
         headers: {
@@ -107,7 +93,6 @@ const SystemTypeform = () =>   {
           throw new Error()
         }
       )
-
   
   }
 
@@ -145,8 +130,8 @@ const SystemTypeform = () =>   {
           <input type="text"  className="form-control alinhaDireita" id="inputFirstName" value={potenciaPainel} onChange={(e) => setPotenciaPainel(e.target.value)} />
         </div>
         <div className="col-md-3">
-          <label htmlFor="inputFirstName" className="form-label">
-           Número de placas
+          <label htmlFor="inutFirstName" className="form-label">
+           Número de placas (Und)
           </label>
           <NumericFormat decimalScale={0} readOnly placeholder="" decimalSeparator=","
                   className="form-control number" value={numeroPlaca|| ''} onChange={(e) => setNumeroPlaca(e.target.value)} />
@@ -179,7 +164,7 @@ const SystemTypeform = () =>   {
            Bandeira (R$)
           </label>
           <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
-                  className="form-control number" value={bandeira|| ''} onChange={(e) => SetBandeira(e.target.value)} />
+                  className="form-control number" value={bandeira|| ''} onChange={(e) => setBandeira(e.target.value)} />
         </div>
         
         <div className="customerCliente">
