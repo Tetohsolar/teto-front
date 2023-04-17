@@ -95,7 +95,9 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
           <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold mb-5 text-primary text-center mt-4">
               Como funciona a Energia Solar?
@@ -197,7 +199,9 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
           <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center mt-4">
               Detalhes do Sistema Solar
@@ -207,10 +211,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Estimativa de Geração Inversor X Microinversor
+                  </div>
                   <div className="card-body">
-                    <p>
-                      <span>Cabeçalho da tabela</span>
-                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -254,10 +258,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Estimativa de Geração Inversor X Microinversor
+                  </div>
                   <div className="card-body">
-                    <p>
-                      <span>Cabeçalho da tabela</span>
-                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -290,7 +294,9 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
           <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center">Garantias</h4>
           </div>
@@ -298,10 +304,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Estimativa de Geração Inversor X Microinversor
+                  </div>
                   <div className="card-body">
-                    <p>
-                      <span>Cabeçalho da tabela</span>
-                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -345,7 +351,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
-                  <div className="card-body mb-4">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Estimativa de Geração Inversor X Microinversor
+                  </div>
+                  <div className="card-body">
                     <AnnualVariation />
                   </div>
                 </div>
@@ -355,8 +364,9 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
-
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
           <div className="my-4 d-flex flex-column align-items-center">
             <h4 className="fw-semibold text-primary text-center">
               Indicadores Financeiros
@@ -366,10 +376,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                  </div>
                   <div className="card-body">
-                    <p>
-                      Valor do Investimento: <span>{`R$ 898.600,00`}</span>
-                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -413,10 +423,10 @@ export default function SingleBusinessReport() {
             <div className="row mb-3 report-print-width report-cards">
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                  </div>
                   <div className="card-body">
-                    <p>
-                      Valor do Investimento: <span>{`R$ 898.600,00`}</span>
-                    </p>
                     <div class="table-responsive">
                       <table class="table">
                         <tbody>
@@ -446,159 +456,204 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
-          <div className="my-4 d-flex flex-column align-items-center">
-            <h4 className="fw-semibold text-primary text-center">
-              Economia
-            </h4>
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
+          <div className="mt-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center">Economia</h4>
           </div>
 
           <div className="d-flex flex-column align-items-center justify-content-center">
             <div className="row my-2 report-print-width report-cards">
-              <h6>asdasdsa</h6>
-              <div className="col-lg-4 mb-3 mb-lg-0">
+              <h6>2023</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    ENEL
+                  </div>
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    TETO SOLAR
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 2.662,89`}</p>
                   </div>
                 </div>
               </div>
 
               <div className="col-lg-4 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ECONOMIA
                   </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>asdasdsa</h6>
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Sua economia mensal</h6>
+                    <p className="mb-0">{`R$ 16.996,00`}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="row my-2 report-print-width report-cards">
-              <h6>asdasdsa</h6>
-              <div className="col-lg-4 mb-3 mb-lg-0">
+              <h6>2024</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    ENEL
+                  </div>
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    TETO SOLAR
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 2.662,89`}</p>
                   </div>
                 </div>
               </div>
 
               <div className="col-lg-4 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ECONOMIA
                   </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row my-2 report-print-width report-cards">
-              <h6>asdasdsa</h6>
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-lg-4 mb-3 mb-lg-0">
-                <div className="card border-light-subtle">
-                  <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Sua economia mensal</h6>
+                    <p className="mb-0">{`R$ 16.996,00`}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="row my-2 report-print-width report-cards">
-              <h6>asdasdsa</h6>
-              <div className="col-lg-4 mb-3 mb-lg-0">
+              <h6>2025</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    ENEL
+                  </div>
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    TETO SOLAR
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 2.662,89`}</p>
                   </div>
                 </div>
               </div>
 
               <div className="col-lg-4 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ECONOMIA
+                  </div>
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Sua economia mensal</h6>
+                    <p className="mb-0">{`R$ 16.996,00`}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>2026</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    ENEL
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    TETO SOLAR
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 2.662,89`}</p>
                   </div>
                 </div>
               </div>
 
               <div className="col-lg-4 mb-3 mb-lg-0">
                 <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ECONOMIA
+                  </div>
                   <div className="card-body py-4">
-                    <h6 className="fw-bold">Sustentabilidade</h6>
-                    <p className="mb-0">Energia limpa, ambiente amigável.</p>
+                    <h6 className="fw-bold">Sua economia mensal</h6>
+                    <p className="mb-0">{`R$ 16.996,00`}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row my-2 report-print-width report-cards">
+              <h6>2027</h6>
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    ENEL
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 19.907,59`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg text-light border-0">
+                    TETO SOLAR
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Fatura mensal</h6>
+                    <p className="mb-0">{`R$ 2.662,89`}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4 mb-3 mb-lg-0">
+                <div className="card border-light-subtle">
+                  <div class="card-header report-card-bg-yellow text-light border-0">
+                    ECONOMIA
+                  </div>
+                  <div className="card-body py-4">
+                    <h6 className="fw-bold">Sua economia mensal</h6>
+                    <p className="mb-0">{`R$ 16.996,00`}</p>
                   </div>
                 </div>
               </div>
@@ -607,9 +662,11 @@ export default function SingleBusinessReport() {
         </section>
 
         <section className="report-section-height">
-          <div className="report-image-header py-4"></div>
-          <div className="my-4 d-flex flex-column align-items-center">
-            <h4 className="fw-semibold mb-5 text-primary text-center mt-4">
+          <div className="report-image-header py-3 fw-semibold text-center text-light">
+            <span>TETO SOLAR - (88) 99228-5655</span>
+          </div>
+          <div className="mt-4 d-flex flex-column align-items-center">
+            <h4 className="fw-semibold text-primary text-center mt-4">
               Financiamento
             </h4>
           </div>

@@ -49,7 +49,6 @@ const data = [
 export default function AnnualVariationChart(props) {
   return (
     <div className='annual-variation-chart annual-variation' style={{height: 256 }}>
-      <p>Estimativa de Geração Inversor X Microinversor</p>
       <ResponsiveContainer>
         <ComposedChart
           width={500}
