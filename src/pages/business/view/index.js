@@ -233,25 +233,12 @@ const ViewBusiness = () => {
 
   }
 
-  function updateDimensionamento() {
-    let data = {
-      cliente: name,
-      usuario: donoN,
-      fatorSolar: fatorS,
-      tipoTelhado: telhado,
-      tipoLigacao: tipoL,
-      modalidade: modalidade,
-      grupo: grupo,
-      subgrupo: subgrupo,
-      demFP: demandaFp,
-      energiaFp: energiaFp,
-      demandaP: demandaP,
-      energiaP: energiaP
+  function updateDimensionamento(businessId) {
 
 
-    }
-    navigate("/business/editDimens", { state: { data } })
-    data = {}
+
+    navigate("/business/editDimens/" + businessId)
+
 
   }
 
@@ -660,8 +647,8 @@ const ViewBusiness = () => {
                 <div className='cards border rounded-3'>
                   <div className='card-title'>
                     <h6 class="card-content-title mb-3 fw-semibold">Informações básicas</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento() }}>
-                      Edit Dimens
+                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => { updateDimensionamento(businessId) }}>
+
                       <BsFillPencilFill />
                     </button>
                   </div>
