@@ -74,7 +74,8 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="business">
-              <Route path="editDimens" element={<EditDimensionamento />} />
+              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
+
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
