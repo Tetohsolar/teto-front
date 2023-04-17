@@ -8,18 +8,15 @@
   width: 100%;
 }
 
-.report-header img {
-  width: 100%;
+.report-image-header {
   display: none;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 }
 
 .teto-solar-infographic {
   max-width: 768px;
   width: 100%;
-}
-
-.report-section-mb-5 {
-  margin-bottom: 48px;
 }
 
 .report-footer,
@@ -29,19 +26,28 @@
 
 .report-cover-data {
   max-width: 576px;
-  min-width: 360px;
+}
+
+.report-icon-star {
+  min-width: 24px;
+  width: 24px;
+}
+
+.report-cards {
+  width: 100%;
 }
 
 @media print {
   .report-section-bg {
-    background-image: url(../../assets/img/beautiful-alternative-energy-plant-with-solar-panels.jpg);
+    background-image: url(../../assets/img/solar-panels-background.jpg);
   }
 
   .report-logo {
     margin-top: 96px;
   }
 
-  .report-header img {
+  .report-image-header {
+    width: 100%;
     display: block;
   }
 
@@ -49,17 +55,13 @@
     margin-top: 48px;
   }
 
-  .teto-solar-infographic {
-    max-width: 992px;
-    width: 100%;
+  .teto-solar-infographic,
+  .report-print-width {
+    width: 94%;
   }
 
   .report-section-height {
-    height: calc(297mm + 94.5mm);
-  }
-
-  .report-section-mb-5 {
-    margin-bottom: 0;
+    height: calc(296.8mm);
   }
 
   .report-section h3 {
@@ -78,5 +80,4 @@
     justify-content: space-between;
     align-items: center;
   }
-
 }
