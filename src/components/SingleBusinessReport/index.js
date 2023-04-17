@@ -1,7 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import {toast} from 'react-toastify'
 import SolarSystemDescription from "../SolarSystemDescription";
 import GenerationAndPrice from "../GenerationAndPrice";
 import AnnualVariation from "../AnnualVariation";
@@ -27,12 +26,11 @@ export default function SingleBusinessReport() {
   const handlePrint = useReactToPrint({
       content: ()=> componentRef.current,
       documentTitle:"emp-data",
-      onAfterPrint: () => toast.success("Relatório salvo.")
     }
   )
 
   return (
-    <div className="p-3 mb-4 bg-white rounded-3">
+    <div className="p-3 mb-4 bg-white rounded-3 single-business-report">
       <div className="d-flex flex-column flex-sm-row justify-content-end mb-3">
         <button onClick={handlePrint} className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -44,9 +42,9 @@ export default function SingleBusinessReport() {
       </div>
       <article ref={componentRef}>
         <section className="mb-5">
-          <div className="row">
+          <div className="row ">
             <div className="mb-3 mb-sm-0">
-              <div className="card border-0">
+              <div className="card border-0 report-cover ">
                 <div className="report-bg card-body bg-primary d-flex flex-column align-items-center justify-content-center text-white py-5 text-center">
                   <img className="report-logo my-5"
                     src={bgReport}
