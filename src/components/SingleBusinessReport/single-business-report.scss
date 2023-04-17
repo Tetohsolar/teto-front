@@ -1,0 +1,94 @@
+.report-section-bg,
+.report-card-bg {
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+}
+
+.report-card-bg-yellow {
+  background-color: #f5a103;
+  background-image: linear-gradient(90deg, #f5a103 0%, #fad961 100%);
+}
+
+.report-card-bg-green {
+  background-color: #21bf7d;
+background-image: linear-gradient(160deg, #21bf7d 0%, #7ad9b1 100%);
+}
+
+.report-logo {
+  max-width: 360px;
+  width: 100%;
+}
+
+.report-image-header {
+  display: none;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+}
+
+.teto-solar-infographic {
+  max-width: 768px;
+  width: 100%;
+}
+
+.report-footer,
+.report-cover-image {
+  display: none;
+}
+
+.report-cover-data {
+  max-width: 576px;
+}
+
+.report-icon-star {
+  min-width: 24px;
+  width: 24px;
+}
+
+.report-cards {
+  width: 100%;
+}
+
+@media print {
+  .report-section-bg {
+    background-image: url(../../assets/img/solar-panels-background.jpg);
+  }
+
+  .report-logo {
+    margin-top: 96px;
+  }
+
+  .report-image-header {
+    width: 100%;
+    display: block;
+  }
+
+  .report-section h3 {
+    margin-top: 48px;
+  }
+
+  .teto-solar-infographic,
+  .report-print-width {
+    width: 94%;
+  }
+
+  .report-section-height {
+    height: calc(296.8mm);
+  }
+
+  .report-section h3 {
+    font-size: 2rem;
+  }
+
+  .report-footer,
+  .report-cover-image {
+    display: block;
+  }
+
+  .report-section-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
