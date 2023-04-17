@@ -43,7 +43,7 @@ const selectOptions = [
   },
   {
     value: "Ganhos",
-    label: "Fechados",
+    label: "Ganhos",
   },
   {
     value: "Perdas",
