@@ -10,7 +10,7 @@ export default function SixMonthsCharts(props) {
         <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card border-light-subtle">
             <div className="card-body">
-              <h6 className="card-title">Negócios fechados</h6>
+              <h6 className="card-title">Negócios ganhos</h6>
               <TinyBarGainChart />
             </div>
           </div>
