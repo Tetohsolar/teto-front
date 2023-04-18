@@ -12,7 +12,7 @@ const Widget = ({ type,valor }) => {
       data = {
         title: "Negócios deste mês",
         isMoney: true,
-        link: <Link to={"/"}>Ver todos</Link>,
+        link: <Link to={"/business/listmonth"}>Ver todos</Link>,
         icon: (
           <div className="widget-icon widget-wallet-icon">
           <BsHandThumbsUpFill size={25}/>
@@ -26,7 +26,7 @@ const Widget = ({ type,valor }) => {
       data = {
         title: "Negócios fechados neste mês",
         isMoney: true,
-        link: <Link to={"/"}>Ver todos</Link>,
+        link: <Link to={"/business/listfechadomonth"}>Ver todos</Link>,
         icon: (
           <div className="widget-icon widget-hand-thumbs-up-icon">
             <BsFillWalletFill size={25}/>
@@ -40,7 +40,7 @@ const Widget = ({ type,valor }) => {
       data = {
         title: "Negócios em aberto",
         isMoney: false,
-        link: <Link to={"/"}>Ver todos</Link>,
+        link: <Link to={"/business/listopenmonth"}>Ver todos</Link>,
         icon: (
           <div className="widget-icon widget-basket3-icon">
             <BsBasket3Fill size={25}/>
