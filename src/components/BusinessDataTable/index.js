@@ -38,6 +38,10 @@ const formatter = new Intl.NumberFormat('pt-BR', {
 const selectOptions = [
 
   {
+    value: "",
+    label: "Todos",
+  },
+  {
     value: "Aberta",
     label: "Em aberto",
   },
@@ -63,64 +67,8 @@ const BusinessDataTable = (props) => {
   const [name, setName] = useState([])
   const [data, setData] = useState([])
   const [numero, setNumero] = useState([])
-  const [abertos, setAbertos] = useState([])
   const navigate = useNavigate();
-  const [ClientId, setClientId] = useState('')
-  const [logradouro, setLogradouro] = useState('')
-  const [status, setStatus] = useState('')
-  const [donoN, setDonoN] = useState('')
-  const [numberP, setNumberP] = useState('')
-  const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const [modificadoD, setModificadoD] = useState('')
-  const [tipoPessoa, setTipoPessoa] = useState('')
-  const [documento, setDocumento] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [zap, setZap] = useState('')
-  const [email, setEmail] = useState('')
-  const [infAdc, setInfAdc] = useState('')
-  const [fatorS, setFatorS] = useState('')
-  const [telhado, setTelhado] = useState('')
-  const [tipoL, setTipoL] = useState('')
-  const [modalidade, setModalidade] = useState('')
-  const [grupo, setGrupo] = useState('')
-  const [subgrupo, setSubGrupo] = useState('')
-  const [demandaFp, setDemandaFp] = useState('')
-  const [energiaFp, setEnergiaFp] = useState('')
-  const [demandaP, setDemandaP] = useState('')
-  const [energiaP, setEnergiaP] = useState('')
-  const [tipoSistema, setTipoSistema] = useState('')
-  const [painelP, setPainelP] = useState('')
-  const [numeroP, setNumeroP] = useState('')
-  const [media, setMedia] = useState('')
-  const [potenciaS, setPotenciaS] = useState('')
-  const [marcaP, setMarcaP] = useState('')
-  const [modeloP, setModeloP] = useState('')
-  const [inversorMa, setInversorMa] = useState('')
-  const [inversorMo, setInversorMo] = useState('')
-  const [numeroInv, setNumeroInv] = useState('')
-  const [rua, setRua] = useState('')
-  const [bairro, setBairro] = useState('')
-  const [cep, setCep] = useState('')
-  const [estado, setEstado] = useState('')
-  const [cidade, setCidade] = useState('')
-  const { businessId } = useParams();
-  const [valor, setValor] = useState('')
-  const [consumo, setConsumo] = useState('')
-  const [geracaoSu, setGeracaoSu] = useState('')
-  const [precoKit, setPrecoKit] = useState('')
-  const [projeto, setProjeto] = useState('')
-  const [imposto, setImposto] = useState('')
-  const [montagem, setMontagem] = useState('')
-  const [comissaoVe, setComissaoVe] = useState('')
-  const [margem, setMargem] = useState('')
-  const [totalLu, setTotalLu] = useState('')
-  const [margemCa, setMargemCa] = useState('')
-  const [valorTotal, setValorTotal] = useState('')
-  const [valorComissao, setValorComissao] = useState('')
-  const [lucroReal, setLucroReal] = useState('')
-  const [lucroProjeto, setLucroProjeto] = useState('')
-  const [complemento, setcomplemento] = useState('')
-  const [situation, setSituation] = useState('Aberta');
+  const [situation, setSituation] = useState(props.situation);
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
   const [idSelected,setIdSelected] = useState('');
@@ -128,9 +76,12 @@ const BusinessDataTable = (props) => {
   
   useEffect(() => {
 
-
+   
+   if (props.situation){
+    setSituation(props.situation)
+   } 
    list("%");
-   setAbertos()
+  
    
 
     return () => { }
@@ -162,69 +113,6 @@ const BusinessDataTable = (props) => {
       })
   }
 
-  async function loadbId(id) {
-
-    await api.get('/business/get/' + id, {
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-
-    }).then((response) => {
-      setName(response.data["Client.fantasy"])
-      setStatus(response.data.situation)
-      setNumberP(response.data.number)
-      setDonoN(response.data['User.name'])
-      //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
-      setModificadoD(format(new Date(response.data.updatedAt), 'dd/MM/yyyy'))
-      setTipoPessoa(response.data['Client.tipo'])
-      setDocumento(response.data['Client.document'])
-      setTelefone(response.data['Client.phone'])
-      setZap(response.data['Client.zap'])
-      setEmail(response.data['Client.email'])
-      setInfAdc(response.data['Client.addInformation'])
-      setFatorS(response.data.sunIndex)
-      setTelhado(response.data.roof)
-      setTipoL(response.data.typeConnection)
-      setModalidade(response.data.modality)
-      setGrupo(response.data.group)
-      setSubGrupo(response.data.subgroup)
-      setDemandaFp(response.data.demadaFp)
-      setEnergiaFp(response.data.energiaFp)
-      setDemandaP(response.data.demandaP)
-      setEnergiaP(response.data.energiaP)
-      setTipoSistema(response.data.type)
-      setPainelP(response.data.panelpower)
-      setNumeroP(response.data.numberborder)
-      setMedia(response.data.avgmonth)
-      setPotenciaS(response.data.systempower)
-      setMarcaP(response.data['placa_negocio.brand'])
-      setModeloP(response.data['placa_negocio.description'])
-      setInversorMa(response.data['inversor_negocio.brand'])
-      setInversorMo(response.data['inversor_negocio.brand'])
-      setNumeroInv(response.data.numberInverMicro)
-      setValor(formatter.format(response.data.amount))
-      setConsumo(response.data.avgconsumption)
-      setGeracaoSu(response.data.suggestedGeneration)
-      setPrecoKit(response.data.kitprice)
-      setProjeto(response.data.project)
-      setImposto(response.data.tax)
-      setMontagem(response.data.assembled)
-      setComissaoVe(response.data.sellercomission)
-      setMargem(response.data.margin)
-      setTotalLu(response.data.amountcost)
-      setMargemCa(response.data.marginCalculate)
-      setValorTotal(response.data.amount)
-      setValorComissao(response.data.valuesellercomission)
-      setLucroProjeto(response.data.profit)
-      setLucroReal(response.data.realProfit)
-      setcomplemento(response.data.complement)
-      setBusiness(response.data.shares)
-      setClientId(response.data.ClientId)
-
-    }).catch((error) => { console.log(error) })
-
-  }
-    
 
   async function list(name) {
 
@@ -364,11 +252,15 @@ const paginate = ({ selected }) => {
         <div className="filtro">
           <input type="numero" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" onChange={(e) => setNumero(e.target.value)} onKeyUp={(e) => { list(name) }} />
           <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
+         
+         {props.typeReport !== 'mes' ?
+          
           <DateInput className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" onChange={(e) => { setData(e.target.value) }}
             onKeyUp={(e) => {
               list(name)
             }} />
 
+        : ""}
           <button className="btn btn-primary filtro2" type="button" id="button-addon2">
             <span className="d-flex align-items-center">
               <VscSearch />
@@ -376,18 +268,15 @@ const paginate = ({ selected }) => {
           </button>
         </div>
 
-
-
-
-
-
-
-        <form className="mb-3 justify-content-end">
+         <form className="mb-3 justify-content-end">
           <div className="row">
             <div className="col-md-auto">
-              <select className="form-select" aria-label="Selecionar" onChange={(e) => setSituation(e.target.value)} onKeyUp={find} onClick={find}>
+            {props.typeReport !== 'mes' ?
+              <select className="form-select" disabled={props.filtro} aria-label="Selecionar" onChange={(e) => setSituation(e.target.value)} onKeyUp={find} onClick={find}>
                 {selectOptions.map((option) => (<option key={option.value} value={option.value} >{option.label}</option>))}
               </select>
+              :""}
+
             </div>
           </div>
         </form>
