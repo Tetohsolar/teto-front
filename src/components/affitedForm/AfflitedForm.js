@@ -545,26 +545,26 @@ const AfflitedForm = (props) => {
              
               <div className="col-md-3"  >
                 <label htmlFor="complementCostI" className="form-label ">
-                  Complementar
+                  Complementar (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
                   className="form-control number" value={complementCostI || ''} onChange={(e) => setcustoComplementari(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="projectCostI" className="form-label ">
-                  Projeto
+                  Projeto (R$)
                 </label>
                 <NumericFormat decimalScale={2} decimalSeparator="," placeholder="" className="form-control number" value={projectCostI || ''} onChange={(e) => setProjetoinv(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="assemblyCostI" className="form-label ">
-                  Montagem do Kit
+                  Montagem do Kit (R$)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostI || ''} onChange={(e) => setMontagemi(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="taxI" className="form-label ">
-                  Taxa Adicional
+                  Taxa Adicional (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxI || ''} onChange={(e) => setTaxainv(e.target.value)} />
               </div>
@@ -575,25 +575,25 @@ const AfflitedForm = (props) => {
               
               <div className="col-md-3"  >
                 <label htmlFor="complementCostM" className="form-label ">
-                  Complementar
+                  Complementar (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={complementCostM || ''} onChange={(e) => setcustoComplementarm(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="projectCostM" className="form-label ">
-                  Projeto
+                  Projeto (R$)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={projectCostM || ''} onChange={(e) => setProjetom(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="assemblyCostM" className="form-label ">
-                  Montagem do Kit
+                  Montagem do Kit (R$)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={assemblyCostM || ''} onChange={(e) => setMontagemm(e.target.value)} />
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="taxM" className="form-label ">
-                  Taxa Adicional
+                  Taxa Adicional (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
