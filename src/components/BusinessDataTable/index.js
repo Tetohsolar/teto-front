@@ -280,6 +280,10 @@ const BusinessDataTable = (props) => {
 
   }
 
+  async function createreport(id){
+    navigate('/business/report/' + id)
+    }
+    
 
   function onPageChanged(data) {
 
@@ -420,12 +424,11 @@ const paginate = ({ selected }) => {
                           <td>
 
                             <div className="d-flex gap-2 justify-content-end">
-                              <button
-                                type="button"
+                            <button
+                                type="button" onClick={()=> {createreport(item.id)}}
                                 className="btn btn-light btn-sm text-primary d-flex align-items-center"
                               >
-
-                                <BsFillPieChartFill />
+                                <BsFillSendFill/>
                               </button>
                               {/* <button
                                 type="button"

@@ -53,11 +53,6 @@ const indicadoresFinanceirosData = [
   { id: 48484, name: "PayBack", value: "4 anos e 1 Meses" },
 ];
 
-const pagamentoData = {
-  value1: "R$ 718.880,00",
-  value2: "R$ 89.860,00",
-  value3: "R$ 89.860,00",
-};
 
 const economiaData = [
   {
@@ -375,7 +370,7 @@ export default function SingleBusinessReport() {
                     <tbody>
                       <tr>
                         <td>{numberP}</td>
-                        <td>{potenciaS} Kwh</td>
+                        <td>{potenciaS} kWp</td>
                       </tr>
                     </tbody>
                   </table>
