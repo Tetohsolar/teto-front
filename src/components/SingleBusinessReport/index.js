@@ -11,6 +11,16 @@ import {
 } from "react-icons/bs";
 
 import "./single-business-report.scss";
+import { useEffect } from "react";
+import { useState } from 'react';
+import { useContext } from "react";
+import { AuthContext } from '../../context/AuthContext';
+import { format } from 'date-fns';
+import api from "../../api";
+import { useNavigate, useParams } from "react-router";
+
+
+
 
 const proposta = "202303129";
 const inversor = "237,60 kWp";
@@ -102,12 +112,225 @@ const economiaData = [
   },
 ];
 
+ 
+
 export default function SingleBusinessReport() {
   const componentRef = useRef();
+  
+
+  const [ClientId, setClientId] = useState('')
+  const [name, setName] = useState('')
+  const [status, setStatus] = useState('')
+  const [donoN, setDonoN] = useState('')
+  const [numberP, setNumberP] = useState('')
+  const { token } = useContext(AuthContext)
+  
+  const [modificadoD, setModificadoD] = useState('')
+  const [tipoPessoa, setTipoPessoa] = useState('')
+  const [documento, setDocumento] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [zap, setZap] = useState('')
+  const [email, setEmail] = useState('')
+  const [infAdc, setInfAdc] = useState('')
+  const [fatorS, setFatorS] = useState('')
+  const [telhado, setTelhado] = useState('')
+  const [tipoL, setTipoL] = useState('')
+  const [modalidade, setModalidade] = useState('')
+  const [grupo, setGrupo] = useState('')
+  const [subgrupo, setSubGrupo] = useState('')
+  const [demandaFp, setDemandaFp] = useState('')
+  const [energiaFp, setEnergiaFp] = useState('')
+  const [demandaP, setDemandaP] = useState('')
+  const [energiaP, setEnergiaP] = useState('')
+  const [tipoSistema, setTipoSistema] = useState('')
+  const [painelP, setPainelP] = useState('')
+  const [numeroP, setNumeroP] = useState('')
+  const [media, setMedia] = useState('')
+  const [potenciaS, setPotenciaS] = useState('')
+  const [marcaP, setMarcaP] = useState('')
+  const [modeloP, setModeloP] = useState('')
+  const [inversorMa, setInversorMa] = useState('')
+  const [inversorMo, setInversorMo] = useState('')
+  const [numeroInv, setNumeroInv] = useState('')
+  const [rua, setRua] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [cep, setCep] = useState('')
+  const [estado, setEstado] = useState('')
+  const { businessId } = useParams();
+  const [valor, setValor] = useState('')
+  const [consumo, setConsumo] = useState('')
+  const [geracaoSu, setGeracaoSu] = useState('')
+  const [precoKit, setPrecoKit] = useState('')
+  const [projeto, setProjeto] = useState('')
+  const [imposto, setImposto] = useState('')
+  const [montagem, setMontagem] = useState('')
+  const [comissaoVe, setComissaoVe] = useState('')
+  const [margem, setMargem] = useState('')
+  const [totalLu, setTotalLu] = useState('')
+  const [margemCa, setMargemCa] = useState('')
+  const [valorTotal, setValorTotal] = useState('')
+  const [valorComissao, setValorComissao] = useState('')
+  const [lucroReal, setLucroReal] = useState('')
+  const [lucroProjeto, setLucroProjeto] = useState('')
+  const [complemento, setcomplemento] = useState('')
+  const [situation, setSituation] = useState([]);
+  const [business, setBusiness] = useState([]);
+  const [client, setClient] = useState([]);
+  const [idSelected, setIdSelected] = useState('');
+  const navigate = useNavigate();
+  const[products,setProducts] = useState([]);
+  const[geracaoDesejada,setGeracaoDesejada] = useState('');
+  const[cip,setCip] = useState('');
+  const[bandeira,setBandeira] = useState('');
+  const[total2,setTotal2] = useState('');
+  const[marg2,setMarg2] = useState('');
+  const[comiss2,setComiss2] = useState('');
+  const[prof2,setProf2] = useState ('')
+  const[profitR2,setProfitR2] = useState('')
+  const [margR2,setMargR2] =useState ('')
+  const[total4,setTotal4] = useState('');
+  const[marg4,setMarg4] = useState('');
+  const[comiss4,setComiss4] = useState('');
+  const[prof4,setProf4] = useState ('')
+  const[profitR4,setProfitR4] = useState('')
+  const [margtR4,setMargtR4] =useState ('')
+  const[cidade,setCidade] = useState('')
+  const [entrada80,setEntrada80] = useState ('')
+  const [entrada10,setEntrada10] =useState('')
+  const { reportId } = useParams();
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `teto_solar_proposta_${proposta}`,
+    documentTitle: `teto_solar_proposta_${numberP}`,
   });
+
+  useEffect(() => {
+    loadbId(reportId)
+    return () => { }
+  }, [])
+
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
+  
+  
+  async function loadbId(id) {
+
+    await api.get('/business/get/' + id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setName(response.data["Client.fantasy"])
+      setStatus(response.data.situation)
+      setNumberP(response.data.number)
+      setDonoN(response.data['User.name'])
+      //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
+      setModificadoD(format(new Date(response.data.updatedAt), 'dd/MM/yyyy'))
+      setTipoPessoa(response.data['Client.tipo'])
+      setDocumento(response.data['Client.document'])
+      setTelefone(response.data['Client.phone'])
+      setZap(response.data['Client.zap'])
+      setEmail(response.data['Client.email'])
+      setInfAdc(response.data['Client.addInformation'])
+      setFatorS(response.data.sunIndex)
+      setTelhado(response.data.roof)
+      setTipoL(response.data.typeConnection)
+      setModalidade(response.data.modality)
+      setGrupo(response.data.group)
+      setSubGrupo(response.data.subgroup)
+      setDemandaFp(response.data.demadaFp)
+      setEnergiaFp(response.data.energiaFp)
+      setDemandaP(response.data.demandaP)
+      setEnergiaP(response.data.energiaP)
+      setTipoSistema(response.data.type)
+      setPainelP(response.data.panelpower)
+      setNumeroP(response.data.numberborder)
+      setMedia(response.data.avgmonth)
+      setPotenciaS(response.data.systempower)
+      setMarcaP(response.data['placa_negocio.brand'])
+      setModeloP(response.data['placa_negocio.description'])
+      setInversorMa(response.data['inversor_negocio.brand'])
+      setInversorMo(response.data['inversor_negocio.brand'])
+      setNumeroInv(response.data.numberInverMicro)
+      setValor(formatter.format(response.data.amount))
+      loadAdd(response.data.ClientId)
+      setConsumo(response.data.avgconsumption)
+      setGeracaoSu(response.data.suggestedGeneration)
+      setPrecoKit(response.data.kitprice)
+      setProjeto(response.data.project)
+      setImposto(response.data.tax)
+      setMontagem(response.data.assembled)
+      setComissaoVe(response.data.sellercomission)
+      setMargem(response.data.margin)
+      setTotalLu(response.data.amountcost)
+      setMargemCa(response.data.marginCalculate)
+      setValorTotal(response.data.amount)
+      setValorComissao(response.data.valuesellercomission)
+      setLucroProjeto(response.data.profit)
+      setLucroReal(response.data.realProfit)
+      setcomplemento(response.data.complement)
+      setBusiness(response.data.shares)
+      setClientId(response.data.ClientId)
+      setProducts(response.data.products)
+      setGeracaoDesejada(response.data.suggestedDesired)
+      setCip(response.data.cip)
+      setBandeira(response.data.flag)
+      setTotal2(response.data.total2);
+      setMarg2(response.data.marg2)
+      setComiss2(response.data.comiss2)
+      setProf2(response.data.prof2)
+      setProfitR2(response.data.profitR2)
+      setMargR2 (response.data.margR2)
+      setTotal4(response.data.total4)
+      setMarg4(response.data.marg4)
+      setComiss4(response.data.comiss4)
+      setProf4(response.data.prof4)
+      setProfitR4(response.data.profitR4)
+      setMargtR4(response.data.margtR4)
+      let oitenta = response.data.amount * 0.8
+      setEntrada80((formatter.format(oitenta)))
+      let dez = response.data.amount * 0.1
+      setEntrada10((formatter.format(dez)))
+     
+      
+
+
+    }).catch((error) => { console.log(error) })
+
+  }
+
+  async function loadAdd(Id) {
+
+    await api.get('/client/get/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setClient(response.data)
+      console.log(response.data.document)
+    })
+
+    await api.get('/client/get/add/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setRua(response.data.street)
+      setBairro(response.data.neighborhood)
+      setCep(response.data.postcode)
+      setEstado(response.data.state)
+      setCidade(response.data.city)
+
+    })
+
+  }
+
+  
 
   return (
     <div className="p-3 mb-4 bg-white rounded-3 single-business-report">
@@ -137,7 +360,7 @@ export default function SingleBusinessReport() {
             <div className="report-cover-data mx-2">
               <div className="p-4 bg-white rounded-3 mb-3">
                 <h5 className="card-content-title mb-0 text-uppercase text-primary">
-                  Ass. de Pesquisa e Pres. de Ecos. Aquático
+                  {name}
                 </h5>
               </div>
               <div className="bg-white rounded-3 border">
@@ -146,13 +369,13 @@ export default function SingleBusinessReport() {
                     <thead>
                       <tr>
                         <th scope="col">Proposta</th>
-                        <th scope="col">Inversor</th>
+                        <th scope="col">{tipoSistema}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{proposta}</td>
-                        <td>{inversor}</td>
+                        <td>{numberP}</td>
+                        <td>{potenciaS} Kwh</td>
                       </tr>
                     </tbody>
                   </table>
@@ -161,7 +384,7 @@ export default function SingleBusinessReport() {
             </div>
 
             <div className="report-footer my-3">
-              <p className="fs-5 fw-semibold mb-2">Caucaia-CE</p>
+              <p className="fs-5 fw-semibold mb-2">{cidade}</p>
               <p className="fs-5 fw-semibold">05/04/2023</p>
             </div>
           </div>
@@ -430,7 +653,7 @@ export default function SingleBusinessReport() {
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                    Valor do Investimento: <span>{valor}</span>
                   </div>
                   <div className="card-body">
                     <div class="table-responsive">
@@ -474,7 +697,7 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">80%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value1}</p>
+                    <p className="mb-0 fs-4">{entrada80}</p>
                   </div>
                 </div>
               </div>
@@ -486,7 +709,7 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">10%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value2}</p>
+                    <p className="mb-0 fs-4">{entrada10}</p>
                   </div>
                 </div>
               </div>
@@ -498,7 +721,7 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">10%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value3}</p>
+                    <p className="mb-0 fs-4">{entrada10}</p>
                   </div>
                 </div>
               </div>
