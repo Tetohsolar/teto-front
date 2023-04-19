@@ -67,8 +67,6 @@ const Home = () => {
       }
     }
 
-
-
     await api.post('business/lastMonth', filtro,
       {
         headers: {
@@ -166,11 +164,8 @@ const Home = () => {
 
              });
 
-
             setDataGraph(saida)
             
-
-
           } else {
             const currentDate = new Date();
             const currentMonth = currentDate.getMonth() + 1;
