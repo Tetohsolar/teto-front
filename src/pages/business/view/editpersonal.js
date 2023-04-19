@@ -28,7 +28,6 @@ const EditPersonalData = (prop) => {
 
   function validaCampos(name, phone, documento, cep) {
 
-
     if (name === "") {
       toast.error("Nome É obrigatório", {
         autoClose: 1000,
@@ -119,13 +118,11 @@ const EditPersonalData = (prop) => {
 
     }
 
-
     await save(tipoPessoaInt, nof, "", cpf, phone, whatsapp, cep, estado, cidade, rua, bairro, inf_Adicionais,
       email, ClientId, '0', numero).then()
   }
 
   async function save(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
-
 
     const json = {
       fantasy: name,

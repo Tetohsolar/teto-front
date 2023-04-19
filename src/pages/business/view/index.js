@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
-import Widget from '../../../components/Widget';
 import { useEffect } from 'react';
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
@@ -16,7 +15,6 @@ import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import EditPersonalData from './editpersonal';
 import MyModal from '../../../components/communs/ModalDelete';
 import { toast } from 'react-toastify';
-import EditDimensionamento from '../editDimens';
 import EditSituationBusiness from '../../../components/modalSituation';
 
 const ViewBusiness = () => {
@@ -76,27 +74,26 @@ const ViewBusiness = () => {
   const [lucroReal, setLucroReal] = useState('')
   const [lucroProjeto, setLucroProjeto] = useState('')
   const [complemento, setcomplemento] = useState('')
-  const [situation, setSituation] = useState([]);
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
   const [idSelected, setIdSelected] = useState('');
   const navigate = useNavigate();
-  const[products,setProducts] = useState([]);
-  const[geracaoDesejada,setGeracaoDesejada] = useState('');
-  const[cip,setCip] = useState('');
-  const[bandeira,setBandeira] = useState('');
-  const[total2,setTotal2] = useState('');
-  const[marg2,setMarg2] = useState('');
-  const[comiss2,setComiss2] = useState('');
-  const[prof2,setProf2] = useState ('')
-  const[profitR2,setProfitR2] = useState('')
-  const [margR2,setMargR2] =useState ('')
-  const[total4,setTotal4] = useState('');
-  const[marg4,setMarg4] = useState('');
-  const[comiss4,setComiss4] = useState('');
-  const[prof4,setProf4] = useState ('')
-  const[profitR4,setProfitR4] = useState('')
-  const [margtR4,setMargtR4] =useState ('')
+  const [products, setProducts] = useState([]);
+  const [geracaoDesejada, setGeracaoDesejada] = useState('');
+  const [cip, setCip] = useState('');
+  const [bandeira, setBandeira] = useState('');
+  const [total2, setTotal2] = useState('');
+  const [marg2, setMarg2] = useState('');
+  const [comiss2, setComiss2] = useState('');
+  const [prof2, setProf2] = useState('')
+  const [profitR2, setProfitR2] = useState('')
+  const [margR2, setMargR2] = useState('')
+  const [total4, setTotal4] = useState('');
+  const [marg4, setMarg4] = useState('');
+  const [comiss4, setComiss4] = useState('');
+  const [prof4, setProf4] = useState('')
+  const [profitR4, setProfitR4] = useState('')
+  const [margtR4, setMargtR4] = useState('')
 
 
   const formatter = new Intl.NumberFormat('pt-BR', {
@@ -145,7 +142,7 @@ const ViewBusiness = () => {
   function editypebusiness(id) {
     navigate("/business/view/edittypebusiness/" + id)
   }
-  
+
   async function loadAdd(Id) {
 
     await api.get('/client/get/' + Id, {
@@ -251,15 +248,13 @@ const ViewBusiness = () => {
       setComiss2(response.data.comiss2)
       setProf2(response.data.prof2)
       setProfitR2(response.data.profitR2)
-      setMargR2 (response.data.margR2)
+      setMargR2(response.data.margR2)
       setTotal4(response.data.total4)
       setMarg4(response.data.marg4)
       setComiss4(response.data.comiss4)
       setProf4(response.data.prof4)
       setProfitR4(response.data.profitR4)
       setMargtR4(response.data.margtR4)
-      
-
 
     }).catch((error) => { console.log(error) })
 
@@ -268,14 +263,11 @@ const ViewBusiness = () => {
   function updateDimensionamento(businessId) {
 
 
-
     navigate("/business/editDimens/" + businessId)
-
 
   }
 
-  function hanndlerChangeSituation(){
-
+  function hanndlerChangeSituation() {
   }
 
   return (
@@ -292,18 +284,16 @@ const ViewBusiness = () => {
 
               <div className="row topResume">
                 <div className="col-lg-4 card-mateus rounded-3">
-                  <h6 class="card-content-title mb-3 fw-semibold">  Status  </h6> 
+                  <h6 class="card-content-title mb-3 fw-semibold">  Status  </h6>
 
-                  <span className="badge rounded-pill text-bg-lightblue text-primary">{status} 
-                  <button onClick={hanndlerChangeSituation} 
-                  className="btn btn-light btn-sm text-primary " data-bs-toggle="modal" data-bs-target="#modalTypeSituation">
-                     <BsFillPencilFill/></button> </span> 
+                  <span className="badge rounded-pill text-bg-lightblue text-primary">{status}
+                    <button onClick={hanndlerChangeSituation}
+                      className="btn btn-light btn-sm text-primary " data-bs-toggle="modal" data-bs-target="#modalTypeSituation">
+                      <BsFillPencilFill /></button> </span>
 
-                     <EditSituationBusiness  setStatus={setStatus} situation = {status} businessId={businessId} uc=" o rateio" onClick={handleAfterDel} />
-                     
+                  <EditSituationBusiness setStatus={setStatus} situation={status} businessId={businessId} uc=" o rateio" onClick={handleAfterDel} />
+
                 </div>
-
-               
 
                 <div className="col-lg-4 card-mateus rounded-3">
                   <h6 class="card-content-title mb-3 fw-semibold">Nº da proposta </h6>
@@ -479,7 +469,7 @@ const ViewBusiness = () => {
                     </button>
                   </div>
                   <table className='table_view'>
-                  <tr className='linhabaixo tamanho-tr'>
+                    <tr className='linhabaixo tamanho-tr'>
                       Consumo (kWh):
                       <td>
                       </td>
@@ -565,7 +555,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label> {numeroFormatado.format(margem)+' %'}  </label>
+                        <label> {numeroFormatado.format(margem) + ' %'}  </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -640,7 +630,7 @@ const ViewBusiness = () => {
                 <div className="mb-3 mb-sm-0">
                   <div className="card border-light-subtle">
                     <div className="card-body">
-                     
+
                       <div className="table-responsive">
                         <table className="table caption-top table-sm">
                           <thead>
@@ -651,25 +641,25 @@ const ViewBusiness = () => {
                               <th scope="col" className='alinhaCentro'>Margem (%)  </th>
                               <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
                               <th scope="col" className='alinhaCentro'>Projeto desconto (R$) </th>
-        
+
                               <th scope="col"></th>
                             </tr>
                           </thead>
 
                           <tbody>
-                            
-                                <tr key={businessId}>
-                              
-                                  <td className='alinhaDireita'>{formatter.format(prof2)} </td>
-                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR2)}</td>
-                                  <td className='alinhaDireita'>{formatter.format(marg2)}</td>
-                                  <td className='alinhaDireita'>{numeroFormatado.format(margR2)}</td>
-                                  <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
-                                  <td className='alinhaDireita'> {formatter.format(total2)}</td>
-                                </tr>
-                              </tbody>
+
+                            <tr key={businessId}>
+
+                              <td className='alinhaDireita'>{formatter.format(prof2)} </td>
+                              <td className='alinhaDireita'>{numeroFormatado.format(profitR2)}</td>
+                              <td className='alinhaDireita'>{formatter.format(marg2)}</td>
+                              <td className='alinhaDireita'>{numeroFormatado.format(margR2)}</td>
+                              <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
+                              <td className='alinhaDireita'> {formatter.format(total2)}</td>
+                            </tr>
+                          </tbody>
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
@@ -701,35 +691,35 @@ const ViewBusiness = () => {
                 <div className="mb-3 mb-sm-0">
                   <div className="card border-light-subtle">
                     <div className="card-body">
-                     
+
                       <div className="table-responsive">
-                        
+
                         <table className="table caption-top table-sm">
                           <thead>
                             <tr>
-                            <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
+                              <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
                               <th scope="col" className='alinhaCentro'>Lucro (%) </th>
                               <th scope="col" className='alinhaCentro'>Margem (R$) </th>
                               <th scope="col" className='alinhaCentro'>Margem (%)  </th>
                               <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
                               <th scope="col" className='alinhaCentro'>Projeto desconto (R$)</th>
-                       
+
                               <th scope="col"></th>
                             </tr>
                           </thead>
 
                           <tbody>
-                            
-                                <tr key={businessId}>
-                                  
-                                  <td className='alinhaDireita'>{formatter.format(prof4)}</td>
-                                  <td className='alinhaDireita'>{numeroFormatado.format(profitR4)}</td>
-                                  <td className='alinhaDireita'>{formatter.format(marg4)}</td>
-                                  <td className='alinhaDireita'>{numeroFormatado.format(margtR4)}</td>
-                                  <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
-                                  <td className='alinhaDireita'>{formatter.format(total4)}</td>
-                                </tr>
-                              </tbody>
+
+                            <tr key={businessId}>
+
+                              <td className='alinhaDireita'>{formatter.format(prof4)}</td>
+                              <td className='alinhaDireita'>{numeroFormatado.format(profitR4)}</td>
+                              <td className='alinhaDireita'>{formatter.format(marg4)}</td>
+                              <td className='alinhaDireita'>{numeroFormatado.format(margtR4)}</td>
+                              <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
+                              <td className='alinhaDireita'>{formatter.format(total4)}</td>
+                            </tr>
+                          </tbody>
                         </table>
                       </div>
                     </div>
@@ -868,15 +858,15 @@ const ViewBusiness = () => {
                     <h6 class="card-content-title mb-3 fw-semibold">Tipo do sistema</h6>
                     <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
 
-                  editypebusiness(businessId)
-}}>
+                      editypebusiness(businessId)
+                    }}>
                       <BsFillPencilFill />
                     </button>
                   </div>
                   <table className='table_view'>
 
                     <tr className='linhabaixo tamanho-tr'>
-                      Tipo de sistema: 
+                      Tipo de sistema:
                       <td>
                       </td>
                       <td>
@@ -933,8 +923,6 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                   </table>
-
-
                 </div>
 
               </div>
@@ -984,7 +972,7 @@ const ViewBusiness = () => {
                               <th scope="col" >Modelo</th>
                               <th scope="col" className='alinhaDireita' >Potência</th>
                               <th scope="col" className='alinhaDireita'>Quantidade</th>
-                           
+
                               <th scope="col"></th>
                             </tr>
                           </thead>
@@ -995,8 +983,8 @@ const ViewBusiness = () => {
                               return (
                                 <tr key={item.id}>
 
-                              
-                                  <td>{item.type==='P'?"Placa": item.type==="M"?"MicroInversor":"Inversor" }</td>
+
+                                  <td>{item.type === 'P' ? "Placa" : item.type === "M" ? "MicroInversor" : "Inversor"}</td>
                                   <td>{item.brand}</td>
                                   <td>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
