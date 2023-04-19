@@ -26,18 +26,6 @@ const proposta = "202303129";
 const inversor = "237,60 kWp";
 const cidade = "Caucaia";
 
-const detalhesSistemaSolarData = [
-  { id: 15465, name: "Painel solar J.A. 550W", value: 432 },
-  { id: 14656, name: " Inversor Growatt MAC 60KTL3-X LV", value: 3 },
-  { id: 15588, name: "Estrutura para Estrutura em Solo", value: "Incluso" },
-  { id: 16565, name: "Geração média mensal (1ºano)", value: "30.015 kWh" },
-];
-
-const caracteristicasData = [
-  { id: 26449, name: "Área necessária", value: "689 m²" },
-  { id: 24654, name: " Peso do sistema", value: "11.880 kg" },
-  { id: 25616, name: "Porc. atendida", value: "91%" },
-];
 
 const garantiasData = [
   { id: 36584, name: "Painel Solar (eficiência)", value: "25 anos" },
@@ -46,158 +34,42 @@ const garantiasData = [
   { id: 33649, name: "Instalação", value: "1 ano" },
 ];
 
-const indicadoresFinanceirosData = [
-  { id: 45166, name: "Caixa Acum.", value: "R$ 59.817.265,54" },
-  { id: 48499, name: "V.P.L.", value: "R$ 1.711.892,79" },
-  { id: 44848, name: "T.I.R.", value: "27%" },
-  { id: 48484, name: "PayBack", value: "4 anos e 1 Meses" },
-];
-
-
-const economiaData = [
-  {
-    id: 56565,
-    ano: "2023",
-    id: 56546,
-    enel: "R$ 19.907,59",
-    id: 58554,
-    tetoSolar: "R$ 2.662,89",
-    id: 50515,
-    economia: "R$ 16.996,00",
-  },
-  {
-    id: 56546,
-    ano: "2024",
-    id: 55110,
-    enel: "R$ 20.902,97",
-    id: 50654,
-    tetoSolar: "R$ 2.931,85",
-    id: 50487,
-    economia: "R$ 17.722,41",
-  },
-  {
-    id: 50640,
-    ano: "2025",
-    id: 50708,
-    enel: "R$ 21.948,12",
-    id: 50571,
-    tetoSolar: "R$ 3.221,06",
-    id: 51817,
-    economia: "R$ 18.478,36",
-  },
-  {
-    id: 58745,
-    ano: "2026",
-    id: 51978,
-    enel: "R$ 23.045,52",
-    id: 51989,
-    tetoSolar: "R$ 3.531,84",
-    id: 50564,
-    economia: "R$ 19.264,99",
-  },
-  {
-    id: 59789,
-    ano: "2027",
-    id: 50645,
-    enel: "R$ 24.197,80",
-    id: 50659,
-    tetoSolar: "R$ 3.865,65",
-    id: 509594,
-    economia: "R$ 20.083,44",
-  },
-];
-
- 
 
 export default function SingleBusinessReport() {
   const componentRef = useRef();
   
 
-  const [ClientId, setClientId] = useState('')
   const [name, setName] = useState('')
-  const [status, setStatus] = useState('')
-  const [donoN, setDonoN] = useState('')
   const [numberP, setNumberP] = useState('')
   const { token } = useContext(AuthContext)
-  
-  const [modificadoD, setModificadoD] = useState('')
-  const [tipoPessoa, setTipoPessoa] = useState('')
-  const [documento, setDocumento] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [zap, setZap] = useState('')
-  const [email, setEmail] = useState('')
-  const [infAdc, setInfAdc] = useState('')
-  const [fatorS, setFatorS] = useState('')
-  const [telhado, setTelhado] = useState('')
-  const [tipoL, setTipoL] = useState('')
-  const [modalidade, setModalidade] = useState('')
-  const [grupo, setGrupo] = useState('')
-  const [subgrupo, setSubGrupo] = useState('')
-  const [demandaFp, setDemandaFp] = useState('')
-  const [energiaFp, setEnergiaFp] = useState('')
-  const [demandaP, setDemandaP] = useState('')
-  const [energiaP, setEnergiaP] = useState('')
   const [tipoSistema, setTipoSistema] = useState('')
-  const [painelP, setPainelP] = useState('')
-  const [numeroP, setNumeroP] = useState('')
-  const [media, setMedia] = useState('')
   const [potenciaS, setPotenciaS] = useState('')
-  const [marcaP, setMarcaP] = useState('')
-  const [modeloP, setModeloP] = useState('')
-  const [inversorMa, setInversorMa] = useState('')
-  const [inversorMo, setInversorMo] = useState('')
-  const [numeroInv, setNumeroInv] = useState('')
-  const [rua, setRua] = useState('')
-  const [bairro, setBairro] = useState('')
-  const [cep, setCep] = useState('')
-  const [estado, setEstado] = useState('')
-  const { businessId } = useParams();
   const [valor, setValor] = useState('')
-  const [consumo, setConsumo] = useState('')
-  const [geracaoSu, setGeracaoSu] = useState('')
-  const [precoKit, setPrecoKit] = useState('')
-  const [projeto, setProjeto] = useState('')
-  const [imposto, setImposto] = useState('')
-  const [montagem, setMontagem] = useState('')
-  const [comissaoVe, setComissaoVe] = useState('')
-  const [margem, setMargem] = useState('')
-  const [totalLu, setTotalLu] = useState('')
-  const [margemCa, setMargemCa] = useState('')
-  const [valorTotal, setValorTotal] = useState('')
-  const [valorComissao, setValorComissao] = useState('')
-  const [lucroReal, setLucroReal] = useState('')
-  const [lucroProjeto, setLucroProjeto] = useState('')
-  const [complemento, setcomplemento] = useState('')
-  const [situation, setSituation] = useState([]);
-  const [business, setBusiness] = useState([]);
-  const [client, setClient] = useState([]);
-  const [idSelected, setIdSelected] = useState('');
-  const navigate = useNavigate();
-  const[products,setProducts] = useState([]);
-  const[geracaoDesejada,setGeracaoDesejada] = useState('');
-  const[cip,setCip] = useState('');
-  const[bandeira,setBandeira] = useState('');
-  const[total2,setTotal2] = useState('');
-  const[marg2,setMarg2] = useState('');
-  const[comiss2,setComiss2] = useState('');
-  const[prof2,setProf2] = useState ('')
-  const[profitR2,setProfitR2] = useState('')
-  const [margR2,setMargR2] =useState ('')
-  const[total4,setTotal4] = useState('');
-  const[marg4,setMarg4] = useState('');
-  const[comiss4,setComiss4] = useState('');
-  const[prof4,setProf4] = useState ('')
-  const[profitR4,setProfitR4] = useState('')
-  const [margtR4,setMargtR4] =useState ('')
   const[cidade,setCidade] = useState('')
   const [entrada80,setEntrada80] = useState ('')
   const [entrada10,setEntrada10] =useState('')
   const { reportId } = useParams();
+  const [produto, setProduto] = useState ([])
+  const [economia, setEconomia] =useState([])
+  const [areaInversor,setAreaInversor] = useState([])
+  const [pesoSistema, setPesoSistema] = useState([])
+  const [porcAtendida,setPorcAtendida] = useState([])
+  const [caixaAcumulado, setCaixaAcumulado] = useState([])
+  const [vpl,setVpl] = useState([])
+  const [payback, setPayback] = useState([])
+  const [tir,setTir] = useState([])
+  const [caixaAcumulado1,setCaixaAcumulado1] = useState([])
+  const[caixaAcumulado2,setCaixaAcumulado2] = useState([])
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `teto_solar_proposta_${numberP}`,
   });
+  const numeroFormatado = Intl.NumberFormat("pt-BR", {
+    style: "decimal",
+    maximumFractionDigits: 2
+  });
+
 
   useEffect(() => {
     loadbId(reportId)
@@ -219,77 +91,28 @@ export default function SingleBusinessReport() {
 
     }).then((response) => {
       setName(response.data["Client.fantasy"])
-      setStatus(response.data.situation)
       setNumberP(response.data.number)
-      setDonoN(response.data['User.name'])
       //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
-      setModificadoD(format(new Date(response.data.updatedAt), 'dd/MM/yyyy'))
-      setTipoPessoa(response.data['Client.tipo'])
-      setDocumento(response.data['Client.document'])
-      setTelefone(response.data['Client.phone'])
-      setZap(response.data['Client.zap'])
-      setEmail(response.data['Client.email'])
-      setInfAdc(response.data['Client.addInformation'])
-      setFatorS(response.data.sunIndex)
-      setTelhado(response.data.roof)
-      setTipoL(response.data.typeConnection)
-      setModalidade(response.data.modality)
-      setGrupo(response.data.group)
-      setSubGrupo(response.data.subgroup)
-      setDemandaFp(response.data.demadaFp)
-      setEnergiaFp(response.data.energiaFp)
-      setDemandaP(response.data.demandaP)
-      setEnergiaP(response.data.energiaP)
       setTipoSistema(response.data.type)
-      setPainelP(response.data.panelpower)
-      setNumeroP(response.data.numberborder)
-      setMedia(response.data.avgmonth)
       setPotenciaS(response.data.systempower)
-      setMarcaP(response.data['placa_negocio.brand'])
-      setModeloP(response.data['placa_negocio.description'])
-      setInversorMa(response.data['inversor_negocio.brand'])
-      setInversorMo(response.data['inversor_negocio.brand'])
-      setNumeroInv(response.data.numberInverMicro)
       setValor(formatter.format(response.data.amount))
       loadAdd(response.data.ClientId)
-      setConsumo(response.data.avgconsumption)
-      setGeracaoSu(response.data.suggestedGeneration)
-      setPrecoKit(response.data.kitprice)
-      setProjeto(response.data.project)
-      setImposto(response.data.tax)
-      setMontagem(response.data.assembled)
-      setComissaoVe(response.data.sellercomission)
-      setMargem(response.data.margin)
-      setTotalLu(response.data.amountcost)
-      setMargemCa(response.data.marginCalculate)
-      setValorTotal(response.data.amount)
-      setValorComissao(response.data.valuesellercomission)
-      setLucroProjeto(response.data.profit)
-      setLucroReal(response.data.realProfit)
-      setcomplemento(response.data.complement)
-      setBusiness(response.data.shares)
-      setClientId(response.data.ClientId)
-      setProducts(response.data.products)
-      setGeracaoDesejada(response.data.suggestedDesired)
-      setCip(response.data.cip)
-      setBandeira(response.data.flag)
-      setTotal2(response.data.total2);
-      setMarg2(response.data.marg2)
-      setComiss2(response.data.comiss2)
-      setProf2(response.data.prof2)
-      setProfitR2(response.data.profitR2)
-      setMargR2 (response.data.margR2)
-      setTotal4(response.data.total4)
-      setMarg4(response.data.marg4)
-      setComiss4(response.data.comiss4)
-      setProf4(response.data.prof4)
-      setProfitR4(response.data.profitR4)
-      setMargtR4(response.data.margtR4)
       let oitenta = response.data.amount * 0.8
       setEntrada80((formatter.format(oitenta)))
       let dez = response.data.amount * 0.1
       setEntrada10((formatter.format(dez)))
-     
+      setProduto(response.data.products)
+      setEconomia(response.data.economia)
+      setAreaInversor(numeroFormatado.format(response.data.areainversor))
+      setPesoSistema (numeroFormatado.format(response.data.pesosistema))
+      setPorcAtendida(numeroFormatado.format(response.data.porctendida))
+      setCaixaAcumulado(response.data.caixaAcumulado)
+      setVpl(formatter.format(response.data.vpl))
+      setPayback(response.data.payback)
+      setTir(numeroFormatado.format(response.data.tir))
+      caixaAcumulado1(response.data.caixaAcumuladoI)
+      caixaAcumulado(response.data.caixaAcumuladoM)
+
       
 
 
@@ -305,8 +128,8 @@ export default function SingleBusinessReport() {
       }
 
     }).then((response) => {
-      setClient(response.data)
-      console.log(response.data.document)
+      
+     
     })
 
     await api.get('/client/get/add/' + Id, {
@@ -315,10 +138,7 @@ export default function SingleBusinessReport() {
       }
 
     }).then((response) => {
-      setRua(response.data.street)
-      setBairro(response.data.neighborhood)
-      setCep(response.data.postcode)
-      setEstado(response.data.state)
+     
       setCidade(response.data.city)
 
     })
@@ -510,16 +330,16 @@ export default function SingleBusinessReport() {
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">{inversor}</th>
+                            <th scope="col">{tipoSistema}</th>
                             <th scope="col">Quantidade</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {detalhesSistemaSolarData.map((item) => {
+                          {produto.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
+                                <td> {item.brand + '-'  + item.model}</td>
+                                <td>{item.qtd}</td>
                               </tr>
                             );
                           })}
@@ -554,14 +374,17 @@ export default function SingleBusinessReport() {
                           </tr>
                         </thead>
                         <tbody>
-                          {caracteristicasData.map((item) => {
-                            return (
-                              <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
-                              </tr>
-                            );
-                          })}
+                          <tr>
+                            <td>Area necessária</td>
+                            <td>{areaInversor} m²</td>
+                          </tr>
+                          <tr>
+                            <td>Peso do sistema</td>
+                            <td>{pesoSistema} Kg</td>
+                          </tr><tr>
+                            <td>Porc. atendida </td>
+                            <td>{porcAtendida} %</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -660,14 +483,23 @@ export default function SingleBusinessReport() {
                           </tr>
                         </thead>
                         <tbody>
-                          {indicadoresFinanceirosData.map((item) => {
-                            return (
-                              <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
-                              </tr>
-                            );
-                          })}
+                        <tr>
+                            <td>Caixa Acum.</td>
+                            
+                            <td>{caixaAcumulado==="Inversor"? caixaAcumulado1:caixaAcumulado2}</td>
+                          </tr>
+                          <tr>
+                            <td>V.P.L</td>
+                            <td>{vpl}</td>
+                          </tr>
+                          <tr>
+                            <td>T.I.R</td>
+                            <td>{tir} %</td>
+                          </tr>
+                          <tr>
+                            <td>Payback</td>
+                            <td>{payback}</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -733,7 +565,7 @@ export default function SingleBusinessReport() {
           </div>
 
           <div className="d-flex flex-column align-items-center justify-content-center">
-            {economiaData.map((item) => {
+            {economia.map((item) => {
               return (
                 <div
                   key={item.id}
@@ -746,7 +578,7 @@ export default function SingleBusinessReport() {
                         ENEL
                       </div>
                       <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura mensal</h6>
+                        <h6 className="fw-bold">Fatura anual</h6>
                         <p className="mb-0">{item.enel}</p>
                       </div>
                     </div>
@@ -758,7 +590,7 @@ export default function SingleBusinessReport() {
                         TETO SOLAR
                       </div>
                       <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura mensal</h6>
+                        <h6 className="fw-bold">Fatura anual</h6>
                         <p className="mb-0">{item.tetoSolar}</p>
                       </div>
                     </div>
@@ -770,8 +602,9 @@ export default function SingleBusinessReport() {
                         ECONOMIA
                       </div>
                       <div className="card-body py-4">
-                        <h6 className="fw-bold">Sua economia mensal</h6>
-                        <p className="mb-0">{item.economia}</p>
+                        <h6 className="fw-bold">Sua economia anual</h6>
+
+                        <p className="mb-0">{ tipoSistema==="Inversor"? item.economiaIn:item.economiaM}</p>
                       </div>
                     </div>
                   </div>
