@@ -20,8 +20,6 @@ import api from "../../api";
 import { useNavigate, useParams } from "react-router";
 
 
-
-
 const proposta = "202303129";
 const inversor = "237,60 kWp";
 const cidade = "Caucaia";
@@ -38,7 +36,6 @@ const garantiasData = [
 export default function SingleBusinessReport() {
   const componentRef = useRef();
   
-
   const [name, setName] = useState('')
   const [numberP, setNumberP] = useState('')
   const { token } = useContext(AuthContext)
@@ -109,6 +106,7 @@ export default function SingleBusinessReport() {
       setVpl(formatter.format(response.data.vpl))
       setPayback(response.data.payback)
       setTir(numeroFormatado.format(response.data.tir))
+      caixaAcumulado(response.data.caixaAcumuladoM)
       setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
       setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
     //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
@@ -142,8 +140,6 @@ export default function SingleBusinessReport() {
     })
 
   }
-
-  
 
   return (
     <div className="p-3 mb-4 bg-white rounded-3 single-business-report">

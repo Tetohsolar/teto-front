@@ -33,11 +33,6 @@ const EditDimensionamento = () => {
 
   const { businessId } = useParams();
 
-
-
-
-
-
   useEffect(() => {
 
     loadbId()
@@ -67,13 +62,9 @@ const EditDimensionamento = () => {
       setEnergiaP(response.data.energiaP)
       setTipoSistema(response.data.type)
 
-
-
     }).catch((error) => { console.log(error) })
 
   }
-
-
 
   async function updateDimensionamento(e) {
     e.preventDefault();
@@ -119,12 +110,6 @@ const EditDimensionamento = () => {
     })
 
   }
-
-
-
-
-
-
 
 
   return (
@@ -196,7 +181,6 @@ const EditDimensionamento = () => {
                     Grupo:
                   </label>
 
-
                   <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => setGrupo(e.target.value)}  >
                     <option value="">Selecione</option>
                     <option value="A">Grupo A</option>
@@ -207,7 +191,6 @@ const EditDimensionamento = () => {
                   <label htmlFor="inputFirstName" className="form-label">
                     Sub-Grupo:
                   </label>
-
 
                   <select className="form-select" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubGrupo(e.target.value)} >
                     <option value="">Selecione</option>
@@ -224,7 +207,6 @@ const EditDimensionamento = () => {
                       </>}
                   </select>
                 </div>
-
 
 
               </div>
@@ -267,8 +249,6 @@ const EditDimensionamento = () => {
                 </div>
 
               </div>
-
-
 
             </div>
           </form>
