@@ -5,41 +5,33 @@ import Sidebar from '../../../components/sidebar/Sidebar';
 import { useLocation, useParams } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
+import { toast } from 'react-toastify';
+
+
 
 const EditDimensionamento = () => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Atualização do Dimensionamento do Projeto";
 
-  const location = useLocation()
 
-  const [name, setName] = useState('')
-  const [fatorS, setFatorS] = useState('')
-  const [telhado, setTelhado] = useState('')
-  const [tipoL, setTipoL] = useState('')
-  const [modalidade, setModalidade] = useState('')
-  const [grupo, setGrupo] = useState('')
-  const [subgrupo, setSubGrupo] = useState('')
-  const [demandaFp, setDemandaFp] = useState('')
-  const [energiaFp, setEnergiaFp] = useState('')
-  const [demandaP, setDemandaP] = useState('')
-  const [energiaP, setEnergiaP] = useState('')
-  const [tipoSistema, setTipoSistema] = useState('')
-  const [donoN, setDonoN] = useState('')
+  const [name, setName] = useState()
+  const [fatorS, setFatorS] = useState()
+  const [telhado, setTelhado] = useState()
+  const [tipoL, setTipoL] = useState()
+  const [modalidade, setModalidade] = useState()
+  const [grupo, setGrupo] = useState()
+  const [subgrupo, setSubGrupo] = useState()
+  const [demandaFp, setDemandaFp] = useState()
+  const [energiaFp, setEnergiaFp] = useState()
+  const [demandaP, setDemandaP] = useState()
+  const [energiaP, setEnergiaP] = useState()
+  const [tipoSistema, setTipoSistema] = useState()
+  const [donoN, setDonoN] = useState()
   const { token } = useContext(AuthContext)
 
 
   const { businessId } = useParams();
-
-
-
-
-
-
-
-
-
-
 
   useEffect(() => {
 
@@ -55,7 +47,7 @@ const EditDimensionamento = () => {
       }
 
     }).then((response) => {
-      console.log(response)
+
       setName(response.data["Client.fantasy"])
       setDonoN(response.data['User.name'])
       setFatorS(response.data.sunIndex)
@@ -70,13 +62,9 @@ const EditDimensionamento = () => {
       setEnergiaP(response.data.energiaP)
       setTipoSistema(response.data.type)
 
-
-
     }).catch((error) => { console.log(error) })
 
   }
-
-
 
   async function updateDimensionamento(e) {
     e.preventDefault();
@@ -84,42 +72,44 @@ const EditDimensionamento = () => {
     const data = {
       name,
       donoN,
-      fatorS,
-      telhado,
-      tipoL,
-      modalidade,
-      grupo,
-      subgrupo,
-      demandaFp,
-      demandaP,
-      energiaFp,
-      energiaP,
-      tipoSistema
+      sunIndex: fatorS,
+      roof: telhado,
+      typeConnection: tipoL,
+      modality: modalidade,
+      group: grupo,
+      subgroup: subgrupo,
+      demadaFp: demandaFp,
+      demandaP: demandaP,
+      energiaFp: energiaFp,
+      energiaP: energiaP,
+      type: tipoSistema
 
     }
-    const t = JSON.stringify(data);
-    const saida = JSON.parse(t);
-    console.log(saida)
+    // const t = JSON.stringify(data);
+    // const saida = JSON.parse(t);
+    console.log(data)
 
-    await api.patch('/business/update/' + businessId, saida, {
+
+    await api.patch('/business/update/' + businessId, data, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
 
+      toast.success("Dados atualizados com sucesso!", {
+        autoClose: 1000,
+      })
 
+    }).catch((error) => {
+      console.log(error)
+      toast.error("Erro ao atualizar dados!", {
+        autoClose: 1000,
+      })
 
-
-    }).catch((error) => { console.log(error) })
+    })
 
   }
-
-
-
-
-
-
 
 
   return (
@@ -154,11 +144,10 @@ const EditDimensionamento = () => {
 
                   <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={telhado} onChange={(e) => setTelhado(e.target.value)} >
                     <option value="">Selecione</option>
-                    <option value="ceramico">Cerâmico</option>
-                    <option value="metalico">Metálico</option>
-                    <option value="solo">Solo</option>
-                    <option value="fibrocimento">Fibrocimento</option>
-                    <option value="laje">Laje</option>
+                    <option value="Cerâmico">Cerâmico</option>
+                    <option value="Metálico">Metálico</option>
+                    <option value="Em Solo">Solo</option>
+
 
                   </select>
 
@@ -192,7 +181,6 @@ const EditDimensionamento = () => {
                     Grupo:
                   </label>
 
-
                   <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => setGrupo(e.target.value)}  >
                     <option value="">Selecione</option>
                     <option value="A">Grupo A</option>
@@ -203,7 +191,6 @@ const EditDimensionamento = () => {
                   <label htmlFor="inputFirstName" className="form-label">
                     Sub-Grupo:
                   </label>
-
 
                   <select className="form-select" id="inputSubgrupo" value={subgrupo} onChange={(e) => setSubGrupo(e.target.value)} >
                     <option value="">Selecione</option>
@@ -222,20 +209,19 @@ const EditDimensionamento = () => {
                 </div>
 
 
-
               </div>
               <div className="row g-3 p2" >
                 <div className="col-md-2">
                   <label htmlFor="inputFirstName" className="form-label">
                     Demanda FP:
                   </label>
-                  <input type="text" className="form-control" id="inputFirstName" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} />
+                  <input type="text" className="form-control" id="inputFirstName" value={demandaFp || ''} onChange={(e) => setDemandaFp(e.target.value)} />
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="inputFirstName" className="form-label">
                     Demanda Ponta:
                   </label>
-                  <input type="text" className="form-control" id="inputFirstName" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} />
+                  <input type="text" className="form-control" id="inputFirstName" value={demandaP || ''} onChange={(e) => setDemandaP(e.target.value)} />
                 </div>
               </div>
               <div className="row g-3 p2" >
@@ -243,13 +229,13 @@ const EditDimensionamento = () => {
                   <label htmlFor="inputFirstName" className="form-label">
                     Energia FP:
                   </label>
-                  <input type="text" className="form-control" id="inputFirstName" value={energiaP} onChange={(e) => setEnergiaFp(e.target.value)} />
+                  <input type="text" className="form-control" id="inputFirstName" value={energiaFp || ''} onChange={(e) => setEnergiaFp(e.target.value)} />
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="inputFirstName" className="form-label">
                     Energia Ponta:
                   </label>
-                  <input type="text" className="form-control" id="inputFirstName" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} />
+                  <input type="text" className="form-control" id="inputFirstName" value={energiaP || ''} onChange={(e) => setEnergiaP(e.target.value)} />
                 </div>
               </div>
               <div className="row g-3 p2" >
@@ -263,8 +249,6 @@ const EditDimensionamento = () => {
                 </div>
 
               </div>
-
-
 
             </div>
           </form>

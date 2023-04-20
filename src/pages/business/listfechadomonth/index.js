@@ -11,7 +11,7 @@ import StepByStep from '../../../components/StepByStep';
 
 const BusinessMonthListfechado = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle = "Negócios fechados neste mês";
+  const pageTitle = "Negócios ganhos neste mês";
   return (
     <div>
       <Navbar />
@@ -23,7 +23,7 @@ const BusinessMonthListfechado = () => {
           <h5 className="pb-3">{pageTitle}</h5>
           
           <BusinessDataTable listTitle="Todos os negócios" filtro = {false} typeReport={'mes'} situation={'Ganhos'}/>
-          <StepByStep />
+          
         </div>
       </div>
     </div>
