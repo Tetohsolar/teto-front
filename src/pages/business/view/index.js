@@ -95,7 +95,6 @@ const ViewBusiness = () => {
   const [profitR4, setProfitR4] = useState('')
   const [margtR4, setMargtR4] = useState('')
 
-
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
@@ -104,7 +103,6 @@ const ViewBusiness = () => {
     style: "decimal",
     maximumFractionDigits: 2
   });
-
 
   useEffect(() => {
 
@@ -119,7 +117,6 @@ const ViewBusiness = () => {
   }, [])
 
   async function handleAfterDel(e) {
-
 
     await api.delete('/business/delete/share/' + idSelected, {
       headers: {
@@ -166,7 +163,6 @@ const ViewBusiness = () => {
       setCep(response.data.postcode)
       setEstado(response.data.state)
       setCidade(response.data.city)
-
     })
 
   }
@@ -178,6 +174,9 @@ const ViewBusiness = () => {
   function editPessoa(id) {
     navigate("/customers/edit/" + id)
     console.log(id)
+  }
+  function editProduto(id) {
+    navigate('/business/view/editproduct/' + id)
   }
 
   async function loadbId(id) {
@@ -261,7 +260,6 @@ const ViewBusiness = () => {
   }
 
   function updateDimensionamento(businessId) {
-
 
     navigate("/business/editDimens/" + businessId)
 
@@ -902,7 +900,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label>{potenciaS} </label>
+                        <label>{numeroFormatado.format(potenciaS)} </label>
                       </td>
                     </tr>
 
@@ -911,7 +909,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label>{cip} </label>
+                        <label> {formatter.format(cip)} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -919,7 +917,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label>{bandeira} </label>
+                        <label>{formatter.format(bandeira)} </label>
                       </td>
                     </tr>
                   </table>
@@ -937,15 +935,8 @@ const ViewBusiness = () => {
 
                 <h5 className="pb-3">Produtos</h5>
 
-                <button
-                  className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
-                  type="submit"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                >
-                  <AiFillPlusSquare />
-                  Adicionar produto
-                </button>
+
+
               </div>
 
               <hr className="my-3 text-body-tertiary" />
@@ -962,7 +953,13 @@ const ViewBusiness = () => {
                 <div className="mb-3 mb-sm-0">
                   <div className="card border-light-subtle">
                     <div className="card-body">
-                      <h6 className="card-title">Produtos que compoem o kit</h6>
+                      <h6 className="card-title">Produtos que compoem o kit <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                        editProduto(businessId)
+                      }}>
+                        <BsFillPencilFill />
+                      </button>
+                      </h6>
                       <div className="table-responsive">
                         <table className="table caption-top table-sm">
                           <thead>
@@ -992,23 +989,7 @@ const ViewBusiness = () => {
 
                                   <td>
                                     <div className="d-flex gap-2 justify-content-end">
-                                      <button
-                                        type="button"
-                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
-                                      >
-                                        <BsPencilFill />
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                          setIdSelected(item.id)
-                                        }}
-                                      >
-                                        <BsFillTrash3Fill />
 
-                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
-                                      </button>
                                     </div>
                                   </td>
                                 </tr>
