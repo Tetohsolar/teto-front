@@ -40,18 +40,8 @@ const ValoresProposta = () =>   {
   const { businessId } = useParams();
 
 
-
-  /*
-
-  const [complemento,setComplemento] = useContext('')
-  const [business,setBusiness] = useContext('')
-  const [geracaoDesejada,setGeracaoDesajada] = useContext('')
-  const [totalCusto,setTotalCusto] = useContext('')
-
-*/
   useEffect(() => {
 
-    //const businessId = 1
 
     if (businessId) {
       loadbId(businessId)
@@ -84,7 +74,9 @@ const ValoresProposta = () =>   {
       setImposto(response.data.tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setMontagem(response.data.assembled.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setComissaoVe(response.data.sellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      if (response.data.margin){
       setMargem(response.data.margin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      }
       if (response.data.amountcost){
       setTotalLu(response.data.amountcost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       }

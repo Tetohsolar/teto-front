@@ -36,7 +36,9 @@ import ValoresProposta from '../components/business-form/valoresPropform';
 import EditDimensionamento from '../pages/business/editDimens';
 import SystemTypeform from '../components/business-form/systemTypeform';
 import EditBussinessProduct from '../pages/business/editProduct';
-
+import BusinessMonthList from '../pages/business/listmoth';
+import BusinessMonthListfechado from '../pages/business/listfechadomonth';
+import BusinessMonthListopen from '../pages/business/listopenmonth';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -79,7 +81,9 @@ const RoutesApp = () => {
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
-
+              <Route path="listmonth" element={token ? <BusinessMonthList /> : <Navigate to="/login" />} />
+              <Route path="listfechadomonth" element={token ? <BusinessMonthListfechado /> : <Navigate to="/login" />} />
+              <Route path="listopenmonth" element={token ? <BusinessMonthListopen /> : <Navigate to="/login" />} />
               <Route path="view/:businessId" element={<ViewBusiness />} />
               <Route path="report/:reportId" element={<BusinessReport />} />
 

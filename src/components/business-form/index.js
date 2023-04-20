@@ -137,9 +137,8 @@ const BusinessForm = (props) => {
 
   const [perdas, serPerdas] = useState(afflited.lost/100)
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
-  const [qtdeModulos, setQtdeModulos] = useState('')
+  
   const [potenciaSistema, setPotenciaSistema] = useState(0)
-  const [mediaMensal, setMediaMensal] = useState('')
   const [cip, setCip] = useState(afflited.cip.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [bandeira, setbandeira] = useState(afflited.flag.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 }))
   const [fatorSimult, setFatorSimult] = useState(0)
@@ -160,14 +159,8 @@ const BusinessForm = (props) => {
   const [lucroReal, setLucroReal] = useState(0)
   const [projetoDesconto2, setprojetoDesconto2] = useState('')
   const [projetoDesconto4, setprojetoDesconto4] = useState('')
-  const [marcaModulo, setMarcaModulo] = useState('')
   const [modeloPlaca, setModeloPlaca] = useState([])
   const [modeloInversor, setModeloInversor] = useState([])
-  const [modeloMicroInversor, setModeloMicroInversor] = useState([])
-  const [selectedInversor, setSelectecInversor] = useState('')
-  const [selectedModeloPainel, setSelectedModeloPainel] = useState('')
-  const [selectedMicroinversor, setSelectecMicroinversor] = useState('')
-  const [taxa, setTaxa] = useState('')
   const [nome, setNome] = useState('')
   const [usuario, setUsuario] = useState('')
   const [marca, setMarca] = useState()
@@ -423,27 +416,7 @@ const BusinessForm = (props) => {
 
 
 
-  async function findMicroInversor() {
-    const filtro = {
-      brand: "%",
-      category: "Microinversor",
-      "page": 0,
-      "pageSize": 100
-    }
-
-
-    await api.post('/products/byparam', filtro, {
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-    }).then((response) => {
-      setModeloMicroInversor(response.data.tutorials)
-      console.log(response.data.tutorials)
-
-    })
-
-
-  };
+  
 
 
   async function findAllPainel() {
@@ -470,23 +443,7 @@ const BusinessForm = (props) => {
   };
 
 
-  function findAllProductsByBrand(e) {
-    console.log(e)
-    setTipoSistema(e)
-
-    if (e === "Inversor") {
-      console.log('chamou inversor')
-      findInversores()
-
-    }
-    else if (e === "Microinversor") {
-      console.log('chamou microinversor')
-      findMicroInversor()
-
-    }
-
-    findAllPainel()
-  }
+  
   async function loadClienById(id) {
 
     try {
@@ -814,7 +771,7 @@ const BusinessForm = (props) => {
     sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit,
     realProfit, numberInverMicro, validate, AffiliatedId, ClientId,  type, UserId, clientData) {
     
-    console.log(clientData)
+    console.log("margen"+margin)
 
     const data = {
       sunIndex: sunIndex, number: number, roof: roof, typeConnection: typeConnection,
@@ -955,7 +912,7 @@ const BusinessForm = (props) => {
           let demPonta = 0
           let energia_FP = 0
 
-          let perdas = 0
+          
           const precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'));
           const comp = parseFloat(String(complemento).replace(/\./g, '').replace(',', '.'));
           const proje = parseFloat(String(projeto).replace(/\./g, '').replace(',', '.'));
@@ -968,9 +925,7 @@ const BusinessForm = (props) => {
           const lp = parseFloat(String(lucroProjeto).replace(/\./g, '').replace(',', '.'));
           const lr = parseFloat(String(lucroReal).replace(/\./g, '').replace(',', '.'));
           const cip1 = parseFloat(String(cip).replace(/\./g, '').replace(',', '.'));
-
           const flag = parseFloat(String(bandeira).replace(/\./g, '').replace(',', '.'));
-
 
           saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
             energiaPonta, demPonta, energia_FP, consumoMedio, geracaoSugerida, geracaoDesejada, "Aberta",
@@ -1294,7 +1249,7 @@ const BusinessForm = (props) => {
                     Tipo de Sistema:
                   </label>
                   {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} >
                     <option value="Inversor">Inversor</option>
                     <option value="MicroInversor">Microinversor</option>
                   </select>

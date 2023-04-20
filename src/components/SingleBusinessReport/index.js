@@ -55,8 +55,8 @@ export default function SingleBusinessReport() {
   const [vpl,setVpl] = useState([])
   const [payback, setPayback] = useState([])
   const [tir,setTir] = useState([])
-  const [caixaAcumulado1,setCaixaAcumulado1] = useState([])
-  const[caixaAcumulado2,setCaixaAcumulado2] = useState([])
+  const [caixaAcumuladoInversor,setCaixaAcumuladoInversor] = useState([])
+  const[caixaAcumuladoMicro,setCaixaAcumuladoMicro] = useState([])
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -103,14 +103,16 @@ export default function SingleBusinessReport() {
       setAreaInversor(numeroFormatado.format(response.data.areainversor))
       setPesoSistema (numeroFormatado.format(response.data.pesosistema))
       setPorcAtendida(numeroFormatado.format(response.data.porctendida))
-      setCaixaAcumulado(response.data.caixaAcumulado)
       setVpl(formatter.format(response.data.vpl))
       setPayback(response.data.payback)
       setTir(numeroFormatado.format(response.data.tir))
       caixaAcumulado1(response.data.caixaAcumuladoI)
       caixaAcumulado(response.data.caixaAcumuladoM)
+      setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
+      setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
+    //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
+     // caixaAcumulado()
 
-    
     }).catch((error) => { console.log(error) })
 
   }
@@ -479,7 +481,7 @@ export default function SingleBusinessReport() {
                         <tr>
                             <td>Caixa Acum.</td>
                             
-                            <td>{caixaAcumulado==="Inversor"? caixaAcumulado1:caixaAcumulado2}</td>
+                            <td>{tipoSistema==="Inversor"? caixaAcumuladoInversor:caixaAcumuladoMicro}</td>
                           </tr>
                           <tr>
                             <td>V.P.L</td>
@@ -572,7 +574,7 @@ export default function SingleBusinessReport() {
                       </div>
                       <div className="card-body py-4">
                         <h6 className="fw-bold">Fatura anual</h6>
-                        <p className="mb-0">{item.enel}</p>
+                        <p className="mb-0">{formatter.format(item.enel)}</p>
                       </div>
                     </div>
                   </div>
@@ -584,7 +586,7 @@ export default function SingleBusinessReport() {
                       </div>
                       <div className="card-body py-4">
                         <h6 className="fw-bold">Fatura anual</h6>
-                        <p className="mb-0">{item.tetoSolar}</p>
+                        <p className="mb-0">{formatter.format(item.tetoSolar)}</p>
                       </div>
                     </div>
                   </div>
@@ -596,8 +598,7 @@ export default function SingleBusinessReport() {
                       </div>
                       <div className="card-body py-4">
                         <h6 className="fw-bold">Sua economia anual</h6>
-
-                        <p className="mb-0">{ tipoSistema==="Inversor"? item.economiaIn:item.economiaM}</p>
+                        <p className="mb-0">{ tipoSistema==="Inversor"? formatter.format(item.economiaIn):formatter.format(item.economiaM)}</p>
                       </div>
                     </div>
                   </div>
