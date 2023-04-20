@@ -141,7 +141,7 @@ const BusinessForm = (props) => {
   const [potenciaSistema, setPotenciaSistema] = useState(0)
   const [cip, setCip] = useState(afflited.cip.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [bandeira, setbandeira] = useState(afflited.flag.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 }))
-  const [fatorSimult, setFatorSimult] = useState(0)
+  const [fatorSimult, setFatorSimult] = useState(30)
   const [precoKit, setPrecoKit] = useState('')
   const [precoKitFornecedor, setPrecoKitForncedor] = useState(0)
   const [precoKitCalculado, setPrecoKitCalculado] = useState(0)
@@ -993,13 +993,21 @@ const BusinessForm = (props) => {
 
     var complement = precoK * (fator / 100)
     var imp = precoK * (tax / 100)
+     
     const numeroFormatado = precoK.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     setPrecoKit(numeroFormatado)
     setComplemento(complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     setImposto(imp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     const projet = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
-    const mont = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
-    var total = precoK + complement + imp + projet + mont
+    
+    let mont = parseFloat( afflited.assemblyCostI);
+    if (tipoSistema==="MicroInversor"){
+      mont = parseFloat( afflited.assemblyCostM);
+    }
+    var monta = mont* nPlacas
+    console.log(monta)
+    setMontagem(monta)
+    var total = precoK + complement + imp + projet + monta
     setCustoTotal(total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     const mgsV = parseFloat(String(margem).replace(/\./g, '').replace(',', '.'));
     const comsV = parseFloat(String(comissao).replace(/\./g, '').replace(',', '.'));
