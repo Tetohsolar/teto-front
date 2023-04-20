@@ -106,7 +106,6 @@ export default function SingleBusinessReport() {
       setVpl(formatter.format(response.data.vpl))
       setPayback(response.data.payback)
       setTir(numeroFormatado.format(response.data.tir))
-      caixaAcumulado1(response.data.caixaAcumuladoI)
       caixaAcumulado(response.data.caixaAcumuladoM)
       setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
       setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
