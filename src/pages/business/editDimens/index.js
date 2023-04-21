@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, useRef } from 'react'
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext'
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -39,12 +39,11 @@ const EditDimensionamento = () => {
 
 
   const { token } = useContext(AuthContext)
+  const navigate = useNavigate();
   const inputDemFP = useRef();
   const inputDemP = useRef();
   const inputEnergiaFP = useRef();
   const inputEnergiaP = useRef();
-
-
   const { businessId } = useParams();
 
 
@@ -219,6 +218,8 @@ const EditDimensionamento = () => {
       toast.success("Dados atualizados com sucesso!", {
         autoClose: 1000,
       })
+
+      navigate("/business/view/" + businessId)
 
     }).catch((error) => {
       console.log(error)
