@@ -277,7 +277,7 @@ const ViewBusiness = () => {
       <div
         className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}
       >
-        <Sidebar activeButtonHome="active" />
+        <Sidebar activeButtonBusiness="active" />
         <div className='container '>
           <div className="container-fluid bg-home primeiraDivHome">
             <div class="p-3 mb-3 bg-white border rounded-3 container " >
