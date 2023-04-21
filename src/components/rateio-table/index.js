@@ -49,6 +49,7 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                                         <option value="A4">A4</option>
                                         <option value="B1">B1</option>
                                         <option value="B2">B2</option>
+                                        <option value="B3">B3</option>
                                     </select>
                                 </td>
                                 <td>

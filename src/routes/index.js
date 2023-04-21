@@ -39,6 +39,7 @@ import EditBussinessProduct from '../pages/business/editProduct';
 import BusinessMonthList from '../pages/business/listmoth';
 import BusinessMonthListfechado from '../pages/business/listfechadomonth';
 import BusinessMonthListopen from '../pages/business/listopenmonth';
+import EditBussinessShare from '../pages/business/editRateio';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -92,6 +93,7 @@ const RoutesApp = () => {
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editpersonal:clientId" element={<EditPersonalData />} />
               <Route path="view/editproduct/:businessId" element={<EditBussinessProduct />} />
+              <Route path="view/editshare/:businessId" element={<EditBussinessShare />} />
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta />} />
