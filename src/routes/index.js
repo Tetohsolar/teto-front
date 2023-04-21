@@ -76,7 +76,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="business">
-              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
+
 
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
@@ -91,11 +91,12 @@ const RoutesApp = () => {
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editpersonal:clientId" element={<EditPersonalData />} />
-              <Route path="view/editproduct/:businessId" element={<EditBussinessProduct/>} />
+              <Route path="view/editproduct/:businessId" element={<EditBussinessProduct />} />
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta />} />
               <Route path="view/edittypebusiness/:businessId" element={<SystemTypeform />} />
+              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
 
 
 
