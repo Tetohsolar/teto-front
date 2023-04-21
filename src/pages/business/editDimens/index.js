@@ -283,8 +283,8 @@ const EditDimensionamento = () => {
 
                   <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoL} onChange={(e) => setTipoL(e.target.value)}>
                     <option value="">Selecione</option>
-                    <option value="tri">Trifásico</option>
-                    <option value="mono">Monofásico</option>
+                    <option value="Trifásico">Trifásico</option>
+                    <option value="Monofásico">Monofásico</option>
 
                   </select>
                 </div>
