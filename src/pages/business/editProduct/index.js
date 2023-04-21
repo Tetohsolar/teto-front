@@ -195,7 +195,7 @@ const EditBussinessProduct = () => {
         const saida = JSON.parse(t);
         console.log(saida)
     
-        await api.patch('/business/update/' + businessId, saida, {
+        await api.patch('/business/update/products/' + businessId, saida, {
           headers: {
             'Authorization': `Basic ${token}`
           }

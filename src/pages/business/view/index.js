@@ -178,6 +178,9 @@ const ViewBusiness = () => {
   function editProduto(id) {
     navigate('/business/view/editproduct/' + id)
   }
+  function editShare(id) {
+    navigate('/business/view/editshare/' + id)
+  }
 
   async function loadbId(id) {
 
@@ -1013,15 +1016,7 @@ const ViewBusiness = () => {
 
                 <h5 className="pb-3">Rateio</h5>
 
-                <button
-                  className="btn btn-primary text-light d-flex align-items-center justify-content-sm-start justify-content-center gap-2"
-                  type="submit"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                >
-                  <AiFillPlusSquare />
-                  Novo rateio
-                </button>
+
               </div>
 
               <hr className="my-3 text-body-tertiary" />
@@ -1038,7 +1033,14 @@ const ViewBusiness = () => {
                 <div className="mb-3 mb-sm-0">
                   <div className="card border-light-subtle">
                     <div className="card-body">
-                      <h6 className="card-title">Informações da geradora</h6>
+                      <h6 className="card-title">Informações da geradora
+
+                        <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
+
+                          editShare(businessId)
+                        }}>
+                          <BsFillPencilFill />
+                        </button> </h6>
                       <div className="table-responsive">
                         <table className="table caption-top table-sm">
                           <thead>
@@ -1073,23 +1075,7 @@ const ViewBusiness = () => {
                                   <td className='alinhaDireita'>{item.energiaP}</td>
                                   <td>
                                     <div className="d-flex gap-2 justify-content-end">
-                                      <button
-                                        type="button"
-                                        className="btn btn-light btn-sm text-primary d-flex align-items-center"
-                                      >
-                                        <BsPencilFill />
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                          setIdSelected(item.id)
-                                        }}
-                                      >
-                                        <BsFillTrash3Fill />
-
-                                        <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
-                                      </button>
+                                     
                                     </div>
                                   </td>
                                 </tr>
