@@ -3,7 +3,6 @@ import api from '../../../api'
 import { AuthContext } from '../../../context/AuthContext'
 import InputMask from 'react-input-mask';
 import { ToastContainer, toast } from 'react-toastify'
-import ExibeItens from './exibeItens';
 
 
 
@@ -24,8 +23,6 @@ export default function NewBusiness(prop) {
   const [rua, setRua] = useState('')
   const [inf_Adicionais, setInf_Adicionais] = useState('')
   const [nomeFantasia, setNomeFantasia] = useState('')
-  const [razaoSocial, setRazaosocial] = useState('')
-  const [cliente, setCliente] = useState('')
   const [usuario, setUsuario] = useState('')
   const [fatorSolar, setFatorSolar] = useState('')
   const [tipoTelhado, setTipoTelhado] = useState('')
@@ -40,33 +37,14 @@ export default function NewBusiness(prop) {
   const [energiaPontaTratada, setEnergiaPontaTratada] = useState('')
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
-  const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const [tipoSistema, setTipoSistema] = useState('')
   const [potenciaPainel, setPotenciaPainel] = useState('')
-  const [listaPotencia, setListaPotencia] = useState([])
   const [perdas, serPerdas] = useState('')
-  const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
-  const [qtdeModulos, setQtdeModulos] = useState('')
-  const [potenciaSistema, setPotenciaSistema] = useState('')
   const [mediaMensal, setMediaMensal] = useState('')
   const [cip, setCip] = useState('')
   const [bandeira, setbandeira] = useState('')
   const [fatorSimult, setFatorSimult] = useState('')
   const [precoKit, setPrecoKit] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [projeto, setprojeto] = useState('')
-  const [imposto, setImposto] = useState('')
-  const [montagem, seMontagem] = useState('')
-  const [comissao, setComissao] = useState('')
-  const [margem, setMargem] = useState('')
-  const [custo_total, setCustoTotal] = useState('')
-  const [margemCalculada, setMargemCalculada] = useState('')
-  const [valorTotalProjeto, setValorTotalProjeto] = useState('')
-  const [valorComissao, setValorComissao] = useState('')
-  const [lucroProjeto, setLucroProjeto] = useState('')
-  const [lucroReal, setLucroReal] = useState('')
-  const [projetoDesconto2, setprojetoDesconto2] = useState('')
-  const [projetoDesconto4, setprojetoDesconto4] = useState('')
   const [marcaPainel, setMarcaPainel] = useState('')
   const [modeloPlaca, setModeloPlaca] = useState([])
   const [modeloInversor, setModeloInversor] = useState([])
@@ -82,33 +60,13 @@ export default function NewBusiness(prop) {
   const [qtdeInversor, setQtdeInversor] = useState('')
   const [qtdePainel, setQtdePainel] = useState()
   const [listaInversor, setListaInversor] = useState([])
-  const [listaMicroinversor, setlistaMicroInversor] = useState([])
-  const [updateListaItens, setUpdateListaitens] = useState('')
-
-  const [taxa, setTaxa] = useState('')
   const { token, userName } = useContext(AuthContext)
 
   //USESTATES DO PRODUTO
-  const [codigo, setCodigo] = useState()
-  const [descricao, setDescricao] = useState()
-  const [marca, setMarca] = useState()
+
   const [marcas, setMarcas] = useState([])
-  const [categoria, setCategoria] = useState()
-  const [descricaoTec, setDescricaoTec] = useState()
-  const [descricaoAmigavel, setDescricaoAmigavel] = useState()
-  const [garantia, setGarantia] = useState()
-  const [fornecedor, setFornecedor] = useState()
-  const [preco, setPreco] = useState()
-  const [dimensao, setDimensao] = useState()
-  const [idSelected, setIdSelected] = useState()
-  const [peso, setPeso] = useState()
   const [produtos, setProdutos] = useState([])
   const [updateLista, setUpdateLista] = useState()
-
-
-
-
-
 
   async function loadAllProducts() {
     try {
@@ -132,8 +90,6 @@ export default function NewBusiness(prop) {
 
     }
   }
-
-
 
   //busca por tipo de produto
   async function loadBrandByProduct(type) {
@@ -162,7 +118,6 @@ export default function NewBusiness(prop) {
     }
   }
 
-
   //load inversor and microinversor
   async function loadBrand() {
 
@@ -182,10 +137,6 @@ export default function NewBusiness(prop) {
     console.log(tipo)
     await loadBrandByProduct(tipo)
   }
-
-
-
-
 
 
   async function findInversores() {
@@ -210,8 +161,6 @@ export default function NewBusiness(prop) {
 
 
   };
-
-
 
 
   async function findMicroInversor() {
@@ -280,10 +229,6 @@ export default function NewBusiness(prop) {
   }
 
 
-
-
-
-
   async function handleFindClient(e) {
     e.preventDefault();
 
@@ -309,8 +254,6 @@ export default function NewBusiness(prop) {
         setBairro(response.data.Addresses[0].neighborhood)
         setUsuario(userName)
         setNumero(response.data.Addresses[0].number)
-
-
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -342,12 +285,7 @@ export default function NewBusiness(prop) {
 
     })
 
-
-
   }
-
-
-
 
   //calculos Geração Média e Geração sugerida no Grupo A
   function handleGrupoAConsMedio(e) {
@@ -406,9 +344,6 @@ export default function NewBusiness(prop) {
 
   }
 
-
-
-
   function validaCampos(nome, fone, cep, whatsapp) {
 
 
@@ -434,7 +369,6 @@ export default function NewBusiness(prop) {
       })
       return false;
     }
-
 
 
     if (whatsapp) {
@@ -463,11 +397,8 @@ export default function NewBusiness(prop) {
     }
 
 
-
     return true;
   }
-
-
 
   async function saveNewClient() {
 
@@ -579,13 +510,7 @@ export default function NewBusiness(prop) {
 
 
 
-
-
-
-
   return (
-
-
 
 
     <>
@@ -643,9 +568,6 @@ export default function NewBusiness(prop) {
                         </InputMask>
 
                       </div>
-
-
-
 
                     </>
                       :
@@ -733,8 +655,6 @@ export default function NewBusiness(prop) {
 
                     </div>
 
-
-
                   </div>
                   <br />
                   <div class="card">
@@ -807,14 +727,10 @@ export default function NewBusiness(prop) {
                     </div>
                   </div>
 
-
-
                 </div>
-
 
               </div>
               <div className="modal-footer">
-
 
 
                 <button type="button" onClick={resetFormCliente}
@@ -844,8 +760,6 @@ export default function NewBusiness(prop) {
                 </button>
 
               </div>
-
-
 
 
             </div>
@@ -974,8 +888,6 @@ export default function NewBusiness(prop) {
                           </select>
                         </div>
 
-
-
                       </div>
                       <div className="row p-2  d-flex flex-column">
 
@@ -1000,7 +912,6 @@ export default function NewBusiness(prop) {
                           <input type="text" className="form-control" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onKeyUp={handleGrupoAConsMedio} />
                         </div>
 
-
                       </div>
                       <div className="row p-2  d-flex flex-column">
                         <div className="col-md-3  w-100">
@@ -1016,7 +927,6 @@ export default function NewBusiness(prop) {
                           <input type="text" className="form-control" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
 
                         </div>
-
 
                         <div className="col-md-3 w-100">
                           <label htmlFor="inputGeracaoSugerida" className="form-label">
@@ -1142,8 +1052,6 @@ export default function NewBusiness(prop) {
                       </select>
 
                     </div>
-
-
                   </div>
                   <br />
 
@@ -1206,9 +1114,6 @@ export default function NewBusiness(prop) {
                             <input type="text" className="form-control" id="inputFatorSimult" value={qtdeInversor} onChange={(e) => setQtdeInversor(e.target.value)} />
                           </div>
 
-
-
-
                         </>
                           :
                           <>
@@ -1256,7 +1161,6 @@ export default function NewBusiness(prop) {
                               <input type="text" className="form-control" id="inputFatorSimult" value={qtdeMicroInve} onChange={(e) => setQtdeMicroInve(e.target.value)} />
                             </div>
 
-
                           </>}
 
                         <div className="col-sm-1  d-flex align-items-center">
@@ -1272,16 +1176,11 @@ export default function NewBusiness(prop) {
                           </svg></button>
                         </div>
 
-
                       </div>
-
-
 
                     </div>
                   </div>
                   <br />
-
-
 
 
                   <div class="card">
@@ -1378,10 +1277,6 @@ export default function NewBusiness(prop) {
 
                 </div>
 
-
-
-
-
               </div>
 
               <div className="modal-footer">
@@ -1409,22 +1304,13 @@ export default function NewBusiness(prop) {
 
             </div>
 
-
           </div>
 
-
         </div>
-
-
-
 
       </form >
 
     </ >
-
-
-
-
 
   )
 

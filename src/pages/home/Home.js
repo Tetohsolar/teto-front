@@ -31,7 +31,6 @@ const Home = () => {
   const [dataGraph, setDataGraph] = useState([{ name: 'mar', amt: 0 }])
   const [total, setTotal] = useState(0.0)
   const [totalGanho, setTotalGanho] = useState(0.0)
-
   const [totalEmAberto, setTotalEmAberto] = useState(0.0)
 
   async function getData(situacao, Opercao) {
@@ -66,8 +65,6 @@ const Home = () => {
 
       }
     }
-
-
 
     await api.post('business/lastMonth', filtro,
       {
@@ -140,7 +137,7 @@ const Home = () => {
 
     if (profilelogged === "Root") {
       filtro = {
-    
+
       }
     }
 
@@ -156,20 +153,17 @@ const Home = () => {
         (response) => {
           if (response.data && response.data.length !== 0) {
             let saida = []
-            
+
             response.data.forEach(objeto => {
-              const novo ={
-                amt:objeto.amt,
-                name: meses[objeto.name-1]
+              const novo = {
+                amt: objeto.amt,
+                name: meses[objeto.name - 1]
               }
               saida.push(novo)
 
-             });
-
+            });
 
             setDataGraph(saida)
-            
-
 
           } else {
             const currentDate = new Date();
@@ -192,13 +186,12 @@ const Home = () => {
       })
     //setData(data)
 
-
   }
 
   useEffect(() => {
     getData(null, 'SUM');
     getData("Ganhos", 'SUM');
-    getData("Aberta","COUNT")
+    getData("Aberta", "COUNT")
     getDataGraph()
     return () => { }
   }, [])
@@ -231,7 +224,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <SixMonthLargeChart chartTitle="Últimos 6 meses" data={dataGraph}/>
+          <SixMonthLargeChart chartTitle="Últimos 6 meses" data={dataGraph} />
           <SixMonthsBusinessDataTable listTitle="Mês atual" />
         </div>
       </div>

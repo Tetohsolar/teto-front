@@ -24,6 +24,9 @@ import EditProduct from '../pages/products/edit';
 import NewBusiness from '../pages/business/new';
 import SingleBusiness from '../pages/business/single';
 import ViewBusiness from '../pages/business/view';
+
+import BusinessReport from '../pages/business/report';
+
 import EditPersonalData from "../pages/business/view/editpersonal"
 import EditBusiness from '../pages/business/proporse';
 
@@ -32,7 +35,11 @@ import PasswordRecover from '../pages/login/PasswordRecover';
 import ValoresProposta from '../components/business-form/valoresPropform';
 import EditDimensionamento from '../pages/business/editDimens';
 import SystemTypeform from '../components/business-form/systemTypeform';
-
+import EditBussinessProduct from '../pages/business/editProduct';
+import BusinessMonthList from '../pages/business/listmoth';
+import BusinessMonthListfechado from '../pages/business/listfechadomonth';
+import BusinessMonthListopen from '../pages/business/listopenmonth';
+import EditBussinessShare from '../pages/business/editRateio';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -70,18 +77,28 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="business">
-              <Route path="editDimens" element={<EditDimensionamento />} />
+
+
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
               <Route path="new" element={token ? <NewBusiness /> : <Navigate to="/login" />} />
+              <Route path="listmonth" element={token ? <BusinessMonthList /> : <Navigate to="/login" />} />
+              <Route path="listfechadomonth" element={token ? <BusinessMonthListfechado /> : <Navigate to="/login" />} />
+              <Route path="listopenmonth" element={token ? <BusinessMonthListopen /> : <Navigate to="/login" />} />
+              <Route path="view/:businessId" element={<ViewBusiness />} />
+              <Route path="report/:reportId" element={<BusinessReport />} />
+
               <Route path="create" element={token ? <EditBusiness /> : <Navigate to="/login" />} />
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editpersonal:clientId" element={<EditPersonalData />} />
+              <Route path="view/editproduct/:businessId" element={<EditBussinessProduct />} />
+              <Route path="view/editshare/:businessId" element={<EditBussinessShare />} />
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta />} />
               <Route path="view/edittypebusiness/:businessId" element={<SystemTypeform />} />
+              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
 
 
 
