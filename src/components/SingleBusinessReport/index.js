@@ -35,28 +35,28 @@ const garantiasData = [
 
 export default function SingleBusinessReport() {
   const componentRef = useRef();
-  
+
   const [name, setName] = useState('')
   const [numberP, setNumberP] = useState('')
   const { token } = useContext(AuthContext)
   const [tipoSistema, setTipoSistema] = useState('')
   const [potenciaS, setPotenciaS] = useState('')
   const [valor, setValor] = useState('')
-  const[cidade,setCidade] = useState('')
-  const [entrada80,setEntrada80] = useState ('')
-  const [entrada10,setEntrada10] =useState('')
+  const [cidade, setCidade] = useState('')
+  const [entrada80, setEntrada80] = useState('')
+  const [entrada10, setEntrada10] = useState('')
   const { reportId } = useParams();
-  const [produto, setProduto] = useState ([])
-  const [economia, setEconomia] =useState([])
-  const [areaInversor,setAreaInversor] = useState([])
+  const [produto, setProduto] = useState([])
+  const [economia, setEconomia] = useState([])
+  const [areaInversor, setAreaInversor] = useState([])
   const [pesoSistema, setPesoSistema] = useState([])
-  const [porcAtendida,setPorcAtendida] = useState([])
+  const [porcAtendida, setPorcAtendida] = useState([])
   const [caixaAcumulado, setCaixaAcumulado] = useState([])
-  const [vpl,setVpl] = useState([])
+  const [vpl, setVpl] = useState([])
   const [payback, setPayback] = useState([])
-  const [tir,setTir] = useState([])
-  const [caixaAcumuladoInversor,setCaixaAcumuladoInversor] = useState([])
-  const[caixaAcumuladoMicro,setCaixaAcumuladoMicro] = useState([])
+  const [tir, setTir] = useState([])
+  const [caixaAcumuladoInversor, setCaixaAcumuladoInversor] = useState([])
+  const [caixaAcumuladoMicro, setCaixaAcumuladoMicro] = useState([])
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -77,8 +77,8 @@ export default function SingleBusinessReport() {
     style: 'currency',
     currency: 'BRL'
   })
-  
-  
+
+
   async function loadbId(id) {
 
     await api.get('/business/get/' + id, {
@@ -101,7 +101,7 @@ export default function SingleBusinessReport() {
       setProduto(response.data.products)
       setEconomia(response.data.economia)
       setAreaInversor(numeroFormatado.format(response.data.areainversor))
-      setPesoSistema (numeroFormatado.format(response.data.pesosistema))
+      setPesoSistema(numeroFormatado.format(response.data.pesosistema))
       setPorcAtendida(numeroFormatado.format(response.data.porctendida))
       setVpl(formatter.format(response.data.vpl))
       setPayback(response.data.payback)
@@ -109,8 +109,8 @@ export default function SingleBusinessReport() {
       caixaAcumulado(response.data.caixaAcumuladoM)
       setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
       setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
-    //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
-     // caixaAcumulado()
+      //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
+      // caixaAcumulado()
 
     }).catch((error) => { console.log(error) })
 
@@ -124,8 +124,8 @@ export default function SingleBusinessReport() {
       }
 
     }).then((response) => {
-      
-     
+
+
     })
 
     await api.get('/client/get/add/' + Id, {
@@ -134,7 +134,7 @@ export default function SingleBusinessReport() {
       }
 
     }).then((response) => {
-     
+
       setCidade(response.data.city)
 
     })
