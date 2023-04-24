@@ -141,11 +141,12 @@ export default function SingleBusinessReport() {
 
   }
 
+  /* Específico para impressão */
   let counter = 6;
   let counterHeight = 0
-  let agrupa = true;
-  let agrupaText = "true";
-  let agrupaHeight = false;
+  let groupEconomy = true;
+  let groupEconomyHeight = false;
+  /* Fim - Específico para impressão */
 
   return (
     <div className="p-3 mb-4 bg-white rounded-3 single-business-report">
@@ -178,7 +179,7 @@ export default function SingleBusinessReport() {
                   {name}
                 </h5>
               </div>
-              <div className="bg-white rounded-3 border">
+              <div className="bg-white rounded-3 border px-4 py-2">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -689,25 +690,26 @@ export default function SingleBusinessReport() {
         </section>
 
         {economia.map((item) => {
+
+          /* Específico para impressão */
           ++counter;
           ++counterHeight;
           if (counter > 5) {
-            agrupa = true;
-            agrupaText = "true";
+            groupEconomy = true;
             counter = 1;
           } else {
-            agrupa = false;
-            agrupaText = "false";
+            groupEconomy = false;
           }
           if (counterHeight % 5 === 0) {
-            agrupaHeight = true;
+            groupEconomyHeight = true;
           } else {
-            agrupaHeight = false;
+            groupEconomyHeight = false;
           }
+          /* Fim - Específico para impressão */
 
           return (
-            <section className={agrupaHeight ? "report-section-height2" : ""}>
-              <div className={agrupa ? "mostrar" : "esconder"}>
+            <section className={groupEconomyHeight ? "report-section-height2" : ""}>
+              <div className={groupEconomy ? "mostrar" : "esconder"}>
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <div className="report-image-header py-3 fw-semibold text-center text-light">
                     <span>TETO SOLAR - (88) 99228-5655</span>
@@ -725,7 +727,7 @@ export default function SingleBusinessReport() {
                   key={item.id}
                   className="row my-2 report-print-width report-cards"
                 >
-                  <h6>{item.ano + "---" + counter + "---" + agrupaText}</h6>
+                  <h6>{item.ano}</h6>
                   <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
                     <div className="card border-light">
                       <div class="card-header report-card-bg text-light border-0">
@@ -772,8 +774,6 @@ export default function SingleBusinessReport() {
             </section>
           );
         })}
-
-        
       </article>
     </div>
   );
