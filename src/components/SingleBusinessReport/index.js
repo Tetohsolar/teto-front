@@ -141,6 +141,12 @@ export default function SingleBusinessReport() {
 
   }
 
+  let counter = 6;
+  let counterHeight = 0
+  let agrupa = true;
+  let agrupaText = "true";
+  let agrupaHeight = false;
+
   return (
     <div className="p-3 mb-4 bg-white rounded-3 single-business-report">
       <div className="d-flex flex-column flex-sm-row justify-content-end mb-3">
@@ -332,7 +338,7 @@ export default function SingleBusinessReport() {
                           {produto.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td> {item.brand + '-'  + item.model}</td>
+                                <td> {item.brand + "-" + item.model}</td>
                                 <td>{item.qtd}</td>
                               </tr>
                             );
@@ -375,7 +381,8 @@ export default function SingleBusinessReport() {
                           <tr>
                             <td>Peso do sistema</td>
                             <td>{pesoSistema} Kg</td>
-                          </tr><tr>
+                          </tr>
+                          <tr>
                             <td>Porc. atendida </td>
                             <td>{porcAtendida} %</td>
                           </tr>
@@ -477,10 +484,14 @@ export default function SingleBusinessReport() {
                           </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                          <tr>
                             <td>Caixa Acum.</td>
-                            
-                            <td>{tipoSistema==="Inversor"? caixaAcumuladoInversor:caixaAcumuladoMicro}</td>
+
+                            <td>
+                              {tipoSistema === "Inversor"
+                                ? caixaAcumuladoInversor
+                                : caixaAcumuladoMicro}
+                            </td>
                           </tr>
                           <tr>
                             <td>V.P.L</td>
@@ -547,63 +558,6 @@ export default function SingleBusinessReport() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="report-section-height">
-          <div className="report-image-header py-3 fw-semibold text-center text-light">
-            <span>TETO SOLAR - (88) 99228-5655</span>
-          </div>
-          <div className="mt-4 d-flex flex-column align-items-center">
-            <h4 className="fw-semibold text-primary text-center">Economia</h4>
-          </div>
-
-          <div className="d-flex flex-column align-items-center justify-content-center">
-            {economia.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className="row my-2 report-print-width report-cards"
-                >
-                  <h6>{item.ano}</h6>
-                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg text-light border-0">
-                        ENEL
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura anual</h6>
-                        <p className="mb-0">{formatter.format(item.enel)}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg text-light border-0">
-                        TETO SOLAR
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura anual</h6>
-                        <p className="mb-0">{formatter.format(item.tetoSolar)}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-4 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg-green text-light border-0">
-                        ECONOMIA
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Sua economia anual</h6>
-                        <p className="mb-0">{ tipoSistema==="Inversor"? formatter.format(item.economiaIn):formatter.format(item.economiaM)}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </section>
 
@@ -733,6 +687,93 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
+        {economia.map((item) => {
+          ++counter;
+          ++counterHeight;
+          if (counter > 5) {
+            agrupa = true;
+            agrupaText = "true";
+            counter = 1;
+          } else {
+            agrupa = false;
+            agrupaText = "false";
+          }
+          if (counterHeight % 5 === 0) {
+            agrupaHeight = true;
+          } else {
+            agrupaHeight = false;
+          }
+
+          return (
+            <section className={agrupaHeight ? "report-section-height2" : ""}>
+              <div className={agrupa ? "mostrar" : "esconder"}>
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <div className="report-image-header py-3 fw-semibold text-center text-light">
+                    <span>TETO SOLAR - (88) 99228-5655</span>
+                  </div>
+                  <div className="mt-4 d-flex flex-column align-items-center">
+                    <h4 className="fw-semibold text-primary text-center">
+                      Economia
+                    </h4>
+                  </div>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <div
+                  key={item.id}
+                  className="row my-2 report-print-width report-cards"
+                >
+                  <h6>{item.ano + "---" + counter + "---" + agrupaText}</h6>
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        ENEL
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura anual</h6>
+                        <p className="mb-0">{formatter.format(item.enel)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        TETO SOLAR
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura anual</h6>
+                        <p className="mb-0">
+                          {formatter.format(item.tetoSolar)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg-green text-light border-0">
+                        ECONOMIA
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Sua economia anual</h6>
+                        <p className="mb-0">
+                          {tipoSistema === "Inversor"
+                            ? formatter.format(item.economiaIn)
+                            : formatter.format(item.economiaM)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        })}
+
+        
       </article>
     </div>
   );
