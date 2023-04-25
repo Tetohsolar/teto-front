@@ -95,7 +95,6 @@ const AfflitedForm = (props) => {
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const handleInputnum = ({ target: { value } }) => setNumero(value);
   const { clientId } = useParams();
-
   useEffect(() => {
 
     if (clientId) {
@@ -215,7 +214,26 @@ const AfflitedForm = (props) => {
       return false;
     }
   
-   
+    if (zap !== "" && zap !== undefined) {
+      let zapnomask = zap.replace('_', "");
+      if (zapnomask.length < 15) {
+      toast.error("WhatsApp é inválido", {
+      autoClose: 1000,
+      })
+      return false;
+      }
+      }
+               
+      if (cep !== "" && cep !== undefined) {
+        let cepnomask = cep.replace('_', "");
+        if (cepnomask.length < 8) {
+        toast.error("CEP é inválido", {
+        autoClose: 1000,
+        })
+        return false;
+        }
+        }
+
     if (documento !== '') {
 
       if (documento.length <= 14 && !cpf.isValid(documento)) {
@@ -562,7 +580,7 @@ const AfflitedForm = (props) => {
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="taxI" className="form-label ">
-                  Taxa Adicional (%)
+                  Imposto (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxI || ''} onChange={(e) => setTaxainv(e.target.value)} />
               </div>
@@ -591,7 +609,7 @@ const AfflitedForm = (props) => {
               </div>
               <div className="col-md-3"  >
                 <label htmlFor="taxM" className="form-label ">
-                  Taxa Adicional (%)
+                  Imposto (%)
                 </label>
                 <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={taxM || ''} onChange={(e) => setTaxam(e.target.value)} />
               </div>
