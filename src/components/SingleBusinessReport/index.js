@@ -103,10 +103,16 @@ export default function SingleBusinessReport() {
       setAreaInversor(numeroFormatado.format(response.data.areainversor))
       setPesoSistema(numeroFormatado.format(response.data.pesosistema))
       setPorcAtendida(numeroFormatado.format(response.data.porctendida))
-      setVpl(formatter.format(response.data.vpl))
+      if (tipoSistema==="Inversor")
+       {   
+        setVpl(formatter.format(response.data.vplI))
+        setTir(numeroFormatado.format(response.data.tirI))  
+      }else{
+            setVpl(formatter.format(response.data.vplM))
+            setTir(numeroFormatado.format(response.data.tirM))
+          }
       setPayback(response.data.payback)
-      setTir(numeroFormatado.format(response.data.tir))
-      caixaAcumulado(response.data.caixaAcumuladoM)
+      
       setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
       setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
       //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
