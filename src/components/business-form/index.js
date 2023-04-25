@@ -14,10 +14,8 @@ import 'react-tabs/style/react-tabs.css';
 import '/node_modules/react-tabs/style/react-tabs.scss';
 import { NumericFormat } from 'react-number-format';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
-import { BsFillTrash3Fill, BsPencilFill } from 'react-icons/bs';
-import MyModal from '../communs/ModalDelete';
-import { AiFillPlusSquare, AiOutlinePlus } from 'react-icons/ai';
 import TabelaProdutoEditavel from '../prods';
+import TabelaRateioBusiness from '../rateio-table';
 
 function PhoneInput(props) {
   return (
@@ -88,11 +86,9 @@ const BusinessForm = (props) => {
 
   ]);
 
-  
+
   const [name, setName] = useState('')
   const [num, setNumero] = useState('')
-  const [id, setId] = useState('')
-  const [idNegocio, setIdNegocio] = useState('')
   const [lbFantasia, setLbFantasia] = useState('')
   const [lbDocument, setLbDocument] = useState('')
   const [exibeCorporateName, setExibeCorporateName] = useState('')
@@ -110,7 +106,6 @@ const BusinessForm = (props) => {
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
-  const [taxM, setTaxam] = useState('')
   const { token, userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
@@ -134,24 +129,20 @@ const BusinessForm = (props) => {
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const [tipoSistema, setTipoSistema] = useState('Inversor')
-
-  const [perdas, serPerdas] = useState(afflited.lost/100)
+  const [perdas, serPerdas] = useState(afflited.lost / 100)
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
-  const [qtdeModulos, setQtdeModulos] = useState('')
   const [potenciaSistema, setPotenciaSistema] = useState(0)
-  const [mediaMensal, setMediaMensal] = useState('')
   const [cip, setCip] = useState(afflited.cip.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [bandeira, setbandeira] = useState(afflited.flag.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 }))
-  const [fatorSimult, setFatorSimult] = useState(0)
+  const [fatorSimult, setFatorSimult] = useState(30)
   const [precoKit, setPrecoKit] = useState('')
   const [precoKitFornecedor, setPrecoKitForncedor] = useState(0)
-  const [precoKitCalculado, setPrecoKitCalculado] = useState(0)
   const [complemento, setComplemento] = useState(afflited.complementCostI)
   const [projeto, setprojeto] = useState(afflited.projectCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [imposto, setImposto] = useState(afflited.taxI)
   const [montagem, setMontagem] = useState(afflited.assemblyCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [comissao, setComissao] = useState(afflited.profitCost)
-  const [margem, setMargem] = useState(afflited.profitCost+afflited.profit)
+  const [margem, setMargem] = useState(afflited.profitCost + afflited.profit)
   const [custo_total, setCustoTotal] = useState(0)
   const [margemCalculada, setMargemCalculada] = useState(0)
   const [valorTotalProjeto, setValorTotalProjeto] = useState(0)
@@ -160,20 +151,12 @@ const BusinessForm = (props) => {
   const [lucroReal, setLucroReal] = useState(0)
   const [projetoDesconto2, setprojetoDesconto2] = useState('')
   const [projetoDesconto4, setprojetoDesconto4] = useState('')
-  const [marcaModulo, setMarcaModulo] = useState('')
   const [modeloPlaca, setModeloPlaca] = useState([])
   const [modeloInversor, setModeloInversor] = useState([])
-  const [modeloMicroInversor, setModeloMicroInversor] = useState([])
-  const [selectedInversor, setSelectecInversor] = useState('')
-  const [selectedModeloPainel, setSelectedModeloPainel] = useState('')
-  const [selectedMicroinversor, setSelectecMicroinversor] = useState('')
-  const [taxa, setTaxa] = useState('')
   const [nome, setNome] = useState('')
   const [usuario, setUsuario] = useState('')
-  const [marca, setMarca] = useState()
   const [marcas, setMarcas] = useState([])
   const [IdClient, setIdClient] = useState('')
-  
   const [demandasVisible, setDemandasVisible] = useState('')
   const [nPlacas, setNplacas] = useState(0)
   const [idRateio, setIdRateio] = useState(1)
@@ -184,7 +167,6 @@ const BusinessForm = (props) => {
   const [margem2p, setMargem2p] = useState(0.0)
   const [lucro2, setLucro2] = useState(0.0)
   const [lucroR2, setLucroR2] = useState(0.0)
-
   const [comissao4, setComissao4] = useState(0.0)
   const [margem4, setMargem4] = useState(0.0)
   const [lucro4, setLucro4] = useState(0.0)
@@ -199,7 +181,6 @@ const BusinessForm = (props) => {
         "type": type
       }
 
-
       await api.post('/brands/all', filtro, {
         headers: {
           'Authorization': `Basic ${token}`
@@ -211,20 +192,17 @@ const BusinessForm = (props) => {
         //toast.error(error.response.data.message)
       });
 
-
     } catch (err) {
       console.log(err)
 
     }
   }
 
-
   const [dadosProdutos, setDadosProdutos] = useState([
     {
-      id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands:[], products:[]
+      id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
     }
   ]);
-
 
   const handleEdit = (id, campo, valor) => {
     setDados(prevDados => {
@@ -238,7 +216,7 @@ const BusinessForm = (props) => {
     });
   };
 
-   const handleEditProds = async(id, campo, valor) => {
+  const handleEditProds = async (id, campo, valor) => {
     setDadosProdutos(prevDados => {
       const novoDados = [...prevDados];
       const index = novoDados.findIndex(item => item.id === id);
@@ -247,13 +225,13 @@ const BusinessForm = (props) => {
     });
   };
 
-  async function carregaPotencia(item){
+  async function carregaPotencia(item) {
 
     console.log(item.model)
-    const filtro ={
-      codef:item.model.trim()
+    const filtro = {
+      codef: item.model.trim()
     }
-    await api.post('/products/getpowerbycod/',filtro, {
+    await api.post('/products/getpowerbycod/', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
       }
@@ -268,16 +246,16 @@ const BusinessForm = (props) => {
     })
 
   }
-  async function onBlurProdutoMarca(item){
+  async function onBlurProdutoMarca(item) {
 
     let category = "Nenhum"
-    if (item.type==="P"){
-      category ="Placa"
+    if (item.type === "P") {
+      category = "Placa"
     }
-    else if (item.type === "I"){
-      category="Inversor"
-    }else if (item.type==="M"){
-      category ="Microinversor"
+    else if (item.type === "I") {
+      category = "Inversor"
+    } else if (item.type === "M") {
+      category = "Microinversor"
     }
 
     const filtro = {
@@ -301,43 +279,42 @@ const BusinessForm = (props) => {
         return novoDados;
       });
     })
-    
+
   }
 
 
-  async function onBlurMarca(item){
+  async function onBlurMarca(item) {
 
-    if (item.type!==""){
-     let type = "M"
-     if (item.type==="P"){
-        type="P";
-     } 
-    const filtro = {
-      "type": type
-    }
-
-    console.log(filtro)
-    await api.post('/brands/all', filtro, {
-      headers: {
-        'Authorization': `Basic ${token}`
-
+    if (item.type !== "") {
+      let type = "M"
+      if (item.type === "P") {
+        type = "P";
       }
-    }).then((response) => {
-      setDadosProdutos(prevDados => {
-        const novoDados = [...prevDados];
-        const index = novoDados.findIndex(it => it.id === item.id);
-        novoDados[index]["brands"] = response.data.brand;
-        return novoDados;
+      const filtro = {
+        "type": type
+      }
+
+      console.log(filtro)
+      await api.post('/brands/all', filtro, {
+        headers: {
+          'Authorization': `Basic ${token}`
+
+        }
+      }).then((response) => {
+        setDadosProdutos(prevDados => {
+          const novoDados = [...prevDados];
+          const index = novoDados.findIndex(it => it.id === item.id);
+          novoDados[index]["brands"] = response.data.brand;
+          return novoDados;
+        });
+      }).catch((error) => {
       });
-    }).catch((error) => {
-    });
 
     }
-    else{
+    else {
       item["brands"] = []
     }
   }
-
 
   const [novoItem, setNovoItem] = useState({
     id: idRateio, modality: "Convencional", group: 'B', subgroup: 'B1', demandaFP: 0, energiaFP: 0,
@@ -391,7 +368,7 @@ const BusinessForm = (props) => {
     if (BId) {
       loadClienById(BId)
       loadBrandByProduct("P")
-      console.log("id"+idLogged)
+      console.log("id" + idLogged)
     }
     return () => { }
 
@@ -418,33 +395,7 @@ const BusinessForm = (props) => {
 
     })
 
-
   };
-
-
-
-  async function findMicroInversor() {
-    const filtro = {
-      brand: "%",
-      category: "Microinversor",
-      "page": 0,
-      "pageSize": 100
-    }
-
-
-    await api.post('/products/byparam', filtro, {
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-    }).then((response) => {
-      setModeloMicroInversor(response.data.tutorials)
-      console.log(response.data.tutorials)
-
-    })
-
-
-  };
-
 
   async function findAllPainel() {
     console.log('chamou painel')
@@ -454,7 +405,6 @@ const BusinessForm = (props) => {
       "page": 0,
       "pageSize": 100
     }
-
 
     await api.post('/products/byparam', filtro, {
       headers: {
@@ -466,27 +416,8 @@ const BusinessForm = (props) => {
 
     })
 
-
   };
 
-
-  function findAllProductsByBrand(e) {
-    console.log(e)
-    setTipoSistema(e)
-
-    if (e === "Inversor") {
-      console.log('chamou inversor')
-      findInversores()
-
-    }
-    else if (e === "Microinversor") {
-      console.log('chamou microinversor')
-      findMicroInversor()
-
-    }
-
-    findAllPainel()
-  }
   async function loadClienById(id) {
 
     try {
@@ -499,11 +430,9 @@ const BusinessForm = (props) => {
         setName(response.data.fantasy)
         setDoc(response.data.document)
         setCorporateName(response.data.corporatename)
-
         response.data.tipo === "Fisico" ? setTipoPessoa("F") : setTipoPessoa("J")
         let olha = response.data.tipo === "Fisico" ? "F" : "J"
         handleTipoPessoaValue(olha)
-
         setPhone(response.data.phone)
         setNumero(response.data.num)
         setZap(response.data.zap)
@@ -515,7 +444,6 @@ const BusinessForm = (props) => {
         setBairro(response.data.Addresses[0].neighborhood)
         setIdAdd(response.data.Addresses[0].id)
         setInformacoesAdicionais(response.data.addInformation)
-        setId(response.data.id)
         setEmail(response.data.email)
         setNumero(response.data.Addresses[0].number)
 
@@ -557,7 +485,6 @@ const BusinessForm = (props) => {
       return false;
     }
 
-
     if (phone === "" || phone === undefined) {
       toast.error("Telefone É obrigatório", {
         autoClose: 1000,
@@ -589,13 +516,9 @@ const BusinessForm = (props) => {
         });
         throw new Error;
 
-
       }
 
     }
-
-
-
 
     return true;
   }
@@ -670,7 +593,6 @@ const BusinessForm = (props) => {
     }
   };
 
-
   async function handleFindClient(e) {
     e.preventDefault();
 
@@ -731,8 +653,6 @@ const BusinessForm = (props) => {
       setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
 
     })
-
-
 
   }
 
@@ -798,7 +718,6 @@ const BusinessForm = (props) => {
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
       setGeracaoSugeridaParcial(result)
 
-
     }
     else {
       setConsumoMedio('')
@@ -812,9 +731,9 @@ const BusinessForm = (props) => {
     flag, syncindex, lost, consideredpower, numberborder, systempower, consumption,
     panelpower, avgmonth, kitprice, complement, project, tax, assembled,
     sellercomission, margin, amountcost, marginCalculate, amount, valuesellercomission, profit,
-    realProfit, numberInverMicro, validate, AffiliatedId, ClientId,  type, UserId, clientData) {
-    
-    console.log(clientData)
+    realProfit, numberInverMicro, validate, AffiliatedId, ClientId, type, UserId, clientData) {
+
+    console.log("margen" + margin)
 
     const data = {
       sunIndex: sunIndex, number: number, roof: roof, typeConnection: typeConnection,
@@ -833,11 +752,11 @@ const BusinessForm = (props) => {
       amount: amount, valuesellercomission: valuesellercomission,
       profit: profit, realProfit: realProfit, numberInverMicro: numberInverMicro,
       validate: validate, AffiliatedId: AffiliatedId, ClientId: ClientId,
-      type: type, UserId: UserId, shares: dados, products:dadosProdutos, ClientData:clientData
+      type: type, UserId: UserId, shares: dados, products: dadosProdutos, ClientData: clientData
 
     };
 
-    
+
     console.log(data)
     await api.post('/business/create', data
       , {
@@ -847,7 +766,6 @@ const BusinessForm = (props) => {
 
       }).then((response) => {
 
-        setIdNegocio(response.data.business.id)
         navigate("/business/view/" + response.data.business.id)
       }).catch(
         (response) => {
@@ -859,143 +777,85 @@ const BusinessForm = (props) => {
   }
 
   async function saveClient(tipoPesoa, name, corpName, documento, phone, zap, cep, estado, cidade, logradouro, bairro, inform, email, id, idAdd, num) {
-  
-    /*const t = JSON.stringify(json);
-    const saida = JSON.parse(t);
-    //console.log(saida)
 
-    if (await validaCampos(name, phone, documento)) {
-
-      console.log("valor do id " + id)
-      if (id) {
-        await api.patch('/client/update/' + id, saida
-          , {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
-
-          }).then((response) => {
-
-
- 
-          }).catch(
-            (response) => {
-              toast.error(response.response.data.message)
-              throw new Error()
-            }
-          );
-
-      } else {
-        await api.post('/client/create', saida
-          , {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
-
-          }).then((response) => {
-            
-            setIdClient(response.data.client.id)
-            if (response.data.client.Addresses.length>0){
-              setIdAdd(response.data.client.Addresses[0].id)
-            }
-            console.log("aqui create cliente" + response.data.id)
-            
-
-
-          }).catch(
-            (response) => {
-
-
-              toast.error(response.response.data.message)
-              throw new Error()
-            }
-          )
-      }
-    }*/
   }
 
   async function handleChangePage(event) {
     event.preventDefault();
 
-         if (!validaCampos(name,phone,doc,cepData,zap)){
-          return
-         }
+    if (!validaCampos(name, phone, doc, cepData, zap)) {
+      return
+    }
 
-          const clientData = {
-            id:IdClient,
-            fantasy: name,
-            corporatename: corporateName,
-            phone: phone,
-            document: doc,
-            email: email,
-            tipo: tipoPessoa,
-            zap: zap,
-            addInformation: informacoesAdicionais,
-            AffiliatedId:afflitedId,
-            Addresses: [
-              {
-                id: idAdd ? idAdd : undefined,
-                street: rua,
-                postcode: cepData,
-                city: cidade,
-                state: estado,
-                neighborhood: bairro,
-                number: num
-              }
-            ]
-          }
+    const clientData = {
+      id: IdClient,
+      fantasy: name,
+      corporatename: corporateName,
+      phone: phone,
+      document: doc,
+      email: email,
+      tipo: tipoPessoa,
+      zap: zap,
+      addInformation: informacoesAdicionais,
+      AffiliatedId: afflitedId,
+      Addresses: [
+        {
+          id: idAdd ? idAdd : undefined,
+          street: rua,
+          postcode: cepData,
+          city: cidade,
+          state: estado,
+          neighborhood: bairro,
+          number: num
+        }
+      ]
+    }
 
-          setNome(name)
-          setUsuario(userName)
-          const today = new Date();
-          const validade = new Date(today.setDate(today.getDate() + 90));
+    setNome(name)
+    setUsuario(userName)
+    const today = new Date();
+    const validade = new Date(today.setDate(today.getDate() + 90));
 
-          let demandaFP = 0
-          let energiaPonta = 0
-          let demPonta = 0
-          let energia_FP = 0
-
-          let perdas = 0
-          const precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'));
-          const comp = parseFloat(String(complemento).replace(/\./g, '').replace(',', '.'));
-          const proje = parseFloat(String(projeto).replace(/\./g, '').replace(',', '.'));
-          const imp = parseFloat(String(imposto).replace(/\./g, '').replace(',', '.'));
-          const monta = parseFloat(String(montagem).replace(/\./g, '').replace(',', '.'));
-          const ct = parseFloat(String(custo_total).replace(/\./g, '').replace(',', '.'));
-          const mg = parseFloat(String(margemCalculada).replace(/\./g, '').replace(',', '.'));
-          const vt = parseFloat(String(valorTotalProjeto).replace(/\./g, '').replace(',', '.'));
-          const vc = parseFloat(String(valorComissao).replace(/\./g, '').replace(',', '.'));
-          const lp = parseFloat(String(lucroProjeto).replace(/\./g, '').replace(',', '.'));
-          const lr = parseFloat(String(lucroReal).replace(/\./g, '').replace(',', '.'));
-          const cip1 = parseFloat(String(cip).replace(/\./g, '').replace(',', '.'));
-
-          const flag = parseFloat(String(bandeira).replace(/\./g, '').replace(',', '.'));
+    let demandaFP = 0
+    let energiaPonta = 0
+    let demPonta = 0
+    let energia_FP = 0
 
 
-          saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
-            energiaPonta, demPonta, energia_FP, consumoMedio, geracaoSugerida, geracaoDesejada, "Aberta",
-            cip1, flag, fatorSimult, perdas, potenciaConsiderada, nPlacas, potenciaSistema, potenciaModulo,
-            potenciaModulo, geracaoSugerida, precoK, comp, proje, imp, monta, comissao, margem,
-            ct, mg, vt, vc, lp, lr, 1,
-            validade, afflitedId, IdClient, tipoSistema, idLogged, clientData).then(
-              () => {
-                toast.success("Operação realizada com sucesso!", {
-                  autoClose: 1000,
-                })
+    const precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'));
+    const comp = parseFloat(String(complemento).replace(/\./g, '').replace(',', '.'));
+    const proje = parseFloat(String(projeto).replace(/\./g, '').replace(',', '.'));
+    const imp = parseFloat(String(imposto).replace(/\./g, '').replace(',', '.'));
+    const monta = parseFloat(String(montagem).replace(/\./g, '').replace(',', '.'));
+    const ct = parseFloat(String(custo_total).replace(/\./g, '').replace(',', '.'));
+    const mg = parseFloat(String(margemCalculada).replace(/\./g, '').replace(',', '.'));
+    const vt = parseFloat(String(valorTotalProjeto).replace(/\./g, '').replace(',', '.'));
+    const vc = parseFloat(String(valorComissao).replace(/\./g, '').replace(',', '.'));
+    const lp = parseFloat(String(lucroProjeto).replace(/\./g, '').replace(',', '.'));
+    const lr = parseFloat(String(lucroReal).replace(/\./g, '').replace(',', '.'));
+    const cip1 = parseFloat(String(cip).replace(/\./g, '').replace(',', '.'));
+    const flag = parseFloat(String(bandeira).replace(/\./g, '').replace(',', '.'));
+
+    saveBusiness(fatorSolar, num, tipoTelhado, tipoLigacao, modalidade, grupo, subgrupo, demandaFP,
+      energiaPonta, demPonta, energia_FP, consumoMedio, geracaoSugerida, geracaoDesejada, "Aberta",
+      cip1, flag, fatorSimult, perdas, potenciaConsiderada, nPlacas, potenciaSistema, potenciaModulo,
+      potenciaModulo, geracaoSugerida, precoK, comp, proje, imp, monta, comissao, margem,
+      ct, mg, vt, vc, lp, lr, 1,
+      validade, afflitedId, IdClient, tipoSistema, idLogged, clientData).then(
+        () => {
+          toast.success("Operação realizada com sucesso!", {
+            autoClose: 1000,
+          })
 
 
-              }
+        }
 
-            ).catch((error) => {
-              toast.error(error, {
-                autoClose: 1000,
-              })
+      ).catch((error) => {
+        toast.error(error, {
+          autoClose: 1000,
+        })
 
-            })
-        
-
-
-      
+      })
 
   }
   function setMod(e) {
@@ -1038,13 +898,21 @@ const BusinessForm = (props) => {
 
     var complement = precoK * (fator / 100)
     var imp = precoK * (tax / 100)
+
     const numeroFormatado = precoK.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     setPrecoKit(numeroFormatado)
     setComplemento(complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     setImposto(imp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     const projet = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
-    const mont = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
-    var total = precoK + complement + imp + projet + mont
+
+    let mont = parseFloat(afflited.assemblyCostI);
+    if (tipoSistema === "MicroInversor") {
+      mont = parseFloat(afflited.assemblyCostM);
+    }
+    var monta = mont * nPlacas
+    console.log(monta)
+    setMontagem(monta)
+    var total = precoK + complement + imp + projet + monta
     setCustoTotal(total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     const mgsV = parseFloat(String(margem).replace(/\./g, '').replace(',', '.'));
     const comsV = parseFloat(String(comissao).replace(/\./g, '').replace(',', '.'));
@@ -1129,8 +997,6 @@ const BusinessForm = (props) => {
 
   return (
 
-
-
     <div className="p-3 mb-3 bg-white border rounded-3">
       <ToastContainer />
 
@@ -1139,9 +1005,9 @@ const BusinessForm = (props) => {
         <Tabs >
           <TabList>
             <Tab>Dados do Cliente</Tab>
-            <Tab  > Dados da Geradora</Tab>
-            <Tab> Tipo de Sistema</Tab>
-            <Tab> Resumo Financeiro</Tab>
+            <Tab>Dados da Geradora</Tab>
+            <Tab>Tipo de Sistema</Tab>
+            <Tab>Resumo Financeiro</Tab>
           </TabList>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
@@ -1168,7 +1034,6 @@ const BusinessForm = (props) => {
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
-
 
               <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <label htmlFor="inputCorporateName" className="form-label ">
@@ -1258,7 +1123,8 @@ const BusinessForm = (props) => {
                   <label htmlFor="inputCodigo" className="form-label">
                     Fator Solar:
                   </label>
-                  <input type="number" className="form-control alinhaDireita" id="inputCodigo" value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+                  <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                    className="form-control number" value={fatorSolar || ''} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
                 </div>
                 <div className="col-md-3">
                   <label htmlFor="inputCodigo" className="form-label">
@@ -1294,7 +1160,7 @@ const BusinessForm = (props) => {
                     Tipo de Sistema:
                   </label>
                   {/* <input type="text" className="form-control" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} /> */}
-                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => findAllProductsByBrand(e.target.value)} >
+                  <select className="form-select" id="inputTipoSistema" value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} >
                     <option value="Inversor">Inversor</option>
                     <option value="MicroInversor">Microinversor</option>
                   </select>
@@ -1306,8 +1172,8 @@ const BusinessForm = (props) => {
                     Potência do Painel:
                   </label>
                   {/*  */}
-
-                  <input type="text" className="form-control alinhaDireita" id="inputTipoSistema" value={potenciaModulo} onChange={(e) => { setPotenciaModulo(e.target.value); calculaDemana() }} />
+                  <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                    className="form-control number" value={potenciaModulo || ''} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana} />
 
                 </div>
 
@@ -1321,7 +1187,6 @@ const BusinessForm = (props) => {
                 <div class="card-body d-flex flex-row ">
 
                   <div className="row p-2 d-flex flex-column">
-
 
                     <div className="col-md-3 w-100">
                       <label htmlFor="modalidade" className="form-label">
@@ -1340,7 +1205,6 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputGrupo" className="form-label">
                         Grupo:
                       </label>
-
 
                       <select className="form-select" id="inputGrupo" value={grupo} onChange={(e) => { setGrupo(e.target.value); calculaDemana(); }} >
                         <option value="">Selecione</option>
@@ -1368,8 +1232,6 @@ const BusinessForm = (props) => {
                       </select>
                     </div>
 
-
-
                   </div>
                   <div className="row p-2  d-flex flex-column">
 
@@ -1377,23 +1239,26 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputDemandaFP" className="form-label">
                         Demanda FP(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputDemandaFP" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onBlur={calculaDemana} />
+
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={demandaFP || ''} onChange={(e) => setDemandaFP(e.target.value)} onBlur={calculaDemana} />
 
                     </div>
                     <div className="col-md-3 w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputEnergiaFP" className="form-label">
                         Energia FP(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputEnergiaFP" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
-
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={energia_FP || ''} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
                     </div>
                     <div className="col-md-3   w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputEnergiaPonta" className="form-label">
                         Energia Ponta(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputEnergiaPonta" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={calculaDemana} />
-                    </div>
 
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={energiaPonta || ''} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={calculaDemana} />
+                    </div>
                   </div>
 
                   <div className="row p-2  d-flex flex-column" >
@@ -1401,33 +1266,32 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputDemandaPonta" className="form-label">
                         Demanda Ponta(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputDemandaPonta" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={demPonta || ''} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
                     </div>
 
                     <div className="col-md-3  w-100 " id={demandasVisible === "N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
                         Consumo Médio(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputConsMedio" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)}
-                        onBlur={() => {
+
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={() => {
                           calculaDemana();
                           calculaGeracaoTotal();
                         }} onKeyUp={() => { calculaDemana(); }} />
-
                     </div>
-
 
                     <div className="col-md-3 w-100">
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         Geração Sugerida(KWh):
                       </label>
-                      <input type="text" readOnly className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
+
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
+
                     </div>
-
-
-
                   </div>
-
                 </div>
               </div>
               <br />
@@ -1441,153 +1305,10 @@ const BusinessForm = (props) => {
                   <div className="mb-3 mb-sm-0">
                     <div className="card border-light-subtle">
                       <div className="card-body">
-                        <div className="table-responsive">
-                          <table className="table caption-top table-sm">
-                            <thead>
-                              <tr>
-                                <th scope="col" className='tamanhoM'>Modalidade</th>
-                                <th scope="col">Grupo</th>
-                                <th scope="col">SubGrupo</th>
-                                <th scope="col" className='alinhaCenter' >Consumo</th>
-                                <th scope="col" className='alinhaCenter'>Dem. FP.</th>
-                                <th scope="col" className='alinhaCenter'>Ener. F. P. </th>
-                                <th scope="col" className='alinhaCenter'>Dem. P</th>
-                                <th scope="col" className='alinhaCenter'>Eng. P</th>
-                                <th scope="col" className='alinhaCenter'>G.Sugerida</th>
-                                <th scope="col" className='alinhaCenter'>C.I.P</th>
-                                <th scope="col"></th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                              {dados.map((item) => {
-                                return (
-                                  <tr key={item.id}>
-                                    <td>
-                                      <select className='form-select tamanhoModalidade' value={item.modality} onChange={e => { handleEdit(item.id, 'modality', e.target.value); }}>
-                                        <option value="Convencional">Convencional</option>
-                                        <option value="HA">Horos. Azul</option>
-                                        <option value="HV">Horos. Verde</option>
-                                        <option value="Rural">Rural</option>
-                                      </select>
-                                    </td>
-                                    <td>
-                                      <select className="form-select tamanhoTabela" id="inputGrupo" value={item.group} onChange={(e) => { handleEdit(item.id, 'group', e.target.value) }} >
-                                        <option value="A">A </option>
-                                        <option value="B">B </option>
-                                      </select>
-                                    </td>
-                                    <td>
-                                      <select className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
-                                        <option value="">Selecione</option>
-                                        <option value="A3">A3</option>
-                                        <option value="A4">A4</option>
-                                        <option value="B1">B1</option>
-                                        <option value="B2">B2</option>
-                                      </select>
-                                    </td>
-                                    <td>
-                                      <input
-                                        type="text" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.avgconsumption}
-                                        onChange={e => handleEdit(item.id, 'avgconsumption', e.target.value)}
-                                        onBlur={() => {
-                                          calculaGeracaoTotal()
-                                        }}
-
-                                      />
-                                    </td>
-                                    <td>
-
-                                      <input
-                                        type="number" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.demandaFP}
-                                        onChange={e => handleEdit(item.id, 'demandaFP', e.target.value)}
-                                        onBlur={() => {
-                                          calculaGeracaoTotal()
-                                        }}
-
-                                      />
-
-                                    </td>
-                                    <td className='alinhaDireita'>
-                                      <input
-                                        type="text" pattern="[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.energiaFP}
-                                        onChange={e => handleEdit(item.id, 'energiaFP', e.target.value)}
-                                        onBlur={() => {
-                                          calculaGeracaoTotal()
-                                        }}
-
-                                      />
-                                    </td>
-                                    <td className='alinhaDireita'>
-                                      <input
-                                        type="text" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.demandaP}
-                                        onChange={e => handleEdit(item.id, 'demandaP', e.target.value)}
-                                        onBlur={() => {
-                                          calculaGeracaoTotal()
-                                        }}
-
-                                      />
-                                    </td>
-                                    <td className='alinhaDireita'>
-
-                                      <input
-                                        type="text" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.energiaP}
-                                        onChange={e => handleEdit(item.id, 'energiaP', e.target.value)}
-                                        onBlur={() => {
-                                          calculaGeracaoTotal()
-                                        }}
-
-                                      />
-                                    </td>
-                                    <td className='alinhaDireita'>
-                                      <input
-                                        type="text" className='form-control tamanhoTabela alinhaDireita ' readOnly
-                                        value={item.suggestedGeneration}
-                                        onChange={e => handleEdit(item.id, 'suggestedGeneration', e.target.value)}
-
-                                      />
-                                    </td>
-                                    <td className='alinhaDireita'>
-                                      <input
-                                        type="text" className='form-control tamanhoTabela alinhaDireita '
-                                        value={item.CIP}
-                                        onChange={e => handleEdit(item.id, 'CIP', e.target.value)}
-                                      />
-                                    </td>
-                                    <td>
-
-                                      <div className="d-flex gap-2 justify-content-end">
-                                        <button
-                                          type="button"
-                                          className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={handleAdd}
-                                        >
-                                          <AiOutlinePlus />
-                                        </button>
-
-
-                                        <button
-                                          type="button"
-                                          className="btn btn-light btn-sm text-danger d-flex align-items-center"
-                                          data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                            setIdSelected(item.id)
-                                          }}
-                                        >
-                                          <BsFillTrash3Fill />
-                                          <MyModal userId={item.id} uc=" o rateio" onClick={handleAfterDel} />
-                                        </button>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
+                        <TabelaRateioBusiness token={token} dados={dados} handleEdit={handleEdit}
+                          handleAdd={handleAdd} setIdSelected={setIdSelected}
+                          handleAfterDel={handleAfterDel} calculaGeracaoTotal={calculaGeracaoTotal}
+                        />
                       </div>
                     </div>
                   </div>
@@ -1596,7 +1317,6 @@ const BusinessForm = (props) => {
 
               </div>
               <br></br>
-
 
               <div class="card">
                 <div class="card-header">
@@ -1609,15 +1329,17 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         Ger. Sugerida(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" readOnly id="inputGeracaoSugerida" value={geracaoTotal || ''} onChange={(e) => setGeracaoTotal(e.target.value)}
-                      />
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={geracaoTotal || ''} onChange={(e) => setGeracaoTotal(e.target.value)} />
+
                     </div>
 
                     <div className="col-md-2">
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         Ger. Desejada(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita"  id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)}
+
+                      <input type="text" readOnly className="form-control alinhaDireita" id="inputGeracaoSugerida" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)}
                       />
                     </div>
 
@@ -1625,15 +1347,18 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         N. Placas:
                       </label>
-                      <input type="text" className="form-control alinhaDireita" readOnly id="inputGeracaoSugerida" value={nPlacas || ''} onChange={(e) => setNplacas(e.target.value)}
-                      />
+
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={nPlacas || ''} onChange={(e) => setNplacas(e.target.value)} />
+
                     </div>
 
                     <div className="col-md-2">
                       <label htmlFor="inputGeracaoSugerida" className="form-label">
                         Pot. do Sistema(KWh):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
                     </div>
 
 
@@ -1641,21 +1366,21 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputCIP" className="form-label">
                         CIP(R$):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputCIP" value={cip} onChange={(e) => setCip(e.target.value)} />
+                      <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+                        className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
                     </div>
                     <div className="col-md-2">
                       <label htmlFor="inputbandeira" className="form-label">
                         Bandeira(R$):
                       </label>
-                      <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={bandeira} onChange={(e) => setbandeira(e.target.value)} />
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
                     </div>
 
                   </div>
 
                 </div>
               </div>
-
-
 
             </div>
           </TabPanel>
@@ -1669,28 +1394,25 @@ const BusinessForm = (props) => {
               <br />
               <div class="card">
                 <div class="card-header">
-                  Produtos que compõe o kit  
+                  Produtos que compõe o kit
                 </div>
 
                 <div class="card-body">
                   <div className="row d-flex justify-content-start">
-                  <div className="table-responsive">
-                          
-                  <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds} 
-                   handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
-                   handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
-                   onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
-                   />
-                  </div>
+                    <div className="table-responsive">
+
+                      <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds}
+                        handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
+                        handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
+                        onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
               <br />
 
-
-
             </div>
-
 
           </TabPanel>
 
@@ -1701,9 +1423,6 @@ const BusinessForm = (props) => {
               <div class="card-header">
                 Custos
               </div>
-
-
-
               <div class="card-body">
                 <div className="row d-flex justify-content-start">
 
@@ -1711,108 +1430,114 @@ const BusinessForm = (props) => {
                     <label htmlFor="inputGeracaoSugerida" className="form-label">
                       Pot. do Sistema(KWh):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputGeracaoSugerida" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
+                    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                      className="form-control number" value={potenciaSistema || ''} readOnly onChange={(e) => setPotenciaSistema(e.target.value)} />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Preço do Kit Forn(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" onBlur={calculaCustos} value={precoKitFornecedor || ''} onChange={(e) => setPrecoKitForncedor(e.target.value)} />
-                  </div>
 
+                    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                      className="form-control number" value={precoKitFornecedor || ''} onChange={(e) => setPrecoKitForncedor(e.target.value)} onBlur={calculaCustos} />
+                  </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Preço do Kit (R$)
                     </label>
-                    <input type="text" readOnly className="form-control alinhaDireita" id="inputFatorSimult" value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} />
+                    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                      className="form-control number" value={precoKit || ''} onChange={(e) => setPrecoKit(e.target.value)} />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Margem (%)
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={margem} onChange={(e) => setMargem(e.target.value)} onKeyUp={calculaCustos} />
+                    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margem || ''} onChange={(e) => setMargem(e.target.value)} onKeyUp={calculaCustos} />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Comissão  (%)
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={comissao} onChange={(e) => setComissao(e.target.value)} onKeyUp={calculaCustos} />
+                    <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                      className="form-control number" value={comissao || ''} onChange={(e) => setComissao(e.target.value)} onKeyUp={calculaCustos} />
                   </div>
-
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Complemento:
                     </label>
-                    <input type="text" readOnly className="form-control alinhaDireita" id="inputFatorSimult" value={complemento} onChange={(e) => setComplemento(e.target.value)} />
+                    <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+                      className="form-control number" value={complemento || ''} onChange={(e) => setComplemento(e.target.value)} />
                   </div>
                   <div className="col-md-2">
                     <label htmlFor="inputCIP" className="form-label">
                       Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCIP" value={projeto} onChange={(e) => setprojeto(e.target.value)}  onKeyDown={calculaCustos}/>
+                    <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                      className="form-control number" value={projeto || ''} readOnly onChange={(e) => setprojeto(e.target.value)} onKeyUp={calculaCustos} />
                   </div>
                   <div className="col-md-2">
                     <label htmlFor="inputbandeira" className="form-label">
                       Imposto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputbandeira" value={imposto} onChange={(e) => setImposto(e.target.value)} readOnly />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={imposto || ''} readOnly onChange={(e) => setImposto(e.target.value)} />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Montagem(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={montagem} onChange={(e) => setMontagem(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={montagem || ''} onChange={(e) => setMontagem(e.target.value)} />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Custo Total(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={custo_total} onChange={(e) => setCustoTotal(e.target.value)} />
+                    <NumericFormat decimalScale={3} readOnly placeholder="" decimalSeparator=","
+                      className="form-control number" value={custo_total || ''} onChange={(e) => setCustoTotal(e.target.value)} />
                   </div>
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Margem (R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={margemCalculada} onChange={(e) => setMargemCalculada(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margemCalculada || ''} onChange={(e) => setMargemCalculada(e.target.value)} />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Comissão(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={valorComissao} onChange={(e) => setValorComissao(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={valorComissao || ''} onChange={(e) => setValorComissao(e.target.value)} />
                   </div>
-
-
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Valor do Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={valorTotalProjeto} onChange={(e) => setValorTotalProjeto(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={valorTotalProjeto || ''} onChange={(e) => setValorTotalProjeto(e.target.value)} />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Lucro do Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={lucroProjeto} onChange={(e) => setLucroProjeto(e.target.value)} readOnly />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucroProjeto || ''} onChange={(e) => setLucroProjeto(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputPreco" className="form-label">
                       Lucro do Real(%):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputCodigo" value={lucroReal} onChange={(e) => setLucroReal(e.target.value)} readOnly />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucroReal || ''} onChange={(e) => setLucroReal(e.target.value)} readOnly />
                   </div>
                 </div>
-
               </div>
             </div>
             <br></br>
@@ -1827,47 +1552,46 @@ const BusinessForm = (props) => {
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={projetoDesconto2} readOnly onChange={(e) => setprojetoDesconto2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={projetoDesconto2 || ''} onChange={(e) => setprojetoDesconto2(e.target.value)} readOnly />
                   </div>
 
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Margem(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={margem2} onChange={(e) => setMargem2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margem2|| ''} onChange={(e) => setprojetoDesconto2(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Margem(%):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={margem2p} onChange={(e) => setMargem2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margem2p || ''} onChange={(e) => setMargem2p(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Comissão(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={comissao2} onChange={(e) => setComissao2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={comissao2 || ''} onChange={(e) => setComissao2(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Lucro em R$:
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={lucro2} onChange={(e) => setLucro2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucro2|| ''} onChange={(e) => setLucro2(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Lucro em %:
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={lucroR2} onChange={(e) => setLucroR2(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucroR2|| ''} onChange={(e) => setLucro2(e.target.value)} readOnly />
                   </div>
-
                 </div>
-
-
 
               </div>
             </div>
@@ -1884,48 +1608,45 @@ const BusinessForm = (props) => {
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Projeto(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" value={projetoDesconto4} readOnly onChange={(e) => setprojetoDesconto4(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={projetoDesconto4|| ''} onChange={(e) => setprojetoDesconto4(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Margem(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={margem4} onChange={(e) => setMargem4(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margem4|| ''} onChange={(e) => setMargem4(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Margem(%):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={margem4p} onChange={(e) => setMargem4p(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={margem4p|| ''} onChange={(e) => setMargem4p(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Comissão(R$):
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={comissao4} onChange={(e) => setComissao4(e.target.value)} />
+                    <NumericFormat decimalScale={3} placeholder="" decimalSeparator=","
+                      className="form-control number" value={comissao4|| ''} onChange={(e) => setComissao4(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Lucro em R$:
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={lucro4} onChange={(e) => setLucro4(e.target.value)} />
+                    <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucro4|| ''} onChange={(e) => setLucro4(e.target.value)} readOnly />
                   </div>
-
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
                       Lucro em %:
                     </label>
-                    <input type="text" className="form-control alinhaDireita" id="inputFatorSimult" readOnly value={lucroR4} onChange={(e) => setLucroR4(e.target.value)} />
+                    <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
+                      className="form-control number" value={lucroR4|| ''} onChange={(e) => setLucroR4(e.target.value)} readOnly />
                   </div>
-
                 </div>
-
-
-
               </div>
             </div>
 

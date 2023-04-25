@@ -1,14 +1,19 @@
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
+import UpdatePasswordUser from '../../../components/updatePasswordUser';
+
 import '../../pages.scss';
-import ClientForm from '../../../components/clientForm/ClientForm';
+import './new.scss';
 
-const NewClient = ({ childToParent }) => {
 
+
+const UpdatePassword = (props) => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const pageTitle = "Cadastro de Cliente";
+  const pageTitle = "Atualização de Senha";
+  const { userId } = useParams();
 
   return (
     <div>
@@ -17,11 +22,11 @@ const NewClient = ({ childToParent }) => {
         <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-          <ClientForm listTitle="Novo Cliente" />
+          <UpdatePasswordUser listTitle="Digite seu e-mail e a nova senha para atualização!" />
         </div>
       </div>
     </div>
   );
 };
 
-export default NewClient;
+export default UpdatePassword;

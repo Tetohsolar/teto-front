@@ -23,7 +23,7 @@ const BusinessMonthListfechado = () => {
           <h5 className="pb-3">{pageTitle}</h5>
           
           <BusinessDataTable listTitle="Todos os negócios" filtro = {false} typeReport={'mes'} situation={'Ganhos'}/>
-          <StepByStep />
+          
         </div>
       </div>
     </div>

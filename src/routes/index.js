@@ -35,11 +35,13 @@ import PasswordRecover from '../pages/login/PasswordRecover';
 import ValoresProposta from '../components/business-form/valoresPropform';
 import EditDimensionamento from '../pages/business/editDimens';
 import SystemTypeform from '../components/business-form/systemTypeform';
+import EditBussinessProduct from '../pages/business/editProduct';
 import BusinessMonthList from '../pages/business/listmoth';
 import BusinessMonthListfechado from '../pages/business/listfechadomonth';
 import BusinessMonthListopen from '../pages/business/listopenmonth';
-
-
+import EditBussinessShare from '../pages/business/editRateio';
+import UpdatePasswordUser from '../components/updatePasswordUser';
+import UpdatePassword from '../pages/users/editPassword';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -77,7 +79,7 @@ const RoutesApp = () => {
             </Route>
 
             <Route path="business">
-              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
+
 
               <Route index element={token ? <BusinessList /> : <Navigate to="/login" />} />
               <Route path=":projectId" element={token ? <SingleBusiness /> : <Navigate to="/login" />} />
@@ -92,10 +94,13 @@ const RoutesApp = () => {
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editpersonal:clientId" element={<EditPersonalData />} />
+              <Route path="view/editproduct/:businessId" element={<EditBussinessProduct />} />
+              <Route path="view/editshare/:businessId" element={<EditBussinessShare />} />
 
               <Route path="view/:businessId" element={token ? <ViewBusiness /> : <Navigate to="/login" />} />
               <Route path="view/editvaluebussines/:businessId" element={<ValoresProposta />} />
               <Route path="view/edittypebusiness/:businessId" element={<SystemTypeform />} />
+              <Route path="editDimens/:businessId" element={<EditDimensionamento />} />
 
 
 
@@ -151,6 +156,10 @@ const RoutesApp = () => {
               <Route
                 path="/users/edit/:userId"
                 element={token ? <EditUser /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/users/editPassword/"
+                element={token ? <UpdatePassword /> : <Navigate to="/login" />}
               />
             </Route>
 

@@ -11,23 +11,19 @@ import {
 } from "react-icons/bs";
 
 import "./single-business-report.scss";
+import { useEffect } from "react";
+import { useState } from 'react';
+import { useContext } from "react";
+import { AuthContext } from '../../context/AuthContext';
+import { format } from 'date-fns';
+import api from "../../api";
+import { useNavigate, useParams } from "react-router";
+
 
 const proposta = "202303129";
 const inversor = "237,60 kWp";
 const cidade = "Caucaia";
 
-const detalhesSistemaSolarData = [
-  { id: 15465, name: "Painel solar J.A. 550W", value: 432 },
-  { id: 14656, name: " Inversor Growatt MAC 60KTL3-X LV", value: 3 },
-  { id: 15588, name: "Estrutura para Estrutura em Solo", value: "Incluso" },
-  { id: 16565, name: "Geração média mensal (1ºano)", value: "30.015 kWh" },
-];
-
-const caracteristicasData = [
-  { id: 26449, name: "Área necessária", value: "689 m²" },
-  { id: 24654, name: " Peso do sistema", value: "11.880 kg" },
-  { id: 25616, name: "Porc. atendida", value: "91%" },
-];
 
 const garantiasData = [
   { id: 36584, name: "Painel Solar (eficiência)", value: "25 anos" },
@@ -36,78 +32,121 @@ const garantiasData = [
   { id: 33649, name: "Instalação", value: "1 ano" },
 ];
 
-const indicadoresFinanceirosData = [
-  { id: 45166, name: "Caixa Acum.", value: "R$ 59.817.265,54" },
-  { id: 48499, name: "V.P.L.", value: "R$ 1.711.892,79" },
-  { id: 44848, name: "T.I.R.", value: "27%" },
-  { id: 48484, name: "PayBack", value: "4 anos e 1 Meses" },
-];
-
-const pagamentoData = {
-  value1: "R$ 718.880,00",
-  value2: "R$ 89.860,00",
-  value3: "R$ 89.860,00",
-};
-
-const economiaData = [
-  {
-    id: 56565,
-    ano: "2023",
-    id: 56546,
-    enel: "R$ 19.907,59",
-    id: 58554,
-    tetoSolar: "R$ 2.662,89",
-    id: 50515,
-    economia: "R$ 16.996,00",
-  },
-  {
-    id: 56546,
-    ano: "2024",
-    id: 55110,
-    enel: "R$ 20.902,97",
-    id: 50654,
-    tetoSolar: "R$ 2.931,85",
-    id: 50487,
-    economia: "R$ 17.722,41",
-  },
-  {
-    id: 50640,
-    ano: "2025",
-    id: 50708,
-    enel: "R$ 21.948,12",
-    id: 50571,
-    tetoSolar: "R$ 3.221,06",
-    id: 51817,
-    economia: "R$ 18.478,36",
-  },
-  {
-    id: 58745,
-    ano: "2026",
-    id: 51978,
-    enel: "R$ 23.045,52",
-    id: 51989,
-    tetoSolar: "R$ 3.531,84",
-    id: 50564,
-    economia: "R$ 19.264,99",
-  },
-  {
-    id: 59789,
-    ano: "2027",
-    id: 50645,
-    enel: "R$ 24.197,80",
-    id: 50659,
-    tetoSolar: "R$ 3.865,65",
-    id: 509594,
-    economia: "R$ 20.083,44",
-  },
-];
 
 export default function SingleBusinessReport() {
   const componentRef = useRef();
+
+  const [name, setName] = useState('')
+  const [numberP, setNumberP] = useState('')
+  const { token } = useContext(AuthContext)
+  const [tipoSistema, setTipoSistema] = useState('')
+  const [potenciaS, setPotenciaS] = useState('')
+  const [valor, setValor] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [entrada80, setEntrada80] = useState('')
+  const [entrada10, setEntrada10] = useState('')
+  const { reportId } = useParams();
+  const [produto, setProduto] = useState([])
+  const [economia, setEconomia] = useState([])
+  const [areaInversor, setAreaInversor] = useState([])
+  const [pesoSistema, setPesoSistema] = useState([])
+  const [porcAtendida, setPorcAtendida] = useState([])
+  const [caixaAcumulado, setCaixaAcumulado] = useState([])
+  const [vpl, setVpl] = useState([])
+  const [payback, setPayback] = useState([])
+  const [tir, setTir] = useState([])
+  const [caixaAcumuladoInversor, setCaixaAcumuladoInversor] = useState([])
+  const [caixaAcumuladoMicro, setCaixaAcumuladoMicro] = useState([])
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `teto_solar_proposta_${proposta}`,
+    documentTitle: `teto_solar_proposta_${numberP}`,
   });
+  const numeroFormatado = Intl.NumberFormat("pt-BR", {
+    style: "decimal",
+    maximumFractionDigits: 2
+  });
+
+
+  useEffect(() => {
+    loadbId(reportId)
+    return () => { }
+  }, [])
+
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
+
+
+  async function loadbId(id) {
+
+    await api.get('/business/get/' + id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+      setName(response.data["Client.fantasy"])
+      setNumberP(response.data.number)
+      //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
+      setTipoSistema(response.data.type)
+      setPotenciaS(response.data.systempower)
+      setValor(formatter.format(response.data.amount))
+      loadAdd(response.data.ClientId)
+      let oitenta = response.data.amount * 0.8
+      setEntrada80((formatter.format(oitenta)))
+      let dez = response.data.amount * 0.1
+      setEntrada10((formatter.format(dez)))
+      setProduto(response.data.products)
+      setEconomia(response.data.economia)
+      setAreaInversor(numeroFormatado.format(response.data.areainversor))
+      setPesoSistema(numeroFormatado.format(response.data.pesosistema))
+      setPorcAtendida(numeroFormatado.format(response.data.porctendida))
+      setVpl(formatter.format(response.data.vpl))
+      setPayback(response.data.payback)
+      setTir(numeroFormatado.format(response.data.tir))
+      caixaAcumulado(response.data.caixaAcumuladoM)
+      setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
+      setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
+      //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
+      // caixaAcumulado()
+
+    }).catch((error) => { console.log(error) })
+
+  }
+
+  async function loadAdd(Id) {
+
+    await api.get('/client/get/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+
+
+    })
+
+    await api.get('/client/get/add/' + Id, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+
+    }).then((response) => {
+
+      setCidade(response.data.city)
+
+    })
+
+  }
+
+  /* Específico para impressão */
+  let counter = 6;
+  let counterHeight = 0
+  let groupEconomy = true;
+  let groupEconomyHeight = false;
+  /* Fim - Específico para impressão */
 
   return (
     <div className="p-3 mb-4 bg-white rounded-3 single-business-report">
@@ -137,22 +176,22 @@ export default function SingleBusinessReport() {
             <div className="report-cover-data mx-2">
               <div className="p-4 bg-white rounded-3 mb-3">
                 <h5 className="card-content-title mb-0 text-uppercase text-primary">
-                  Ass. de Pesquisa e Pres. de Ecos. Aquático
+                  {name}
                 </h5>
               </div>
-              <div className="bg-white rounded-3 border">
+              <div className="bg-white rounded-3 border px-4 py-2">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
                       <tr>
                         <th scope="col">Proposta</th>
-                        <th scope="col">Inversor</th>
+                        <th scope="col">{tipoSistema}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{proposta}</td>
-                        <td>{inversor}</td>
+                        <td>{numberP}</td>
+                        <td>{potenciaS} kWp</td>
                       </tr>
                     </tbody>
                   </table>
@@ -161,7 +200,7 @@ export default function SingleBusinessReport() {
             </div>
 
             <div className="report-footer my-3">
-              <p className="fs-5 fw-semibold mb-2">Caucaia-CE</p>
+              <p className="fs-5 fw-semibold mb-2">{cidade}</p>
               <p className="fs-5 fw-semibold">05/04/2023</p>
             </div>
           </div>
@@ -292,16 +331,16 @@ export default function SingleBusinessReport() {
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">{inversor}</th>
+                            <th scope="col">{tipoSistema}</th>
                             <th scope="col">Quantidade</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {detalhesSistemaSolarData.map((item) => {
+                          {produto.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
+                                <td> {item.brand + "-" + item.model}</td>
+                                <td>{item.qtd}</td>
                               </tr>
                             );
                           })}
@@ -336,14 +375,18 @@ export default function SingleBusinessReport() {
                           </tr>
                         </thead>
                         <tbody>
-                          {caracteristicasData.map((item) => {
-                            return (
-                              <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
-                              </tr>
-                            );
-                          })}
+                          <tr>
+                            <td>Area necessária</td>
+                            <td>{areaInversor} m²</td>
+                          </tr>
+                          <tr>
+                            <td>Peso do sistema</td>
+                            <td>{pesoSistema} Kg</td>
+                          </tr>
+                          <tr>
+                            <td>Porc. atendida </td>
+                            <td>{porcAtendida} %</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -430,7 +473,7 @@ export default function SingleBusinessReport() {
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Valor do Investimento: <span>{`R$ 898.600,00`}</span>
+                    Valor do Investimento: <span>{valor}</span>
                   </div>
                   <div className="card-body">
                     <div class="table-responsive">
@@ -442,14 +485,27 @@ export default function SingleBusinessReport() {
                           </tr>
                         </thead>
                         <tbody>
-                          {indicadoresFinanceirosData.map((item) => {
-                            return (
-                              <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
-                              </tr>
-                            );
-                          })}
+                          <tr>
+                            <td>Caixa Acum.</td>
+
+                            <td>
+                              {tipoSistema === "Inversor"
+                                ? caixaAcumuladoInversor
+                                : caixaAcumuladoMicro}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>V.P.L</td>
+                            <td>{vpl}</td>
+                          </tr>
+                          <tr>
+                            <td>T.I.R</td>
+                            <td>{tir} %</td>
+                          </tr>
+                          <tr>
+                            <td>Payback</td>
+                            <td>{payback}</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -474,7 +530,7 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">80%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value1}</p>
+                    <p className="mb-0 fs-4">{entrada80}</p>
                   </div>
                 </div>
               </div>
@@ -486,7 +542,7 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">10%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value2}</p>
+                    <p className="mb-0 fs-4">{entrada10}</p>
                   </div>
                 </div>
               </div>
@@ -498,68 +554,11 @@ export default function SingleBusinessReport() {
                   </div>
                   <div className="card-body py-4">
                     <h3 className="fw-bold text-warning fs-1">10%</h3>
-                    <p className="mb-0 fs-4">{pagamentoData.value3}</p>
+                    <p className="mb-0 fs-4">{entrada10}</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="report-section-height">
-          <div className="report-image-header py-3 fw-semibold text-center text-light">
-            <span>TETO SOLAR - (88) 99228-5655</span>
-          </div>
-          <div className="mt-4 d-flex flex-column align-items-center">
-            <h4 className="fw-semibold text-primary text-center">Economia</h4>
-          </div>
-
-          <div className="d-flex flex-column align-items-center justify-content-center">
-            {economiaData.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className="row my-2 report-print-width report-cards"
-                >
-                  <h6>{item.ano}</h6>
-                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg text-light border-0">
-                        ENEL
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura mensal</h6>
-                        <p className="mb-0">{item.enel}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg text-light border-0">
-                        TETO SOLAR
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Fatura mensal</h6>
-                        <p className="mb-0">{item.tetoSolar}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-4 mb-3 mb-lg-0">
-                    <div className="card border-light">
-                      <div class="card-header report-card-bg-green text-light border-0">
-                        ECONOMIA
-                      </div>
-                      <div className="card-body py-4">
-                        <h6 className="fw-bold">Sua economia mensal</h6>
-                        <p className="mb-0">{item.economia}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </section>
 
@@ -689,6 +688,92 @@ export default function SingleBusinessReport() {
             </div>
           </div>
         </section>
+
+        {economia.map((item) => {
+
+          /* Específico para impressão */
+          ++counter;
+          ++counterHeight;
+          if (counter > 5) {
+            groupEconomy = true;
+            counter = 1;
+          } else {
+            groupEconomy = false;
+          }
+          if (counterHeight % 5 === 0) {
+            groupEconomyHeight = true;
+          } else {
+            groupEconomyHeight = false;
+          }
+          /* Fim - Específico para impressão */
+
+          return (
+            <section className={groupEconomyHeight ? "report-section-height2" : ""}>
+              <div className={groupEconomy ? "mostrar" : "esconder"}>
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <div className="report-image-header py-3 fw-semibold text-center text-light">
+                    <span>TETO SOLAR - (88) 99228-5655</span>
+                  </div>
+                  <div className="mt-4 d-flex flex-column align-items-center">
+                    <h4 className="fw-semibold text-primary text-center">
+                      Economia
+                    </h4>
+                  </div>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <div
+                  key={item.id}
+                  className="row my-2 report-print-width report-cards"
+                >
+                  <h6>{item.ano}</h6>
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        ENEL
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura anual</h6>
+                        <p className="mb-0">{formatter.format(item.enel)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 col-sm-6 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg text-light border-0">
+                        TETO SOLAR
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Fatura anual</h6>
+                        <p className="mb-0">
+                          {formatter.format(item.tetoSolar)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 mb-3 mb-lg-0">
+                    <div className="card border-light">
+                      <div class="card-header report-card-bg-green text-light border-0">
+                        ECONOMIA
+                      </div>
+                      <div className="card-body py-4">
+                        <h6 className="fw-bold">Sua economia anual</h6>
+                        <p className="mb-0">
+                          {tipoSistema === "Inversor"
+                            ? formatter.format(item.economiaIn)
+                            : formatter.format(item.economiaM)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        })}
       </article>
     </div>
   );

@@ -51,7 +51,11 @@ const Navbar = () => {
                   </svg></a>
                   <ul className="dropdown-menu dropdown-menu-end shadow border border-0">
                     <li><Link className='dropdown-item' to={"/users"}>Conta</Link></li>
+
+                    <li><Link className='dropdown-item' to={"/users/editPassword/"}>Alterar Senha</Link></li>
+
                     <li><Link className='dropdown-item' to={"/business/view"}>Configurações</Link></li>
+
                     <li><button className="dropdown-item" onClick={handleSignOut}>Sair</button></li>
                   </ul>
                 </li>

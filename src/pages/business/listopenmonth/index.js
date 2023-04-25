@@ -21,9 +21,7 @@ const BusinessMonthListopen = () => {
         <Sidebar activeButtonBusiness="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-          
           <BusinessDataTable listTitle="Todos os negócios" filtro={true} typeReport={'mes'} situation="Aberto" />
-
         </div>
       </div>
     </div>

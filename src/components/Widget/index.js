@@ -24,7 +24,7 @@ const Widget = ({ type,valor }) => {
 
     case "earnings":
       data = {
-        title: "Negócios fechados neste mês",
+        title: "Negócios ganhos neste mês",
         isMoney: true,
         link: <Link to={"/business/listfechadomonth"}>Ver todos</Link>,
         icon: (

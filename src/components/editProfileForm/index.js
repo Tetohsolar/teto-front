@@ -12,24 +12,25 @@ const EditProfileForm = (props) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
   const [tipo, setTipo] = useState('')
   const [id, setId] = useState('')
   const [reloadPage, setReloadPage] = useState(false)
   const [habilitar, setHabilitar] = useState('')
-  const { signUp, profilelogged } = useContext(AuthContext)
-  const { updateUser} = useContext(AuthContext)
+  const { profilelogged } = useContext(AuthContext)
+  const { updateUser } = useContext(AuthContext)
   const [filiados, setFiliados] = useState([])
-  const [idfiliado, setIdfiliado] = useState(null) 
+  const [idfiliado, setIdfiliado] = useState(null)
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    
+
     findUserById()
   }, [reloadPage])
 
   async function findUserById() {
-    
+
     await loadfiliados();
 
     await api.get(`/user/get/${props.userId}`, {
@@ -46,36 +47,43 @@ const EditProfileForm = (props) => {
         setHabilitar(response.data.enabled)
         console.log(response.data)
         setIdfiliado(response.data.AffiliatedId
-)
+        )
       })
   }
 
-  async function loadfiliados(){
-  
-    await api.get('/afflited/all',{
+  async function loadfiliados() {
+
+    await api.get('/afflited/all', {
       headers: {
         'Authorization': `Basic ${token}`
       }
-    }).then(response=>{
+    }).then(response => {
       //console.log(response.data.affiliated)
       setFiliados(response.data.affiliated)
 
-     
-    }).catch(error=>{
-      console.log(" d eu errado")
+
+    }).catch(error => {
+      console.log("Erro ao carregar dados!")
     })
   }
+
   async function handleUpdateUser(e) {
     setReloadPage(true)
     e.preventDefault()
     console.log(idfiliado)
     try {
 
-      await updateUser(id, name, phone, email, tipo, habilitar,idfiliado)
+      await updateUser(id, name, phone, email, tipo, habilitar, idfiliado)
       setReloadPage(false)
+      toast.success("Usuário Atualizado com Sucesso!", {
+        autoClose: 1000,
+      })
       navigate("/users/")
     }
     catch (error) {
+      toast.error("Erro ao Atualizar Dados!", {
+        autoClose: 1000,
+      })
       console.log(error)
     }
   }
@@ -84,7 +92,7 @@ const EditProfileForm = (props) => {
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
-     <form className="row g-3" onSubmit={handleUpdateUser}>
+      <form className="row g-3" onSubmit={handleUpdateUser}>
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
             Nome
@@ -119,7 +127,7 @@ const EditProfileForm = (props) => {
             {
               profilelogged === 'Root' ? <option value="Root">Root</option> : ''
             }
-            
+
           </select>
         </div>
         <div className="col-md-4">
@@ -134,24 +142,24 @@ const EditProfileForm = (props) => {
         </div>
         {
           profilelogged === 'Root' ?
-        <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Filiado
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
-            <option value="">Selecionar...</option>
-            {filiados?filiados.map(objeto => (
-            <option key={objeto.id} value={objeto.id}>
-              {objeto.fantasy}
-            </option>
-          )):''}
-            
-          </select>
-        </div>
-        : ""}
+            <div className="col-md-4">
+              <label htmlFor="inputUserType" className="form-label">
+                Filiado
+              </label>
+              <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
+                <option value="">Selecionar...</option>
+                {filiados ? filiados.map(objeto => (
+                  <option key={objeto.id} value={objeto.id}>
+                    {objeto.fantasy}
+                  </option>
+                )) : ''}
+
+              </select>
+            </div>
+            : ""}
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
-           Salvar
+            Salvar
           </button>
         </div>
       </form>

@@ -7,8 +7,7 @@ import { format } from 'date-fns';
 import Pagination from '../pagination/Pagination';
 import {BsFillSendFill, BsPencilFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
-
-
+import { async } from 'q';
 
 const SixMonthsBusinessDataTable = (props) => {
   const PageSize= 5
@@ -26,16 +25,11 @@ const SixMonthsBusinessDataTable = (props) => {
 
     list("%");
     
- 
    return () => { }
- 
  
  }, [])
 
- 
-
  function onPageChanged(data) {
-
 
   const today = new Date();
   const year = today.getFullYear();
@@ -66,7 +60,6 @@ const SixMonthsBusinessDataTable = (props) => {
         AffiliatedId:afflitedId
       }
       
-
     }
     if (profilelogged === "User"){
        
@@ -99,7 +92,9 @@ const SixMonthsBusinessDataTable = (props) => {
 
 }
 
-
+async function createreport(id){
+navigate('/business/report/' + id)
+}
 
  async function list(){
 
@@ -132,11 +127,9 @@ const SixMonthsBusinessDataTable = (props) => {
         AffiliatedId:afflitedId
       }
       
-
     }
     console.log(filtro)
   
-    
    await api.post('/business/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -193,7 +186,7 @@ const SixMonthsBusinessDataTable = (props) => {
                           <td>
                             <div className="d-flex gap-2 justify-content-end">
                               <button
-                                type="button"
+                                type="button" onClick={()=> {createreport(item.id)}}
                                 className="btn btn-light btn-sm text-primary d-flex align-items-center"
                               >
                                 <BsFillSendFill/>
@@ -232,5 +225,4 @@ const SixMonthsBusinessDataTable = (props) => {
     </div>
   );
 };
-
 export default SixMonthsBusinessDataTable;
