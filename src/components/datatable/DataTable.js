@@ -12,7 +12,7 @@ let PageSize = 5;
 
 const DataTable = (props) => {
 
-
+ 
   const { token, profilelogged,  afflitedId,idLogged} = useContext(AuthContext)
 
   const [users, setUsers] = useState([])

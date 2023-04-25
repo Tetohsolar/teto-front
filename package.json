@@ -14,6 +14,7 @@
     "cpf-cnpj-validator": "^1.0.3",
     "datable": "^1.0.3",
     "date-fns": "^2.29.3",
+    "google-libphonenumber": "^3.2.32",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "react": "^18.2.0",
@@ -24,7 +25,7 @@
     "react-number-format": "^5.1.4",
     "react-paginate": "^8.1.4",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-tabs": "^6.0.0",
     "react-to-print": "^2.14.12",
     "react-toastify": "^9.1.1",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-react": "^7.32.2",
     "sass": "^1.58.3"
   }
 }

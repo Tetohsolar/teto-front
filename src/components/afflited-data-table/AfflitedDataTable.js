@@ -41,7 +41,7 @@ const AfflitedDataTable = (props) => {
 
     }
 
-    const { currentPage, totalPages, pageLimit } = data;
+    const {  } = data;
 
     api.post('/afflited/byparam', filtro, {
       headers: {
