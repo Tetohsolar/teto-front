@@ -210,7 +210,7 @@ const ProductForm = (props) => {
       <form className="row g-3" onSubmit={handleSave}>
         <div className="col-md-5">
           <label htmlFor="inputCodigo" className="form-label">
-            Código
+            Código*
           </label>
           <input type="text" maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
         </div>
@@ -241,7 +241,7 @@ const ProductForm = (props) => {
         
         <div className="col-md-11">
           <label htmlFor="descricao" className="form-label">
-            Descrição
+            Descrição*
           </label>
           <input type="descricao" maxLength={200} className="form-control" id="inputDescricao" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
         </div>
@@ -260,7 +260,7 @@ const ProductForm = (props) => {
         
         <div className="col-md-3">
           <label htmlFor="inputPreco" className="form-label">
-            Preço
+            Preço*
           </label>
           <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco || ''} onChange={(e) => setPreco(e.target.value)} />
         </div>
