@@ -126,7 +126,7 @@ const BusinessDataTable = (props) => {
     }
 
     let filtro = {
-      fantasy: "%" + name + "%",
+      fantasy: name? "%" + name + "%":"",
       document: "%",
       page: 0,
       pageSize: 5,
@@ -139,7 +139,7 @@ const BusinessDataTable = (props) => {
 
       filtro = {
 
-        fantasy: "%" + name + "%",
+        fantasy: name? "%" + name + "%":"",
         document: "%",
         page: 0,
         pageSize: 5,
@@ -149,7 +149,6 @@ const BusinessDataTable = (props) => {
         dateSt: datanova,
       }
     }
-
 
     await api.post('/business/byparam', filtro, {
       headers: {
@@ -186,7 +185,7 @@ const BusinessDataTable = (props) => {
 
     let filtro = {
 
-      fantasy: "%" + name + "%",
+      fantasy: name? "%" + name + "%":"",
       document: "%",
       page: data - 1,
       pageSize: 5,
@@ -199,7 +198,7 @@ const BusinessDataTable = (props) => {
 
       filtro = {
 
-        fantasy: "%" + name + "%",
+        fantasy: name? "%" + name + "%":"",
         document: "%",
         page: data - 1,
         pageSize: 5,

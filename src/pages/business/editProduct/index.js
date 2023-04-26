@@ -243,7 +243,7 @@ const EditBussinessProduct = () => {
 
                                 <div class="card-body">
                                     <div className="row d-flex justify-content-start">
-                                        <div className="table-responsive">
+                                        <div>
 
                                             <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds}
                                                 handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
