@@ -1028,7 +1028,7 @@ const BusinessForm = (props) => {
 
               <div className="col-md-3">
                 <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
-                  {lbFantasia === "" ? "Nome" : lbFantasia}
+                  {lbFantasia === "" ? "Nome*" : lbFantasia}
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
@@ -1041,7 +1041,7 @@ const BusinessForm = (props) => {
               </div>
               <div className="col-md-3">
                 <label htmlFor="inputPhoneNumber" className="form-label">
-                  Telefone
+                  Telefone*
                 </label>
                 <PhoneInput className="form-control" id="inputPhoneNumber" value={phone} onChange={handleInput}> </PhoneInput>
               </div>
@@ -1119,7 +1119,7 @@ const BusinessForm = (props) => {
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="inputCodigo" className="form-label">
-                    Fator Solar:
+                    Fator Solar*:
                   </label>
                   <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
                     className="form-control number" value={fatorSolar || ''} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
@@ -1270,7 +1270,7 @@ const BusinessForm = (props) => {
 
                     <div className="col-md-3  w-100 " id={demandasVisible === "N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
-                        Consumo Médio(KWh):
+                        Consumo Médio*(KWh):
                       </label>
 
                       <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
@@ -1443,7 +1443,7 @@ const BusinessForm = (props) => {
 
                   <div className="col-md-2">
                     <label htmlFor="inputFatorSimult" className="form-label" >
-                      Preço do Kit (R$)
+                      Preço do Kit* (R$)
                     </label>
                     <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
                       className="form-control number" value={precoKit || ''} onChange={(e) => setPrecoKit(e.target.value)} />
