@@ -9,13 +9,13 @@ import { AuthContext } from '../../../context/AuthContext';
 import { useState } from 'react';
 import { BsFillPencilFill } from "react-icons/bs";
 import { format } from 'date-fns';
-import { Navigate, redirect, useNavigate, useParams } from 'react-router-dom';
-import { AiFillPlusSquare } from "react-icons/ai";
-import { BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import {  useNavigate, useParams } from 'react-router-dom';
+import { BsPencilFill} from "react-icons/bs";
 import EditPersonalData from './editpersonal';
-import MyModal from '../../../components/communs/ModalDelete';
-import { toast } from 'react-toastify';
 import EditSituationBusiness from '../../../components/modalSituation';
+import { BsPrinter} from "react-icons/bs";
+
+
 
 const ViewBusiness = () => {
   const [ClientId, setClientId] = useState('')
@@ -47,11 +47,6 @@ const ViewBusiness = () => {
   const [numeroP, setNumeroP] = useState('')
   const [media, setMedia] = useState('')
   const [potenciaS, setPotenciaS] = useState('')
-  const [marcaP, setMarcaP] = useState('')
-  const [modeloP, setModeloP] = useState('')
-  const [inversorMa, setInversorMa] = useState('')
-  const [inversorMo, setInversorMo] = useState('')
-  const [numeroInv, setNumeroInv] = useState('')
   const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
   const [cep, setCep] = useState('')
@@ -76,7 +71,6 @@ const ViewBusiness = () => {
   const [complemento, setcomplemento] = useState('')
   const [business, setBusiness] = useState([]);
   const [client, setClient] = useState([]);
-  const [idSelected, setIdSelected] = useState('');
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [geracaoDesejada, setGeracaoDesejada] = useState('');
@@ -116,22 +110,7 @@ const ViewBusiness = () => {
 
   }, [])
 
-  async function handleAfterDel(e) {
-
-    await api.delete('/business/delete/share/' + idSelected, {
-      headers: {
-        'Authorization': `Basic ${token}`
-      }
-    })
-      .then((response) => {
-        loadbId(businessId)
-        toast.success("Operação realizada com sucesso!", {
-          autoClose: 1000,
-        })
-      }).catch((err) => {
-        console.log(err)
-      })
-  }
+  
 
   function editbussinesvalue(id) {
     navigate("/business/view/editvaluebussines/" + id)
@@ -217,11 +196,6 @@ const ViewBusiness = () => {
       setNumeroP(response.data.numberborder)
       setMedia(response.data.avgmonth)
       setPotenciaS(response.data.systempower)
-      setMarcaP(response.data['placa_negocio.brand'])
-      setModeloP(response.data['placa_negocio.description'])
-      setInversorMa(response.data['inversor_negocio.brand'])
-      setInversorMo(response.data['inversor_negocio.brand'])
-      setNumeroInv(response.data.numberInverMicro)
       setValor(formatter.format(response.data.amount))
       loadAdd(response.data.ClientId)
       setConsumo(response.data.avgconsumption)
@@ -270,6 +244,10 @@ const ViewBusiness = () => {
 
   function hanndlerChangeSituation() {
   }
+  async function createreport(id){
+
+    navigate('/business/report/' + businessId)
+    }
 
   return (
     <div className="home ">
@@ -292,14 +270,18 @@ const ViewBusiness = () => {
                       className="btn btn-light btn-sm text-primary " data-bs-toggle="modal" data-bs-target="#modalTypeSituation">
                       <BsFillPencilFill /></button> </span>
 
-                  <EditSituationBusiness setStatus={setStatus} situation={status} businessId={businessId} uc=" o rateio" onClick={handleAfterDel} />
+                  <EditSituationBusiness setStatus={setStatus} situation={status} businessId={businessId} uc=" o rateio"  />
 
                 </div>
 
                 <div className="col-lg-4 card-mateus rounded-3">
                   <h6 class="card-content-title mb-3 fw-semibold">Nº da proposta </h6>
+                 
 
                   <label> {numberP}</label>
+                  <button onClick={ ()=>{createreport()}}
+                      className="btn btn-light btn-sm text-primary " >
+                      <BsPrinter/></button> 
 
                 </div>
 
