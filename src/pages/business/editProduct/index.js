@@ -2,11 +2,10 @@ import { useEffect, useState, useContext } from 'react'
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext'
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
-import { useLocation, useParams } from 'react-router-dom'
+import {useParams } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import TabelaProdutoEditavel from '../../../components/prods';
-import { toast } from 'react-toastify';
 import {useNavigate } from "react-router-dom";
 
 
