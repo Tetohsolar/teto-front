@@ -1,8 +1,8 @@
 import React from 'react'
 import './login.scss';
 import { useState, useRef } from "react"
-import logoTetoSolar from '../../assets/img/teto-solar-visual-signature.png'
-import { Link, useNavigate } from 'react-router-dom';
+// import logoTetoSolar from '../../assets/img/teto-solar-visual-signature.png'
+import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import { toast } from 'react-toastify';
 
@@ -33,9 +33,13 @@ const PasswordRecover = () => {
 
     }).catch((response) => {
 
-      toast.error("Erro ao Resetar Password", {
+      toast.error("Erro ao resetar, e-mail não encontrado!", {
         autoClose: 1000,
       })
+      setTimeout(() => {
+        navigate("/")
+      }, 3000)
+
     })
 
   }
