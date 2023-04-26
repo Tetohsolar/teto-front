@@ -142,7 +142,6 @@ const Home = () => {
     }
 
 
-
     await api.post('business/lastsix', filtro,
       {
         headers: {
