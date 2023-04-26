@@ -40,6 +40,8 @@ import BusinessMonthList from '../pages/business/listmoth';
 import BusinessMonthListfechado from '../pages/business/listfechadomonth';
 import BusinessMonthListopen from '../pages/business/listopenmonth';
 import EditBussinessShare from '../pages/business/editRateio';
+import UpdatePasswordUser from '../components/updatePasswordUser';
+import UpdatePassword from '../pages/users/editPassword';
 
 const RoutesApp = () => {
   const { token } = useContext(AuthContext)
@@ -154,6 +156,10 @@ const RoutesApp = () => {
               <Route
                 path="/users/edit/:userId"
                 element={token ? <EditUser /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/users/editPassword/"
+                element={token ? <UpdatePassword /> : <Navigate to="/login" />}
               />
             </Route>
 

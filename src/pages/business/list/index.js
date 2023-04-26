@@ -72,7 +72,7 @@ const BusinessList = () => {
           <h5 className="pb-3">{pageTitle}</h5>
           <SixMonthsCharts listTitle="Últimos 12 meses" dados={data}/>
           <BusinessDataTable listTitle="Todos os negócios" filtro={false} typeReport={'normal'} situation=""/>
-          
+         
         </div>
       </div>
     </div>

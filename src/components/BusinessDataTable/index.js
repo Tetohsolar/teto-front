@@ -1,6 +1,6 @@
 import './style.scss'
 import NewBusiness from '../../pages/business/new';
-import { AiOutlinePartition } from 'react-icons/ai';
+// import { AiOutlinePartition } from 'react-icons/ai';
 import { AuthContext } from '../../context/AuthContext';
 import api from '../../api';
 import { useContext, useEffect, useMemo, useState } from 'react';
@@ -8,12 +8,12 @@ import Pagination from '../pagination/Pagination';
 import { format } from 'date-fns'
 import { AiFillPlusSquare } from "react-icons/ai";
 import { VscSearch } from "react-icons/vsc";
-import { BsFillPieChartFill, BsFillSendFill, BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
+import { BsFillSendFill, BsPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import InputMask from 'react-input-mask';
 import moment from 'moment/moment';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyModal from '../communs/ModalDelete';
-import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
+// import { SidebarWrapperContext } from '../../context/SidebarWrapperContext';
 import { toast } from 'react-toastify';
 
 
@@ -61,28 +61,28 @@ const BusinessDataTable = (props) => {
   const [objs, setObjects] = useState([])
   const [totalPages, setTotalPages] = useState([])
 
-  
-  const { token,  profilelogged,  afflitedId,idLogged } = useContext(AuthContext)
+
+  const { token, profilelogged, afflitedId } = useContext(AuthContext)
 
   const [name, setName] = useState([])
   const [data, setData] = useState([])
   const [numero, setNumero] = useState([])
   const navigate = useNavigate();
   const [situation, setSituation] = useState(props.situation);
-  const [business, setBusiness] = useState([]);
-  const [client, setClient] = useState([]);
-  const [idSelected,setIdSelected] = useState('');
+  // const [business, setBusiness] = useState([]);
+  // const [client, setClient] = useState([]);
+  const [idSelected, setIdSelected] = useState('');
 
-  
+
   useEffect(() => {
 
-   
-   if (props.situation){
-    setSituation(props.situation)
-   } 
-   list("%");
-  
-   
+
+    if (props.situation) {
+      setSituation(props.situation)
+    }
+    list("%");
+
+
 
     return () => { }
 
@@ -134,10 +134,10 @@ const BusinessDataTable = (props) => {
       pageSize: 5,
       number: numero,
       situation: `${situation}`,
-      dateSt:datanova,
+      dateSt: datanova,
     }
 
-    if (profilelogged !== "Root"){
+    if (profilelogged !== "Root") {
 
       filtro = {
 
@@ -147,11 +147,11 @@ const BusinessDataTable = (props) => {
         pageSize: 5,
         number: numero,
         situation: `${situation}`,
-        AffiliatedId:afflitedId,
-        dateSt:datanova,
+        AffiliatedId: afflitedId,
+        dateSt: datanova,
       }
     }
-   
+
 
     await api.post('/business/byparam', filtro, {
       headers: {
@@ -168,10 +168,10 @@ const BusinessDataTable = (props) => {
 
   }
 
-  async function createreport(id){
+  async function createreport(id) {
     navigate('/business/report/' + id)
-    }
-    
+  }
+
 
   function onPageChanged(data) {
 
@@ -197,7 +197,7 @@ const BusinessDataTable = (props) => {
       situation: `${situation}`
     }
 
-    if (profilelogged !== "Root"){
+    if (profilelogged !== "Root") {
 
       filtro = {
 
@@ -208,7 +208,7 @@ const BusinessDataTable = (props) => {
         number: numero,
         dateSt: datanova,
         situation: `${situation}`,
-        AffiliatedId:afflitedId
+        AffiliatedId: afflitedId
       }
     }
 
@@ -227,16 +227,16 @@ const BusinessDataTable = (props) => {
     setCurrentPage(data);
 
 
-}
-function find(){
-  list("%")
-}
-function edit(id) {
-  navigate("/business/view/" + id)
-}
-const paginate = ({ selected }) => {
-  setCurrentPage(selected + 1);
-};
+  }
+  function find() {
+    list("%")
+  }
+  function edit(id) {
+    navigate("/business/view/" + id)
+  }
+  const paginate = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
 
 
   const totalValue = `${totalPages}`
@@ -244,23 +244,23 @@ const paginate = ({ selected }) => {
     <div className="p-3 mb-3 bg-white rounded-3">
       <div className="d-flex flex-column flex-sm-row justify-content-between">
         <h5 className="card-content-title fw-semibold mb-3">{props.listTitle}</h5>
-          <Link to={"/business/create"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Negocio </Link>
-        </div>
+        <Link to={"/business/create"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Negocio </Link>
+      </div>
       <NewBusiness />
       <hr className="my-3 text-body-tertiary" />
       <div className="d-flex flex-column flex-md-row justify-content-between gap-2">
         <div className="filtro">
           <input type="numero" className="form-control" placeholder="Número" aria-label="Number" aria-describedby="button-addon2" onChange={(e) => setNumero(e.target.value)} onKeyUp={(e) => { list(name) }} />
           <input type="text" className="form-control" placeholder="Nome" aria-label="Name" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
-         
-         {props.typeReport !== 'mes' ?
-          
-          <DateInput className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" onChange={(e) => { setData(e.target.value) }}
-            onKeyUp={(e) => {
-              list(name)
-            }} />
 
-        : ""}
+          {props.typeReport !== 'mes' ?
+
+            <DateInput className="form-control" placeholder="Data" aria-label="Date" aria-describedby="button-addon2" onChange={(e) => { setData(e.target.value) }}
+              onKeyUp={(e) => {
+                list(name)
+              }} />
+
+            : ""}
           <button className="btn btn-primary filtro2" type="button" id="button-addon2">
             <span className="d-flex align-items-center">
               <VscSearch />
@@ -268,14 +268,14 @@ const paginate = ({ selected }) => {
           </button>
         </div>
 
-         <form className="mb-3 justify-content-end">
+        <form className="mb-3 justify-content-end">
           <div className="row">
             <div className="col-md-auto">
-            {props.typeReport !== 'mes' ?
-              <select className="form-select" disabled={props.filtro} aria-label="Selecionar" onChange={(e) => setSituation(e.target.value)} onKeyUp={find} onClick={find}>
-                {selectOptions.map((option) => (<option key={option.value} value={option.value} >{option.label}</option>))}
-              </select>
-              :""}
+              {props.typeReport !== 'mes' ?
+                <select className="form-select" disabled={props.filtro} aria-label="Selecionar" onChange={(e) => setSituation(e.target.value)} onKeyUp={find} onClick={find}>
+                  {selectOptions.map((option) => (<option key={option.value} value={option.value} >{option.label}</option>))}
+                </select>
+                : ""}
 
             </div>
           </div>
@@ -313,11 +313,11 @@ const paginate = ({ selected }) => {
                           <td>
 
                             <div className="d-flex gap-2 justify-content-end">
-                            <button
-                                type="button" onClick={()=> {createreport(item.id)}}
+                              <button
+                                type="button" onClick={() => { createreport(item.id) }}
                                 className="btn btn-light btn-sm text-primary d-flex align-items-center"
                               >
-                                <BsFillSendFill/>
+                                <BsFillSendFill />
                               </button>
                               {/* <button
                                 type="button"
@@ -330,23 +330,23 @@ const paginate = ({ selected }) => {
                               </button> */}
                               <button
                                 type="button"
-                                className="btn btn-light btn-sm text-primary d-flex align-items-center"  onClick={() => {
+                                className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
                                   edit(item.id)
                                 }}
                               >
                                 <BsPencilFill />
                               </button>
-                              <button 
-                                        type="button"
-                                        className="btn btn-light btn-sm text-danger d-flex align-items-center"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                          setIdSelected(item.id)
-                                        }}
-                                      >
-                                        <BsFillTrash3Fill />
-                                        
-                                        <MyModal userId={item.id} uc="excluir proposta" onClick={handleAfterDel} />
-                                      </button>
+                              <button
+                                type="button"
+                                className="btn btn-light btn-sm text-danger d-flex align-items-center"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                  setIdSelected(item.id)
+                                }}
+                              >
+                                <BsFillTrash3Fill />
+
+                                <MyModal userId={item.id} uc="excluir proposta" onClick={handleAfterDel} />
+                              </button>
                             </div>
                           </td>
                         </tr>
