@@ -438,7 +438,7 @@ const AfflitedForm = (props) => {
           projectCostI,
           taxI,
           assemblyCostI, num, flag, cip, profit, lost, commission)
-        navigate("/affliteds");
+        navigate(-1);
         toast.success("Operação realizada com sucesso!", {
           autoClose: 1000,
         })
