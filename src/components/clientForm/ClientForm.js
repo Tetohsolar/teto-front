@@ -158,13 +158,13 @@ const ClientForm = (props) => {
 
 
     if (name === "") {
-      toast.error("Nome É obrigatório", {
+      toast.error("Nome é obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
     if (phone === "") {
-      toast.error("Telefone É obrigatório", {
+      toast.error("Telefone é obrigatório", {
         autoClose: 1000,
       })
       return false;
