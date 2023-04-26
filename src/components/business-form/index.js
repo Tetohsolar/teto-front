@@ -139,7 +139,7 @@ const BusinessForm = (props) => {
   const [projeto, setprojeto] = useState(afflited.projectCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [imposto, setImposto] = useState(afflited.taxI)
   const [montagem, setMontagem] = useState(afflited.assemblyCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-  const [comissao, setComissao] = useState(afflited.profitCost)
+  const [comissao, setComissao] = useState(afflited.commission)
   const [margem, setMargem] = useState(afflited.profitCost + afflited.profit)
   const [custo_total, setCustoTotal] = useState(0)
   const [margemCalculada, setMargemCalculada] = useState(0)
