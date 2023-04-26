@@ -15,23 +15,83 @@ import { useEffect } from "react";
 import { useState } from 'react';
 import { useContext } from "react";
 import { AuthContext } from '../../context/AuthContext';
-import { format } from 'date-fns';
 import api from "../../api";
 import { useNavigate, useParams } from "react-router";
 
-
-const proposta = "202303129";
-const inversor = "237,60 kWp";
-const cidade = "Caucaia";
-
-
-const garantiasData = [
-  { id: 36584, name: "Painel Solar (eficiência)", value: "25 anos" },
-  { id: 35848, name: "Painel Solar (defeitos)", value: "12 anos" },
-  { id: 39494, name: "Inversor", value: "10 anos" },
-  { id: 33649, name: "Instalação", value: "1 ano" },
+const data = [
+  {
+    name: "1",
+    inversor: 2600,
+    microinversor: 2500,
+    consumo: 2600,
+  },
+  {
+    name: "2",
+    inversor: 2500,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "3",
+    inversor: 2600,
+    microinversor: 2800,
+    consumo: 2600,
+  },
+  {
+    name: "4",
+    inversor: 2500,
+    microinversor: 2600,
+    consumo: 2600,
+  },
+  {
+    name: "5",
+    inversor: 2700,
+    microinversor: 2500,
+    consumo: 2600,
+  },
+  {
+    name: "6",
+    inversor: 2700,
+    microinversor: 2600,
+    consumo: 2600,
+  },
+  {
+    name: "7",
+    inversor: 2600,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "8",
+    inversor: 2800,
+    microinversor: 2900,
+    consumo: 2600,
+  },
+  {
+    name: "9",
+    inversor: 2900,
+    microinversor: 2700,
+    consumo: 2600,
+  },
+  {
+    name: "10",
+    inversor: 3000,
+    microinversor: 2900,
+    consumo: 2600,
+  },
+  {
+    name: "11",
+    inversor: 2100,
+    microinversor: 2200,
+    consumo: 2600,
+  },
+  {
+    name: "12",
+    inversor: 3000,
+    microinversor: 3100,
+    consumo: 2600,
+  },
 ];
-
 
 export default function SingleBusinessReport() {
   const componentRef = useRef();
@@ -51,12 +111,12 @@ export default function SingleBusinessReport() {
   const [areaInversor, setAreaInversor] = useState([])
   const [pesoSistema, setPesoSistema] = useState([])
   const [porcAtendida, setPorcAtendida] = useState([])
-  const [caixaAcumulado, setCaixaAcumulado] = useState([])
   const [vpl, setVpl] = useState([])
   const [payback, setPayback] = useState([])
   const [tir, setTir] = useState([])
   const [caixaAcumuladoInversor, setCaixaAcumuladoInversor] = useState([])
   const [caixaAcumuladoMicro, setCaixaAcumuladoMicro] = useState([])
+  const [garantiasData,setGarantiasData] = useState([])
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -115,6 +175,7 @@ export default function SingleBusinessReport() {
       
       setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI))
       setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM))
+      setGarantiasData(response.data.guarantee)
       //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
       // caixaAcumulado()
 
@@ -337,7 +398,8 @@ export default function SingleBusinessReport() {
                       <table class="table">
                         <thead>
                           <tr>
-                            <th scope="col">{tipoSistema}</th>
+                          <th scope="col"></th>
+                            <th scope="col"></th>
                             <th scope="col">Quantidade</th>
                           </tr>
                         </thead>
@@ -345,8 +407,11 @@ export default function SingleBusinessReport() {
                           {produto.map((item) => {
                             return (
                               <tr key={item.id}>
+                                <td>{item.type === 'M' ? 'Microinversor' : item.type === 'P' ? 'Placa'
+                                : 'Inversor'}</td>
                                 <td> {item.brand + "-" + item.model}</td>
                                 <td>{item.qtd}</td>
+                                
                               </tr>
                             );
                           })}
@@ -430,7 +495,7 @@ export default function SingleBusinessReport() {
                           {garantiasData.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td>{item.name}</td>
+                                <td> <strong> {item.category + ': '}</strong>{item.name}</td>
                                 <td>{item.value}</td>
                               </tr>
                             );
@@ -454,10 +519,10 @@ export default function SingleBusinessReport() {
               <div className="col mb-3 mb-lg-0">
                 <div className="card border-light">
                   <div class="card-header report-card-bg text-light border-0">
-                    Estimativa de Geração Inversor X Microinversor
+                    Estimativa de Geração {tipoSistema} x Consumo
                   </div>
                   <div className="card-body">
-                    <AnnualVariation />
+                    <AnnualVariation data={data}/>
                   </div>
                 </div>
               </div>
@@ -492,7 +557,7 @@ export default function SingleBusinessReport() {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Caixa Acum.</td>
+                            <td>Caixa acumulado até 2045</td>
 
                             <td>
                               {tipoSistema === "Inversor"
