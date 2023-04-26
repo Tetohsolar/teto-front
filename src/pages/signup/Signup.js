@@ -43,33 +43,33 @@ const Signup = () => {
             <p className='subtitle-form text-center'>Crie uma conta para acompanhar o processo de seus projetos.</p>
             <div className="mb-3">
               <label htmlFor="inputFirstName" className="form-label">
-                Nome*
+                Nome
               </label>
               <input placeholder='Seu nome' type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="mb-3">
               <label htmlFor="inputEmail" className="form-label">
-                Email*
+                Email
               </label>
               <input placeholder="Seu email" type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className='row'>
               <div className="mb-3 col-md-6">
                 <label htmlFor="inputPassword4" className="form-label">
-                  Senha*
+                  Senha
                 </label>
                 <input placeholder="Sua senha" type="password" className="form-control" id="inputPassword4" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
               </div>
               <div className="mb-3 col-md-6">
                 <label htmlFor="inputPassword2" className="form-label">
-                  Confirmar senha*
+                  Confirmar senha
                 </label>
                 <input placeholder="Confirmar senha" type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
               </div>
             </div>
             <div className="mb-3">
               <label htmlFor="inputPhone" className="form-label">
-                Telefone*
+                Telefone
               </label>
               <input placeholder="Seu telefonte" type="text" className="form-control" id="inputPhone" value={phone || ''} onChange={(e) => setPhone(e.target.value)} />
             </div>
