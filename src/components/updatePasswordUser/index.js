@@ -20,7 +20,7 @@ const UpdatePasswordUser = (props) => {
 
     if (password !== password2) {
       toast.error("As senhas informadas não conferem!!", {
-        autoClose: 1000,
+        autoClose: 2000,
       })
 
     }
@@ -42,13 +42,14 @@ const UpdatePasswordUser = (props) => {
 
         console.log(response.data)
         toast.success("Senha Atualizada com Sucesso!!", {
-          autoClose: 1000,
+          autoClose: 2000,
         })
+        navigate('/users')
 
 
       }).catch((err) => {
         toast.error("Erro, e-mail não encontrado!!", {
-          autoClose: 1000,
+          autoClose: 2000,
         })
         console.log(err)
       })
