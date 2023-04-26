@@ -187,12 +187,12 @@ const DataTable = (props) => {
 
                   </th>
                   <th className='nome1'>
-                    Nome
+                    Nome*
 
                   </th>
 
                   <th className='nome1'>
-                    E-mail
+                    E-mail*
                   </th>
                   <th>
 
