@@ -1371,7 +1371,7 @@ const BusinessForm = (props) => {
                       <label htmlFor="inputbandeira" className="form-label">
                         Bandeira(R$):
                       </label>
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                      <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
                         className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
                     </div>
 
