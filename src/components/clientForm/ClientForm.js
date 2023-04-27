@@ -140,9 +140,9 @@ const ClientForm = (props) => {
     setCorporateName('')
     setPhone('')
     setTipoPessoa('F')
-    setLbFantasia("Nome")
+    setLbFantasia("Nome*")
     setDoc('')
-    setLbDocument("CPF")
+    setLbDocument("CPF*")
     setZap('')
     setInformacoesAdicionais('')
     setCepData("")
@@ -158,13 +158,13 @@ const ClientForm = (props) => {
 
 
     if (name === "") {
-      toast.error("Nome É obrigatório", {
+      toast.error("Nome é obrigatório", {
         autoClose: 1000,
       })
       return false;
     }
     if (phone === "") {
-      toast.error("Telefone É obrigatório", {
+      toast.error("Telefone é obrigatório", {
         autoClose: 1000,
       })
       return false;
@@ -247,15 +247,15 @@ const ClientForm = (props) => {
   function handleTipoPessoaValue(e) {
 
     if (e === "F" || e === "") {
-      setLbFantasia("Nome");
+      setLbFantasia("Nome*");
       setExibeCorporateName("");
-      setLbDocument("CPF")
+      setLbDocument("CPF*")
       setTipoPessoa("F")
 
     } else {
-      setLbFantasia("Fantasia");
+      setLbFantasia("Fantasia*");
       setExibeCorporateName("J")
-      setLbDocument("CNPJ")
+      setLbDocument("CNPJ*")
       setTipoPessoa("J")
 
     }
@@ -400,26 +400,26 @@ const ClientForm = (props) => {
               </div>
               <div className="col-md-3">
                 <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
-                  {lbFantasia === "" ? "Nome" : lbFantasia}
+                  {lbFantasia === "" ? "Nome*" : lbFantasia}
                 </label>
                 <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
             
               <div className="col-md-3"  >
                 <label htmlFor="inputDocumento" className="form-label ">
-                  {lbDocument === "" ? "CPF" : lbDocument}
+                  {lbDocument === "" ? "CPF*" : lbDocument}
                 </label>
                 <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} />
               </div>
               <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <label htmlFor="inputCorporateName" className="form-label ">
-                  Razão Social
+                  Razão Social*
                 </label>
                 <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
               </div>
               <div className="col-md-3">
                 <label htmlFor="inputPhoneNumber" className="form-label">
-                  Telefone
+                  Telefone*
                 </label>
                 <PhoneInput className="form-control" id="inputPhoneNumber" value={phone} onChange={handleInput}> </PhoneInput>
               </div>

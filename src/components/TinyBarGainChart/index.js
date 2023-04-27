@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function TinyBarGainChart() {
 
-  const { token, AffiliatedId, profilelogged, idLogged } = useContext(AuthContext)
+  const { token, afflitedId, profilelogged, idLogged } = useContext(AuthContext)
   const [data, setData] = useState([{ name: 'joel', amt: 18 }])
   useEffect(() => {
     getData();
@@ -26,14 +26,14 @@ export default function TinyBarGainChart() {
 
     let filtro = {
       situation: "Ganhos",
-      AffiliatedId: AffiliatedId,
+      AffiliatedId: afflitedId,
       UserId: idLogged
     }
 
     if (profilelogged === "Admin") {
       filtro = {
         situation: "Ganhos",
-        AffiliatedId: AffiliatedId
+        AffiliatedId: afflitedId
       }
     }
 
@@ -45,6 +45,7 @@ export default function TinyBarGainChart() {
     }
 
 
+    console.log(filtro)
 
     await api.post('business/lastYear', filtro,
       {

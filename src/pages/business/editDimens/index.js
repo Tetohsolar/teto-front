@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, useRef } from 'react'
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext'
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
-import { useLocation, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -33,11 +33,6 @@ const EditDimensionamento = () => {
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
-  const [geracaoDesejada, setGeracaoDesejada] = useState('')
-
-
-
-
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
   const inputDemFP = useRef();
@@ -53,9 +48,6 @@ const EditDimensionamento = () => {
     loadbId()
 
   }, [])
-
-
-
 
   async function buscaGeracaoSugerida() {
     setEnergiaPontaTratada(0)
@@ -145,8 +137,6 @@ const EditDimensionamento = () => {
         console.log(error)
       }
 
-
-
     }
     else {
       setConsumoMedio('')
@@ -154,8 +144,6 @@ const EditDimensionamento = () => {
     }
 
   }
-
-
 
   async function loadbId() {
 
@@ -241,7 +229,6 @@ const EditDimensionamento = () => {
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
 
-
           <form >
 
             <div className='p-3 bg-white border rounded-1'>
@@ -270,7 +257,6 @@ const EditDimensionamento = () => {
                     <option value="Cerâmico">Cerâmico</option>
                     <option value="Metálico">Metálico</option>
                     <option value="Em Solo">Solo</option>
-
 
                   </select>
 
@@ -331,7 +317,6 @@ const EditDimensionamento = () => {
                     {grupo === "A" ? <>
                       <option value="A3">A3</option>
                       <option value="A4">A4</option>
-
                     </>
                       :
                       <>
@@ -348,7 +333,6 @@ const EditDimensionamento = () => {
                   </label>
                   <input type="text" className="form-control" id="inputGeracaoSugerida" value={consumoMedio || ''} onChange={(e) => { setConsumoMedio(e.target.value); handleGrupoAConsMedio(e.target.value) }} />
                 </div>
-
 
               </div>
               <div className="row g-3 p2" >
@@ -386,7 +370,6 @@ const EditDimensionamento = () => {
                   </label>
                   <input type="text" className="form-control" id="inputGeracaoSugerida" value={geracaoSugerida || ''} onChange={(e) => setGeracaoSugerida(e.target.value)} />
                 </div>
-
 
               </div>
               <div className="row g-3 p2" >
