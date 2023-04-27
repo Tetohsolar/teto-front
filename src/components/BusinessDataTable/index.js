@@ -69,7 +69,7 @@ const BusinessDataTable = (props) => {
   const [numero, setNumero] = useState([])
   const navigate = useNavigate();
   const [situation, setSituation] = useState(props.situation);
-  // const [business, setBusiness] = useState([]);
+  // const [business, setBusiness] = useState([]);;;
   // const [client, setClient] = useState([]);
   const [idSelected, setIdSelected] = useState('');
 
