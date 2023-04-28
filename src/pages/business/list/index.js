@@ -5,7 +5,6 @@ import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
 import SixMonthsCharts from '../../../components/SixMonthsCharts';
 import BusinessDataTable from '../../../components/BusinessDataTable';
-import StepByStep from '../../../components/StepByStep';
 
 const data = [
   {

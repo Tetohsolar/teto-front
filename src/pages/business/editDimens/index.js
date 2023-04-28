@@ -7,11 +7,11 @@ import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { toast } from 'react-toastify';
 
+
 const EditDimensionamento = () => {
 
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
   const pageTitle = "Atualização do Dimensionamento do Projeto";
-
 
   const [name, setName] = useState()
   const [fatorS, setFatorS] = useState()
@@ -67,7 +67,7 @@ const EditDimensionamento = () => {
     })
 
   }
-
+  
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
 
@@ -191,7 +191,6 @@ const EditDimensionamento = () => {
     // const saida = JSON.parse(t);
     console.log(data)
 
-
     await api.patch('/business/update/' + businessId, data, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -215,7 +214,6 @@ const EditDimensionamento = () => {
 
   }
 
-
   return (
     <div>
 
@@ -224,10 +222,8 @@ const EditDimensionamento = () => {
         <Sidebar activeButtonProfile="active" />
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
-
           <form >
             <table className='table_view'>
-
               <div className='p-3 bg-white border rounded-1'>
                 <div className="row g-3 " >
                   <div className="col-md-5">
@@ -251,7 +247,6 @@ const EditDimensionamento = () => {
                       <label htmlFor="inputFirstName" className="form-label">
                         Tipo de Telhado:
                       </label>
-
                       <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={telhado} onChange={(e) => setTelhado(e.target.value)} >
                         <option value="">Selecione</option>
                         <option value="Cerâmico">Cerâmico</option>
@@ -402,10 +397,6 @@ const EditDimensionamento = () => {
         </div>
       </div>
     </div>
-
   )
 }
-
-
-
 export default EditDimensionamento

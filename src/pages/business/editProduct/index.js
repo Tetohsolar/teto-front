@@ -8,7 +8,6 @@ import { AuthContext } from '../../../context/AuthContext';
 import TabelaProdutoEditavel from '../../../components/prods';
 import {useNavigate } from "react-router-dom";
 
-
 const EditBussinessProduct = () => {
 
     const navigate = useNavigate();
@@ -240,8 +239,8 @@ const EditBussinessProduct = () => {
                         <div className='p-3 bg-white border rounded-1'>
 
                             <div className="row g-3 p2" >
-
-                                <div class="card-body">
+                                
+                            <div class="card-body">
                                     <div className="row d-flex justify-content-start">
                                         <div className="table-responsive">
 
