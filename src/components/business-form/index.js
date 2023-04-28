@@ -1136,6 +1136,7 @@ const BusinessForm = (props) => {
                   </label>
                   <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoLigacao} onChange={(e) => setTipoLigacao(e.target.value)}>
                     <option value="Trifásico">Trifásico</option>
+                    <option value="Trifásico">Bifásico</option>
                     <option value="Monofásico">Monofásico</option>
 
                   </select>
@@ -1150,6 +1151,8 @@ const BusinessForm = (props) => {
                     <option value="Metálico">Metálico</option>
                     <option value="Em Solo">Solo</option>
                     <option value="Fibrocimento">Fibrocimento</option>
+                    <option value="Laje">Laje</option>
+                    <option value="Sem estrutura">Sem estrutura</option>
                   </select>
                 </div>
 
@@ -1180,26 +1183,13 @@ const BusinessForm = (props) => {
               <br />
               <div class="card w-100">
                 <div class="card-header">
-                  Informações Complementares
+                  Informações da Geradora
                 </div>
                 <div class="card-body d-flex flex-row ">
 
                   <div className="row p-2 d-flex flex-column">
 
-                    <div className="col-md-3 w-100">
-                      <label htmlFor="modalidade" className="form-label">
-                        Modalidade:
-                      </label>
-                      {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
-                      <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => { setModalidade(e.target.value); setMod(e.target.value); calculaDemana() }}>
-                        <option value="Convencional">Convencional</option>
-                        <option value="HA">Horos. Azul</option>
-                        <option value="HV">Horos. Verde</option>
-                        <option value="Rural">Rural</option>
-
-                      </select>
-                    </div>
-                    <div className="col-md-2 w-100">
+                  <div className="col-md-2 w-100">
                       <label htmlFor="inputGrupo" className="form-label">
                         Grupo:
                       </label>
@@ -1210,7 +1200,29 @@ const BusinessForm = (props) => {
                         <option value="B">Grupo B</option>
                       </select>
                     </div>
-                    <div className="col-md-3   w-100">
+                    <div className="col-md-3  w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputDemandaFP" className="form-label">
+                        Demanda FP(KWh):
+                      </label>
+
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={demandaFP || ''} onChange={(e) => setDemandaFP(e.target.value)} onBlur={calculaDemana} />
+
+                    </div>
+                    <div className="row p-2 d-flex flex-column align-items-start"></div>
+                    <div className="col-md-3  w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                      <label htmlFor="inputDemandaPonta" className="form-label">
+                        Demanda Ponta(KWh):
+                      </label>
+                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                        className="form-control number" value={demPonta || ''} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
+                    </div>
+                   
+
+                  </div>
+                  <div className="row p-2  d-flex flex-column">
+
+                  <div className="col-md-3   w-100">
                       <label htmlFor="inputSubgrupo" className="form-label">
                         Sub-Grupo:
                       </label>
@@ -1229,19 +1241,6 @@ const BusinessForm = (props) => {
                           </>}
                       </select>
                     </div>
-
-                  </div>
-                  <div className="row p-2  d-flex flex-column">
-
-                    <div className="col-md-3  w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                      <label htmlFor="inputDemandaFP" className="form-label">
-                        Demanda FP(KWh):
-                      </label>
-
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                        className="form-control number" value={demandaFP || ''} onChange={(e) => setDemandaFP(e.target.value)} onBlur={calculaDemana} />
-
-                    </div>
                     <div className="col-md-3 w-100 " id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputEnergiaFP" className="form-label">
                         Energia FP(KWh):
@@ -1249,7 +1248,7 @@ const BusinessForm = (props) => {
                       <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
                         className="form-control number" value={energia_FP || ''} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={calculaDemana} />
                     </div>
-                    <div className="col-md-3   w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
+                    <div className="col-md-3 w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
                       <label htmlFor="inputEnergiaPonta" className="form-label">
                         Energia Ponta(KWh):
                       </label>
@@ -1260,36 +1259,57 @@ const BusinessForm = (props) => {
                   </div>
 
                   <div className="row p-2  d-flex flex-column" >
-                    <div className="col-md-3  w-100" id={demandasVisible === "" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                      <label htmlFor="inputDemandaPonta" className="form-label">
-                        Demanda Ponta(KWh):
+                  <div className="col-md-3 w-50">
+                      <label htmlFor="modalidade" className="form-label">
+                        Modalidade:
                       </label>
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                        className="form-control number" value={demPonta || ''} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
+                      {/* <input type="text" className="form-control" id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)} /> */}
+                      <select className="form-select" id="modalidade" value={modalidade} onChange={(e) => { setModalidade(e.target.value); setMod(e.target.value); calculaDemana() }}>
+                        <option value="Convencional">Convencional</option>
+                        <option value="HA">Horos. Azul</option>
+                        <option value="HV">Horos. Verde</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Outros">Outros</option>
+
+                      </select>
                     </div>
 
-                    <div className="col-md-3  w-100 " id={demandasVisible === "N" ? "divDemandaEscondida" : "divDemandaVisvel"}>
-                      <label htmlFor="inputConsMedio" className="form-label font-weight-bold">
-                        Consumo Médio*(KWh):
-                      </label>
+                    <div class="row">
+  <div class="col-md-6">
+    <label htmlFor="inputConsumoMedio" className="form-label">
+      Consumo Médio(KWh):
+    </label>
+    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+      className="form-control number" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
+  </div>
 
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                        className="form-control number" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={() => {
-                          calculaDemana();
-                          calculaGeracaoTotal();
-                        }} onKeyUp={() => { calculaDemana(); }} />
-                    </div>
+  <div class="col-md-6">
+    <label htmlFor="inputGeracaoSugerida" className="form-label">
+      Geração Sugerida(KWh):
+    </label>
+    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+      className="form-control number" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
+  </div>
+</div>
 
-                    <div className="col-md-3 w-100">
-                      <label htmlFor="inputGeracaoSugerida" className="form-label">
-                        Geração Sugerida(KWh):
-                      </label>
+<div class="row">
+  <div class="col-md-6">
+    <label htmlFor="inputCIP" className="form-label ">
+      CIP(R$):
+    </label>
+    <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+      className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
+  </div>
 
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                        className="form-control number" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
-
-                    </div>
-                  </div>
+  <div class="col-md-6">
+    <label htmlFor="inputbandeira" className="form-label">
+      Bandeira(R$):
+    </label>
+    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+      className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
+  </div>
+</div>
+                </div>
                 </div>
               </div>
               <br />
@@ -1360,20 +1380,7 @@ const BusinessForm = (props) => {
                     </div>
 
 
-                    <div className="col-md-2">
-                      <label htmlFor="inputCIP" className="form-label">
-                        CIP(R$):
-                      </label>
-                      <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
-                        className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
-                    </div>
-                    <div className="col-md-2">
-                      <label htmlFor="inputbandeira" className="form-label">
-                        Bandeira(R$):
-                      </label>
-                      <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                        className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
-                    </div>
+                   
 
                   </div>
 
