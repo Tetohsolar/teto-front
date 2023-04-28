@@ -3,7 +3,6 @@ import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
-import ProfileForm from '../../../components/profileform/ProfileForm';
 import ClientForm from '../../../components/clientForm/ClientForm';
 
 const EditClient = ({ childToParent }) => {
