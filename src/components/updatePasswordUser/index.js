@@ -7,8 +7,28 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 
 
+
 const UpdatePasswordUser = (props) => {
-  const { token, } = useContext(AuthContext)
+  const { token, idLogged} = useContext(AuthContext)
+  
+  async function findUserById() {
+
+    await api.get(`/user/get/${idLogged}`, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    })
+      .then((response) => { 
+        setEmail (response.data.email)
+        
+      })
+  }
+  useEffect(() => {
+   findUserById ()
+
+    return () => { }
+  })
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -81,7 +101,7 @@ const UpdatePasswordUser = (props) => {
             <label htmlFor="inputEmail" className="form-label">
               Email:
             </label>
-            <input type="email" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" readOnly  className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
         </div>
 

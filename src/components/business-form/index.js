@@ -139,7 +139,7 @@ const BusinessForm = (props) => {
   const [projeto, setprojeto] = useState(afflited.projectCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   const [imposto, setImposto] = useState(afflited.taxI)
   const [montagem, setMontagem] = useState(afflited.assemblyCostI.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-  const [comissao, setComissao] = useState(afflited.profitCost)
+  const [comissao, setComissao] = useState(afflited.commission)
   const [margem, setMargem] = useState(afflited.profitCost + afflited.profit)
   const [custo_total, setCustoTotal] = useState(0)
   const [margemCalculada, setMargemCalculada] = useState(0)
@@ -1380,7 +1380,20 @@ const BusinessForm = (props) => {
                     </div>
 
 
-                   
+                    <div className="col-md-2">
+                      <label htmlFor="inputCIP" className="form-label">
+                        CIP(R$):
+                      </label>
+                      <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+                        className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
+                    </div>
+                    <div className="col-md-2">
+                      <label htmlFor="inputbandeira" className="form-label">
+                        Bandeira(R$):
+                      </label>
+                      <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+                        className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
+                    </div>
 
                   </div>
 
