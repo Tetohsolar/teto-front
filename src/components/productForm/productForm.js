@@ -7,6 +7,10 @@ import { redirect, useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import api from '../../api';
 import { NumericFormat } from 'react-number-format';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import InputMask from "react-input-mask";
+import DecimalMaskedTextField from '../communs/DecimalMaskedTextField';
+
 
 const ProductForm = (props) => {
   const [codigo, setCodigo] = useState('')
@@ -31,21 +35,21 @@ const ProductForm = (props) => {
   async function loadBrandByProduct(type) {
     try {
       const filtro = {
-        "type":type
+        "type": type
       }
-  
-      
+
+
       await api.post('/brands/all', filtro, {
         headers: {
           'Authorization': `Basic ${token}`
         }
       }).then((response) => {
         setBrands(response.data.brand)
-        
+
       }).catch((error) => {
         toast.error(error.response.data.message)
       });
- 
+
 
     } catch (err) {
       console.log(err)
@@ -65,9 +69,9 @@ const ProductForm = (props) => {
         setCodigo(response.data.codef)
         setDescricao(response.data.description)
         setCategoria(response.data.category)
-        loadBrand(response.data.category,response.data.brand)
-        
-        
+        loadBrand(response.data.category, response.data.brand)
+
+
         setMarca(response.data.brand)
         setDescricaoTec(response.data.descriptionTec)
         setDescricaoAmigavel(response.data.descriptionFriendly)
@@ -93,7 +97,7 @@ const ProductForm = (props) => {
     if (Id) {
       loadById(Id)
     } else {
-    loadBrandByProduct("P")
+      loadBrandByProduct("P")
     }
     return () => { }
 
@@ -184,22 +188,22 @@ const ProductForm = (props) => {
     }
   }
 
-  async function loadBrand(cat, brand){
-    if (categoria){
+  async function loadBrand(cat, brand) {
+    if (categoria) {
       cat = categoria
       console.log("aqui")
     }
-    
-    if (cat==="Inversor"){
-      cat="M"
+
+    if (cat === "Inversor") {
+      cat = "M"
     } else
-    if (cat==="Microinversor"){
-      cat="M"
-    } 
-    else{
-      cat="P"
-    }
-   await loadBrandByProduct(cat).then( setMarca(brand))
+      if (cat === "Microinversor") {
+        cat = "M"
+      }
+      else {
+        cat = "P"
+      }
+    await loadBrandByProduct(cat).then(setMarca(brand))
   }
   return (
     <div className="p-3 mb-3 bg-white border rounded-3">
@@ -209,67 +213,77 @@ const ProductForm = (props) => {
 
       <form className="row g-3" onSubmit={handleSave}>
         <div className="col-md-5">
-          <label htmlFor="inputCodigo" className="form-label">
-            Código*
-          </label>
-          <input type="text" maxLength={50} className="form-control" id="inputCodigo" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
+
+          <TextField id="inputCodigo*" maxLength={50} className="form-control" label="Código*" variant="outlined" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
+
         </div>
-        
+
+
         <div className="col-md-3">
-          <label htmlFor="inputCategoria" className="form-label">
-            Categoria
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={categoria} onChange={(e) => setCategoria(e.target.value)} onClick={loadBrand}>
-          <option value="">Selecionar</option>
-            <option value="Placa">Placa</option>
-            <option value="Inversor">Inversor</option>
-            <option value="Microinversor">Microinversor</option>
-            
-          </select>
+
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={categoria}
+              label="Categoria"
+              onChange={(e) => setCategoria(e.target.value)}
+              onClick={loadBrand}
+            >
+              <MenuItem value={'Placa'}>Placa</MenuItem>
+              <MenuItem value={'Inversor'}>Inversor</MenuItem>
+              <MenuItem value={'Microinversor'}>Microinversor</MenuItem>
+            </Select>
+          </FormControl>
         </div>
 
         <div className="col-md-3">
-          <label htmlFor="inputMarca" className="form-label">
-            Marca
-          </label>
 
-        <select className="form-select" aria-label="Selecionar" onChange={(e) => setMarca(e.target.value)} value={marca}>
-          <option value="">Selecionar </option>
-                {brands?brands.map((option) => (<option key={option.name} value={option.name} >{option.name}</option>)):""}
-              </select>  
-         </div>
-        
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Marca</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={marca}
+              label="inputMarca"
+              onChange={(e) => setMarca(e.target.value)}
+              onClick={loadBrand}
+            >
+
+              {brands ? brands.map((option) => (<MenuItem key={option.name} value={option.name} >{option.name}</MenuItem>)) : ""}
+
+            </Select>
+          </FormControl>
+        </div>
+
+
         <div className="col-md-11">
-          <label htmlFor="descricao" className="form-label">
-            Descrição*
-          </label>
-          <input type="descricao" maxLength={200} className="form-control" id="inputDescricao" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
+
+          <TextField id="inputCodigo*" maxLength={50} className="form-control" label="Descrição*" variant="outlined" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
+
         </div>
         <div className="col-md-5">
-          <label htmlFor="inputFornecedor" className="form-label">
-            Fornecedor
-          </label>
-          <input type="text" maxLength={100} className="form-control" id="inputFornecedor" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
+
+          <TextField id="inputFornecedor" maxLength={50} className="form-control" label="Fornecedor" variant="outlined" value={fornecedor || ''} onChange={(e) => setFornecedor(e.target.value)} />
+
+
         </div>
         <div className="col-md-3">
-          <label htmlFor="inputGarantia" className="form-label">
-            Garantia
-          </label>
-          <input type="text" maxLength={100} className="form-control" id="inputGarantia" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
+          <TextField id="inputGarantia" maxLength={50} className="form-control" label="Garantia" variant="outlined" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)}/>
         </div>
-        
-        <div className="col-md-3">
-          <label htmlFor="inputPreco" className="form-label">
-            Preço*
-          </label>
-          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={preco || ''} onChange={(e) => setPreco(e.target.value)} />
+
+        <div className="col-md-4">
+          
+         <DecimalMaskedTextField  className='number' label="Preço" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
+     
         </div>
         <div className="col-md-3">
-         <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-          Potência
+          <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
+            Potência
           </label>
-         <input type="number"  maxLength={5} className="form-control number" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
-          </div>
+          <input type="number" maxLength={5} className="form-control number" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
+        </div>
         <div className="col-md-4">
           <label htmlFor="inputPeso" className="form-label">
             Peso (Kg)
@@ -295,11 +309,11 @@ const ProductForm = (props) => {
           <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
         </div>
         <div className="d-grid gap-2 d-md-block col-12">
-        <div className="customerCliente">
-          <button className="btn btn-primary text-light" type="submit" >
-            Salvar
-          </button>
-        </div>
+          <div className="customerCliente">
+            <button className="btn btn-primary text-light" type="submit" >
+              Salvar
+            </button>
+          </div>
         </div>
       </form>
     </div>
