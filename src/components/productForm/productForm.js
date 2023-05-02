@@ -31,11 +31,33 @@ const ProductForm = (props) => {
   const { signUp, token } = useContext(AuthContext)
   const navigate = useNavigate();
   const [brands, setBrands] = useState('')
+  const [listCategory, setListCategory] = useState([])
 
+  async function loadCategorys(type) {
+    try {
+
+      await api.get('/typesystem/all', {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }).then((response) => {
+        console.log(response.data.types)
+        setListCategory(response.data.types)
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
   async function loadBrandByProduct(type) {
     try {
       const filtro = {
-        "type": type
+        "type": '%'
       }
 
 
@@ -68,8 +90,9 @@ const ProductForm = (props) => {
       }).then((response) => {
         setCodigo(response.data.codef)
         setDescricao(response.data.description)
-        setCategoria(response.data.category)
-        loadBrand(response.data.category, response.data.brand)
+        
+        setCategoria(response.data.TypeSystemId)
+        // loadBrand(response.data.category, response.data.brand)
 
 
         setMarca(response.data.brand)
@@ -94,10 +117,10 @@ const ProductForm = (props) => {
   }
 
   useEffect(() => {
+    loadCategorys()
+    loadBrandByProduct()
     if (Id) {
       loadById(Id)
-    } else {
-      loadBrandByProduct("P")
     }
     return () => { }
 
@@ -231,9 +254,14 @@ const ProductForm = (props) => {
               onChange={(e) => setCategoria(e.target.value)}
               onClick={loadBrand}
             >
-              <MenuItem value={'Placa'}>Placa</MenuItem>
-              <MenuItem value={'Inversor'}>Inversor</MenuItem>
-              <MenuItem value={'Microinversor'}>Microinversor</MenuItem>
+
+
+              {
+                listCategory.length &&
+                listCategory.map((option, i) => {
+                  return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                })
+              }
             </Select>
           </FormControl>
         </div>
@@ -248,11 +276,16 @@ const ProductForm = (props) => {
               value={marca}
               label="inputMarca"
               onChange={(e) => setMarca(e.target.value)}
-              onClick={loadBrand}
+
             >
 
-              {brands ? brands.map((option) => (<MenuItem key={option.name} value={option.name} >{option.name}</MenuItem>)) : ""}
-
+              {
+                brands.length &&
+                brands.map((option, i) => {
+                  return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                })
+              }
+             
             </Select>
           </FormControl>
         </div>
@@ -288,9 +321,9 @@ const ProductForm = (props) => {
 
         </div>
         <div className="col-md-5">
-        <FormControl fullWidth>
-          <TextField maxLength={300} label="Dimensão" variant="outlined" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)}> </TextField>
-        </FormControl>
+          <FormControl fullWidth>
+            <TextField maxLength={300} label="Dimensão" variant="outlined" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)}> </TextField>
+          </FormControl>
         </div>
         <div className="col-md-11">
 
