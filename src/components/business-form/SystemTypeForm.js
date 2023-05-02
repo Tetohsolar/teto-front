@@ -25,17 +25,17 @@ export default function SystemItemForm() {
     <React.Fragment>
       <box>
         <Typography variant="h6" gutterBottom>
-          Rateios
+        Itens do Kit
         </Typography>
-        <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 }}}>
+        <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 } }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Tipo</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-type"
                   value={item}
-                  label="Estado"
+                  label="Tipo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -44,13 +44,13 @@ export default function SystemItemForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Marca</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-brand"
                   value={item}
-                  label="Estado"
+                  label="Marca"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -59,13 +59,13 @@ export default function SystemItemForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={2}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Modelo</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-model"
                   value={item}
-                  label="Estado"
+                  label="Modelo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -75,57 +75,20 @@ export default function SystemItemForm() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={2}>
               <TextField
-                required
-                id="phone"
-                name="phone"
-                label="Telefone"
+                id="power"
+                name="power"
+                label="Potência"
+                fullWidth
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <TextField
+                id="amount"
+                name="amount"
+                label="Quantidade"
                 fullWidth
                 size="small"
               />
@@ -135,13 +98,13 @@ export default function SystemItemForm() {
 
         <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 }, mt: 2 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Tipo</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-type"
                   value={item}
-                  label="Estado"
+                  label="Tipo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -150,13 +113,13 @@ export default function SystemItemForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Marca</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-brand"
                   value={item}
-                  label="Estado"
+                  label="Marca"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -165,13 +128,13 @@ export default function SystemItemForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={2}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Modelo</InputLabel>
                 <Select
-                  id="demo-simple-select-item"
+                  id="demo-simple-select-model"
                   value={item}
-                  label="Estado"
+                  label="Modelo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -181,57 +144,20 @@ export default function SystemItemForm() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-item"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={2}>
               <TextField
-                required
-                id="phone"
-                name="phone"
-                label="Telefone"
+                id="power"
+                name="power"
+                label="Potência"
+                fullWidth
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <TextField
+                id="amount"
+                name="amount"
+                label="Quantidade"
                 fullWidth
                 size="small"
               />
@@ -246,6 +172,7 @@ export default function SystemItemForm() {
             Excluir
           </Button>
         </Paper>
+
         <Button variant="outlined" size="small" sx={{ mt: 2 }}>
           Novo rateio
         </Button>

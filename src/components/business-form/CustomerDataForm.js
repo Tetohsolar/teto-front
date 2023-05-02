@@ -29,11 +29,11 @@ export default function CustomerDataForm() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel>Type</InputLabel>
+              <InputLabel>Tipo</InputLabel>
               <Select
                 id="demo-simple-select"
                 value={type}
-                label="Type"
+                label="Tipo"
                 onChange={handleChange}
               >
                 {personType.map((item) => (

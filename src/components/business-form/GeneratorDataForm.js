@@ -30,18 +30,18 @@ export default function GeneratorDataForm() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="customer"
+              name="customer"
+              label="Cliente"
               fullWidth
               size="small"
             />
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="user"
+              name="user"
+              label="Usuário"
               fullWidth
               size="small"
             />
@@ -49,18 +49,18 @@ export default function GeneratorDataForm() {
           <Grid item xs={12} sm={3}>
             <TextField
               required
-              id="name"
-              name="name"
-              label="Nome"
+              id="sun-factor"
+              name="sun-factor"
+              label="Fator solar"
               fullWidth
               size="small"
             />
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
-              id="name"
-              name="name"
-              label="Nome"
+              id="considered-power"
+              name="considered-power"
+              label="Potência considerada"
               fullWidth
               size="small"
             />
@@ -68,11 +68,11 @@ export default function GeneratorDataForm() {
 
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Tipo de ligação</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-connection-type"
                 value={item}
-                label="Estado"
+                label="Tipo de ligação"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -83,11 +83,11 @@ export default function GeneratorDataForm() {
           </Grid>
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Tipo de telhado</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-roof-type"
                 value={item}
-                label="Estado"
+                label="Tipo de telhado"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -98,11 +98,11 @@ export default function GeneratorDataForm() {
           </Grid>
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Tipo de sistema</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-system-type"
                 value={item}
-                label="Estado"
+                label="Tipo de sistema"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -113,10 +113,9 @@ export default function GeneratorDataForm() {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
-              required
-              id="phone"
-              name="phone"
-              label="Telefone"
+              id="panel-power"
+              name="panel-power"
+              label="Potência do painel"
               fullWidth
               size="small"
             />
@@ -131,11 +130,11 @@ export default function GeneratorDataForm() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Grupo</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-group"
                 value={item}
-                label="Estado"
+                label="Grupo"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -146,11 +145,11 @@ export default function GeneratorDataForm() {
           </Grid>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Sub-grupo</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-subgroup"
                 value={item}
-                label="Estado"
+                label="Sub-grupo"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -161,11 +160,11 @@ export default function GeneratorDataForm() {
           </Grid>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
+              <InputLabel>Modalidade</InputLabel>
               <Select
-                id="demo-simple-select-titem"
+                id="simple-select-mode"
                 value={item}
-                label="Estado"
+                label="Modalidade"
                 onChange={handleChange}
               >
                 {list.map((item) => (
@@ -176,56 +175,37 @@ export default function GeneratorDataForm() {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
-              <Select
-                id="demo-simple-select-titem"
-                value={item}
-                label="Estado"
-                onChange={handleChange}
-              >
-                {list.map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
-              <Select
-                id="demo-simple-select-titem"
-                value={item}
-                label="Estado"
-                onChange={handleChange}
-              >
-                {list.map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Estado</InputLabel>
-              <Select
-                id="demo-simple-select-titem"
-                value={item}
-                label="Estado"
-                onChange={handleChange}
-              >
-                {list.map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <TextField
+              id="average-usage"
+              name="average-usage"
+              label="Consumo Médio (KWh)"
+              fullWidth
+              size="small"
+            />
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
-              required
-              id="phone"
-              name="phone"
-              label="Telefone"
+              id="suggested-generation"
+              name="suggested-generation"
+              label="Geração Sugerida (KWh)"
+              fullWidth
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="cip"
+              name="cip"
+              label="CIP (R$)"
+              fullWidth
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="flag"
+              name="flag"
+              label="Bandeira (R$)"
               fullWidth
               size="small"
             />
@@ -241,11 +221,11 @@ export default function GeneratorDataForm() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Modalidade</InputLabel>
                 <Select
-                  id="demo-simple-select-titem"
+                  id="simple-select-modality"
                   value={item}
-                  label="Estado"
+                  label="Modalidade"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -256,11 +236,11 @@ export default function GeneratorDataForm() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Grupo</InputLabel>
                 <Select
-                  id="demo-simple-select-titem"
+                  id="simple-select-rateio-group"
                   value={item}
-                  label="Estado"
+                  label="Grupo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -271,11 +251,11 @@ export default function GeneratorDataForm() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
+                <InputLabel>Sub-grupo</InputLabel>
                 <Select
-                  id="demo-simple-select-titem"
+                  id="simple-select-rateio-subgrupo"
                   value={item}
-                  label="Estado"
+                  label="Sub-grupo"
                   onChange={handleChange}
                 >
                   {list.map((item) => (
@@ -285,57 +265,73 @@ export default function GeneratorDataForm() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-titem"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                type="number"
+                id="consumption"
+                name="consumption"
+                label="Consumo"
+                fullWidth
+                size="small"
+              />
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-titem"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                type="number"
+                id="dem-fp"
+                name="dem-fp"
+                label="Dem. FP."
+                fullWidth
+                size="small"
+              />
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Estado</InputLabel>
-                <Select
-                  id="demo-simple-select-titem"
-                  value={item}
-                  label="Estado"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                type="number"
+                id="ener-fp"
+                name="ener-fp"
+                label="Ener. F. P."
+                fullWidth
+                size="small"
+              />
             </Grid>
             <Grid item xs={12} sm={3}>
               <TextField
-                required
-                id="phone"
-                name="phone"
-                label="Telefone"
+                type="number"
+                id="dem-p"
+                name="dem-p"
+                label="Dem. P"
+                fullWidth
+                size="small"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <TextField
+                type="number"
+                id="ener-p"
+                name="ener-p"
+                label="Ener. P"
+                fullWidth
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                type="number"
+                id="g-suggested"
+                name="g-suggested"
+                label="G. Sugerida"
+                fullWidth
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                type="number"
+                id="cip"
+                name="cip"
+                label="CIP"
                 fullWidth
                 size="small"
               />
@@ -362,18 +358,18 @@ export default function GeneratorDataForm() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="g-suggested-kwh"
+              name="g-suggested-kwh"
+              label="Ger. Sugerida (KWh)"
               fullWidth
               size="small"
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="target-generation-kwh"
+              name="target-generation-kwh"
+              label="Ger. Desejada (KWh)"
               fullWidth
               size="small"
             />
@@ -381,9 +377,9 @@ export default function GeneratorDataForm() {
           <Grid item xs={12} sm={4}>
             <TextField
               required
-              id="name"
-              name="name"
-              label="Nome"
+              id="number-of-plates"
+              name="number-of-plates"
+              label="Número de placas"
               fullWidth
               size="small"
             />
@@ -391,18 +387,18 @@ export default function GeneratorDataForm() {
 
           <Grid item xs={12} sm={4}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="system-power-kwh"
+              name="system-power-kwh"
+              label="Pot. do Sistema (KWh)"
               fullWidth
               size="small"
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
-              id="personId"
-              name="CPF"
-              label="CPF"
+              id="cip-brl"
+              name="cip-brl"
+              label="CIP (R$)"
               fullWidth
               size="small"
             />
@@ -410,9 +406,9 @@ export default function GeneratorDataForm() {
           <Grid item xs={12} sm={4}>
             <TextField
               required
-              id="name"
-              name="name"
-              label="Nome"
+              id="flag-brl"
+              name="flag-brl"
+              label="Bandeira (R$)"
               fullWidth
               size="small"
             />
