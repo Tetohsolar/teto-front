@@ -78,7 +78,7 @@ const EditProfileForm = (props) => {
       toast.success("Usuário Atualizado com Sucesso!", {
         autoClose: 1000,
       })
-      navigate("/users/")
+      navigate("/users/") 
     }
     catch (error) {
       toast.error("Erro ao Atualizar Dados!", {

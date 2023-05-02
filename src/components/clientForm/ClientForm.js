@@ -10,6 +10,11 @@ import api from '../../api';
 import { useParams, useNavigate } from "react-router-dom";
 import SelectEstado from '../estadosbr';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { TextFields } from '@mui/icons-material';
+import MaskedTextField from '../communs/MaskedTextField';
+import UFTextField from '../communs/UFTextField';
+
 
 
 
@@ -37,18 +42,6 @@ function CepInput(props) {
   );
 }
 
-function Cidades(props) {
-  return (
-    <select className={props.className} onChange={props.onChange} value={props.value}>
-      {Array.isArray(props.novos) ?
-        props.novos.map((cidade) => (
-          <option key={cidade.nome} value={cidade.nome}>{cidade.nome}</option>
-        )) : []
-
-      }
-    </select>
-  );
-}
 
 const ClientForm = (props) => {
 
@@ -56,10 +49,10 @@ const ClientForm = (props) => {
   const [name, setName] = useState('')
   const [num, setNumero] = useState('')
   const [id, setId] = useState('')
-  const [lbFantasia, setLbFantasia] = useState('')
+  const [lbFantasia, setLbFantasia] = useState('Nome')
   const [lbDocument, setLbDocument] = useState('CPF')
   const [exibeCorporateName, setExibeCorporateName] = useState('')
-  const [tipoPessoa, setTipoPessoa] = useState('')
+  const [tipoPessoa, setTipoPessoa] = useState('F')
   const [corporateName, setCorporateName] = useState('')
   const [doc, setDoc] = useState('')
   const [email, setEmail] = useState('')
@@ -78,12 +71,14 @@ const ClientForm = (props) => {
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
   const { clientId } = useParams();
- 
+  const [maskDOC, setMaskDOC] = useState('999.999.999-99')
 
 
 
   useEffect(() => {
 
+    handleEstadoValue('CE')
+    
     if (clientId) {
       loadClienById(clientId)
     }
@@ -251,12 +246,14 @@ const ClientForm = (props) => {
       setExibeCorporateName("");
       setLbDocument("CPF*")
       setTipoPessoa("F")
+      setMaskDOC("999.999.999-99")
 
     } else {
       setLbFantasia("Fantasia*");
       setExibeCorporateName("J")
       setLbDocument("CNPJ*")
       setTipoPessoa("J")
+      setMaskDOC("99.999.999/9999-99")
 
     }
 
@@ -287,8 +284,7 @@ const ClientForm = (props) => {
     try {
 
       await api.get('/sunindex/cep/' + cepData).then((response) => {
-        handleEstadoValue(response.data.state)
-          .then(setCidade(response.data.city))
+        handleEstadoValue(response.data.state).then(setCidade(response.data.city))
           .then(setRua(response.data.street)).then(setBairro(response.data.neighborhood))
       });
 
@@ -390,93 +386,77 @@ const ClientForm = (props) => {
 
       <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
               <div className='col-md-3'>
-                <label htmlFor="inputFirstName" className="form-label">
-                  Tipo
-                </label>
-                <select className='form-select' value={tipoPessoa} onChange={handleTipoPessoa}>
-                  <option value="F">Física</option>
-                  <option value="J">Jurídica</option>
-                </select>
+                
+
+              <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Tipo Pessoa</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={tipoPessoa}
+              label="Categoria"
+              onChange={(e) => {handleTipoPessoa(e)}}
+             
+            >
+              <MenuItem value={'F'}>Física</MenuItem>
+              <MenuItem value={'J'}>Jurídica</MenuItem>
+              
+            </Select>
+          </FormControl>
+             
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label" id='lbNome'>
-                  {lbFantasia === "" ? "Nome*" : lbFantasia}
-                </label>
-                <input type="text" maxLength={50} className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+                <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia} variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
               </div>
             
               <div className="col-md-3"  >
-                <label htmlFor="inputDocumento" className="form-label ">
-                  {lbDocument === "" ? "CPF*" : lbDocument}
-                </label>
-                <input type="text" className="form-control" id="inputDocumento" value={doc} onKeyUp={(e) => { handleMask(e) }} onChange={(e) => setDoc(e.target.value)} />
-              </div>
-              <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
-                <label htmlFor="inputCorporateName" className="form-label ">
-                  Razão Social*
-                </label>
-                <input type="text" maxLength={100} className="form-control" id="inputCorporateName" value={corporateName} onChange={(e) => setCorporateName(e.target.value)} />
+               <MaskedTextField label={lbDocument}  mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
+             </div>
+             <div className="col-md-3">
+                <TextField id="corporateName" maxLength={50} className="form-control" label= 'Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputPhoneNumber" className="form-label">
-                  Telefone*
-                </label>
-                <PhoneInput className="form-control" id="inputPhoneNumber" value={phone} onChange={handleInput}> </PhoneInput>
+                <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputPassword4" className="form-label">
-                  Whatsapp
-                </label>
-                <PhoneInput className="form-control" id="inputPhoneNumber" value={zap} onChange={handleInputZap}>  </PhoneInput>
-              </div>
-              <div className='col-md-3'>
-                <label htmlFor="CEP" className="form-label">
-                  CEP
-                </label>
-                <CepInput className="form-control" id="inputCep" value={cepData} onChange={handleInputCep} name="cep" onBlur={searchCep} >   </CepInput>
-              </div>
-              <div className='col-md-3'>
-                <label htmlFor="estado" className="form-label combomob">
-                  Estado
-                </label>
-                <SelectEstado className="form-select" id="inputCep" value={estado} onChange={handleEstado}>  </SelectEstado>
-              </div>
-              <div className='col-md-3'>
-                <label htmlFor="Cidade" className="form-label combomob">
-                  Cidade
-                </label>
-                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
-              </div>
-              <div className="col-md-3"  >
-                <label htmlFor="inputLogradouro" className="form-label ">
-                  Logradouro
-                </label>
-                <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={rua} onChange={(e) => setRua(e.target.value)} />
-              </div>
-              <div className="col-md-3"  >
-                <label htmlFor="inputBairro" className="form-label ">
-                  Bairro
-                </label>
-                <input type="text" maxLength={100} className="form-control" id="inputLogradouro" value={bairro} onChange={(e) => setBairro(e.target.value)} />
+                <MaskedTextField label={"Whatsapp"}  mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-                Número
-                </label>
-                <input type="number"  className="form-control" id="inputNumero" value={num} onChange={(e) => setNumero(e.target.value)} />
+                <MaskedTextField label={"CEP"}  mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)}  onBlur={(e)=>{searchCep() }}></MaskedTextField>
               </div>
+              <div className="col-md-3">
+              <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
+              </div>
+              <div className='col-md-3'>
+              <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cidade}
+                label="inputMarca"
+                onChange={(e)=>setCidade(e.target.value)}
+              >
+                {cidades !=null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
+
+              </Select>
+
+            </FormControl>
+
+          </div>
+              <div className="col-md-3">
+                <TextField id="Rua" maxLength={50} className="form-control" label= 'Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
+              </div>
+              <div className="col-md-3">
+                <TextField id="Bairro" maxLength={50} className="form-control" label= 'Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
+              </div>
+              <TextField id="num" maxLength={50} className="form-control" label= 'Número' variant="outlined" value={num || ''} onChange={(e) => setNumero(e.target.value)} />
             
               <div className="col-md-3"  >
-                <label htmlFor="email" className="form-label ">
-                  Email
-                </label>
-                <input type="email" maxLength={100} className="form-control" id="idEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                 <TextField id="email" maxLength={50} className="form-control" label= 'E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="col-md-7"  >
-                <label htmlFor="informacoesAdicionais" className="form-label ">
-                  Informações Adicionais
-                </label>
-                <input type="text" maxLength={200} className="form-control" id="informacoesAcionais" value={informacoesAdicionais} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+              <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label= 'Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
               </div>
             </div>
      

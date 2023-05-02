@@ -7,7 +7,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import CustomerDataForm from "./CustomerDataForm";
 import GeneratorDataForm from "./GeneratorDataForm";
-import SystemTypeForm from "./SystemTypeForm";
+import SystemTypeForm from "./SystemTypeform";
 import FinancialSummaryForm from "./FinancialSummaryForm";
 
 const steps = [

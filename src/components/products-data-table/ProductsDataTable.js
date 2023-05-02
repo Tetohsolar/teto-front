@@ -44,10 +44,7 @@ const ProductsDataTable = (props) => {
           'Authorization': `Basic ${token}`
         }
       }).then((response) => {
-        console.log(response.data.types)
-        setListCategory(response.data.types)
-
-      }).catch((error) => {
+        setListCategory(response.data.types)}).catch((error) => {
         toast.error(error.response.data.message)
       });
 
@@ -201,7 +198,7 @@ const ProductsDataTable = (props) => {
                   value={category}
                   label="Categoria"
                   onChange={(e) => setCategory(e.target.value)}
-                  onClick={find}
+                  onBlur={(e)=>find() }
                 >
                   <MenuItem value="" >...</MenuItem>
                   {listCategory ? listCategory.map((option) => (<MenuItem key={option.id} value={option.id} >{option.name}</MenuItem>)) : ""}
@@ -219,11 +216,12 @@ const ProductsDataTable = (props) => {
                   id="demo-simple-select"
                   value={brand}
                   label="Marca"
-                  onChange={(e) => setBrand(e.target.value)}
-                  
+                  onChange={(e) => setBrand(e.target.value)
+                  }
+                  onBlur={(e)=>find()}
                 >
                    <MenuItem value="" >...</MenuItem>
-                  {brands ? brands.map((option) => (<MenuItem key={option.id} value={option.id} >{option.name}</MenuItem>)) : ""}
+                  {brands ? brands.map((option) => (<MenuItem key={option.id} value={option.name} >{option.name}</MenuItem>)) : ""}
 
                 </Select>
               </FormControl>
@@ -254,7 +252,7 @@ const ProductsDataTable = (props) => {
                   return (
                     <tr key={obj.id}>
                       <td>{obj.description}</td>
-                      <td>{obj.category}</td>
+                      <td>{obj.TypeSystem.name}</td>
                       <td>{obj.brand}</td>
                       <td>
                         <div className="d-flex gap-2 justify-content-end">
