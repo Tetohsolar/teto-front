@@ -276,13 +276,14 @@ const ProductForm = (props) => {
               value={marca}
               label="inputMarca"
               onChange={(e) => setMarca(e.target.value)}
+              
 
             >
 
               {
                 brands.length &&
                 brands.map((option, i) => {
-                  return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                  return (<MenuItem key={i} value={option.name}>{option.name}</MenuItem>)
                 })
               }
              
