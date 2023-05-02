@@ -6,9 +6,11 @@ import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
-import { VscNewFile, VscSearch } from "react-icons/vsc";
+import { VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+
 
 //PAGINATION
 let PageSize = 5;
@@ -68,8 +70,8 @@ const ProductsDataTable = (props) => {
   async function list(name) {
     const filtro = {
       codef: "%",
-      brand:  brand ,
-      category:  category ,
+      brand: brand,
+      category: category,
       description: "%" + name + "%",
       descriptionTec: "%",
       descriptionFriendly: "%",
@@ -92,10 +94,10 @@ const ProductsDataTable = (props) => {
 
   }
 
-  function find(){
+  function find() {
     list("%")
   }
-  
+
   async function handleAfterDel(e) {
 
     await api.delete('/products/delete/' + idSelected, {
@@ -121,23 +123,39 @@ const ProductsDataTable = (props) => {
     <form onSubmit={handleSeach}>
       <div className="p-3 mb-3 bg-white border rounded-3">
         <div className='containerCustom'>
-        <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-        <Link to={"/products/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo produto</Link>
+          <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
+          <Link to={"/products/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo produto</Link>
         </div>
         <hr className='my-4' />
         <div className="input-group">
           <div className='filtro'>
             <div className="col-md-5">
-              <input type="text" className="form-control" placeholder="Descrição" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
+
+              <TextField id="name" maxLength={50} className="form-control" label="Descrição" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
+
             </div>
-            <div className="col-md-4">
-              <select name="pets" id="input-user-type" className="form-select" value={category} onChange={(e) => setCategory(e.target.value)} onKeyUp={find} onClick={find}>
-                <option value="">Selecionar...</option>
-                <option value="Inversor">Inversor</option>
-                <option value="Microinversor">Microninversor</option>
-                <option value="Placa">Placa</option>
-              </select>
+
+
+            <div className="col-md-3">
+
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Categoria"
+                  onChange={(e) => setCategory(e.target.value)}
+                  onClick={find}
+                >
+                  <MenuItem value={'Placa'}>Placa</MenuItem>
+                  <MenuItem value={'Inversor'}>Inversor</MenuItem>
+                  <MenuItem value={'Microinversor'}>Microinversor</MenuItem>
+                </Select>
+              </FormControl>
             </div>
+
+           
             <div className="col-md-3">
               <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} onKeyUp={(e) => { list(name) }} />
             </div>
@@ -189,14 +207,14 @@ const ProductsDataTable = (props) => {
                 })}
               </tbody>
             </table>
-           <div className='paginationCustomer'>
-            <Pagination
-              className="pagination-bar"
-              currentPage={currentPage}
-              totalCount={totalPages}
-              pageSize={PageSize}
-              onPageChange={data => onPageChanged(data)}
-            />
+            <div className='paginationCustomer'>
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={totalPages}
+                pageSize={PageSize}
+                onPageChange={data => onPageChanged(data)}
+              />
             </div>
           </div>
         </div>
