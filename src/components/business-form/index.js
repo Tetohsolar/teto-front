@@ -1003,7 +1003,7 @@ const BusinessForm = (props) => {
       <Checkout />
       {/* END MUI STEP-BY-STEP */}
     
-      <form className="row g-3" onSubmit={handleChangePage}>
+      <form className="row g-3 mt-5" onSubmit={handleChangePage}>
 
         <Tabs >
           <TabList>
