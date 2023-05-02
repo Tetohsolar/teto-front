@@ -42,29 +42,6 @@ function CepInput(props) {
   );
 }
 
-function Cidades(props) {
-  return (
-
-
-    <FormControl fullWidth>
-    <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
-    <Select
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
-      value={props.value}
-      label="inputMarca"
-      onChange={props.onChange}
-      onClick={props.onClick}
-      onBlur={props.onBlur}
-    >
-       {props.novos ? props.novos.map((option) => (<MenuItem key={option.name} value={option.name} >{option.name}</MenuItem>)) : ""}
-
-        </Select>
-       
-      </FormControl>
-   
-  );
-}
 
 const ClientForm = (props) => {
 
@@ -100,6 +77,8 @@ const ClientForm = (props) => {
 
   useEffect(() => {
 
+    handleEstadoValue('CE')
+    
     if (clientId) {
       loadClienById(clientId)
     }
@@ -305,8 +284,7 @@ const ClientForm = (props) => {
     try {
 
       await api.get('/sunindex/cep/' + cepData).then((response) => {
-        handleEstadoValue(response.data.state)
-          .then(setCidade(response.data.city))
+        handleEstadoValue(response.data.state).then(setCidade(response.data.city))
           .then(setRua(response.data.street)).then(setBairro(response.data.neighborhood))
       });
 
@@ -444,16 +422,28 @@ const ClientForm = (props) => {
                 <MaskedTextField label={"Whatsapp"}  mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
               </div>
               <div className="col-md-3">
-                <MaskedTextField label={"CEP"}  mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)}  ></MaskedTextField>
+                <MaskedTextField label={"CEP"}  mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)}  onBlur={(e)=>{searchCep() }}></MaskedTextField>
               </div>
               <div className="col-md-3">
               <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
               </div>
               <div className='col-md-3'>
-              <TextField id="cidade" maxLength={50} className="form-control" label= 'Cidade' variant="outlined" value={cidade || ''} onChange={(e) => setCidade(e.target.value)} />
-              
-                <Cidades className="form-select" id="inputcidade" novos={cidades} value={cidade} onChange={(e) => setCidade(e.target.value)}>  </Cidades>
-              </div>
+              <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cidade}
+                label="inputMarca"
+                onChange={(e)=>setCidade(e.target.value)}
+              >
+                {cidades !=null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
+
+              </Select>
+
+            </FormControl>
+
+          </div>
               <div className="col-md-3">
                 <TextField id="Rua" maxLength={50} className="form-control" label= 'Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
               </div>
