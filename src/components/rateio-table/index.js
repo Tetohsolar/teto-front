@@ -29,7 +29,7 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                         return (
                             <tr key={item.id}>
                                 <td>
-                                    <select className='form-select tamanhoModalidade' value={item.modality} onChange={e => { handleEdit(item.id, 'modality', e.target.value); }}>
+                                    <select className='form-select custom-select tamanhoModalidadenovo' value={item.modality} onChange={e => { handleEdit(item.id, 'modality', e.target.value); }}>
                                         <option value="Convencional">Convencional</option>
                                         <option value="HA">Horos. Azul</option>
                                         <option value="HV">Horos. Verde</option>

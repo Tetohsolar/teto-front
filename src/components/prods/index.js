@@ -2,14 +2,16 @@ import React from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 import MyModal from '../communs/ModalDelete';
+import '../prods/products-table.scss';
+
 
 const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, handleAfterDel, marcas, produtos, onBlurType, onBlurBrand, carregaPotencia }) => {
     return (
 
-        <table className="table caption-top table-sm">
+        <table className="table caption-top table-sm table-products">
             <thead>
                 <tr>
-                    <th scope="col">Tipo</th>
+                    <th scope="col" className='column_tipo'>Tipo</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
                     <th scope="col">Potência</th>
@@ -23,7 +25,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                     return (
                         <tr key={item.id}>
                             <td>
-                                <select className='form-select tamanhoModalidade' onBlur={(event) => { onBlurType(item) }} onKeyUp={(e) => {
+                                <select className='form-select custom-select tamanhoModalidadenovo' onBlur={(event) => { onBlurType(item) }} onKeyUp={(e) => {
                                     onBlurType(item)
                                 }} value={item.type} onChange={e => { handleEdit(item.id, 'type', e.target.value); }}>
                                     <option value="">Selecione</option>
@@ -33,7 +35,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                 </select>
                             </td>
                             <td>
-                                <select className="form-select tamanhoModalidade" id="inputGrupo" onBlur={() => { onBlurBrand(item) }} value={item.brand}
+                                <select className="form-select custom-select tamanhoModalidadenovo" id="inputGrupo" onBlur={() => { onBlurBrand(item) }} value={item.brand}
                                     onChange={(e) => { handleEdit(item.id, 'brand', e.target.value) }} >
                                     <option value="">Selecione</option>
                                     {item.brands ? item.brands.map((opcao, indice) => (
@@ -44,7 +46,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                 </select>
                             </td>
                             <td>
-                                <select className="form-select tamanhoModalidade" id="inputGrupo" value={item.model} onChange={(e) => { handleEdit(item.id, 'model', e.target.value) }} onBlur={
+                                <select className="form-select custom-select tamanhoModel" id="inputGrupo" value={item.model} onChange={(e) => { handleEdit(item.id, 'model', e.target.value) }} onBlur={
                                     () => {
                                         carregaPotencia(item)
                                     }

@@ -107,31 +107,31 @@ const ProfileForm = (props) => {
       <form className="row g-3" onSubmit={handleSaveUser}>
         <div className="col-md-7">
           <label htmlFor="inputFirstName" className="form-label">
-            Nome
+            Nome*
           </label>
           <input type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
         <div className="col-md-5">
           <label htmlFor="inputEmail" className="form-label">
-            Email
+            Email*
           </label>
           <input type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="col-md-7">
           <label htmlFor="inputPassword4" className="form-label">
-            Senha
+            Senha*
           </label>
           <input type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="col-md-5">
           <label htmlFor="inputPassword4" className="form-label">
-            Confirmar senha
+            Confirmar senha*
           </label>
           <input type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
         <div className="col-4">
           <label htmlFor="inputPhoneNumber" className="form-label">
-            Telefone
+            Telefone*
           </label>
           <InputMask
             className="form-control" id="inputPhoneNumber"
@@ -142,7 +142,7 @@ const ProfileForm = (props) => {
         </div>
         <div className="col-md-4">
           <label htmlFor="inputUserType" className="form-label">
-            Tipo de usuário
+            Tipo de usuário*
           </label>
           <select name="pets" id="input-user-type" className="form-select" readonly value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="">Selecionar...</option>

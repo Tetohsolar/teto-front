@@ -26,7 +26,7 @@ const meses = [
 ];
 const Home = () => {
   const { sidebarWrapper } = useContext(SidebarWrapperContext);
-  const { token, AffiliatedId, profilelogged, idLogged } = useContext(AuthContext)
+  const { token, afflitedId, profilelogged, idLogged } = useContext(AuthContext)
   const [data, setData] = useState([{ name: 'joel', amt: 18 }])
   const [dataGraph, setDataGraph] = useState([{ name: 'mar', amt: 0 }])
   const [total, setTotal] = useState(0.0)
@@ -45,7 +45,7 @@ const Home = () => {
 
     let filtro = {
       situation: situacao,
-      AffiliatedId: AffiliatedId,
+      AffiliatedId: afflitedId,
       UserId: idLogged,
       Opercao: Opercao
     }
@@ -53,7 +53,7 @@ const Home = () => {
     if (profilelogged === "Admin") {
       filtro = {
         situation: situacao,
-        AffiliatedId: AffiliatedId,
+        AffiliatedId: afflitedId,
         Opercao: Opercao
       }
     }
@@ -65,7 +65,7 @@ const Home = () => {
 
       }
     }
-
+    console.log(filtro)
     await api.post('business/lastMonth', filtro,
       {
         headers: {
@@ -125,13 +125,13 @@ const Home = () => {
     ];
 
     let filtro = {
-      AffiliatedId: AffiliatedId,
+      AffiliatedId: afflitedId,
       UserId: idLogged,
     }
 
     if (profilelogged === "Admin") {
       filtro = {
-        AffiliatedId: AffiliatedId,
+        AffiliatedId: afflitedId,
       }
     }
 
@@ -140,7 +140,6 @@ const Home = () => {
 
       }
     }
-
 
 
     await api.post('business/lastsix', filtro,

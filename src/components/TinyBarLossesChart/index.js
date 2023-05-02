@@ -58,7 +58,7 @@ const data = [
 
 export default function TinyBarLossesChart(props) {
 
-  const { token, AffiliatedId, profilelogged, idLogged } = useContext(AuthContext)
+  const { token, afflitedId, profilelogged, idLogged } = useContext(AuthContext)
   const [data, setData] = useState([{ name: 'joel', amt: 18 }])
   useEffect(() => {
     getData();
@@ -77,14 +77,14 @@ export default function TinyBarLossesChart(props) {
 
     let filtro = {
       situation: "Perdas",
-      AffiliatedId: AffiliatedId,
+      AffiliatedId: afflitedId,
       UserId: idLogged
     }
 
     if (profilelogged == "Admin") {
       filtro = {
         situation: "Perdas",
-        AffiliatedId: AffiliatedId
+        AffiliatedId: afflitedId
       }
     }
 
