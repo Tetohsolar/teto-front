@@ -269,44 +269,37 @@ const ProductForm = (props) => {
 
 
         </div>
-        <div className="col-md-3">
-          <TextField id="inputGarantia" maxLength={50} className="form-control" label="Garantia" variant="outlined" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)}/>
+        <div className="col-md-6">
+          <TextField id="inputGarantia" maxLength={50} className="form-control" label="Garantia" variant="outlined" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)} />
         </div>
 
-        <div className="col-md-4">
-          
-         <DecimalMaskedTextField  className='number' label="Preço" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
-     
+        <div className="col-md-2">
+
+          <DecimalMaskedTextField className='number' label="Preço" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
+
         </div>
-        <div className="col-md-3">
-          <label htmlFor="inputNumero" className="form-label" id='lbNumero'>
-            Potência
-          </label>
-          <input type="number" maxLength={5} className="form-control number" id="inputPotencia" value={pot} onChange={(e) => setPotencia(e.target.value)} />
+        <div className="col-md-2">
+
+          <DecimalMaskedTextField className='number' label="Potência" variant="outlined" value={pot || ''} onChange={(e) => setPotencia(e.target.value)}> </DecimalMaskedTextField>
         </div>
-        <div className="col-md-4">
-          <label htmlFor="inputPeso" className="form-label">
-            Peso (Kg)
-          </label>
-          <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," className="form-control number" value={peso || ''} onChange={(e) => setPeso(e.target.value)} />
+        <div className="col-md-2">
+
+          <DecimalMaskedTextField className='number' label="Peso (kg)" variant="outlined" value={peso || ''} onChange={(e) => setPeso(e.target.value)}> </DecimalMaskedTextField>
+
         </div>
-        <div className="col-md-4">
-          <label htmlFor="inputDimensao" className="form-label">
-            Dimensão
-          </label>
-          <input type="dimensao" className="form-control" id="inputDimensao" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)} />
+        <div className="col-md-5">
+        <FormControl fullWidth>
+          <TextField maxLength={300} label="Dimensão" variant="outlined" value={dimensao || ''} onChange={(e) => setDimensao(e.target.value)}> </TextField>
+        </FormControl>
         </div>
         <div className="col-md-11">
-          <label htmlFor="inputDescricaoTec" className="form-label">
-            Descrição Técnica
-          </label>
-          <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoTec" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
+
+          <TextField id="inputGarantia" maxLength={50} className="form-control" label="Descrição Técnica" variant="outlined" value={descricaoTec || ''} onChange={(e) => setDescricaoTec(e.target.value)} />
+
         </div>
         <div className="col-md-11">
-          <label htmlFor="inputDescricaoAmigavel" className="form-label">
-            Descrição Amigável
-          </label>
-          <textarea type="text" maxLength={200} className="form-control" id="inputDescricaoAmigavel" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
+
+          <TextField id="inputGarantia" maxLength={50} className="form-control" label="Descrição Amigável" variant="outlined" value={descricaoAmigavel || ''} onChange={(e) => setDescricaoAmigavel(e.target.value)} />
         </div>
         <div className="d-grid gap-2 d-md-block col-12">
           <div className="customerCliente">
