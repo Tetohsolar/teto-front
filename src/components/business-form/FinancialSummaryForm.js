@@ -1,26 +1,9 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Typography,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Typography } from "@mui/material";
 
 export default function FinancialSummaryForm() {
-  const [tipo, setTipo] = React.useState("");
-
-  const handleChange = (event) => {
-    setTipo(event.target.value);
-  };
-
-  const personType = ["Física", "Jurídica"];
-
   return (
     <React.Fragment>
       <box>

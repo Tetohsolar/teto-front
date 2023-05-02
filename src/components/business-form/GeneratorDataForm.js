@@ -13,13 +13,13 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function GeneratorDataForm() {
-  const [tipo, setTipo] = React.useState("");
+  const [item, setItem] = React.useState("");
 
   const handleChange = (event) => {
-    setTipo(event.target.value);
+    setItem(event.target.value);
   };
 
-  const personType = ["Física", "Jurídica"];
+  const list = ["Item 1", "Item 2"];
 
   return (
     <React.Fragment>
@@ -70,12 +70,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -85,12 +85,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -100,12 +100,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -133,12 +133,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -148,12 +148,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -163,12 +163,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -179,12 +179,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -194,12 +194,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -209,12 +209,12 @@ export default function GeneratorDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-titem"
+                value={item}
                 label="Estado"
                 onChange={handleChange}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -243,12 +243,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -258,12 +258,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -273,12 +273,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -289,12 +289,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -304,12 +304,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -319,12 +319,12 @@ export default function GeneratorDataForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-titem"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>

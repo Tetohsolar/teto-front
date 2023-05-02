@@ -12,14 +12,14 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function SystemTypeForm() {
-  const [tipo, setTipo] = React.useState("");
+export default function SystemItemForm() {
+  const [item, setItem] = React.useState("");
 
   const handleChange = (event) => {
-    setTipo(event.target.value);
+    setItem(event.target.value);
   };
 
-  const personType = ["Física", "Jurídica"];
+  const list = ["Item 1", "Item 2"];
 
   return (
     <React.Fragment>
@@ -33,12 +33,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -48,12 +48,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -63,12 +63,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -79,12 +79,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -94,12 +94,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -109,12 +109,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -139,12 +139,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -154,12 +154,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -169,12 +169,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -185,12 +185,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -200,12 +200,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
@@ -215,12 +215,12 @@ export default function SystemTypeForm() {
               <FormControl fullWidth size="small">
                 <InputLabel>Estado</InputLabel>
                 <Select
-                  id="demo-simple-select-type"
-                  value={tipo}
+                  id="demo-simple-select-item"
+                  value={item}
                   label="Estado"
                   onChange={handleChange}
                 >
-                  {personType.map((item) => (
+                  {list.map((item) => (
                     <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>

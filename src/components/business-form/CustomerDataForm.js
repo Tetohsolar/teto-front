@@ -4,13 +4,21 @@ import TextField from "@mui/material/TextField";
 import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 export default function CustomerDataForm() {
-  const [tipo, setTipo] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [item, setItem] = React.useState("");
+
 
   const handleChange = (event) => {
-    setTipo(event.target.value);
+    setType(event.target.value);
   };
 
   const personType = ["Física", "Jurídica"];
+
+  const handleChangeItem = (event) => {
+    setItem(event.target.value);
+  };
+
+  const list = ["Item 1", "Item 2"];
 
   return (
     <React.Fragment>
@@ -21,11 +29,11 @@ export default function CustomerDataForm() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth size="small">
-              <InputLabel>Tipo</InputLabel>
+              <InputLabel>Type</InputLabel>
               <Select
                 id="demo-simple-select"
-                value={tipo}
-                label="Tipo"
+                value={type}
+                label="Type"
                 onChange={handleChange}
               >
                 {personType.map((item) => (
@@ -82,12 +90,12 @@ export default function CustomerDataForm() {
             <FormControl fullWidth size="small">
               <InputLabel>Estado</InputLabel>
               <Select
-                id="demo-simple-select-type"
-                value={tipo}
+                id="demo-simple-select-item"
+                value={item}
                 label="Estado"
-                onChange={handleChange}
+                onChange={handleChangeItem}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
@@ -98,11 +106,11 @@ export default function CustomerDataForm() {
               <InputLabel>Cidade</InputLabel>
               <Select
                 id="demo-simple-select-city"
-                value={tipo}
+                value={item}
                 label="Cidade"
-                onChange={handleChange}
+                onChange={handleChangeItem}
               >
-                {personType.map((item) => (
+                {list.map((item) => (
                   <MenuItem value={item}>{item}</MenuItem>
                 ))}
               </Select>
