@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../pagination/Pagination';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
-import {VscSearch } from "react-icons/vsc";
+import { VscSearch } from "react-icons/vsc";
 let PageSize = 5;
 
 
@@ -41,7 +41,7 @@ const AfflitedDataTable = (props) => {
 
     }
 
-    const {  } = data;
+    const { } = data;
 
     api.post('/afflited/byparam', filtro, {
       headers: {
@@ -115,8 +115,9 @@ const AfflitedDataTable = (props) => {
       })
   }
   function afterSubmit(e) {
-    list(name)
     e.preventDefault()
+    list(name)
+    
   }
 
 
@@ -124,11 +125,11 @@ const AfflitedDataTable = (props) => {
     <form onSubmit={afterSubmit}>
 
       <div className="p-3 mb-3 bg-white border rounded-3">
-        
+
         <div className='afflitedsfilter'>
           <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
-            <Link to={"/affliteds/new"} className="btn btn-primary text-light "><AiFillPlusSquare /> Novo Afiliado</Link>
-          </div>
+          <Link to={"/affliteds/new"} className="btn btn-primary text-light "><AiFillPlusSquare /> Novo Afiliado</Link>
+        </div>
         <hr className='my-4' />
         <div className="input-group mb-3 search-w">
           <input type="text" className="form-control" placeholder="Buscar Afiliado"
@@ -136,17 +137,17 @@ const AfflitedDataTable = (props) => {
             onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
           <div className='btn-create'>
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={afterSubmit}>
-            <VscSearch/>
+              <VscSearch />
             </button>
           </div>
         </div>
         <div>
           <div className='table-responsive'>
-            
+
             <table className="table">
-              
+
               <tbody>
-              
+
 
                 <tr>
 
@@ -158,12 +159,18 @@ const AfflitedDataTable = (props) => {
                   <th>
                     Telefone
                   </th>
-                 <th>
 
-                 </th>
+                  <th>
+
+                  </th>
+                  <th>
+                    
+                  </th>
+
+
                 </tr>
-                
-                
+
+
 
                 {objs.map((user) => {
                   return (
@@ -194,16 +201,16 @@ const AfflitedDataTable = (props) => {
             </table>
 
 
-            <div className ='pagidireita'>
-            <Pagination 
-              className="pagination-bar"
-              currentPage={currentPage}
-              totalCount={totalPages}
-              pageSize={PageSize}
-              onPageChange={data => onPageChanged(data)}
-            />
+            <div className='pagidireita'>
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={totalPages}
+                pageSize={PageSize}
+                onPageChange={data => onPageChanged(data)}
+              />
             </div>
-          </div> 
+          </div>
         </div>
 
       </div>
