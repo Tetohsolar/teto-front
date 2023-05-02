@@ -995,7 +995,7 @@ const BusinessForm = (props) => {
 
   return (
 
-    <div className="p-3 mb-3 bg-white border rounded-3">
+    <div className="p-3 mb-3 bg-white border-0 rounded-3">
       <ToastContainer />
 
       <form className="row g-3" onSubmit={handleChangePage}>
