@@ -54,7 +54,7 @@ export default function Checkout() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <h2>Salvo</h2>
+          <h3>Configurar direcionamento de página ao salvar</h3>
         </React.Fragment>
       ) : (
         <React.Fragment>

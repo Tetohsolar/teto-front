@@ -125,7 +125,7 @@ export default function GeneratorDataForm() {
       </box>
 
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
           Informações da geradora
         </Typography>
         <Grid container spacing={3}>
@@ -234,7 +234,7 @@ export default function GeneratorDataForm() {
       </box>
 
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
           Rateios
         </Typography>
         <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 } }}>
@@ -356,7 +356,7 @@ export default function GeneratorDataForm() {
       </box>
 
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
           Informações complementares
         </Typography>
         <Grid container spacing={3}>

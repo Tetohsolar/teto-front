@@ -174,7 +174,7 @@ export default function FinancialSummaryForm() {
       </box>
 
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
           Informações principais
         </Typography>
         <Grid container spacing={3}>
@@ -239,7 +239,7 @@ export default function FinancialSummaryForm() {
       </box>
 
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
           Informações principais
         </Typography>
         <Grid container spacing={3}>

@@ -24,7 +24,7 @@ export default function SystemTypeForm() {
   return (
     <React.Fragment>
       <box>
-        <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        <Typography variant="h6" gutterBottom>
           Rateios
         </Typography>
         <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 }}}>
