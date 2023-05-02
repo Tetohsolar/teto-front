@@ -16,6 +16,7 @@ import { NumericFormat } from 'react-number-format';
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 import TabelaProdutoEditavel from '../prods';
 import TabelaRateioBusiness from '../rateio-table';
+import Checkout from './Checkout';
 
 function PhoneInput(props) {
   return (
@@ -998,6 +999,10 @@ const BusinessForm = (props) => {
     <div className="p-3 mb-3 bg-white border-0 rounded-3">
       <ToastContainer />
 
+      {/* MUI STEP-BY-STEP */}
+      <Checkout />
+      {/* END MUI STEP-BY-STEP */}
+    
       <form className="row g-3" onSubmit={handleChangePage}>
 
         <Tabs >
