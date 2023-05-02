@@ -409,15 +409,7 @@ const AfflitedForm = (props) => {
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,
-          email, id, idAdd, kitM,
-          complementCostM,
-          projectCostM,
-          taxM,
-          assemblyCostM, kitI,
-          complementCostI,
-          projectCostI,
-          taxI,
-          assemblyCostI, num, profit, lost, commission)
+          email, id, idAdd, num, profit, lost, commission)
 
         navigate(-1);
         toast.success("Operação realizada com sucesso!", {
