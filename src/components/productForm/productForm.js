@@ -273,7 +273,7 @@ const ProductForm = (props) => {
           <TextField id="inputGarantia" maxLength={50} className="form-control" label="Garantia" variant="outlined" value={garantia || ''} onChange={(e) => setGarantia(e.target.value)}/>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-4">
           
          <DecimalMaskedTextField  className='number' label="Preço" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
      
