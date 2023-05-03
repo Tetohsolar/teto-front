@@ -9,7 +9,7 @@ import Pagination from '../pagination/Pagination';
 import { VscSearch } from "react-icons/vsc";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
-
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 //PAGINATION
 let PageSize = 5;
 
@@ -153,9 +153,9 @@ const CustomerDataTable = (props) => {
         <hr className='my-4' />
         <div className='bt-cima'>
           <div className="input-group mb-5 search-w">
-            <input type="text" className="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="button-addon2"
-              onChange={(e) => setName(e.target.value)}
-              onKeyUp={(e) => { listaUsers(name) }} />
+            
+          <TextField id="name" maxLength={50} className="form-control" label="Buscar" variant="outlined" value={name || ''} 
+          onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { listaUsers(name) }} />
 
               <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
               <VscSearch />

@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import InputMask from 'react-input-mask';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import MaskedTextField from '../communs/MaskedTextField';
 
 const EditProfileForm = (props) => {
   const { token, } = useContext(AuthContext)
@@ -93,52 +95,50 @@ const EditProfileForm = (props) => {
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
       <form className="row g-3" onSubmit={handleUpdateUser}>
-        <div className="col-md-7">
-          <label htmlFor="inputFirstName" className="form-label">
-            Nome
-          </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+        <div className="col-md-6">
+          <TextField id="inputFirstName" maxLength={50} className="form-control" label="Nome" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
         <div className="col-md-5">
-          <label htmlFor="inputEmail" className="form-label">
-            Email
-          </label>
-          <input type="email" className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          
+          <TextField id="inputEmail" maxLength={50} className="form-control" label="Email*" variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="col-4">
-          <label htmlFor="inputPhoneNumber" className="form-label">
-            Telefone
-          </label>
-          <InputMask
-            className="form-control" id="inputPhoneNumber"
-            onChange={(e) => setPhone(e.target.value)}
-            mask='(99)9999-99999'
-            value={phone || ''}>
-          </InputMask>
+        <div className="col-2">
+        <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
         </div>
         <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Tipo de usuário
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="">Selecionar...</option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-            {
-              profilelogged === 'Root' ? <option value="Root">Root</option> : ''
-            }
+        <FormControl fullWidth>
+                <InputLabel id="inputUserType">tipo de usuário*</InputLabel>
+                <Select
+                  labelId="input-user-type"
+                  id="input-user-type"
+                  value={tipo}
+                  label="Tipo de usuário"
+                  onChange={(e) => setTipo(e.target.value)}
+                >
+                  <MenuItem value={'Admin'}>Admin</MenuItem>
+                  <MenuItem value={'User'}>User</MenuItem>
+                  {
+                  profilelogged === 'Root' ? <MenuItem value={'Root'}>Root</MenuItem> : ''
+                  }
 
-          </select>
+
+                </Select>
+              </FormControl>
         </div>
         <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Situação
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
-            <option value="">Selecionar...</option>
-            <option value="S">Habilitado</option>
-            <option value="N">Desabilitado</option>
-          </select>
+        <FormControl fullWidth>
+                <InputLabel id="input-user-type">Situação do usuário</InputLabel>
+                <Select
+                  labelId="input-user-type"
+                  id="input-user-type"
+                  value={habilitar}
+                  label="Situação do usuário"
+                  onChange={(e) => setHabilitar(e.target.value)}
+                >
+                  <MenuItem value={'S'}>Habilitado</MenuItem>
+                  <MenuItem value={'N'}>Desabilitado</MenuItem>
+                </Select>
+              </FormControl>
         </div>
         {
           profilelogged === 'Root' ?
