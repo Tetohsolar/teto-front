@@ -389,71 +389,61 @@ const ClientForm = (props) => {
             </FormControl>
 
           </div>
-          <div className="col-md-4">
-            <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia} variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
-          </div>
+          <div className="col-md-2 doc"  >
 
-          <div className="col-md-2"  >
-            <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
-          </div>
-          <div className="col-md-3">
-            <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
-          </div>
+                <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
+              </div>
+              <div className={tipoPessoa==="F"?"nome":"nomej"}>
+                <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
+                  variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="col-md-4 razaoSocial" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
+                <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
+              </div>
+              <div className="col-md-2 fone">
+                <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
+              </div>
+              <div className="col-md-2 zap">
+                <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
+              </div>
+              <div className={tipoPessoa==="J"?"cepj":"cep"}>
+                <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
+              </div>
+              <div className='col-md-2 estado'>
+                <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
+              </div>
+              <div className='col-md-2 estado'>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={cidade}
+                    label="inputMarca"
+                    onChange={(e) => setCidade(e.target.value)}
+                  >
+                    {cidades != null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
 
-          <div className="col-md-2">
-            <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
-          </div>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className={tipoPessoa==="F"?"rua":"ruaj"}  >
+                <TextField id="Rua" maxLength={50} className="form-control" label='Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
+              </div>
+              <div className="col-md-4 bairro"  >
+                <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
+              </div>
+              <div className="col-md-2 estado">
+                <MaskedTextField type="number" label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
+              </div>
+              <div className={tipoPessoa==="J"?"emailj":"email"}  >
+                <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="col-md-4 adicionais"  >
 
-          <div className="col-md-2">
-            <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
-          </div>
-
-          <div className="col-md-2">
-            <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
-          </div>
-
-          <div className="col-md-3">
-            <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
-          </div>
-          <div className='col-md-3'>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={cidade}
-                label="inputMarca"
-                onChange={(e) => setCidade(e.target.value)}
-              >
-                {cidades != null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
-
-              </Select>
-
-            </FormControl>
-
-          </div>
-
-          <div className="col-md-3">
-
-            <TextField id="Rua" maxLength={50} className="form-control" label='Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
-
-          </div>
-
-          <div className="col-md-3">
-            <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
-          </div>
-
-          <div className="col-md-2">
-            <MaskedTextField label={"Número"} mask={'99999-999'} variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
-          </div>
-
-          <div className="col-md-4"  >
-            <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div className="col-md-9"  >
-            <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
-          </div>
-        </div>
+                <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+              </div>
+            </div>  
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit">
             Salvar
