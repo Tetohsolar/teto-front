@@ -16,6 +16,8 @@ import TabelaComposePrice from '../comoseprices-table';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import MaskedTextField from '../communs/MaskedTextField';
 import UFTextField from '../communs/UFTextField';
+import NumberFormatCustom from '../communs/DecimalMaskedTextField';
+import { NumberFormatBase, NumericFormat } from 'react-number-format';
 
 function PhoneInput(props) {
   return (
@@ -78,14 +80,23 @@ const AfflitedForm = (props) => {
   const [maskDOC, setMaskDOC] = useState('999.999.999-99')
   const [idRateio, setIdRateio] = useState(1)
   const [idSelected, setIdSelected] = useState()
-  const [lost, setPerca] = useState('')
+  const [perca, setPerca] = useState('')
   const [profit, setLucro] = useState('')
   const [commission, setComissao] = useState('')
   const { token } = useContext(AuthContext)
   const handleInput = ({ target: { value } }) => setPhone(value);
   const handleInputZap = ({ target: { value } }) => setZap(value);
   const handleInputCep = ({ target: { value } }) => setCepData(value);
+  const [values, setValues] = useState({
+    numberformat: '',
+  });
 
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
   const [dados, setDados] = useState([
     {
       idInt: 1, name: "", value: '0', type: 'P'
@@ -155,8 +166,11 @@ const AfflitedForm = (props) => {
         setZap(response.data.zap)
         setCepData(response.data.Addresses[0].postcode)
         setEstado(response.data.Addresses[0].state)
-        handleEstadoValue(response.data.Addresses[0].state)
-        setCidade(response.data.Addresses[0].city)
+        handleEstadoValue(response.data.Addresses[0].state, response.data.Addresses[0].city)
+        if (cidades.length<0){
+
+        }
+       // setCidade(response.data.Addresses[0].city)
         setRua(response.data.Addresses[0].street)
         setBairro(response.data.Addresses[0].neighborhood)
         setIdAdd(response.data.Addresses[0].id)
@@ -281,7 +295,7 @@ const AfflitedForm = (props) => {
 
   }
 
-  async function handleEstadoValue(value) {
+  async function handleEstadoValue(value, cidade) {
 
     const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + value + "/municipios";
 
@@ -292,12 +306,15 @@ const AfflitedForm = (props) => {
       }),
     };
 
-    fetch(url, requestInfo)
+    await fetch(url, requestInfo)
       .then(resposta => resposta.json())
       .then((json) => setCidades(json))
       .catch((error) => console.log(error));
 
     setEstado(value)
+    if(cidade){
+    setCidade(cidade)
+    }
   }
 
   async function handleEstado(e) {
@@ -350,7 +367,7 @@ const AfflitedForm = (props) => {
       ],
       Prices: dados
     }
-
+    
     if (id) {
       await api.patch('/afflited/update/' + id, json
         , {
@@ -396,7 +413,7 @@ const AfflitedForm = (props) => {
       try {
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData,
           estado, cidade, rua, bairro, informacoesAdicionais,
-          email, id, idAdd, num, profit, lost, commission)
+          email, id, idAdd, num, profit, perca, commission,dados)
 
         navigate(-1);
         toast.success("Operação realizada com sucesso!", {
@@ -488,7 +505,7 @@ const AfflitedForm = (props) => {
                 <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
               </div>
               <div className="col-md-2 estado">
-                <MaskedTextField type="number" label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
+                <TextField type="number" label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></TextField>
               </div>
               <div className={tipoPessoa==="J"?"emailj":"email"}  >
                 <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
@@ -515,19 +532,13 @@ const AfflitedForm = (props) => {
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
               <div className="col-md-2"  >
-
-                <MaskedTextField label={"Perca (%)"}  variant="outlined" value={lost} onChange={(e) => setPerca(e.target.value)} ></MaskedTextField>
-
+                <NumberFormatCustom label={"Perca(%)"}  decimal={2} value={perca} onChange={(e) => setPerca(e.target.value)} ></NumberFormatCustom>
               </div>
               <div className="col-md-2"  >
-
-                <MaskedTextField label={"Lucro (%)"}  variant="outlined" value={profit} onChange={(e) => setLucro(e.target.value)} ></MaskedTextField>
-
+                <NumberFormatCustom label={"Lucro (%)"}  variant="outlined" decimal={2} value={profit} onChange={(e) => setLucro(e.target.value)} ></NumberFormatCustom>
               </div>
               <div className="col-md-3"  >
-
-                <MaskedTextField label={"Comissão padrão (%)"}  variant="outlined" value={commission} onChange={(e) => setComissao(e.target.value)} ></MaskedTextField>
-
+                <NumberFormatCustom label={"Comissão padrão (%)"}  variant="outlined" decimal={2} value={commission} onChange={(e) => setComissao(e.target.value)} ></NumberFormatCustom>
               </div>
             </div>
           </TabPanel>
