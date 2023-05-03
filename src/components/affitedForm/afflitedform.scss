@@ -85,6 +85,16 @@
     width: 630px;
 }
 
-_:-ms-lang(x), .rua {
-    width: 200px;
-}
+/* Estilos para dispositivos com largura de tela menor que 768px */
+@media screen and (max-width: 767px) {
+    .tipopessoa {
+      width: 100%;
+    }
+    
+    .doc {
+        width: 100%;
+      }
+    .fone, .zap, .cep, .estado{
+        width: 100%;
+      }
+  }

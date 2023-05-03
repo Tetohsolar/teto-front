@@ -424,7 +424,7 @@ const AfflitedForm = (props) => {
           </TabList>
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
-              <div className='col-md-2'>
+              <div className='col-md-2 tipopessoa'>
 
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Tipo Pessoa</InputLabel>
@@ -443,10 +443,9 @@ const AfflitedForm = (props) => {
                 </FormControl>
               </div>
               
-              <div className="col-md-2"  >
+              <div className="col-md-2 doc"  >
 
                 <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
-
               </div>
               <div className={tipoPessoa==="F"?"nome":"nomej"}>
                 <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
@@ -455,19 +454,19 @@ const AfflitedForm = (props) => {
               <div className="col-md-4 razaoSocial" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 fone">
                 <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 zap">
                 <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
               </div>
               <div className={tipoPessoa==="J"?"cepj":"cep"}>
                 <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
               </div>
-              <div className='col-md-2'>
+              <div className='col-md-2 estado'>
                 <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
               </div>
-              <div className='col-md-2'>
+              <div className='col-md-2 estado'>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Cidade</InputLabel>
                   <Select
@@ -480,7 +479,6 @@ const AfflitedForm = (props) => {
                     {cidades != null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
 
                   </Select>
-
                 </FormControl>
               </div>
               <div className={tipoPessoa==="F"?"rua":"ruaj"}  >
@@ -489,8 +487,8 @@ const AfflitedForm = (props) => {
               <div className="col-md-4 bairro"  >
                 <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
               </div>
-              <div className="col-md-2">
-                <TextField label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></TextField>
+              <div className="col-md-2 estado">
+                <MaskedTextField type="number" label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
               </div>
               <div className={tipoPessoa==="J"?"emailj":"email"}  >
                 <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
