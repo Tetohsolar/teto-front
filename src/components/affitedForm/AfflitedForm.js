@@ -440,14 +440,15 @@ const AfflitedForm = (props) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col-md-6">
-                <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
-                  variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
-              </div>
+              
               <div className="col-md-2"  >
 
                 <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
 
+              </div>
+              <div className="col-md-6">
+                <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
+                  variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="col-md-3" id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
                 <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
@@ -461,7 +462,7 @@ const AfflitedForm = (props) => {
               <div className='col-md-2'>
                 <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
               </div>
-              <div className='col-md-2'>
+              <div className='col-md-3'>
                 <UFTextField variant="outlined" value={estado} onChange={handleEstado} ></UFTextField>
               </div>
               <div className='col-md-2'>
@@ -480,13 +481,13 @@ const AfflitedForm = (props) => {
 
                 </FormControl>
               </div>
-              <div className="col-md-6"  >
+              <div className="col-md-8"  >
                 <TextField id="Rua" maxLength={50} className="form-control" label='Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
               </div>
-              <div className="col-md-3"  >
+              <div className="col-md-4"  >
                 <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
               </div>
-              <div className="col-md-1">
+              <div className="col-md-2">
                 <MaskedTextField label={"Número"} mask={'99999-999'} variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
               </div>
               <div className="col-md-3"  >
