@@ -8,6 +8,7 @@ import Pagination from '../pagination/Pagination';
 import { VscNewFile, VscSearch } from 'react-icons/vsc';
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
+import { TextField } from '@mui/material';
 let PageSize = 5;
 
 const DataTable = (props) => {
@@ -160,13 +161,10 @@ const DataTable = (props) => {
         <hr className='my-4' />
         <div className="input-group mb-3 search-w">
 
-          <input type="text" className="form-control"
+        <TextField id="name" maxLength={50} className="form-control" label="Buscar" variant="outlined" value={userFind || ''} 
+        onChange={(e) => setUserFind(e.target.value)} onKeyUp={(e) => { listaUsers() }} />
 
-            onChange={(e) => setUserFind(e.target.value)}
-            onKeyUp={(e) => { listaUsers() }}
-
-            placeholder="Buscar..." aria-label="Recipient's username"
-            aria-describedby="button-addon2" />
+          
           <div className='btn-create'>
             <button className="btn btn-primary text-light d-flex align-items-center" onClick={(e) => { handleSearchUser(e) }}> <VscSearch /></button>
           </div>

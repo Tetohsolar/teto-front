@@ -386,8 +386,7 @@ const ClientForm = (props) => {
 
       <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
               <div className='col-md-3'>
-                
-
+         
               <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Tipo Pessoa</InputLabel>
             <Select
