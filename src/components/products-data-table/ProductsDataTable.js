@@ -25,6 +25,7 @@ const ProductsDataTable = (props) => {
   const [category, setCategory] = useState([])
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
+  const [brands, setBrands]= useState([])
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const currentTableData = useMemo(() => {
@@ -32,6 +33,54 @@ const ProductsDataTable = (props) => {
     const lastPageIndex = firstPageIndex + PageSize;
     return products;
   }, [currentPage, products]);
+
+  const [listCategory, setListCategory] = useState([])
+
+  async function loadCategorys(type) {
+    try {
+
+      await api.get('/typesystem/all', {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }).then((response) => {
+        setListCategory(response.data.types)}).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+
+  async function loadBrands(type) {
+    try {
+
+      const filtro = {
+        "type": '%'
+      }
+      await api.post('/brands/all', filtro,{
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }).then((response) => {
+        console.log(response.data.brand)
+        setBrands(response.data.brand)
+
+      }).catch((error) => {
+        toast.error(error.response.data.message)
+      });
+
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
+
+
 
   function onPageChanged(data) {
     const filtro = {
@@ -60,6 +109,9 @@ const ProductsDataTable = (props) => {
     navigate("/products/edit/" + id)
   }
   useEffect(() => {
+
+    loadCategorys()
+    loadBrands()
 
     list("%");
 
@@ -146,18 +198,33 @@ const ProductsDataTable = (props) => {
                   value={category}
                   label="Categoria"
                   onChange={(e) => setCategory(e.target.value)}
-                  onClick={find}
+                  onBlur={(e)=>find() }
                 >
-                  <MenuItem value={'Placa'}>Placa</MenuItem>
-                  <MenuItem value={'Inversor'}>Inversor</MenuItem>
-                  <MenuItem value={'Microinversor'}>Microinversor</MenuItem>
+                  <MenuItem value="" >...</MenuItem>
+                  {listCategory ? listCategory.map((option) => (<MenuItem key={option.id} value={option.id} >{option.name}</MenuItem>)) : ""}
+
                 </Select>
               </FormControl>
             </div>
 
-           
             <div className="col-md-3">
-              <input type="text" className="form-control" placeholder="Marca" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setBrand(e.target.value)} onKeyUp={(e) => { list(name) }} />
+
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Marca</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={brand}
+                  label="Marca"
+                  onChange={(e) => setBrand(e.target.value)
+                  }
+                  onBlur={(e)=>find()}
+                >
+                   <MenuItem value="" >...</MenuItem>
+                  {brands ? brands.map((option) => (<MenuItem key={option.id} value={option.name} >{option.name}</MenuItem>)) : ""}
+
+                </Select>
+              </FormControl>
             </div>
           </div>
           <div className='btn-create' id="btn-create">
@@ -168,6 +235,8 @@ const ProductsDataTable = (props) => {
         </div>
         <div>
           <div className='table-responsive'>
+            <br></br>
+            <br></br>
             <table className="table">
               <tbody>
                 <tr className='cab1'>
@@ -184,7 +253,7 @@ const ProductsDataTable = (props) => {
                   return (
                     <tr key={obj.id}>
                       <td>{obj.description}</td>
-                      <td>{obj.category}</td>
+                      <td>{obj.TypeSystem.name}</td>
                       <td>{obj.brand}</td>
                       <td>
                         <div className="d-flex gap-2 justify-content-end">
