@@ -95,17 +95,17 @@ const EditProfileForm = (props) => {
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
       <form className="row g-3" onSubmit={handleUpdateUser}>
-        <div className="col-md-6">
+        <div className="col-md-7">
           <TextField id="inputFirstName" maxLength={50} className="form-control" label="Nome" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
-        <div className="col-md-5">
+        <div className="col-md-4">
           
           <TextField id="inputEmail" maxLength={50} className="form-control" label="Email*" variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="col-2">
         <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-2">
         <FormControl fullWidth>
                 <InputLabel id="inputUserType">tipo de usuário*</InputLabel>
                 <Select
@@ -125,7 +125,7 @@ const EditProfileForm = (props) => {
                 </Select>
               </FormControl>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-2">
         <FormControl fullWidth>
                 <InputLabel id="input-user-type">Situação do usuário</InputLabel>
                 <Select
@@ -142,7 +142,7 @@ const EditProfileForm = (props) => {
         </div>
         {
           profilelogged === 'Root' ?
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label htmlFor="inputUserType" className="form-label">
                 Filiado
               </label>

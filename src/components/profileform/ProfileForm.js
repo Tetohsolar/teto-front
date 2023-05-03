@@ -168,7 +168,7 @@ const ProfileForm = (props) => {
         </div>
             <div className="col-md-3">
               <FormControl fullWidth>
-                <InputLabel id="input-user-type">Situação</InputLabel>
+                <InputLabel id="input-user-type">Filiado</InputLabel>
                 <Select
                   labelId="input-user-type"
                   id="input-user-type"
