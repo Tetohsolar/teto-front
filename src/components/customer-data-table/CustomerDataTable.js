@@ -19,12 +19,11 @@ const CustomerDataTable = (props) => {
   const [name, setName] = useState([])
   const [totalPages, setTotalPages] = useState([])
   const [idSelected, setIdSelected] = useState([])
-  const { token,  profilelogged,  afflitedId,idLogged } = useContext(AuthContext)
+  const { token, profilelogged, afflitedId, idLogged } = useContext(AuthContext)
   const navigate = useNavigate();
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -41,15 +40,15 @@ const CustomerDataTable = (props) => {
       pageSize: 5
     }
 
-    if (profilelogged !== "Root"){
+    if (profilelogged !== "Root") {
 
       filtro = {
         fantasy: name,
-      corporatename: "",
-      document: "",
-      page: data - 1,
-      pageSize: 5,
-        AffiliatedId:afflitedId
+        corporatename: "",
+        document: "",
+        page: data - 1,
+        pageSize: 5,
+        AffiliatedId: afflitedId
       }
     }
 
@@ -89,7 +88,7 @@ const CustomerDataTable = (props) => {
       pageSize: 5
     }
 
-    if (profilelogged !== "Root"){
+    if (profilelogged !== "Root") {
 
       filtro = {
         name: name,
@@ -97,13 +96,9 @@ const CustomerDataTable = (props) => {
         corporatename: "",
         document: "",
         pageSize: 5,
-        AffiliatedId:afflitedId
+        AffiliatedId: afflitedId
       }
     }
-
-    
-
-
     await api.post('/client/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -145,27 +140,24 @@ const CustomerDataTable = (props) => {
     <form onSubmit={handleMask}>
       <div className="p-3 mb-3 bg-white border rounded-3 container">
         <div className='containerCustom'>
-        <h5 className="card-content-title fw-semibold ">{props.listTitle}
-        </h5>
-        <Link to={"/customers/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Cliente </Link>
-        
+          <h5 className="card-content-title fw-semibold ">{props.listTitle}
+          </h5>
+          <Link to={"/customers/new"} className="btn btn-primary text-light"><AiFillPlusSquare /> Novo Cliente </Link>
+
         </div>
         <hr className='my-4' />
         <div className='bt-cima'>
           <div className="input-group mb-5 search-w">
-            
-          <TextField id="name" maxLength={50} className="form-control" label="Buscar" variant="outlined" value={name || ''} 
-          onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { listaUsers(name) }} />
 
-              <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
+            <TextField id="name" maxLength={50} className="form-control" label="Buscar" variant="outlined" value={name || ''}
+              onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { listaUsers(name) }} />
+
+            <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleMask}>
               <VscSearch />
 
             </button>
           </div>
-         
-           
-            
-          
+
         </div>
         <div>
           <div className='table-responsive'>
@@ -201,13 +193,13 @@ const CustomerDataTable = (props) => {
               </tbody>
             </table>
             <div className='paginationCustomer'>
-            <Pagination
-              className="pagination-bar"
-              currentPage={currentPage}
-              totalCount={totalPages}
-              pageSize={PageSize}
-              onPageChange={data => onPageChanged(data)}
-            />
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={totalPages}
+                pageSize={PageSize}
+                onPageChange={data => onPageChanged(data)}
+              />
             </div>
           </div>
         </div>

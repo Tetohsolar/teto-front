@@ -1,18 +1,16 @@
 import './customer-data-table.scss'
 import { Link, useNavigate } from 'react-router-dom';
-import Avatar from "boring-avatars";
 import { useEffect, useState, useContext, useMemo } from 'react';
 import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from '../communs/ModalDelete';
 import { toast } from 'react-toastify';
-
 import Pagination from '../pagination/Pagination';
 import { AiFillPlusSquare } from "react-icons/ai";
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { VscSearch } from "react-icons/vsc";
+import { TextField } from '@mui/material';
 let PageSize = 5;
-
 
 const AfflitedDataTable = (props) => {
 
@@ -20,25 +18,20 @@ const AfflitedDataTable = (props) => {
   const [name, setName] = useState([])
   const [totalPages, setTotalPages] = useState([])
   const [idSelected, setIdSelected] = useState([])
-
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
-
   const [currentPage, setCurrentPage] = useState(1);
-
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return objs;
   }, [currentPage, objs]);
 
-
   function onPageChanged(data) {
     const filtro = {
       name: name,
       page: data - 1,
       pageSize: 5
-
     }
 
     const { } = data;
@@ -64,11 +57,9 @@ const AfflitedDataTable = (props) => {
 
     const storageUser = localStorage.getItem('cliente')
 
-
     list("%");
 
     return () => { }
-
 
   }, [])
 
@@ -117,10 +108,8 @@ const AfflitedDataTable = (props) => {
   function afterSubmit(e) {
     e.preventDefault()
     list(name)
-    
+
   }
-
-
   return (
     <form onSubmit={afterSubmit}>
 
@@ -132,9 +121,9 @@ const AfflitedDataTable = (props) => {
         </div>
         <hr className='my-4' />
         <div className="input-group mb-3 search-w">
-          <input type="text" className="form-control" placeholder="Buscar Afiliado"
-            aria-label="Recipient's username" aria-describedby="button-addon2"
+          <TextField id="name" maxLength={50} className="form-control" label="Nome / Fantasia" variant="outlined" value={name || ''}
             onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
+
           <div className='btn-create'>
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={afterSubmit}>
               <VscSearch />
@@ -145,32 +134,20 @@ const AfflitedDataTable = (props) => {
           <div className='table-responsive'>
 
             <table className="table">
-
               <tbody>
 
-
                 <tr>
-
                   <th>
                     Nome
-
                   </th>
-
                   <th>
                     Telefone
                   </th>
-
                   <th>
-
                   </th>
                   <th>
-                    
                   </th>
-
-
                 </tr>
-
-
 
                 {objs.map((user) => {
                   return (
@@ -199,8 +176,6 @@ const AfflitedDataTable = (props) => {
                 })}
               </tbody>
             </table>
-
-
             <div className='pagidireita'>
               <Pagination
                 className="pagination-bar"
