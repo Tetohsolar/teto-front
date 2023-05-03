@@ -1,17 +1,24 @@
+import { FormControl, TextField } from "@mui/material";
 import React from "react";
-import { TextField } from "@mui/material";
-import InputMask from "react-input-mask";
+import { NumericFormat } from "react-number-format";
 
-function DecimalMaskedTextField(props) {
-  const { value, onChange, ...other } = props;
-
-  
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, value, label,decimal, ...other } = props;
 
   return (
-    <TextField mask="" value={value} onChange={onChange} {...other}>
-      {() => <TextField {...other} />}
-    </TextField>
+    <FormControl fullWidth>
+                  <NumericFormat customInput={TextField}
+                    value={value}
+                    variant="outlined"
+                    label={label}
+                    decimalSeparator={","}
+                    thousandSeparator={"."}
+                    isNumericString
+                    onChange={onChange}
+                    decimalScale={decimal}
+                    autoComplete="off" />
+                </FormControl>
   );
 }
 
-export default DecimalMaskedTextField;
+export default NumberFormatCustom;
