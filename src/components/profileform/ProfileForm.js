@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
+import { InputLabel, MenuItem, Select, TextField, FormControl } from '@mui/material';
+import MaskedTextField from '../communs/MaskedTextField';
 
 
 const ProfileForm = (props) => {
@@ -105,84 +107,86 @@ const ProfileForm = (props) => {
       <hr className="my-4" />
 
       <form className="row g-3" onSubmit={handleSaveUser}>
-        <div className="col-md-7">
-          <label htmlFor="inputFirstName" className="form-label">
-            Nome*
-          </label>
-          <input type="text" className="form-control" id="inputFirstName" value={name || ''} onChange={(e) => setName(e.target.value)} />
+        <div className="col-md-6">
+        <TextField id="inputFirstName" maxLength={50} className="form-control" label="Nome" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
         </div>
         <div className="col-md-5">
-          <label htmlFor="inputEmail" className="form-label">
-            Email*
-          </label>
-          <input type="email" className="form-control" id="inputEmail" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+          <TextField id="inputEmail" maxLength={50} className="form-control" label="Email*" variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+         
         </div>
-        <div className="col-md-7">
-          <label htmlFor="inputPassword4" className="form-label">
-            Senha*
-          </label>
-          <input type="password" className="form-control" id="inputPassword1" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
+        <div className="col-md-6">
+          
+          <TextField type='password' id="inputPassword1" maxLength={50} className="form-control" label="Senha*" variant="outlined" value={password || ''} onChange={(e) => setPassword(e.target.value)} />
+      
         </div>
         <div className="col-md-5">
-          <label htmlFor="inputPassword4" className="form-label">
-            Confirmar senha*
-          </label>
-          <input type="password" className="form-control" id="inputPassword2" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
+           
+          <TextField type='password' id="inputPassword2" maxLength={50} className="form-control" label="Confirmação de senha*" variant="outlined" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-        <div className="col-4">
-          <label htmlFor="inputPhoneNumber" className="form-label">
-            Telefone*
-          </label>
-          <InputMask
-            className="form-control" id="inputPhoneNumber"
-            onChange={(e) => setPhone(e.target.value)}
-            mask='(99)99999-9999'
-            value={phone || ''}>
-          </InputMask>
-        </div>
-        <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Tipo de usuário*
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" readonly value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="">Selecionar...</option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-            {
-              profilelogged === 'Root' ? <option value="Root">Root</option> : ''
-            }
-
-          </select>
-        </div>
-        <div className="col-md-4">
-          <label htmlFor="inputUserType" className="form-label">
-            Situação
-          </label>
-          <select name="pets" id="input-user-type" className="form-select" value={habilitar} onChange={(e) => setHabilitar(e.target.value)}>
-            <option value="">Selecionar...</option>
-            <option value="S">Habilitado</option>
-            <option value="N">Desabilitado</option>
-          </select>
+        <div className="col-2">
+       
+          <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
         </div>
 
+        <div className="col-md-3">
 
-        {
-          profilelogged === 'Root' ?
-            <div className="col-md-4">
-              <label htmlFor="inputUserType" className="form-label">
-                Filiado
-              </label>
-              <select name="pets" id="input-user-type" className="form-select" value={idfiliado} onChange={(e) => setIdfiliado(e.target.value)}>
-                <option value="">Selecionar...</option>
+        <FormControl fullWidth>
+                <InputLabel id="inputUserType">tipo de usuário*</InputLabel>
+                <Select
+                  labelId="input-user-type"
+                  id="input-user-type"
+                  value={tipo}
+                  label="Tipo de usuário"
+                  onChange={(e) => setTipo(e.target.value)}
+                >
+                  <MenuItem value={'Admin'}>Admin</MenuItem>
+                  <MenuItem value={'User'}>User</MenuItem>
+                  {
+                  profilelogged === 'Root' ? <MenuItem value={'Root'}>Root</MenuItem> : ''
+                  }
+
+
+                </Select>
+              </FormControl>
+        </div>
+        <div className="col-md-3">
+         
+          <FormControl fullWidth>
+                <InputLabel id="input-user-type">Situação</InputLabel>
+                <Select
+                  labelId="input-user-type"
+                  id="input-user-type"
+                  value={habilitar}
+                  label="Situação do usuário"
+                  onChange={(e) => setHabilitar(e.target.value)}
+                >
+                  <MenuItem value={'S'}>Habilitado</MenuItem>
+                  <MenuItem value={'N'}>Desabilitado</MenuItem>
+                </Select>
+              </FormControl>
+
+        </div>
+            <div className="col-md-3">
+              <FormControl fullWidth>
+                <InputLabel id="input-user-type">Situação</InputLabel>
+                <Select
+                  labelId="input-user-type"
+                  id="input-user-type"
+                  value={idfiliado}
+                  label="Filiado"
+                  onChange={(e) => setIdfiliado(e.target.value)}
+                >
                 {filiados ? filiados.map(objeto => (
-                  <option key={objeto.id} value={objeto.id}>
+                  <MenuItem key={objeto.id} value={objeto.id}>
                     {objeto.fantasy}
-                  </option>
+                  </MenuItem>
                 )) : ''}
 
-              </select>
+                </Select>
+              </FormControl>
+
             </div>
-            : ""}
+            
         <div className="customerCliente">
           <button className="btn btn-primary text-light" type="submit" >
             Salvar
