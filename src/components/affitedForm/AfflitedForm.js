@@ -448,7 +448,7 @@ const AfflitedForm = (props) => {
                 <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
 
               </div>
-              <div className="col-md-6">
+              <div className={tipoPessoa==="F"?"nome":"nomej"}>
                 <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
                   variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
               </div>
@@ -483,7 +483,7 @@ const AfflitedForm = (props) => {
 
                 </FormControl>
               </div>
-              <div className="col-md-6"  >
+              <div className={tipoPessoa==="F"?"rua":"ruaj"}  >
                 <TextField id="Rua" maxLength={50} className="form-control" label='Rua' variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
               </div>
               <div className="col-md-4 bairro"  >
