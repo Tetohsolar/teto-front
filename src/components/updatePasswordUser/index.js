@@ -95,44 +95,53 @@ const UpdatePasswordUser = (props) => {
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
-      <form  >
-        <div className="row g-3">
+      <form >
+        <div className="row mb-3">
           <div className="col-md-5">
+            <FormControl fullWidth>
 
+              <TextField id="inputFornecedor" maxLength={50} className="form-control"
+                inputProps={{ readonly: true }}
+                label="E-mail(somente leitura)"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
+            </FormControl>
 
-            <TextField id="inputFornecedor" maxLength={50} className="form-control"
-              inputProps={{ readonly: true }}
-              label="E-mail(somente leitura)"
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} />
-          </div>
-        </div>
-        <br />
-        <div className="row-md-5">
-          <div className="col-3">
-            <TextField id="inputPassword"
-              maxLength={12}
-              className="form-control"
-              type='password'
-              label="Senha"
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} />
 
           </div>
         </div>
-        <br />
+
+        <div className="row  mb-3">
+          <div className="col-3">
+            <FormControl fullWidth>
+              <TextField id="inputPassword"
+                maxLength={12}
+                className="form-control"
+                type='password'
+                label="Senha"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+
+
+          </div>
+        </div>
+
         <div className="row-md-5">
           <div className="col-3">
-            <TextField id="inputPassword2"
-              maxLength={12}
-              className="form-control"
-              type='password'
-              label="Confirme a Senha"
-              variant="outlined"
-              value={password2}
-              onChange={(e) => setPassword2(e.target.value)} />
+            <FormControl fullWidth>
+              <TextField id="inputPassword2"
+                maxLength={12}
+                className="form-control"
+                type='password'
+                label="Confirme a Senha"
+                variant="outlined"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)} />
+            </FormControl>
+
 
           </div>
         </div>
