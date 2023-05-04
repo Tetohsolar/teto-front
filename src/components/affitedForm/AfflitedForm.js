@@ -71,7 +71,7 @@ const AfflitedForm = (props) => {
   const [cepData, setCepData] = useState('')
   const [zap, setZap] = useState('')
   const [estado, setEstado] = useState('')
-  const [cidades, setCidades] = useState('')
+  const [cidades, setCidades] = useState([])
   const [cidade, setCidade] = useState('')
   const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
@@ -106,8 +106,7 @@ const AfflitedForm = (props) => {
 
   const { clientId } = useParams();
   useEffect(() => {
-
-    handleEstadoValue("ce")
+    handleEstadoValue("AC")
     if (clientId) {
       loadClienById(clientId)
     }
@@ -168,10 +167,10 @@ const AfflitedForm = (props) => {
         setCepData(response.data.Addresses[0].postcode)
         setEstado(response.data.Addresses[0].state)
         handleEstadoValue(response.data.Addresses[0].state, response.data.Addresses[0].city)
-        if (cidades.length<0){
-
+        if (cidades){
+          setCidade(response.data.Addresses[0].city)
         }
-       // setCidade(response.data.Addresses[0].city)
+        
         setRua(response.data.Addresses[0].street)
         setBairro(response.data.Addresses[0].neighborhood)
         setIdAdd(response.data.Addresses[0].id)
