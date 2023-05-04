@@ -4,3 +4,11 @@
     border-radius: 50%;
     border: 1px solid #A6CDE5;
 }
+
+/* Estilos para dispositivos com largura de tela menor que 768px */
+@media screen and (max-width: 767px) {
+    .telefone{
+     width: 100%;
+   }
+   
+ }

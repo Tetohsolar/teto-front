@@ -123,7 +123,7 @@ const ProfileForm = (props) => {
            
           <TextField type='password' id="inputPassword2" maxLength={50} className="form-control" label="Confirmação de senha*" variant="outlined" value={confirmPassword || ''} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-        <div className="col-2">
+        <div className="col-2 telefone">
        
           <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
         </div>
