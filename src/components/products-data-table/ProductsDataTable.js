@@ -181,14 +181,14 @@ const ProductsDataTable = (props) => {
         <hr className='my-4' />
         <div className="input-group">
           <div className='filtro'>
-            <div className="col-md-5">
+            <div className="col-md-5 descprod">
 
-              <TextField id="name" maxLength={50} className="form-control" label="Descrição" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
+              <TextField id="name" maxLength={50} className="form-control " label="Descrição" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
 
             </div>
 
 
-            <div className="col-md-3">
+            <div className="col-md-3 categoria">
 
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
@@ -226,12 +226,13 @@ const ProductsDataTable = (props) => {
                 </Select>
               </FormControl>
             </div>
-          </div>
-          <div className='btn-create' id="btn-create">
+            <div className='btn-create' id="btn-create">
             <button className="btn btn-primary text-light d-flex align-items-center" type="button" id="button-addon2" onClick={handleSeach}>
               <VscSearch />
             </button>
           </div>
+          </div>
+          
         </div>
         <div>
           <div className='table-responsive'>
