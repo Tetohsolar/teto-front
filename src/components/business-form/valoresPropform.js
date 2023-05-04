@@ -11,6 +11,7 @@ import api from '../../api';
 import { NumericFormat } from 'react-number-format';
 import { async } from 'q';
 import { id } from 'date-fns/locale';
+import NumberFormatCustom from '../communs/DecimalMaskedTextField';
 const ValoresProposta = () => {
   const { token, afflited } = useContext(AuthContext)
   const { sidebarWrapper } = useContext(SidebarWrapperContext)
@@ -249,127 +250,40 @@ const ValoresProposta = () => {
             <form className="row g-3" onSubmit={salvar} >
 
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Consumo (KWh)
-                </label>
-                <input type="text" readOnly className="form-control alinhaDireita" id="inputFirstName" value={consumo} onChange={(e) => setConsumo(e.target.value)} />
+               
+                <NumberFormatCustom label={"Consumo (KWh)"}  variant="outlined" decimal={2} value={consumo} onChange={(e) => setConsumo(e.target.value)} ></NumberFormatCustom>
+                
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Geração sugerida (KWh)
-                </label>
-                <input type="text" readOnly className="form-control alinhaDireita" id="inputFirstName" value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} />
+               
+                <NumberFormatCustom label={"Geração sugerida (KWh)"}  variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+           
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Geração desejada (KWh)
-                </label>
-                <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-                  className="form-control number" value={geracaoDesejada || ''} onChange={(e) => setGeracaoDesejada(e.target.value)} />
-
+                
+                <NumberFormatCustom label={"Geração desejada (KWh)"}  variant="outlined" decimal={2} value={geracaoDesejada } onChange={(e) => setGeracaoDesejada (e.target.value)} ></NumberFormatCustom>
+            
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Preço do kit (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={precoKit || ''} onChange={(e) => setPrecoKit(e.target.value)} onKeyUp={calculaCustos} />
-              </div>
-
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Complemento (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={complemento || ''} onChange={(e) => setComplemento(e.target.value)} onBlur={calculaTotalComplemento}  onKeyUp={()=>{
-                    calculaTotalComplemento()
-                  } }/>
+                
+                <NumberFormatCustom label={"Preço do kit(R$)"}  variant="outlined" decimal={2} value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} ></NumberFormatCustom>
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Projeto (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={projeto || ''} onChange={(e) => setProjeto(e.target.value)} onBlur={calculaTotalComplemento} 
-                  onKeyUp={()=>{
-                    calculaTotalComplemento()
-                  } }/>
+              
+                <NumberFormatCustom label={"Comissão do vendedor(%)"}  variant="outlined" decimal={2} value={comissaoVe} onChange={(e) => setComissaoVe (e.target.value)} ></NumberFormatCustom>
+               
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Imposto (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={imposto || ''} onChange={(e) => setImposto(e.target.value)} onBlur={calculaTotalComplemento}
-                  onKeyUp={()=>{
-                    calculaTotalComplemento()
-                  } } />
+                <NumberFormatCustom label={"Valor da Comissão (R$)"}  variant="outlined" decimal={2} value={valorComissao} onChange={(e) => setComissaoVe (e.target.value)} ></NumberFormatCustom>
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Montagem (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={montagem || ''} onChange={(e) => setMontagem(e.target.value)} onKeyUp={()=>{
-                    calculaTotalComplemento()
-                  } } onBlur={calculaTotalComplemento}/>
+                <NumberFormatCustom label={"Total de custo (R$)"}  variant="outlined" decimal={2} value={totalCusto} onChange={(e) => setTotalCusto (e.target.value)} ></NumberFormatCustom>
+ 
               </div>
               <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Comissão do vendedor (%)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","  onKeyUp={calculaTotalComplemento }
-                  className="form-control number" value={comissaoVe || ''} onChange={(e) => setComissaoVe(e.target.value)}   />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Valor da Comissão (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
-                  className="form-control number" value={valorComissao || ''} onChange={(e) => setValorComissao(e.target.value)} />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Margem (%)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator=","
-                  className="form-control number" value={margem || ''} onChange={(e) => setMargem(e.target.value)} onBlur={calculaTotalComplemento} onKeyUp={()=>{
-                    calculaTotalComplemento()
-                  } }/>
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Margem calculada (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
-                  className="form-control number" value={margemCa || ''} onChange={(e) => setMargemCa(e.target.value)} onBlur={calculaTotalComplemento}/>
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Total de custo (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
-                  className="form-control number" value={totalCusto || ''} onChange={(e) => setTotalCusto(e.target.value)} />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Lucro (%)
-                </label>
-                <input type="text" readOnly className="form-control alinhaDireita" id="inputFirstName" value={lucroReal} onChange={(e) => setLucroReal(e.target.value)} />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Valor total do projeto (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
-                  className="form-control number" value={valorTotal || ''} onChange={(e) => setValorTotal(e.target.value)} />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Lucro do projeto (R$)
-                </label>
-                <NumericFormat decimalScale={2} placeholder="" decimalSeparator="," readOnly
-                  className="form-control number" value={lucroProjeto || ''} onChange={(e) => setLucroProjeto(e.target.value)} />
+                
+                <NumberFormatCustom label={"Valor total do projeto (R$)"}  variant="outlined" decimal={2} value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} ></NumberFormatCustom>
+                
               </div>
 
               <div className="customerCliente">

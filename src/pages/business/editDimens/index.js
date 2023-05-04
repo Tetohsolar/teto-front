@@ -6,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { toast } from 'react-toastify';
+import { InputLabel, MenuItem, Select, TextField, FormControl } from '@mui/material';
+
 
 
 const EditDimensionamento = () => {
@@ -228,48 +230,62 @@ const EditDimensionamento = () => {
                 <div className="row g-3 " >
                   <div className="col-md-5">
                     <div className="container-fluid">
-                      <label htmlFor="inputFirstName" className="form-label">
-                        Nome:
-                      </label>
-                      <input type="text" className="form-control" id="inputFirstName" value={name} onChange={(e) => setName(e.target.value)} />
+                     
+                      <TextField id="inputFirstName" maxLength={50} className="form-control" label='Nome' variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
+                     
                     </div>
                   </div>
                   <div className="col-md-3 ">
                     <div className="container-fluid">
-                      <label htmlFor="inputFirstName" className="form-label">
-                        Usuário:
-                      </label>
-                      <input type="text" className="form-control" id="inputFirstName" value={donoN} onChange={(e) => setDonoN(e.target.value)} />
+                     
+                      <TextField id="inputFirstName" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={donoN || ''} onChange={(e) => setDonoN(e.target.value)} />
+                  
                     </div>
                   </div>
                   <div className="col-md-3">
                     <div className="container-fluid">
-                      <label htmlFor="inputFirstName" className="form-label">
-                        Tipo de Telhado:
-                      </label>
-                      <select name="tipoLigacao" className="form-select" id="tipoTelhado" value={telhado} onChange={(e) => setTelhado(e.target.value)} >
-                        <option value="">Selecione</option>
-                        <option value="Cerâmico">Cerâmico</option>
-                        <option value="Metálico">Metálico</option>
-                        <option value="Em Solo">Solo</option>
+                    
+                      <FormControl fullWidth>
+              <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
+              <Select
+                labelId="tipoTelhado"
+                id="tipoTelhado"
+                value={telhado}
+                label="Categoria"
+                onChange={(e) => setTelhado(e.target.value)}
 
-                      </select>
+              >
+                <MenuItem value={'Cerâmico'}>Cerâmico</MenuItem>
+                <MenuItem value={'Metálico'}>Metálico</MenuItem>
+                <MenuItem value={'Em solo'}>Solo</MenuItem>
+
+              </Select>
+            </FormControl>
+                      
                     </div>
                   </div>
                 </div>
                 <div className="row g-3 p2" >
                   <div className="col-md-2">
                     <div className="container-fluid">
-                      <label htmlFor="inputFirstName" className="form-label">
-                        < > Tipo de Ligação:</>
-                      </label>
+                     
+                      <FormControl fullWidth>
+              <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
+              <Select
+                labelId="tipoLigacao"
+                id="tipoLigacao"
+                value={tipoL}
+                label="Telhado"
+                onChange={(e) => setTipoL(e.target.value)}
 
-                      <select name="tipoLigacao" className="form-select" id="tipoLigacao" value={tipoL} onChange={(e) => setTipoL(e.target.value)}>
-                        <option value="">Selecione</option>
-                        <option value="Trifásico">Trifásico</option>
-                        <option value="Monofásico">Monofásico</option>
+              >
+                <MenuItem value={'Monofásico'}>Monofásico</MenuItem>
+                <MenuItem value={'Bifásico'}>Bifásico</MenuItem>
+                <MenuItem value={'Trifásico'}>Trifásico</MenuItem>
 
-                      </select>
+              </Select>
+            </FormControl>
+                      
                     </div>
                   </div>
                   <div className="col-md-3">

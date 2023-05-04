@@ -488,38 +488,6 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Complemento (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(complemento)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Projeto (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(projeto)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Imposto (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(imposto)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Montagem (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(montagem)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
                       Comissão do vendedor (%):
                       <td>
                       </td>
@@ -537,35 +505,11 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Margem (%):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {numeroFormatado.format(margem) + ' %'}  </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Margem calculada (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(margemCa)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
                       Total de Custo (R$):
                       <td>
                       </td>
                       <td className='alinhaDireita'>
                         <label> {formatter.format(totalLu)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Lucro (%):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {numeroFormatado.format(lucroReal) + ' %'} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
@@ -576,15 +520,7 @@ const ViewBusiness = () => {
                         <label> {formatter.format(valorTotal)} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Lucro do projeto (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(lucroProjeto)} </label>
-                      </td>
-                    </tr>
-
+                   
                   </table>
 
                 </div>
@@ -592,128 +528,6 @@ const ViewBusiness = () => {
               </div>
             </div>
 
-          </div>
-          <div className="container-fluid bg-home py-4 ">
-            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
-
-              <div className='conteinerCards espaco_button'>
-
-                <h5 className="pb-3">Valores com 2% de desconto </h5>
-
-              </div>
-
-              <hr className="my-3 text-body-tertiary" />
-              <div className="d-flex flex-column flex-md-row justify-content-end">
-                <form className="mb-3 justify-content-end">
-                  <div className="row">
-                    <div className="col-md-auto">
-
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="row">
-                <div className="mb-3 mb-sm-0">
-                  <div className="card border-light-subtle">
-                    <div className="card-body">
-
-                      <div className="table-responsive">
-                        <table className="table caption-top table-sm">
-                          <thead>
-                            <tr>
-                              <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
-                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
-                              <th scope="col" className='alinhaCentro'>Margem (R$)  </th>
-                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
-                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
-                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$) </th>
-
-                              <th scope="col"></th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-
-                            <tr key={businessId}>
-
-                              <td className='alinhaDireita'>{formatter.format(prof2)} </td>
-                              <td className='alinhaDireita'>{numeroFormatado.format(profitR2)}</td>
-                              <td className='alinhaDireita'>{formatter.format(marg2)}</td>
-                              <td className='alinhaDireita'>{numeroFormatado.format(margR2)}</td>
-                              <td className='alinhaDireita'>{formatter.format(comiss2)}</td>
-                              <td className='alinhaDireita'> {formatter.format(total2)}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div className="container-fluid bg-home py-4 ">
-            <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
-
-              <div className='conteinerCards espaco_button'>
-
-                <h5 className="pb-3">Valores com 4% de desconto </h5>
-
-              </div>
-
-              <hr className="my-3 text-body-tertiary" />
-              <div className="d-flex flex-column flex-md-row justify-content-end">
-                <form className="mb-3 justify-content-end">
-                  <div className="row">
-                    <div className="col-md-auto">
-
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="row">
-                <div className="mb-3 mb-sm-0">
-                  <div className="card border-light-subtle">
-                    <div className="card-body">
-
-                      <div className="table-responsive">
-
-                        <table className="table caption-top table-sm">
-                          <thead>
-                            <tr>
-                              <th scope="col" className='alinhaCentro'>Lucro (R$) </th>
-                              <th scope="col" className='alinhaCentro'>Lucro (%) </th>
-                              <th scope="col" className='alinhaCentro'>Margem (R$) </th>
-                              <th scope="col" className='alinhaCentro'>Margem (%)  </th>
-                              <th scope="col" className='alinhaCentro'>Comissão (R$) </th>
-                              <th scope="col" className='alinhaCentro'>Projeto desconto (R$)</th>
-
-                              <th scope="col"></th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-
-                            <tr key={businessId}>
-
-                              <td className='alinhaDireita'>{formatter.format(prof4)}</td>
-                              <td className='alinhaDireita'>{numeroFormatado.format(profitR4)}</td>
-                              <td className='alinhaDireita'>{formatter.format(marg4)}</td>
-                              <td className='alinhaDireita'>{numeroFormatado.format(margtR4)}</td>
-                              <td className='alinhaDireita'>{formatter.format(comiss4)}</td>
-                              <td className='alinhaDireita'>{formatter.format(total4)}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
           </div>
           <div className="container-fluid bg-home py-4 ">
             <div class="p-3 mb-3 bg-white border rounded-3 table-container" >
