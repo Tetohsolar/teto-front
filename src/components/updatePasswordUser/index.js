@@ -5,12 +5,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
-
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
 
 const UpdatePasswordUser = (props) => {
-  const { token, idLogged} = useContext(AuthContext)
-  
+  const { token, idLogged } = useContext(AuthContext)
+
   async function findUserById() {
 
     await api.get(`/user/get/${idLogged}`, {
@@ -18,17 +18,17 @@ const UpdatePasswordUser = (props) => {
         'Authorization': `Basic ${token}`
       }
     })
-      .then((response) => { 
-        setEmail (response.data.email)
-        
+      .then((response) => {
+        setEmail(response.data.email)
+
       })
   }
   useEffect(() => {
-   findUserById ()
+    findUserById()
 
     return () => { }
   })
-  
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -95,31 +95,53 @@ const UpdatePasswordUser = (props) => {
       <ToastContainer />
       <h5 className="card-content-title fw-semibold">{props.listTitle}</h5>
       <hr className="my-4" />
-      <form  >
-        <div className="row g-3">
+      <form >
+        <div className="row mb-3">
           <div className="col-md-5">
-            <label htmlFor="inputEmail" className="form-label">
-              Email:
-            </label>
-            <input type="email" readOnly  className="form-control" id="inputEmail" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <FormControl fullWidth>
+
+              <TextField id="inputFornecedor" maxLength={50} className="form-control"
+                inputProps={{ readonly: true }}
+                label="E-mail(somente leitura)"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
+            </FormControl>
+
+
+          </div>
+        </div>
+
+        <div className="row  mb-3">
+          <div className="col-3">
+            <FormControl fullWidth>
+              <TextField id="inputPassword"
+                maxLength={12}
+                className="form-control"
+                type='password'
+                label="Senha"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+
+
           </div>
         </div>
 
         <div className="row-md-5">
-          <div className="col-4">
-            <label htmlFor="inputPhoneNumber" className="form-label">
-              Nova Senha:
-            </label>
-            <input type="password" className="form-control" id="inputSenha" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div className="col-3">
+            <FormControl fullWidth>
+              <TextField id="inputPassword2"
+                maxLength={12}
+                className="form-control"
+                type='password'
+                label="Confirme a Senha"
+                variant="outlined"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)} />
+            </FormControl>
 
-          </div>
-        </div>
-        <div className="row-md-5">
-          <div className="col-4">
-            <label htmlFor="inputPhoneNumber" className="form-label">
-              Confirme a Senha:
-            </label>
-            <input type="password" className="form-control" id="inputSenha" value={password2} onChange={(e) => setPassword2(e.target.value)} />
 
           </div>
         </div>

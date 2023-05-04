@@ -43,3 +43,25 @@
     width: 26%;
     
 }
+
+
+
+/* Estilos para dispositivos com largura de tela menor que 768px */
+@media screen and (max-width: 767px) {
+    .descprod {
+      width: 100%;
+    }
+    .categoria {
+        width: 100%;
+      }
+    .marca{
+        width: 100%;
+      }
+      .filtro{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 180px;
+     
+    }
+    
+  }
