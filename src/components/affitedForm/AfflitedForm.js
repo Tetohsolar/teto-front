@@ -107,6 +107,7 @@ const AfflitedForm = (props) => {
   const { clientId } = useParams();
   useEffect(() => {
 
+    handleEstadoValue("ce")
     if (clientId) {
       loadClienById(clientId)
     }
@@ -312,7 +313,7 @@ const AfflitedForm = (props) => {
       .catch((error) => console.log(error));
 
     setEstado(value)
-    if(cidade){
+    if(cidade && cidades){
     setCidade(cidade)
     }
   }
@@ -325,8 +326,7 @@ const AfflitedForm = (props) => {
     try {
 
       await api.get('/sunindex/cep/' + cepData).then((response) => {
-        handleEstadoValue(response.data.state)
-          .then(setCidade(response.data.city))
+        handleEstadoValue(response.data.state, response.data.city)
           .then(setRua(response.data.street)).then(setBairro(response.data.neighborhood))
       });
 
