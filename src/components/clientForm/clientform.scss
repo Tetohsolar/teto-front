@@ -30,41 +30,89 @@
     justify-content: space-between;
 }
 
-.cep{
+.cepc{
     width: 148px;
 }
-.cepj{
+.cepjc{
     width: 165px;
 }
-.bairro{
+.bairroc{
     width: 380px;
 }
-.razaoSocial{
+.razaoSocialc{
     width: 440px;
 }
-.email{
+.emailc{
     width: 455px;
 }
-.adicionais{
+.adicionaisc{
     width: 610px;
 }
 
-.emailj{
+.emailjc{
     width: 460px;
 }
-.rua{
-    width: 450px;
+.ruac{
+  
+    width: 455px;
 }
-.ruaj{
+.ruajc{
     width: 630px;
 }
-.nome{
-    width: 620px;
-}
-.nomej{
+.nomec{
     width: 630px;
 }
+.nomejc{
+    width: 630px;
+    border: solid;
+}
+.cidadec {
+    width: 500px;
+    
+  }
 
+  .numeroc{
+    width: 225px;
+  }
+  .adicionaisc{
+    width: 630px;
+  }
+.tipopessoac{ width: 215px;}
 _:-ms-lang(x), .rua {
     width: 200px;
 }
+
+/* Estilos para dispositivos com largura de tela menor que 768px */
+@media screen and (max-width: 767px) {
+    .tipopessoac, .nomec, .nomejc, .ruac, .ruajc, .adicionaisc {
+      width: 200%;
+    }
+    .emailjc {
+       
+        width: 100%;
+      }
+      .emailc{
+        width: 100%;
+      }
+    .docc {
+        width: 100%;
+      }
+      .numeroc {
+        width: 100%;
+      }
+      .cidadec {
+        width: 100%;
+      }
+      .bairroc{
+        width: 100%;
+      }
+      .cidadec {
+        width: 50%;
+      }
+      .estadoc{
+        width: 100%;
+      }
+    .fonec, .zapc, .cepc, .cepjc, .divRazaoEscondidac, .divRazaoVisvelc{
+        width: 100%;
+      }
+  }

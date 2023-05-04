@@ -1,0 +1,100 @@
+.input-avatar {
+    width: 72px;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid #A6CDE5;
+}
+
+#divRazaoEscondida{
+    display: none;
+}
+#divRazaoVisvel{
+    display: block;
+}
+.divendereco{
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;    
+}
+
+.divInfo{
+  
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+    
+    gap:25px;
+    margin-left: 15px;
+
+}
+
+.number{
+    text-align: right;
+}
+
+.afflitedsfilter{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.afflitedsalvar{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tabela_coluna_precos{
+    width: 300px;
+}
+.borda{
+    border: solid;
+    border-color: red;
+}
+.cep{
+    width: 148px;
+}
+.cepj{
+    width: 165px;
+}
+.bairro{
+    width: 380px;
+}
+.razaoSocial{
+    width: 440px;
+}
+.email{
+    width: 455px;
+}
+.adicionais{
+    width: 610px;
+}
+
+.emailj{
+    width: 460px;
+}
+.rua{
+    width: 450px;
+}
+.ruaj{
+    width: 630px;
+}
+.nome{
+    width: 620px;
+}
+.nomej{
+    width: 630px;
+}
+
+/* Estilos para dispositivos com largura de tela menor que 768px */
+@media screen and (max-width: 767px) {
+    .tipopessoa {
+      width: 100%;
+    }
+    
+    .doc {
+        width: 100%;
+      }
+    .fone, .zap, .cep, .estado, .cidade{
+        width: 100%;
+      }
+  }

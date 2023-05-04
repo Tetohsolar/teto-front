@@ -162,13 +162,16 @@ const ViewBusiness = () => {
   }
 
   async function loadbId(id) {
-
-    await api.get('/business/get/' + id, {
+   await api.get('/business/get/' + id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
+      console.log("abriu a tela")
+
+      console.log(response)
+      
       setName(response.data["Client.fantasy"])
       setStatus(response.data.situation)
       setNumberP(response.data.number)
