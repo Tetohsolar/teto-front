@@ -245,7 +245,7 @@ const ProductForm = (props) => {
         <div className="col-md-3">
 
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+            <InputLabel id="demo-simple-select-label">Categoria*</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -269,7 +269,7 @@ const ProductForm = (props) => {
         <div className="col-md-3">
 
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Marca</InputLabel>
+            <InputLabel id="demo-simple-select-label">Marca*</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -309,12 +309,12 @@ const ProductForm = (props) => {
 
         <div className="col-md-2">
 
-          <DecimalMaskedTextField className='number' label="Preço" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
+          <DecimalMaskedTextField className='number' label="Preço*" variant="outlined" value={preco || ''} onChange={(e) => setPreco(e.target.value)}> </DecimalMaskedTextField>
 
         </div>
         <div className="col-md-2">
 
-          <DecimalMaskedTextField className='number' label="Potência" variant="outlined" value={pot || ''} onChange={(e) => setPotencia(e.target.value)}> </DecimalMaskedTextField>
+          <DecimalMaskedTextField className='number' label="Potência*" variant="outlined" value={pot || ''} onChange={(e) => setPotencia(e.target.value)}> </DecimalMaskedTextField>
         </div>
         <div className="col-md-2">
 
