@@ -67,29 +67,17 @@ const ValoresProposta = () => {
       setConsumo(response.data.avgconsumption)
       setGeracaoSu(response.data.suggestedGeneration)
       setGeracaoDesejada(response.data.suggestedDesired)
-      setComplemento(response.data.complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setValorTotal(response.data.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
 
-      setPrecoKit(response.data.kitprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setProjeto(response.data.project.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setImposto(response.data.tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setMontagem(response.data.assembled.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setComissaoVe(response.data.sellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      if (response.data.margin) {
-        setMargem(response.data.margin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      }
+      setPrecoKit(response.data.kitprice)
+      setComissaoVe(response.data.sellercomission)
+      
       if (response.data.amountcost) {
-        setTotalLu(response.data.amountcost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+        setTotalLu(response.data.amountcost)
       }
-      setMargemCa(response.data.marginCalculate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setValorComissao(response.data.valuesellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setLucroProjeto(response.data.profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-      setLucroReal(response.data.realProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-
-      setTotalCusto(response.data.amountcost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-
-      setTipoSistema(response.data.type)
-
+      setTotalCusto(response.data.amountcost)
+    
     }).catch((error) => { console.log(error) })
 
   }
