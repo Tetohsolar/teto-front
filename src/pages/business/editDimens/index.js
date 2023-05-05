@@ -307,34 +307,8 @@ const EditDimensionamento = () => {
                     </div>
                     <div className="row " >
                   <div className="col-md-3">
-                 
-                      <br></br>
-                      <FormControl fullWidth>
-                        <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
-                        <Select
-                          labelId="tipoLigacao"
-                          id="modalidade"
-                          value={modalidade}
-                          label="modalidade"
-                          onChange={(e) => { setModalidade(e.target.value); }}
-
-                        >
-                          <MenuItem value={'HA'}>Horos. Azul</MenuItem>
-                          <MenuItem value={'HV'}>Horos.Verde</MenuItem>
-                          <MenuItem value={'Rural'}>Rural</MenuItem>
-
-                        </Select>
-                      </FormControl>
-                      
-                  
-                </div>
-                
-                
-                  <div className="col-md-3">
-                   
-                      <br></br>
-
-                      <FormControl fullWidth>
+                  <br></br>
+                  <FormControl fullWidth>
                         <InputLabel id="inputGrupo">Grupo</InputLabel>
                         <Select
                           labelId="tipoLigacao"
@@ -349,13 +323,13 @@ const EditDimensionamento = () => {
 
                         </Select>
                       </FormControl>
-
-                    </div>
-               
+                      
+                </div>
+                      
                   <div className="col-md-3">
-                    
+                   
+                      <br></br>
 
-                    <br></br>
                       <FormControl fullWidth>
                         <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                         <Select
@@ -382,6 +356,31 @@ const EditDimensionamento = () => {
                         </Select>
                       </FormControl>
 
+                    </div>
+               
+                  <div className="col-md-3">
+                  <FormControl fullWidth>
+                    <br></br>
+                        <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
+                        <Select
+                          labelId="tipoLigacao"
+                          id="modalidade"
+                          value={modalidade}
+                          label="modalidade"
+                          onChange={(e) => { setModalidade(e.target.value); }}
+
+                        >
+                          <MenuItem value={'HA'}>Horos. Azul</MenuItem>
+                          <MenuItem value={'HV'}>Horos.Verde</MenuItem>
+                          <MenuItem value={'Rural'}>Rural</MenuItem>
+
+                        </Select>
+                      </FormControl>
+                      
+
+                    <br></br>
+                    
+                     
 
                  </div>
                   </div>
