@@ -520,6 +520,63 @@ const ViewBusiness = () => {
                         <label> {formatter.format(valorTotal)} </label>
                       </td>
                     </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Tipo de sistema:
+                      <td>
+                      </td>
+                      <td>
+                        <label>{tipoSistema} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Potência do painel (kWh):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{painelP} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Número de placas (Und):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{numeroP} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Média mensal (kWh):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{media} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Potência do sistema (kWh):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{numeroFormatado.format(potenciaS)} </label>
+                      </td>
+                    </tr>
+
+                    <tr className='linhabaixo tamanho-tr'>
+                      CIP (R$):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label> {formatter.format(cip)} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Bandeira (R$):
+                      <td>
+                      </td>
+                      <td className='alinhaDireita'>
+                        <label>{formatter.format(bandeira)} </label>
+                      </td>
+                    </tr>
                    
                   </table>
 
@@ -653,77 +710,7 @@ const ViewBusiness = () => {
                   </table>
 
                 </div>
-                <div className='cards border rounded-3'>
-                  <div className='card-title'>
-                    <h6 class="card-content-title mb-3 fw-semibold">Tipo do sistema</h6>
-                    <button type="button" className="btn btn-light btn-sm text-primary d-flex align-items-center" onClick={() => {
-
-                      editypebusiness(businessId)
-                    }}>
-                      <BsFillPencilFill />
-                    </button>
-                  </div>
-                  <table className='table_view'>
-
-                    <tr className='linhabaixo tamanho-tr'>
-                      Tipo de sistema:
-                      <td>
-                      </td>
-                      <td>
-                        <label>{tipoSistema} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Potência do painel (kWh):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{painelP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Número de placas (Und):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{numeroP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Média mensal (kWh):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{media} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Potência do sistema (kWh):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{numeroFormatado.format(potenciaS)} </label>
-                      </td>
-                    </tr>
-
-                    <tr className='linhabaixo tamanho-tr'>
-                      CIP (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {formatter.format(cip)} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Bandeira (R$):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{formatter.format(bandeira)} </label>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+               
 
               </div>
 
