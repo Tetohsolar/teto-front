@@ -235,7 +235,7 @@ const EditDimensionamento = () => {
           
           <form >
             
-                <div className="row g-3 " >
+                <div className="row" >
                   <div className="col-md-5">
                     
 
@@ -243,15 +243,16 @@ const EditDimensionamento = () => {
 
                     
                   </div>
-                  <div className="col-md-3 ">
+                  <div className="col-md-4 ">
                     
 
                       <TextField id="inputFirstName" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={donoN || ''} onChange={(e) => setDonoN(e.target.value)} />
 
                     </div>
-                  
+                    </div>
+                    <div className="row g-3 p2" >
                   <div className="col-md-3">
-                    
+                    <br></br>
 
                       <FormControl fullWidth>
                         <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
@@ -272,12 +273,12 @@ const EditDimensionamento = () => {
 
                     </div>
                  
-                </div>
+               
                 <br></br>
-                <div className="row g-3 p2" >
+                
                   <div className="col-md-3">
                     
-
+                    <br></br>
                       <FormControl fullWidth>
                         <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
                         <Select
@@ -299,14 +300,15 @@ const EditDimensionamento = () => {
                   </div>
                   <div className="col-md-3">
                   
-
+                   <br></br>
                       <NumberFormatCustom type="number" label={"Fator Solar"} type='number' variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
 
                     </div>
-                
+                    </div>
+                    <div className="row " >
                   <div className="col-md-3">
                  
-                      
+                      <br></br>
                       <FormControl fullWidth>
                         <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
                         <Select
@@ -324,12 +326,10 @@ const EditDimensionamento = () => {
                         </Select>
                       </FormControl>
                       
-
-                   
-                  </div>
+                  
                 </div>
                 
-                <div className="row g-3 p2" >
+                
                   <div className="col-md-3">
                    
                       <br></br>
@@ -383,18 +383,18 @@ const EditDimensionamento = () => {
                       </FormControl>
 
 
-                 
+                 </div>
                   </div>
-                  
+                  <div className="row" >
                   <div className="col-md-3">
                     <br></br>
 
                       <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
 
                     </div>
-                  </div>
+                  
              
-                <div className="row g-3 p2" >
+                
                   <div className="col-md-3">
                       <br></br>
                        
@@ -402,14 +402,17 @@ const EditDimensionamento = () => {
 
                     
                   </div>
+                  
                   <div className="col-md-3">
                     <br></br>
 
                       <NumberFormatCustom type="number" label={"Demanda Ponta"} type='number' variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
-                    </div>
+                    
                   
+                   </div> 
                 </div>
-                <div className="row g-3 p2" >
+
+                <div className="row " >
                   <div className="col-md-3">
                    
                    <br></br>
@@ -424,8 +427,8 @@ const EditDimensionamento = () => {
                       <NumberFormatCustom type="number" label={"Energia Ponta"} type='number' variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
                     
                   </div>
-                </div>
-                <div className="row g-3 p2" >
+               
+                
                   <div className="col-md-3">
                   <br></br>
 
@@ -433,6 +436,7 @@ const EditDimensionamento = () => {
 
                     </div>
                 
+  
                 </div>
                 <div className="row g-3 p2" >
                   <div className="col-md-10">
