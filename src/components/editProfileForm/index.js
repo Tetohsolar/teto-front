@@ -102,7 +102,7 @@ const EditProfileForm = (props) => {
           
           <TextField id="inputEmail" maxLength={50} className="form-control" label="Email*" variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="col-2">
+        <div className="col-2 telefone">
         <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
         </div>
         <div className="col-md-2">

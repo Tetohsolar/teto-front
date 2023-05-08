@@ -1,6 +1,7 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+
 import {
   Button,
   FormControl,
@@ -12,7 +13,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function SystemTypeForm() {
+export default function SystemTypeform() {
   const [item, setItem] = React.useState("");
 
   const handleChange = (event) => {
