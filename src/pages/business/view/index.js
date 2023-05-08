@@ -529,22 +529,6 @@ const ViewBusiness = () => {
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
-                      Potência do painel (kWh):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{painelP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Número de placas (Und):
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label>{numeroP} </label>
-                      </td>
-                    </tr>
-                    <tr className='linhabaixo tamanho-tr'>
                       Média mensal (kWh):
                       <td>
                       </td>
