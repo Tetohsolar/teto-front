@@ -531,7 +531,7 @@ const AfflitedForm = (props) => {
           <TabPanel>
             <div className='divInfo p-3 mb-3 bg-white border rounded-3'>
               <div className="col-md-2"  >
-                <NumberFormatCustom label={"Perca(%)"}  decimal={2} value={perca} onChange={(e) => setPerca(e.target.value)} ></NumberFormatCustom>
+                <NumberFormatCustom  className={"number"} label={"Perca(%)"}  decimal={2} value={perca} onChange={(e) => setPerca(e.target.value)} ></NumberFormatCustom>
               </div>
               <div className="col-md-2"  >
                 <NumberFormatCustom label={"Lucro (%)"}  variant="outlined" decimal={2} value={profit} onChange={(e) => setLucro(e.target.value)} ></NumberFormatCustom>
