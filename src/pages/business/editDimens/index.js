@@ -33,6 +33,8 @@ const EditDimensionamento = () => {
   const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
+  const [telhados, setTelhados] = useState([])
+
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
@@ -45,7 +47,9 @@ const EditDimensionamento = () => {
 
   useEffect(() => {
 
+    buscaTelhados()
     loadbId()
+
 
   }, [])
 
@@ -68,6 +72,21 @@ const EditDimensionamento = () => {
 
       setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
 
+    })
+
+  }
+  async function buscaTelhados() {
+
+
+    await api.get('/roofs/all',
+
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }
+    ).then((response) => {
+      setTelhados(response.data.roofs)
     })
 
   }
@@ -157,7 +176,7 @@ const EditDimensionamento = () => {
       setName(response.data["Client.fantasy"])
       setDonoN(response.data['User.name'])
       setFatorS(response.data.sunIndex)
-      setTelhado(response.data.roof)
+      //setTelhado(response.data.roof)
       setTipoL(response.data.typeConnection)
       setModalidade(response.data.modality)
       setGrupo(response.data.group)
@@ -229,227 +248,223 @@ const EditDimensionamento = () => {
         <div id="page-content-wrapper" className="container-fluid bg-home py-4">
           <h5 className="pb-3">{pageTitle}</h5>
           <div className='p-3 mb-3 bg-white border rounded-3'>
-          <ToastContainer />
+            <ToastContainer />
             <h5 className="card-content-title fw-semibold">{"Editar Negocio"}</h5>
             <hr className="my-4" />
-          
-          <form >
-            
-                <div className="row" >
-                  <div className="col-md-5">
-                    
 
-                      <TextField id="inputFirstName" maxLength={50} className="form-control" label='Nome' variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
+            <form >
 
-                    
-                  </div>
-                  <div className="col-md-4 ">
-                    
+              <div className="row" >
+                <div className="col-md-5">
 
-                      <TextField id="inputFirstName" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={donoN || ''} onChange={(e) => setDonoN(e.target.value)} />
 
-                    </div>
-                    </div>
-                    <div className="row g-3 p2" >
-                  <div className="col-md-3">
-                    <br></br>
+                  <TextField id="inputFirstName" maxLength={50} className="form-control" label='Nome' variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
 
-                      <FormControl fullWidth>
-                        <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
-                        <Select
-                          labelId="tipoTelhado"
-                          id="tipoTelhado"
-                          value={telhado}
-                          label="Categoria"
-                          onChange={(e) => setTelhado(e.target.value)}
 
-                        >
-                          <MenuItem value={'Cerâmico'}>Cerâmico</MenuItem>
-                          <MenuItem value={'Metálico'}>Metálico</MenuItem>
-                          <MenuItem value={'Em solo'}>Solo</MenuItem>
+                </div>
+                <div className="col-md-4 ">
 
-                        </Select>
-                      </FormControl>
 
-                    </div>
-                 
-               
+                  <TextField id="inputFirstName" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={donoN || ''} onChange={(e) => setDonoN(e.target.value)} />
+
+                </div>
+              </div>
+              <div className="row g-3 p2" >
+                <div className="col-md-3">
+                  <br></br>
+
+                  <FormControl fullWidth>
+                    <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
+                    <Select
+                      labelId="tipoTelhado"
+                      id="tipoTelhado"
+                      value={telhado}
+                      label="Categoria"
+                      onChange={(e) => setTelhado(e.target.value)}
+
+                    >
+                      {
+                        telhados.length > 0 &&
+                        telhados.map((option, i) => {
+                          return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                        })
+                      }
+
+                    </Select>
+                  </FormControl>
+
+                </div>
+
+
                 <br></br>
-                
-                  <div className="col-md-3">
-                    
-                    <br></br>
-                      <FormControl fullWidth>
-                        <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
-                        <Select
-                          labelId="tipoLigacao"
-                          id="tipoLigacao"
-                          value={tipoL}
-                          label="Telhado"
-                          onChange={(e) => setTipoL(e.target.value)}
 
-                        >
-                          <MenuItem value={'Monofásico'}>Monofásico</MenuItem>
-                          <MenuItem value={'Bifásico'}>Bifásico</MenuItem>
-                          <MenuItem value={'Trifásico'}>Trifásico</MenuItem>
+                <div className="col-md-3">
 
-                        </Select>
-                      </FormControl>
-
-                   
-                  </div>
-                  <div className="col-md-3">
-                  
-                   <br></br>
-                      <NumberFormatCustom type="number" label={"Fator Solar"} type='number' variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
-
-                    </div>
-                    </div>
-                    <div className="row " >
-                  <div className="col-md-3">
                   <br></br>
                   <FormControl fullWidth>
-                        <InputLabel id="inputGrupo">Grupo</InputLabel>
-                        <Select
-                          labelId="tipoLigacao"
-                          id="inputGrupo"
-                          value={grupo}
-                          label="inputGrupo"
-                          onChange={(e) => setGrupo(e.target.value)}
-                        >
+                    <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
+                    <Select
+                      labelId="tipoLigacao"
+                      id="tipoLigacao"
+                      value={tipoL}
+                      label="Telhado"
+                      onChange={(e) => setTipoL(e.target.value)}
 
-                          <MenuItem value={'A'}>Grupo A</MenuItem>
-                          <MenuItem value={'B'}>Grupo B</MenuItem>
+                    >
+                      <MenuItem value={'Monofásico'}>Monofásico</MenuItem>
+                      <MenuItem value={'Bifásico'}>Bifásico</MenuItem>
+                      <MenuItem value={'Trifásico'}>Trifásico</MenuItem>
 
-                        </Select>
-                      </FormControl>
-                      
+                    </Select>
+                  </FormControl>
+
+
                 </div>
-                      
-                  <div className="col-md-3">
-                   
-                      <br></br>
+                <div className="col-md-3">
 
-                      <FormControl fullWidth>
-                        <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
-                        <Select
-                          labelId="inputSubgrupo"
-                          id="inputSubgrupo"
-                          value={subgrupo}
-                          label="inputSubgrupo"
-                          onChange={(e) => setSubGrupo(e.target.value)}
-                        >
-                          {grupo === 'A' ? <>
+                  <br></br>
+                  <NumberFormatCustom type="number" label={"Fator Solar"} type='number' variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
 
-                            <MenuItem value={'A3'}>A3</MenuItem>
-                            <MenuItem value={'A4'}>A4</MenuItem>
-
-                          </>
-                            :
-                            <>
-                              <MenuItem value={'B1'}>B1</MenuItem>
-                              <MenuItem value={'B2'}>B2</MenuItem>
-                              <MenuItem value={'B3'}>B3</MenuItem>
-
-
-                            </>}
-                        </Select>
-                      </FormControl>
-
-                    </div>
-               
-                  <div className="col-md-3">
+                </div>
+              </div>
+              <div className="row " >
+                <div className="col-md-3">
+                  <br></br>
                   <FormControl fullWidth>
-                    <br></br>
-                        <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
-                        <Select
-                          labelId="tipoLigacao"
-                          id="modalidade"
-                          value={modalidade}
-                          label="modalidade"
-                          onChange={(e) => { setModalidade(e.target.value); }}
+                    <InputLabel id="inputGrupo">Grupo</InputLabel>
+                    <Select
+                      labelId="tipoLigacao"
+                      id="inputGrupo"
+                      value={grupo}
+                      label="inputGrupo"
+                      onChange={(e) => setGrupo(e.target.value)}
+                    >
 
-                        >
-                          <MenuItem value={'HA'}>Horos. Azul</MenuItem>
-                          <MenuItem value={'HV'}>Horos.Verde</MenuItem>
-                          <MenuItem value={'Rural'}>Rural</MenuItem>
+                      <MenuItem value={'A'}>Grupo A</MenuItem>
+                      <MenuItem value={'B'}>Grupo B</MenuItem>
 
-                        </Select>
-                      </FormControl>
-                      
+                    </Select>
+                  </FormControl>
 
-                    <br></br>
-                    
-                     
-
-                 </div>
-                  </div>
-                  <div className="row" >
-                  <div className="col-md-3">
-                    <br></br>
-
-                      <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
-
-                    </div>
-                  
-             
-                
-                  <div className="col-md-3">
-                      <br></br>
-                       
-                      <NumberFormatCustom type="number" label={"Demanda FP"} type='number' variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
-
-                    
-                  </div>
-                  
-                  <div className="col-md-3">
-                    <br></br>
-
-                      <NumberFormatCustom type="number" label={"Demanda Ponta"} type='number' variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
-                    
-                  
-                   </div> 
                 </div>
 
-                <div className="row " >
-                  <div className="col-md-3">
-                   
-                   <br></br>
+                <div className="col-md-3">
 
-                      <NumberFormatCustom type="number" label={"Energia FP"} type='number' variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} ></NumberFormatCustom>
-
-                    </div>
-                  
-                  <div className="col-md-3">
-                    <br></br>
-
-                      <NumberFormatCustom type="number" label={"Energia Ponta"} type='number' variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
-                    
-                  </div>
-               
-                
-                  <div className="col-md-3">
                   <br></br>
 
-                      <NumberFormatCustom type="number" label={"Geração Sugerida"} type='number' variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+                  <FormControl fullWidth>
+                    <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
+                    <Select
+                      labelId="inputSubgrupo"
+                      id="inputSubgrupo"
+                      value={subgrupo}
+                      label="inputSubgrupo"
+                      onChange={(e) => setSubGrupo(e.target.value)}
+                    >
 
-                    </div>
-                
-  
+                      <MenuItem value={'B1'}>B1</MenuItem>
+                      <MenuItem value={'B2'}>B2</MenuItem>
+                      <MenuItem value={'B3'}>B3</MenuItem>
+                      <MenuItem value={'A3'}>A3</MenuItem>
+                      <MenuItem value={'A4'}>A4</MenuItem>
+                    </Select>
+                  </FormControl>
+
                 </div>
-                <div className="row g-3 p2" >
-                  <div className="col-md-10">
-                  </div>
-                  <div className="col-md-2">
-                    <button className="btn btn-primary text-light" type="submit" onClick={updateDimensionamento}>
-                      Atualizar
-                    </button>
-                  </div>
+
+                <div className="col-md-3">
+                <br></br>
+                  <FormControl fullWidth>
+                   
+                    <InputLabel id="tipoLigacao">Modalidade</InputLabel>
+                    <Select
+                      labelId="tipoLigacao"
+                      id="modalidade"
+                      value={modalidade}
+                      label="modalidade"
+                      onChange={(e) => { setModalidade(e.target.value); }}
+
+                    >
+                      <MenuItem value={'HA'}>Horos. Azul</MenuItem>
+                      <MenuItem value={'HV'}>Horos.Verde</MenuItem>
+                      <MenuItem value={'Rural'}>Rural</MenuItem>
+
+                    </Select>
+                  </FormControl>
+
+
+                  <br></br>
+
+
+
                 </div>
-              
-            
-          </form>
-        </div>
+              </div>
+              <div className="row" >
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+
+
+
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Demanda FP"} type='number' variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
+
+
+                </div>
+
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Demanda Ponta"} type='number' variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
+
+
+                </div>
+              </div>
+
+              <div className="row " >
+                <div className="col-md-3">
+
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Energia FP"} type='number' variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Energia Ponta"} type='number' variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+
+
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Geração Sugerida"} type='number' variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+
+
+              </div>
+              <div className="row g-3 p2" >
+                <div className="col-md-10">
+                </div>
+                <div className="col-md-2">
+                  <button className="btn btn-primary text-light" type="submit" onClick={updateDimensionamento}>
+                    Atualizar
+                  </button>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
         </div>
       </div>
     </div>

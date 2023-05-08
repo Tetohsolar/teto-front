@@ -36,6 +36,11 @@ const ValoresProposta = () => {
   const [valorComissao, setValorComissao] = useState('')
   const [tipoSistema, setTipoSistema] = useState('')
   const navigate = useNavigate();
+  const [cip, setCip] = useState('')
+  const [bandeira, setBandeira] = useState('')
+  const [potenciaS,setPotenciaS]=useState('')
+  const [media, setMedia] = useState('')
+
 
 
   const { businessId } = useParams();
@@ -77,6 +82,14 @@ const ValoresProposta = () => {
       }
       setValorComissao(response.data.valuesellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
       setTotalCusto(response.data.amountcost)
+      setTipoSistema(response.data.TypeSystemId)
+      setPotenciaS(response.data.systempower)
+      setMedia(response.data.avgmonth)
+      setCip(response.data.cip)
+      setBandeira(response.data.flag)
+      
+      
+
     
     }).catch((error) => { console.log(error) })
 
@@ -271,6 +284,32 @@ const ValoresProposta = () => {
               <div className="col-md-3">
                 
                 <NumberFormatCustom label={"Valor total do projeto (R$)"}  variant="outlined" decimal={2} value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} ></NumberFormatCustom>
+                
+              </div>
+              <div className="col-md-3">
+                
+                <NumberFormatCustom label={"Tipo do sistema"}  variant="outlined" decimal={2} value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} ></NumberFormatCustom>
+                
+              </div>
+             
+              <div className="col-md-3">
+                
+                <NumberFormatCustom label={"Média mensal (kWh)"}  variant="outlined" decimal={2} value={media} onChange={(e) => setMedia(e.target.value)} ></NumberFormatCustom>
+                
+              </div>
+              <div className="col-md-3">
+                
+                <NumberFormatCustom label={"Potência do sistema"}  variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
+                
+              </div>
+              <div className="col-md-3">
+                
+                <NumberFormatCustom label={"CIP"}  variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+                
+              </div>
+              <div className="col-md-3">
+                
+                <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={2} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
                 
               </div>
 
