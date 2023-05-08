@@ -6,6 +6,8 @@ import { useState } from "react";
 import MaskedTextField from '../communs/MaskedTextField';
 import UFTextField from '../communs/UFTextField';
 import api from '../../api';
+import { cpfMask } from './cpfmask'
+import { cnpjMask } from './cnpjmask'
 export default function CustomerDataForm() {
   const [type, setType] = React.useState("");
   const [item, setItem] = React.useState("");
@@ -43,6 +45,41 @@ export default function CustomerDataForm() {
 
   const list = ["Item 1", "Item 2"];
 
+  function handleMask(e) {
+    if (tipoPessoa === "F" || tipoPessoa === "") {
+      const formatado = cpfMask(doc);
+      setDoc(formatado);
+    } else {
+      const formatado = cnpjMask(doc);
+      setDoc(formatado);
+    }
+
+  }
+  //chama para trocar assunto
+  function handleTipoPessoa(e) {
+
+    handleTipoPessoaValue(e.target.value)
+
+  }
+  function handleTipoPessoaValue(e) {
+
+    if (e === "F" || e === "") {
+      setLbFantasia("Nome*");
+      setExibeCorporateName("");
+      setLbDocument("CPF*")
+      setTipoPessoa("F")
+      setMaskDOC("999.999.999-99")
+
+    } else {
+      setLbFantasia("Fantasia*");
+      setExibeCorporateName("J")
+      setLbDocument("CNPJ*")
+      setTipoPessoa("J")
+      setMaskDOC("99.999.999/9999-99")
+
+    }
+
+  }
   async function handleEstadoValue(value) {
     const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + value + "/municipios";
 
@@ -93,7 +130,7 @@ export default function CustomerDataForm() {
                 id="demo-simple-select"
                 value={type}
                 label="Tipo"
-                onChange={handleChange}
+                onChange={(e) => { handleTipoPessoa(e) }}
               >
                  <MenuItem value={'F'}>Física</MenuItem>
                 <MenuItem value={'J'}>Jurídica</MenuItem>
