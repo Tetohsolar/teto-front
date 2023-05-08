@@ -28,7 +28,8 @@ export default function CustomerDataForm() {
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
-
+  const [lbDocument, setLbDocument] = useState('CPF')
+  const [maskDOC, setMaskDOC] = useState('999.999.999-99')
   
   const handleChange = (event) => {
     setType(event.target.value);
@@ -51,7 +52,8 @@ export default function CustomerDataForm() {
         'Content-Type': 'application/json',
       }),
     };
-
+   
+    
     await fetch(url, requestInfo)
       .then(resposta => resposta.json())
       .then((json) => setCidades(json))
@@ -85,7 +87,7 @@ export default function CustomerDataForm() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <FormControl fullWidth size="small">
+            <FormControl fullWidth >
               <InputLabel>Tipo</InputLabel>
               <Select
                 id="demo-simple-select"
@@ -99,32 +101,25 @@ export default function CustomerDataForm() {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia} size="small"
+          <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia} 
               variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="name"
-              name="name"
-              label="Nome"
-              fullWidth
-              size="small"
-            />
+          <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
           </Grid>
 
           <Grid item xs={12} sm={4}>
-           <MaskedTextField label={"Telefone"} size="small" mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
+           <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <MaskedTextField label={"Whatsapp"} size="small" mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
+          <MaskedTextField label={"Whatsapp"}  mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <MaskedTextField label={"CEP"} size="small" mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
+          <MaskedTextField label={"CEP"}  mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
           </Grid>
 
           <Grid item xs={12} sm={4}>
-          <UFTextField variant="outlined" size="small" value={estado} onChange={handleEstado} ></UFTextField>
+          <UFTextField variant="outlined"  value={estado} onChange={handleEstado} ></UFTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
@@ -134,7 +129,6 @@ export default function CustomerDataForm() {
                 id="demo-simple-select"
                 value={cidade}
                 label="inputMarca"
-                size="small"
                 onChange={(e) => setCidade(e.target.value)}
               >
                 {cidades != null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
@@ -143,21 +137,21 @@ export default function CustomerDataForm() {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <TextField id="Rua" maxLength={50} className="form-control " label='Rua' size="small" variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
+          <TextField id="Rua" maxLength={50} className="form-control " label='Rua'  variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
           </Grid>
 
           <Grid item xs={12} sm={4}>
-          <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' size="small" variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
+          <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro'  variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={4}>
-             <MaskedTextField type="number" label={"Número"} size="small"  type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
+             <MaskedTextField type="number" label={"Número"}   type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <TextField id="email" maxLength={50} className="form-control" label='E-mail' size="small" variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+          <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
           </Grid>
 
           <Grid item xs={12} sm={12}>
-          <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' size="small" variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+          <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
           </Grid>
         </Grid>
       </box>
