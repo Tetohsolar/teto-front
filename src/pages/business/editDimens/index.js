@@ -19,17 +19,17 @@ const EditDimensionamento = () => {
 
   const [name, setName] = useState()
   const [fatorS, setFatorS] = useState()
-  const [telhado, setTelhado] = useState()
-  const [tipoL, setTipoL] = useState()
-  const [modalidade, setModalidade] = useState()
-  const [grupo, setGrupo] = useState()
-  const [subgrupo, setSubGrupo] = useState()
-  const [demandaFp, setDemandaFp] = useState()
-  const [energiaFp, setEnergiaFp] = useState()
-  const [demandaP, setDemandaP] = useState()
-  const [energiaP, setEnergiaP] = useState()
-  const [tipoSistema, setTipoSistema] = useState()
-  const [donoN, setDonoN] = useState()
+  const [telhado, setTelhado] = useState(0)
+  const [tipoL, setTipoL] = useState('')
+  const [modalidade, setModalidade] = useState('')
+  const [grupo, setGrupo] = useState('')
+  const [subgrupo, setSubGrupo] = useState('')
+  const [demandaFp, setDemandaFp] = useState('')
+  const [energiaFp, setEnergiaFp] = useState('')
+  const [demandaP, setDemandaP] = useState('')
+  const [energiaP, setEnergiaP] = useState('')
+  const [tipoSistema, setTipoSistema] = useState('')
+  const [donoN, setDonoN] = useState('')
   const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
@@ -172,11 +172,11 @@ const EditDimensionamento = () => {
       }
 
     }).then((response) => {
-
+      
       setName(response.data["Client.fantasy"])
       setDonoN(response.data['User.name'])
       setFatorS(response.data.sunIndex)
-      //setTelhado(response.data.roof)
+      setTelhado(response.data.RoofId)
       setTipoL(response.data.typeConnection)
       setModalidade(response.data.modality)
       setGrupo(response.data.group)
@@ -186,6 +186,8 @@ const EditDimensionamento = () => {
       setDemandaP(response.data.demandaP)
       setEnergiaP(response.data.energiaP)
       setTipoSistema(response.data.type)
+      setGeracaoSugerida(response.data.suggestedGeneration)
+      setConsumoMedio(response.data.avgconsumption)
 
     }).catch((error) => { console.log(error) })
 
@@ -256,6 +258,7 @@ const EditDimensionamento = () => {
 
               <div className="row" >
                 <div className="col-md-5">
+                  <br></br>
 
 
                   <TextField id="inputFirstName" maxLength={50} className="form-control" label='Nome' variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
@@ -263,6 +266,7 @@ const EditDimensionamento = () => {
 
                 </div>
                 <div className="col-md-4 ">
+                  <br></br>
 
 
                   <TextField id="inputFirstName" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={donoN || ''} onChange={(e) => setDonoN(e.target.value)} />
@@ -283,6 +287,7 @@ const EditDimensionamento = () => {
                       onChange={(e) => setTelhado(e.target.value)}
 
                     >
+                      <MenuItem key={-1}value={''}></MenuItem>
                       {
                         telhados.length > 0 &&
                         telhados.map((option, i) => {
@@ -328,27 +333,7 @@ const EditDimensionamento = () => {
                 </div>
               </div>
               <div className="row " >
-                <div className="col-md-3">
-                  <br></br>
-                  <FormControl fullWidth>
-                    <InputLabel id="inputGrupo">Grupo</InputLabel>
-                    <Select
-                      labelId="tipoLigacao"
-                      id="inputGrupo"
-                      value={grupo}
-                      label="inputGrupo"
-                      onChange={(e) => setGrupo(e.target.value)}
-                    >
-
-                      <MenuItem value={'A'}>Grupo A</MenuItem>
-                      <MenuItem value={'B'}>Grupo B</MenuItem>
-
-                    </Select>
-                  </FormControl>
-
-                </div>
-
-                <div className="col-md-3">
+              <div className="col-md-3">
 
                   <br></br>
 
@@ -371,6 +356,28 @@ const EditDimensionamento = () => {
                   </FormControl>
 
                 </div>
+             
+                <div className="col-md-3">
+                  <br></br>
+                  <FormControl fullWidth>
+                    <InputLabel id="inputGrupo">Grupo</InputLabel>
+                    <Select
+                      labelId="tipoLigacao"
+                      id="inputGrupo"
+                      value={grupo}
+                      label="inputGrupo"
+                      onChange={(e) => setGrupo(e.target.value)}
+                    >
+
+                      <MenuItem value={'A'}>Grupo A</MenuItem>
+                      <MenuItem value={'B'}>Grupo B</MenuItem>
+
+                    </Select>
+                  </FormControl>
+
+                </div>
+
+                
 
                 <div className="col-md-3">
                 <br></br>
@@ -385,10 +392,12 @@ const EditDimensionamento = () => {
                       onChange={(e) => { setModalidade(e.target.value); }}
 
                     >
+                      <MenuItem value={'Convencional'}>Convencional</MenuItem>
+                      <MenuItem value={'Rural'}>Rural</MenuItem>
+                      <MenuItem value={'outros'}>Outros</MenuItem>
                       <MenuItem value={'HA'}>Horos. Azul</MenuItem>
                       <MenuItem value={'HV'}>Horos.Verde</MenuItem>
-                      <MenuItem value={'Rural'}>Rural</MenuItem>
-
+                      
                     </Select>
                   </FormControl>
 
