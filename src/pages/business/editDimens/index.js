@@ -172,7 +172,7 @@ const EditDimensionamento = () => {
       }
 
     }).then((response) => {
-      
+
       setName(response.data["Client.fantasy"])
       setDonoN(response.data['User.name'])
       setFatorS(response.data.sunIndex)
@@ -287,7 +287,7 @@ const EditDimensionamento = () => {
                       onChange={(e) => setTelhado(e.target.value)}
 
                     >
-                      <MenuItem key={-1}value={''}></MenuItem>
+                      <MenuItem key={-1} value={''}></MenuItem>
                       {
                         telhados.length > 0 &&
                         telhados.map((option, i) => {
@@ -333,7 +333,7 @@ const EditDimensionamento = () => {
                 </div>
               </div>
               <div className="row " >
-              <div className="col-md-3">
+                <div className="col-md-3">
 
                   <br></br>
 
@@ -356,7 +356,7 @@ const EditDimensionamento = () => {
                   </FormControl>
 
                 </div>
-             
+
                 <div className="col-md-3">
                   <br></br>
                   <FormControl fullWidth>
@@ -377,12 +377,10 @@ const EditDimensionamento = () => {
 
                 </div>
 
-                
-
                 <div className="col-md-3">
-                <br></br>
+                  <br></br>
                   <FormControl fullWidth>
-                   
+
                     <InputLabel id="tipoLigacao">Modalidade</InputLabel>
                     <Select
                       labelId="tipoLigacao"
@@ -397,7 +395,7 @@ const EditDimensionamento = () => {
                       <MenuItem value={'outros'}>Outros</MenuItem>
                       <MenuItem value={'HA'}>Horos. Azul</MenuItem>
                       <MenuItem value={'HV'}>Horos.Verde</MenuItem>
-                      
+
                     </Select>
                   </FormControl>
 
