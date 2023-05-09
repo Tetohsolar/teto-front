@@ -12,6 +12,7 @@ import { NumericFormat } from 'react-number-format';
 import { async } from 'q';
 import { id } from 'date-fns/locale';
 import NumberFormatCustom from '../communs/DecimalMaskedTextField';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 const ValoresProposta = () => {
   const { token, afflited } = useContext(AuthContext)
   const { sidebarWrapper } = useContext(SidebarWrapperContext)
@@ -40,6 +41,7 @@ const ValoresProposta = () => {
   const [bandeira, setBandeira] = useState('')
   const [potenciaS,setPotenciaS]=useState('')
   const [media, setMedia] = useState('')
+  const[tipoSistemas,setTipoSistemas]=useState([])
 
 
 
@@ -47,7 +49,7 @@ const ValoresProposta = () => {
 
 
   useEffect(() => {
-
+     buscaSistema()
 
     if (businessId) {
       loadbId(businessId)
@@ -57,6 +59,21 @@ const ValoresProposta = () => {
 
   }, [])
 
+  async function buscaSistema() {
+
+
+    await api.get('/typesystem/all',
+
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }
+    ).then((response) => {
+      setTipoSistemas(response.data.types)
+    })
+
+  }
 
   async function loadbId(id) {
 
@@ -80,7 +97,7 @@ const ValoresProposta = () => {
       if (response.data.amountcost) {
         setTotalLu(response.data.amountcost)
       }
-      setValorComissao(response.data.valuesellercomission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+      setValorComissao(response.data.sellercomission)
       setTotalCusto(response.data.amountcost)
       setTipoSistema(response.data.TypeSystemId)
       setPotenciaS(response.data.systempower)
@@ -288,8 +305,25 @@ const ValoresProposta = () => {
               </div>
               <div className="col-md-3">
                 
-                <NumberFormatCustom label={"Tipo do sistema"}  variant="outlined" decimal={2} value={tipoSistema} onChange={(e) => setTipoSistema(e.target.value)} ></NumberFormatCustom>
-                
+              <FormControl fullWidth>
+                    <InputLabel id="tipoSistema">Tipo de sistema</InputLabel>
+                    <Select
+                      labelId="tipoSistema"
+                      id="tipoSistema"
+                      value={tipoSistema}
+                      label="Sistema"
+                      onChange={(e) => setTipoSistema(e.target.value)}
+
+                    >
+                      <MenuItem key={-1}value={''}></MenuItem>
+                      {
+                        tipoSistemas.length > 0 &&
+                        tipoSistemas.map((option, i) => {
+                          return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                        })
+                      }
+                </Select>
+                </FormControl>
               </div>
              
               <div className="col-md-3">
@@ -309,7 +343,7 @@ const ValoresProposta = () => {
               </div>
               <div className="col-md-3">
                 
-                <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={2} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+                <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
                 
               </div>
 
