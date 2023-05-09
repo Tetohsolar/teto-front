@@ -8,6 +8,9 @@ import UFTextField from '../communs/UFTextField';
 import api from '../../api';
 import { cpfMask } from './cpfmask'
 import { cnpjMask } from './cnpjmask'
+import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 export default function CustomerDataForm() {
   const [type, setType] = React.useState("");
   const [item, setItem] = React.useState("");
@@ -32,6 +35,8 @@ export default function CustomerDataForm() {
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
   const [lbDocument, setLbDocument] = useState('CPF')
   const [maskDOC, setMaskDOC] = useState('999.999.999-99')
+  const { token, userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
+  const [IdClient, setIdClient] = useState('')
   
   const handleChange = (event) => {
     setType(event.target.value);
@@ -115,6 +120,48 @@ export default function CustomerDataForm() {
 
     }
   };
+  async function handleFindClient(e) {
+    e.preventDefault();
+
+    console.log("passou no cpf")
+    try {
+      if (!doc) {
+        return
+      }
+
+      await api.post('/client/getbydocument',
+        { "document": `${doc}` }, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        handleEstadoValue(response.data.Addresses[0].state)
+        console.log(response)
+        setName(response.data.fantasy)
+        setEmail(response.data.email)
+        setPhone(response.data.phone)
+        setZap(response.data.zap)
+        setInformacoesAdicionais(response.data.addInformation)
+        setEstado(response.data.Addresses[0].state)
+        setCidade(response.data.Addresses[0].city)
+        setCepData(response.data.Addresses[0].postcode)
+        setRua(response.data.Addresses[0].street)
+        setBairro(response.data.Addresses[0].neighborhood)
+        setNumero(response.data.Addresses[0].number)
+        setIdClient(response.data.id)
+        setIdAdd(response.data.Addresses[0].id)
+
+      }).catch((error) => {
+        setIdClient(null)
+        toast.error(error.response.data.message)
+      });
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
 
   return (
     <React.Fragment>
@@ -128,22 +175,27 @@ export default function CustomerDataForm() {
               <InputLabel>Tipo</InputLabel>
               <Select
                 id="demo-simple-select"
-                value={type}
+                value={tipoPessoa}
                 label="Tipo"
-                onChange={(e) => { handleTipoPessoa(e) }}
+                onChange={(e) => { handleTipoPessoa(e) }
+                }
+                onBlur={handleFindClient}
               >
                  <MenuItem value={'F'}>Física</MenuItem>
                 <MenuItem value={'J'}>Jurídica</MenuItem>
               </Select>
             </FormControl>
           </Grid>
+
+          <Grid item xs={12} sm={4}>
+          <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)} onBlur={ handleFindClient}  ></MaskedTextField>
+          </Grid>
+
           <Grid item xs={12} sm={4}>
           <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia} 
               variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
           </Grid>
-          <Grid item xs={12} sm={4}>
-          <MaskedTextField label={lbDocument} mask={maskDOC} variant="outlined" value={doc} onChange={(e) => setDoc(e.target.value)}  ></MaskedTextField>
-          </Grid>
+          
 
           <Grid item xs={12} sm={4}>
            <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
