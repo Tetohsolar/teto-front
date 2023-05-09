@@ -56,8 +56,8 @@ export default function GeneratorDataForm() {
   const [geracaoSu, setGeracaoSu] = useState('')
   const [cip, setCip] = useState('')
   const [bandeira, setBandeira] = useState('')
-  const [potenciaS,setPotenciaS]=React.useState('')
-  
+  const [potenciaS, setPotenciaS] = React.useState('')
+
 
 
 
@@ -562,23 +562,23 @@ export default function GeneratorDataForm() {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"Geração desejada (KWh)"}  variant="outlined" decimal={2} value={geracaoDesejada } onChange={(e) => setGeracaoDesejada (e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"Número de placas"}  variant="outlined" decimal={2} value={nPlacas} onChange={(e) => setNplacas(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Número de placas"} variant="outlined" decimal={2} value={nPlacas} onChange={(e) => setNplacas(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"Potência do sistema"}  variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-            <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
             </Grid>
           </Grid>
         </div>
