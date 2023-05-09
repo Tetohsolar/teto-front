@@ -7,9 +7,8 @@ import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import { InputLabel, MenuItem, Select, TextField, FormControl } from '@mui/material';
-import MaskedTextField from '../../../components/communs/MaskedTextField';
-import NumberFormatCustom from '../../../components/communs/DecimalMaskedTextField';
 
+import NumberFormatCustom from '../../../components/communs/DecimalMaskedTextField';
 
 
 const EditDimensionamento = () => {
@@ -399,10 +398,7 @@ const EditDimensionamento = () => {
                     </Select>
                   </FormControl>
 
-
                   <br></br>
-
-
 
                 </div>
               </div>
@@ -414,13 +410,10 @@ const EditDimensionamento = () => {
 
                 </div>
 
-
-
                 <div className="col-md-3">
                   <br></br>
 
                   <NumberFormatCustom type="number" label={"Demanda FP"} type='number' variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
-
 
                 </div>
 
@@ -428,7 +421,6 @@ const EditDimensionamento = () => {
                   <br></br>
 
                   <NumberFormatCustom type="number" label={"Demanda Ponta"} type='number' variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
-
 
                 </div>
               </div>
@@ -449,14 +441,12 @@ const EditDimensionamento = () => {
 
                 </div>
 
-
                 <div className="col-md-3">
                   <br></br>
 
                   <NumberFormatCustom type="number" label={"Geração Sugerida"} type='number' variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
 
                 </div>
-
 
               </div>
               <div className="row g-3 p2" >
@@ -468,7 +458,6 @@ const EditDimensionamento = () => {
                   </button>
                 </div>
               </div>
-
 
             </form>
           </div>
