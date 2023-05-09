@@ -327,20 +327,6 @@ export default function GeneratorDataForm() {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3}>
-              <FormControl fullWidth >
-                <InputLabel>Tipo</InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={type}
-                  label="Tipo"
-                  onChange={(e) => { handleTipoPessoa(e) }}
-                >
-                  <MenuItem value={'F'}>Física</MenuItem>
-                  <MenuItem value={'J'}>Jurídica</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
               <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
                 variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
             </Grid>
