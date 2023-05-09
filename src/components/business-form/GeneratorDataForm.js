@@ -2,7 +2,6 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import {
-  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -10,14 +9,11 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import TabelaRateioBusiness from "../rateio-table";
 import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
-import { NumericFormat } from "react-number-format";
 import api from '../../api';
 import NumberFormatCustom from "../communs/DecimalMaskedTextField";
-
 
 
 
@@ -60,6 +56,8 @@ export default function GeneratorDataForm() {
   const [geracaoSu, setGeracaoSu] = useState('')
   const [cip, setCip] = useState('')
   const [bandeira, setBandeira] = useState('')
+  const [potenciaS,setPotenciaS]=React.useState('')
+  
 
 
 
@@ -504,17 +502,17 @@ export default function GeneratorDataForm() {
             </Grid>
 
             <Grid item xs={12} sm={3}>
-            <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
-            <NumberFormatCustom label={"Geração sugerida (KWh)"}  variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
-            <NumberFormatCustom label={"CIP"}  variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
             <Grid item xs={12} sm={3}>
-            <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
           </Grid>
@@ -564,61 +562,23 @@ export default function GeneratorDataForm() {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
-              <TextField
-                id="g-suggested-kwh"
-                name="g-suggested-kwh"
-                label="Ger. Sugerida (KWh)"
-                fullWidth
-
-              />
+            <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField
-                id="target-generation-kwh"
-                name="target-generation-kwh"
-                label="Ger. Desejada (KWh)"
-                fullWidth
+            <NumberFormatCustom label={"Geração desejada (KWh)"}  variant="outlined" decimal={2} value={geracaoDesejada } onChange={(e) => setGeracaoDesejada (e.target.value)} ></NumberFormatCustom>
 
-              />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="number-of-plates"
-                name="number-of-plates"
-                label="Número de placas"
-                fullWidth
-
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <TextField
-                id="system-power-kwh"
-                name="system-power-kwh"
-                label="Pot. do Sistema (KWh)"
-                fullWidth
-
-              />
+            <NumberFormatCustom label={"Número de placas"}  variant="outlined" decimal={2} value={nPlacas} onChange={(e) => setNplacas(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField
-                id="cip-brl"
-                name="cip-brl"
-                label="CIP (R$)"
-                fullWidth
-
-              />
+            <NumberFormatCustom label={"Potência do sistema"}  variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="flag-brl"
-                name="flag-brl"
-                label="Bandeira (R$)"
-                fullWidth
-
-              />
+            <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+            <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
             </Grid>
           </Grid>
         </div>
