@@ -370,7 +370,7 @@ const ClientForm = (props) => {
     const confirmed = window.confirm('O número de WhatsApp pode ser o mesmo do número de telefone?')
     if (confirmed) {
       setZap(phone)
-    }
+    }   
   }
 
   return (
@@ -411,10 +411,10 @@ const ClientForm = (props) => {
             <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => setCorporateName(e.target.value)} />
           </div>
           <div className="col-md-2 fonec">
-            <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
+            <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur = {confirmPhoneNumber}  ></MaskedTextField>
           </div>
           <div className="col-md-2 zapc">
-            <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)} onBlur = {confirmPhoneNumber}  ></MaskedTextField>
+            <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}   ></MaskedTextField>
           </div>
           <div className={tipoPessoa === "J" ? "cepjc" : "cepc"}>
             <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
