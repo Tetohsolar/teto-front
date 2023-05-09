@@ -13,10 +13,16 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import TabelaRateioBusiness from "../rateio-table";
 import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { NumericFormat } from "react-number-format";
+import api from '../../api';
+import NumberFormatCustom from "../communs/DecimalMaskedTextField";
+
 
 
 
 export default function GeneratorDataForm() {
+  const [type, setType] = React.useState("");
   const { token, userName, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
   const [potenciaSistema, setPotenciaSistema] = React.useState(0)
   const [potenciaModulo, setPotenciaModulo] = React.useState('465')
@@ -27,6 +33,37 @@ export default function GeneratorDataForm() {
   const [geracaoTotal, setGeracaoTotal] = React.useState(0.0)
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = React.useState('')
   const [idRateio, setIdRateio] = React.useState(1)
+  const [lbFantasia, setLbFantasia] = useState('Nome')
+  const [exibeCorporateName, setExibeCorporateName] = useState('')
+  const [lbDocument, setLbDocument] = useState('CPF')
+  const [tipoPessoa, setTipoPessoa] = useState('F')
+  const [maskDOC, setMaskDOC] = useState('999.999.999-99')
+  const [name, setName] = useState('')
+  const [usuario, setUsuario] = useState('')
+  const [fatorSolar, setFatorSolar] = useState('')
+  const [perdas, serPerdas] = useState(afflited.lost / 100)
+  const [modalidade, setModalidade] = useState('Convencional')
+  const [consumoMedio, setConsumoMedio] = useState('')
+  const [subgrupo, setSubgrupo] = useState('B1')
+  const [demandaFP, setDemandaFP] = useState(0)
+  const [energia_FP, setEnergia_FP] = useState(0)
+  const [demPonta, setDem_ponta] = useState(0)
+  const [energiaPonta, setEnergia_ponta] = useState(0)
+  const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
+  const [tipoL, setTipoL] = useState('')
+  const [telhado, setTelhado] = useState(0)
+  const [telhados, setTelhados] = useState([])
+  const [tipoSistema, setTipoSistema] = useState('')
+  const [tipoSistemas, setTipoSistemas] = useState([])
+  const [subGrupo, setSubGrupo] = useState('')
+  const [grupo, setGrupo] = useState('')
+  const [geracaoSu, setGeracaoSu] = useState('')
+  const [cip, setCip] = useState('')
+  const [bandeira, setBandeira] = useState('')
+
+
+
+
 
   const [idSelected, setIdSelected] = React.useState('')
 
@@ -37,7 +74,7 @@ export default function GeneratorDataForm() {
     }
 
   ]);
-  
+
   const handleAfterDel = () => {
 
     const quantidadeItens = dados.length;
@@ -68,6 +105,145 @@ export default function GeneratorDataForm() {
       return novoDados;
     });
   };
+
+  React.useEffect(() => {
+
+    buscaTelhados()
+    buscaSistema()
+
+
+  }, [])
+
+
+  function handleTipoPessoa(e) {
+
+    handleTipoPessoaValue(e.target.value)
+
+  }
+  function handleTipoPessoaValue(e) {
+
+    if (e === "F" || e === "") {
+      setLbFantasia("Nome*");
+      setExibeCorporateName("");
+      setLbDocument("CPF*")
+      setTipoPessoa("F")
+      setMaskDOC("999.999.999-99")
+
+    } else {
+      setLbFantasia("Fantasia*");
+      setExibeCorporateName("J")
+      setLbDocument("CNPJ*")
+      setTipoPessoa("J")
+      setMaskDOC("99.999.999/9999-99")
+
+    }
+
+  }
+
+  function calculaPotenciaConsidedara() {
+
+    let f = parseFloat(fatorSolar) * (1 - perdas)
+    if (isNaN(f)) {
+      setPotenciaConsiderada(0)
+    } else {
+      setPotenciaConsiderada(Math.ceil(f))
+    }
+    let potSistema = 0;
+
+  }
+  function calculaDemana() {
+    handleGrupoAConsMedio()
+    calculaGeracaoTotal()
+
+  }
+  function handleGrupoAConsMedio(e) {
+    buscaGeracaoSugerida()
+    if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
+      setGeracaoSugerida(consumoMedio)
+      setGeracaoSugeridaParcial(consumoMedio)
+      return
+    }
+
+    if (modalidade === "HA" && subgrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
+      const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
+      setConsumoMedio(energiaPonta)
+      //setGeracaoDesejada(energiaPonta)
+      const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+    }
+
+    else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
+      const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
+      setConsumoMedio(valor)
+      //setGeracaoDesejada(valor)
+      let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
+
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+    }
+
+    else if (modalidade === "HA" && subgrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
+      const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
+      setConsumoMedio(valor)
+
+      //GeracaoSugerida
+      let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+
+    }
+    else {
+      setConsumoMedio('')
+      setGeracaoSugerida('')
+    }
+
+  }
+  async function buscaGeracaoSugerida() {
+    setEnergiaPontaTratada(0)
+
+    await api.post('/taxkhw/byparam', {
+      "subgroup": "A3",
+      "modal": "HA",
+      "ep": energiaPonta,
+      "state": "CE"
+
+    }, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }
+    ).then((response) => {
+
+      setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
+
+    })
+
+  }
+  async function buscaGeracaoSugerida() {
+    setEnergiaPontaTratada(0)
+
+    await api.post('/taxkhw/byparam', {
+      "subgroup": "A3",
+      "modal": "HA",
+      "ep": energiaPonta,
+      "state": "CE"
+
+    }, {
+      headers: {
+        'Authorization': `Basic ${token}`
+      }
+    }
+    ).then((response) => {
+
+      setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
+
+    })
+
+  }
+
+
+
   async function calculaDemandaRateios(item) {
     if (item.modality === "Convencional" || item.modalidade === "Rural" || item.modalidade === "Outros") {
       item.suggestedGeneration = item.avgconsumption;
@@ -100,6 +276,37 @@ export default function GeneratorDataForm() {
     setPotenciaSistema(numeroArredondado)
 
   }
+  async function buscaTelhados() {
+
+
+    await api.get('/roofs/all',
+
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }
+    ).then((response) => {
+      setTelhados(response.data.roofs)
+    })
+
+  }
+  async function buscaSistema() {
+
+
+    await api.get('/typesystem/all',
+
+      {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }
+    ).then((response) => {
+      setTipoSistemas(response.data.types)
+    })
+
+  }
+
 
   const [item, setItem] = React.useState("");
 
@@ -122,103 +329,111 @@ export default function GeneratorDataForm() {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3}>
-              <TextField
-                id="customer"
-                name="customer"
-                label="Cliente"
-                fullWidth
-                disabled
-              />
+              <FormControl fullWidth >
+                <InputLabel>Tipo</InputLabel>
+                <Select
+                  id="demo-simple-select"
+                  value={type}
+                  label="Tipo"
+                  onChange={(e) => { handleTipoPessoa(e) }}
+                >
+                  <MenuItem value={'F'}>Física</MenuItem>
+                  <MenuItem value={'J'}>Jurídica</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TextField
-                id="user"
-                name="user"
-                label="Usuário"
-                fullWidth
-                disabled
+              <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
+                variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
+            </Grid>
+            <Grid item xs={12} sm={3}>
 
-              />
+              <TextField id="inputCodigo" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={usuario || ''} onChange={(e) => setUsuario(e.target.value)} />
+
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TextField
-                required
-                id="sun-factor"
-                name="sun-factor"
-                label="Fator solar"
-                fullWidth
-                disabled
-              />
+              <NumberFormatCustom label={"Fator solar"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TextField
-                id="considered-power"
-                name="considered-power"
-                label="Potência considerada"
-                fullWidth
-                disabled
-              />
+              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+
             </Grid>
 
             <Grid item xs={12} sm={3}>
-              <FormControl fullWidth >
-                <InputLabel>Tipo de ligação</InputLabel>
+              <NumberFormatCustom label={"Potência considerada"} variant="outlined" decimal={2} value={potenciaConsiderada} onChange={(e) => setPotenciaConsiderada(e.target.value)} />
+
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
                 <Select
-                  id="simple-select-connection-type"
-                  value={item}
-                  label="Tipo de ligação"
-                  onChange={handleChange}
+                  labelId="tipoLigacao"
+                  id="tipoLigacao"
+                  value={tipoL}
+                  label="Telhado"
+                  onChange={(e) => setTipoL(e.target.value)}
+
                 >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
+                  <MenuItem value={'Monofásico'}>Monofásico</MenuItem>
+                  <MenuItem value={'Bifásico'}>Bifásico</MenuItem>
+                  <MenuItem value={'Trifásico'}>Trifásico</MenuItem>
+
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <FormControl fullWidth >
-                <InputLabel>Tipo de telhado</InputLabel>
+              <FormControl fullWidth>
+                <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
                 <Select
-                  id="simple-select-roof-type"
-                  value={item}
-                  label="Tipo de telhado"
-                  onChange={handleChange}
+                  labelId="tipoTelhado"
+                  id="tipoTelhado"
+                  value={telhado}
+                  label="Categoria"
+                  onChange={(e) => setTelhado(e.target.value)}
+
                 >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
+                  <MenuItem key={-1} value={''}></MenuItem>
+                  {
+                    telhados.length > 0 &&
+                    telhados.map((option, i) => {
+                      return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                    })
+                  }
+
+                </Select>
+              </FormControl>
+
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <InputLabel id="tipoSistema">Tipo de sistema</InputLabel>
+                <Select
+                  labelId="tipoSistema"
+                  id="tipoSistema"
+                  value={tipoSistema}
+                  label="Sistema"
+                  onChange={(e) => setTipoSistema(e.target.value)}
+
+                >
+                  <MenuItem key={-1} value={''}></MenuItem>
+                  {
+                    tipoSistemas.length > 0 &&
+                    tipoSistemas.map((option, i) => {
+                      return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                    })
+                  }
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <FormControl fullWidth >
-                <InputLabel>Tipo de sistema</InputLabel>
-                <Select
-                  id="simple-select-system-type"
-                  value={item}
-                  label="Tipo de sistema"
-                  onChange={handleChange}
-                >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                id="panel-power"
-                name="panel-power"
-                label="Potência do painel"
-                fullWidth
-                disabled
-              />
+              <NumberFormatCustom label={"Potência do painel"} variant="outlined" decimal={2} value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana} />
             </Grid>
           </Grid>
         </div>
       </box>
       <br></br>
-
       <box>
         <div class="card w-100">
           <div class="card-header">
@@ -230,82 +445,176 @@ export default function GeneratorDataForm() {
 
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth >
-                <InputLabel>Grupo</InputLabel>
+              <FormControl fullWidth>
+                <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                 <Select
-                  id="simple-select-group"
-                  value={item}
-                  label="Grupo"
-                  onChange={handleChange}
+                  labelId="inputSubgrupo"
+                  id="inputSubgrupo"
+                  value={subgrupo}
+                  label="inputSubgrupo"
+                  onChange={(e) => setSubGrupo(e.target.value)}
                 >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
+
+                  <MenuItem value={'B1'}>B1</MenuItem>
+                  <MenuItem value={'B2'}>B2</MenuItem>
+                  <MenuItem value={'B3'}>B3</MenuItem>
+                  <MenuItem value={'A3'}>A3</MenuItem>
+                  <MenuItem value={'A4'}>A4</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth >
-                <InputLabel>Sub-grupo</InputLabel>
+              <FormControl fullWidth>
+                <InputLabel id="inputGrupo">Grupo</InputLabel>
                 <Select
-                  id="simple-select-subgroup"
-                  value={item}
-                  label="Sub-grupo"
-                  onChange={handleChange}
+                  labelId="tipoLigacao"
+                  id="inputGrupo"
+                  value={grupo}
+                  label="inputGrupo"
+                  onChange={(e) => setGrupo(e.target.value)}
                 >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
+
+                  <MenuItem value={'A'}>Grupo A</MenuItem>
+                  <MenuItem value={'B'}>Grupo B</MenuItem>
+
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth >
-                <InputLabel>Modalidade</InputLabel>
+              <FormControl fullWidth>
+
+                <InputLabel id="tipoLigacao">Modalidade</InputLabel>
                 <Select
-                  id="simple-select-mode"
-                  value={item}
-                  label="Modalidade"
-                  onChange={handleChange}
+                  labelId="tipoLigacao"
+                  id="modalidade"
+                  value={modalidade}
+                  label="modalidade"
+                  onChange={(e) => { setModalidade(e.target.value); }}
+
                 >
-                  {list.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
-                  ))}
+                  <MenuItem value={'Convencional'}>Convencional</MenuItem>
+                  <MenuItem value={'Rural'}>Rural</MenuItem>
+                  <MenuItem value={'outros'}>Outros</MenuItem>
+                  <MenuItem value={'HA'}>Horos. Azul</MenuItem>
+                  <MenuItem value={'HV'}>Horos.Verde</MenuItem>
+
                 </Select>
               </FormControl>
+
             </Grid>
 
             <Grid item xs={12} sm={3}>
+            <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+            <NumberFormatCustom label={"Geração sugerida (KWh)"}  variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+            <NumberFormatCustom label={"CIP"}  variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+
+            </Grid>
+            <Grid item xs={12} sm={3}>
+            <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+
+            </Grid>
+          </Grid>
+        </div>
+      </box>
+
+
+      <box>
+        <br></br>
+        <div class="card w-100">
+          <div class="card-header">
+            Rateios
+          </div>
+          <Typography variant="h6" gutterBottom>
+
+          </Typography>
+          <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 } }}>
+
+            <div className="row">
+              <div className="mb-3 mb-sm-0">
+                <div className="card border-light-subtle">
+                  <div className="card-body">
+                    <TabelaRateioBusiness token={token} dados={dados} handleEdit={handleEdit}
+                      handleAdd={handleAdd} setIdSelected={setIdSelected}
+                      handleAfterDel={handleAfterDel} calculaGeracaoTotal={calculaGeracaoTotal}
+                    />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </Paper>
+
+        </div>
+      </box>
+
+      <box>
+        <br></br>
+        <div class="card w-100">
+          <div class="card-header">
+            Informações complementares
+          </div>
+          <Typography variant="h6" gutterBottom>
+
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={4}>
               <TextField
-                id="average-usage"
-                name="average-usage"
-                label="Consumo Médio (KWh)"
+                id="g-suggested-kwh"
+                name="g-suggested-kwh"
+                label="Ger. Sugerida (KWh)"
                 fullWidth
 
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <TextField
-                id="suggested-generation"
-                name="suggested-generation"
-                label="Geração Sugerida (KWh)"
+                id="target-generation-kwh"
+                name="target-generation-kwh"
+                label="Ger. Desejada (KWh)"
                 fullWidth
 
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <TextField
-                id="cip"
-                name="cip"
+                required
+                id="number-of-plates"
+                name="number-of-plates"
+                label="Número de placas"
+                fullWidth
+
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField
+                id="system-power-kwh"
+                name="system-power-kwh"
+                label="Pot. do Sistema (KWh)"
+                fullWidth
+
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                id="cip-brl"
+                name="cip-brl"
                 label="CIP (R$)"
                 fullWidth
 
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <TextField
-                id="flag"
-                name="flag"
+                required
+                id="flag-brl"
+                name="flag-brl"
                 label="Bandeira (R$)"
                 fullWidth
 
@@ -313,110 +622,6 @@ export default function GeneratorDataForm() {
             </Grid>
           </Grid>
         </div>
-      </box>
-
-     
-      <box>
-        <br></br>
-      <div class="card w-100">
-          <div class="card-header">
-          Rateios
-          </div>
-          <Typography variant="h6" gutterBottom>
-          
-        </Typography>
-        <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 } }}>
-          
-            
-            <div className="row">
-                  <div className="mb-3 mb-sm-0">
-                    <div className="card border-light-subtle">
-                      <div className="card-body">
-                        <TabelaRateioBusiness token={token} dados={dados} handleEdit={handleEdit}
-                          handleAdd={handleAdd} setIdSelected={setIdSelected}
-                          handleAfterDel={handleAfterDel} calculaGeracaoTotal={calculaGeracaoTotal}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                         
-           
-        </Paper>
-       
-       </div>
-      </box>
-
-      <box>
-        <br></br>
-      <div class="card w-100">
-          <div class="card-header">
-          Informações complementares
-          </div>
-          <Typography variant="h6" gutterBottom>
-
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="g-suggested-kwh"
-              name="g-suggested-kwh"
-              label="Ger. Sugerida (KWh)"
-              fullWidth
-              
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="target-generation-kwh"
-              name="target-generation-kwh"
-              label="Ger. Desejada (KWh)"
-              fullWidth
-              
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="number-of-plates"
-              name="number-of-plates"
-              label="Número de placas"
-              fullWidth
-              
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="system-power-kwh"
-              name="system-power-kwh"
-              label="Pot. do Sistema (KWh)"
-              fullWidth
-              
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="cip-brl"
-              name="cip-brl"
-              label="CIP (R$)"
-              fullWidth
-              
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="flag-brl"
-              name="flag-brl"
-              label="Bandeira (R$)"
-              fullWidth
-              
-            />
-          </Grid>
-        </Grid>
-      </div>
       </box>
     </React.Fragment>
   );

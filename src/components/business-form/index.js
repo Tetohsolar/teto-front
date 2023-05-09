@@ -128,7 +128,7 @@ const BusinessForm = (props) => {
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
   const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const [tipoSistema, setTipoSistema] = useState('Inversor')
-  const [perdas, serPerdas] = useState(afflited.lost / 100)
+  const [perdas, setPerdas] = useState(afflited.lost / 100)
   const [potenciaConsiderada, setPotenciaConsiderada] = useState('')
   const [potenciaSistema, setPotenciaSistema] = useState(0)
   const [cip, setCip] = useState('')
