@@ -162,6 +162,12 @@ export default function CustomerDataForm() {
 
     }
   }
+  const confirmPhoneNumber = () => {
+    const confirmed = window.confirm('O número de WhatsApp pode ser o mesmo do número de telefone?')
+    if (confirmed) {
+      setZap(phone)
+    }
+  }
 
   return (
     <React.Fragment>
@@ -201,7 +207,7 @@ export default function CustomerDataForm() {
            <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <MaskedTextField label={"Whatsapp"}  mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
+          <MaskedTextField label={"Whatsapp"}  mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)} onBlur = {confirmPhoneNumber}  ></MaskedTextField>
           </Grid>
           <Grid item xs={12} sm={4}>
           <MaskedTextField label={"CEP"}  mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
