@@ -70,6 +70,7 @@ const AfflitedForm = (props) => {
   const [phone, setPhone] = useState('')
   const [cepData, setCepData] = useState('')
   const [zap, setZap] = useState('')
+  const [tempzap, setTempzap] = useState('')
   const [estado, setEstado] = useState('')
   const [cidades, setCidades] = useState([])
   const [cidade, setCidade] = useState('')
@@ -424,7 +425,12 @@ const AfflitedForm = (props) => {
       }
     }
   }
-
+  const confirmPhoneNumber = () => {
+    const confirmed = window.confirm('O número de WhatsApp pode ser o mesmo do número de telefone?')
+    if (confirmed) {
+      setZap(phone)
+    }
+  }
   return (
 
     <div className="p-3 mb-3 bg-white border rounded-3">
@@ -474,7 +480,7 @@ const AfflitedForm = (props) => {
                 <MaskedTextField label={"Telefone"} mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)}  ></MaskedTextField>
               </div>
               <div className="col-md-2 zap">
-                <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)}  ></MaskedTextField>
+                <MaskedTextField label={"Whatsapp"} mask={'(99)9 9999-9999'} variant="outlined" value={zap} onChange={(e) => setZap(e.target.value)} onBlur={confirmPhoneNumber}  ></MaskedTextField>
               </div>
               <div className={tipoPessoa==="J"?"cepj":"cep"}>
                 <MaskedTextField label={"CEP"} mask={'99999-999'} variant="outlined" value={cepData} onChange={(e) => setCepData(e.target.value)} onBlur={(e) => { searchCep() }}></MaskedTextField>
