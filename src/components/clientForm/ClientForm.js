@@ -313,6 +313,7 @@ const ClientForm = (props) => {
     }
     const t = JSON.stringify(json);
     const saida = JSON.parse(t);
+    
 
     if (await validaCampos(name, phone, documento)) {
 
@@ -354,7 +355,7 @@ const ClientForm = (props) => {
     e.preventDefault();
 
     if (validaCampos(name, phone, doc, cepData, zap)) {
-      try {
+      try { console.log('aqui' + num)
         await save(tipoPessoa, name, corporateName, doc, phone, zap, cepData, estado, cidade, rua, bairro, informacoesAdicionais, email, id, idAdd, num)
         navigate(-1);
         toast.success("Operação realizada com sucesso!", {
@@ -444,7 +445,7 @@ const ClientForm = (props) => {
             <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro' variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
           </div>
           <div className="col-md-2 numeroc">
-            <MaskedTextField type="number" label={"Número"} type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
+            <TextField type="number" label={"Número"} variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></TextField>
           </div>
           <div className={tipoPessoa === "J" ? "emailjc" : "emailc"}  >
             <TextField id="email" maxLength={50} className="emailc" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
