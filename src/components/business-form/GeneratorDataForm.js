@@ -326,29 +326,8 @@ export default function GeneratorDataForm() {
 
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth >
-                <InputLabel>Tipo</InputLabel>
-                <Select
-                  id="demo-simple-select"
-                  value={type}
-                  label="Tipo"
-                  onChange={(e) => { handleTipoPessoa(e) }}
-                >
-                  <MenuItem value={'F'}>Física</MenuItem>
-                  <MenuItem value={'J'}>Jurídica</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField id="lbNome*" maxLength={50} className="form-control" label={lbFantasia}
-                variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-
-              <TextField id="inputCodigo" maxLength={50} className="form-control" label='Usuário' variant="outlined" value={usuario || ''} onChange={(e) => setUsuario(e.target.value)} />
-
-            </Grid>
+           
+            
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Fator solar"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
 
@@ -426,8 +405,14 @@ export default function GeneratorDataForm() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Potência do painel"} variant="outlined" decimal={2} value={potenciaModulo} onChange={(e) => setPotenciaModulo(e.target.value)} onBlur={calculaDemana} />
+              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+
             </Grid>
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+
+            </Grid>
+            
           </Grid>
         </div>
       </box>
@@ -442,7 +427,7 @@ export default function GeneratorDataForm() {
           </Typography>
 
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={14} sm={2}>
               <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                 <Select
@@ -461,7 +446,7 @@ export default function GeneratorDataForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={2}>
               <FormControl fullWidth>
                 <InputLabel id="inputGrupo">Grupo</InputLabel>
                 <Select
@@ -478,7 +463,7 @@ export default function GeneratorDataForm() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={2}>
               <FormControl fullWidth>
 
                 <InputLabel id="tipoLigacao">Modalidade</InputLabel>
@@ -507,14 +492,7 @@ export default function GeneratorDataForm() {
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
-
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
-
-            </Grid>
+            
           </Grid>
         </div>
       </box>
@@ -568,18 +546,11 @@ export default function GeneratorDataForm() {
               <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"Número de placas"} variant="outlined" decimal={2} value={nPlacas} onChange={(e) => setNplacas(e.target.value)} ></NumberFormatCustom>
-            </Grid>
+           
             <Grid item xs={12} sm={4}>
               <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
-            </Grid>
+            
           </Grid>
         </div>
       </box>
