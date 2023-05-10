@@ -333,7 +333,7 @@ export default function GeneratorDataForm() {
 
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+              <NumberFormatCustom label={"Perdas"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
 
