@@ -18,7 +18,7 @@ import NumberFormatCustom from "../communs/DecimalMaskedTextField";
 
 
 export default function GeneratorDataForm() {
-  const [type, setType] = React.useState("");
+
   const { token, userName, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
   const [potenciaSistema, setPotenciaSistema] = React.useState(0)
   const [potenciaModulo, setPotenciaModulo] = React.useState('465')
@@ -37,10 +37,9 @@ export default function GeneratorDataForm() {
   const [name, setName] = useState('')
   const [usuario, setUsuario] = useState('')
   const [fatorSolar, setFatorSolar] = useState('')
-  const [perdas, serPerdas] = useState(afflited.lost / 100)
+  const [perdas, setPerdas] = useState(afflited.lost)
   const [modalidade, setModalidade] = useState('Convencional')
   const [consumoMedio, setConsumoMedio] = useState('')
-  const [subgrupo, setSubgrupo] = useState('B1')
   const [demandaFP, setDemandaFP] = useState(0)
   const [energia_FP, setEnergia_FP] = useState(0)
   const [demPonta, setDem_ponta] = useState(0)
@@ -57,7 +56,7 @@ export default function GeneratorDataForm() {
   const [cip, setCip] = useState('')
   const [bandeira, setBandeira] = useState('')
   const [potenciaS, setPotenciaS] = React.useState('')
-
+  const [modalidades, setModalidades] = useState([""])
 
 
 
@@ -140,7 +139,9 @@ export default function GeneratorDataForm() {
 
   function calculaPotenciaConsidedara() {
 
-    let f = parseFloat(fatorSolar) * (1 - perdas)
+    let remofot = fatorSolar.replace(".", "");
+
+    let f = parseFloat(remofot) * (1 - (perdas / 100))
     if (isNaN(f)) {
       setPotenciaConsiderada(0)
     } else {
@@ -151,18 +152,22 @@ export default function GeneratorDataForm() {
   }
   function calculaDemana() {
     handleGrupoAConsMedio()
-    calculaGeracaoTotal()
+    /*calculaGeracaoTotal()*/
+    
 
   }
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
+    
     if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
+      
       setGeracaoSugerida(consumoMedio)
       setGeracaoSugeridaParcial(consumoMedio)
       return
     }
 
-    if (modalidade === "HA" && subgrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
+    
+    if (modalidade === "Horos. Azul" && subGrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(energiaPonta)
       //setGeracaoDesejada(energiaPonta)
@@ -171,7 +176,7 @@ export default function GeneratorDataForm() {
       setGeracaoSugeridaParcial(result)
     }
 
-    else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
+    else if (modalidade === "Horos. Verde" && subGrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
       //setGeracaoDesejada(valor)
@@ -181,7 +186,7 @@ export default function GeneratorDataForm() {
       setGeracaoSugeridaParcial(result)
     }
 
-    else if (modalidade === "HA" && subgrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
+    else if (modalidade === "Horos. Azul" && subGrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
 
@@ -259,6 +264,31 @@ export default function GeneratorDataForm() {
     }
   }
 
+  function handleSubGrup(value) {
+    if (value === "B1") {
+      setGrupo("B")
+      setModalidades(['Convencional'])
+      setModalidade("Convencional")
+
+    }
+
+    if (value === "B2") {
+      setGrupo("B")
+      setModalidades(['Rural'])
+      setModalidade("Rural")
+    }
+    if (value === "B3") {
+      setModalidades(['Outros'])
+      setGrupo("B")
+      setModalidade("Outros")
+    }
+    if (value === "A3" || value === "A4") {
+      setGrupo("A")
+      setModalidades(['Horos. Azul', 'Horos. Verde'])
+    }
+
+  }
+
   function calculaGeracaoTotal() {
     const campoParaSomar = 'suggestedGeneration'; // Campo do JSON que será somado
     const soma = dados.reduce((acumulador, item) => acumulador + parseFloat(item[campoParaSomar]), 0);
@@ -326,14 +356,14 @@ export default function GeneratorDataForm() {
 
           </Typography>
           <Grid container spacing={3}>
-           
-            
+
+
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Fator solar"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={perdas} onChange={(e) => setPerdas(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
 
@@ -371,7 +401,6 @@ export default function GeneratorDataForm() {
                   onChange={(e) => setTelhado(e.target.value)}
 
                 >
-                  <MenuItem key={-1} value={''}></MenuItem>
                   {
                     telhados.length > 0 &&
                     telhados.map((option, i) => {
@@ -412,7 +441,7 @@ export default function GeneratorDataForm() {
               <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
-            
+
           </Grid>
         </div>
       </box>
@@ -433,9 +462,10 @@ export default function GeneratorDataForm() {
                 <Select
                   labelId="inputSubgrupo"
                   id="inputSubgrupo"
-                  value={subgrupo}
+                  value={subGrupo}
                   label="inputSubgrupo"
-                  onChange={(e) => setSubGrupo(e.target.value)}
+                  onChange={(e) => { setSubGrupo(e.target.value); handleSubGrup(e.target.value) }}
+
                 >
 
                   <MenuItem value={'B1'}>B1</MenuItem>
@@ -454,7 +484,9 @@ export default function GeneratorDataForm() {
                   id="inputGrupo"
                   value={grupo}
                   label="inputGrupo"
-                  onChange={(e) => setGrupo(e.target.value)}
+                  onChange={(e) => setGrupo(e.target.value)
+                  }
+                  disabled
                 >
 
                   <MenuItem value={'A'}>Grupo A</MenuItem>
@@ -475,28 +507,56 @@ export default function GeneratorDataForm() {
                   onChange={(e) => { setModalidade(e.target.value); }}
 
                 >
-                  <MenuItem value={'Convencional'}>Convencional</MenuItem>
-                  <MenuItem value={'Rural'}>Rural</MenuItem>
-                  <MenuItem value={'outros'}>Outros</MenuItem>
-                  <MenuItem value={'HA'}>Horos. Azul</MenuItem>
-                  <MenuItem value={'HV'}>Horos.Verde</MenuItem>
+
+                  {
+                    modalidades.length > 0 &&
+                    modalidades.map((option, i) => {
+                      return (<MenuItem key={i} value={option}>{option}</MenuItem>)
+                    })
+                  }
 
                 </Select>
               </FormControl>
 
             </Grid>
 
+           { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
-            </Grid>
+              <NumberFormatCustom  label={"Demanda FP(Kwh)"}  variant="outlined" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+            </Grid>:""
+           }
+           { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Demanda P(Kwh)"}  variant="outlined" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
-            
+            :""}
+
+          { grupo==="A"?
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Energia FP(Kwh)"}  variant="outlined" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+            </Grid>:""}
+
+            { grupo==="A"?
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+            </Grid>:""}
+
+
+            { grupo==="B"?
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Consumo Médio"}  variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+            </Grid>
+            :""}
+
+
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSugeridaParcial} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} ></NumberFormatCustom>
+            </Grid>
+
           </Grid>
         </div>
       </box>
-
+                  
 
       <box>
         <br></br>
@@ -540,17 +600,17 @@ export default function GeneratorDataForm() {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
               <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
 
             </Grid>
-           
+
             <Grid item xs={12} sm={4}>
               <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
             </Grid>
-            
+
           </Grid>
         </div>
       </box>
