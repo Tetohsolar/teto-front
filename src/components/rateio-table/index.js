@@ -10,9 +10,9 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
             <table className="table caption-top table-sm">
                 <thead>
                     <tr>
-                        <th scope="col" className='tamanhoM'>Modalidade</th>
-                        <th scope="col">Grupo</th>
                         <th scope="col">SubGrupo</th>
+                        <th scope="col">Grupo</th>
+                        <th scope="col" className='tamanhoM'>Modalidade</th>
                         <th scope="col" className='alinhaCenter' >Consumo</th>
                         <th scope="col" className='alinhaCenter'>Dem. FP.</th>
                         <th scope="col" className='alinhaCenter'>Ener. F. P. </th>
@@ -29,11 +29,13 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                         return (
                             <tr key={item.id}>
                                 <td>
-                                    <select className='form-select custom-select tamanhoModalidadenovo' value={item.modality} onChange={e => { handleEdit(item.id, 'modality', e.target.value); }}>
-                                        <option value="Convencional">Convencional</option>
-                                        <option value="HA">Horos. Azul</option>
-                                        <option value="HV">Horos. Verde</option>
-                                        <option value="Rural">Rural</option>
+                                    <select className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
+                                        <option value="">Selecione</option>
+                                        <option value="A3">A3</option>
+                                        <option value="A4">A4</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="B3">B3</option>
                                     </select>
                                 </td>
                                 <td>
@@ -43,13 +45,11 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                                     </select>
                                 </td>
                                 <td>
-                                    <select className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
-                                        <option value="">Selecione</option>
-                                        <option value="A3">A3</option>
-                                        <option value="A4">A4</option>
-                                        <option value="B1">B1</option>
-                                        <option value="B2">B2</option>
-                                        <option value="B3">B3</option>
+                                    <select className='form-select custom-select tamanhoModalidadenovo' value={item.modality} onChange={e => { handleEdit(item.id, 'modality', e.target.value); }}>
+                                        <option value="Convencional">Convencional</option>
+                                        <option value="HA">Horos. Azul</option>
+                                        <option value="HV">Horos. Verde</option>
+                                        <option value="Rural">Rural</option>
                                     </select>
                                 </td>
                                 <td>
