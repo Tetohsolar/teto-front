@@ -1,7 +1,7 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import TabelaProdutoEditavel from '../../components/prods';
+import TabelaProdutoEditavel from '../prods';
 import api from '../../api';
 
 
@@ -17,6 +17,8 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthContext } from "../../context/AuthContext";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { Category } from "@mui/icons-material";
 
 export default function SystemTypeform() {
   const { token } = React.useContext(AuthContext)
@@ -26,14 +28,38 @@ export default function SystemTypeform() {
     setItem(event.target.value);
   };
   const [marcas, setMarcas] = React.useState([])
-  const [potenciaModulo, setPotenciaModulo] = React.useState('465')
+  const [potenciaModulo, setPotenciaModulo] = React.useState('')
   const [idSelectedProd, setIdSelectedProd] = React.useState('')
   const [modeloInversor, setModeloInversor] = React.useState([])
+
+  const [listCategory, setListCategory] = useState([])
+
+  async function loadCategorys(type) {
+    try {
+
+      await api.get('/typesystem/all', {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+      }).then((response) => {
+        
+        setListCategory(response.data.types)
+
+      }).catch((error) => {
+        console.log(error.response.data.message)
+      });
+
+
+    } catch (err) {
+      console.log(err)
+
+    }
+  }
 
   const list = ["Item 1", "Item 2"];
   const [dadosProdutos, setDadosProdutos] = React.useState([
     {
-      id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
+      id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: [], preco:0
     }
   ]);
   const handleEditProds = async (id, campo, valor) => {
@@ -49,7 +75,7 @@ export default function SystemTypeform() {
 
     let novoItem =
     {
-      id: idN, type: "Placa", brand: '', model: '', power: potenciaModulo, qtd: 1
+      id: idN, type: "1", brand: '', model: '', power: potenciaModulo, qtd: 1, preco:0
     }
     setIdProd(idN)
     setDadosProdutos(prevDados => [...prevDados, novoItem]);
@@ -68,7 +94,9 @@ export default function SystemTypeform() {
 
   React.useEffect(() => {
 
+    loadCategorys()
     loadbId(businessId)
+    
   }, [])
 
   async function loadbId() {
@@ -92,8 +120,20 @@ export default function SystemTypeform() {
 
   }
   async function carregaPotencia(item) {
+    console.log("modelo"+item.model)
 
-    console.log(item.model)
+    if (item.model===""){
+      
+      setDadosProdutos(prevDados => {
+        const novoDados = [...prevDados];
+        const index = novoDados.findIndex(it => it.id === item.id);
+        novoDados[index]["power"] = "";
+        novoDados[index]["price"] = "";
+        return novoDados;
+      });
+    return
+    }
+    console.log("passou do if")
     const filtro = {
       codef: item.model.trim()
     }
@@ -107,18 +147,16 @@ export default function SystemTypeform() {
         const novoDados = [...prevDados];
         const index = novoDados.findIndex(it => it.id === item.id);
         novoDados[index]["power"] = response.data.power;
+        novoDados[index]["price"] = response.data.price;
         return novoDados;
       });
     })
 
   }
   async function onBlurMarca(item) {
-
+    console.log("yipo é " + item.type)
+    let type = item.type
     if (item.type !== "") {
-      let type = "M"
-      if (item.type === "P") {
-        type = "P";
-      }
       const filtro = {
         "type": type
       }
@@ -146,16 +184,8 @@ export default function SystemTypeform() {
   }
   async function onBlurProdutoMarca(item) {
 
-    let category = "Nenhum"
-    if (item.type === "P") {
-      category = "Placa"
-    }
-    else if (item.type === "I") {
-      category = "Inversor"
-    } else if (item.type === "M") {
-      category = "Microinversor"
-    }
-
+    let category = item.type
+    console.log(item.type)
     const filtro = {
       brand: item.brand,
       category: category,
@@ -163,7 +193,6 @@ export default function SystemTypeform() {
       "pageSize": 100
     }
 
-    console.log(filtro)
     await api.post('/products/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -193,7 +222,7 @@ export default function SystemTypeform() {
                 <div className="card-body">
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={3}>
-                      <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds}
+                      <TabelaProdutoEditavel token={token} dados={dadosProdutos} category={listCategory} handleEdit={handleEditProds}
                         handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
                         handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
                         onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
