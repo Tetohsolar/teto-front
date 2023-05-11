@@ -333,7 +333,7 @@ export default function GeneratorDataForm() {
 
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Perdas"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
+              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
 
@@ -487,7 +487,7 @@ export default function GeneratorDataForm() {
             </Grid>
 
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
