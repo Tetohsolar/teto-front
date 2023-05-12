@@ -549,11 +549,6 @@ export default function GeneratorDataForm(props) {
             </Grid>
             :""}
 
-
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSugeridaParcial} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} ></NumberFormatCustom>
-            </Grid>
-
           </Grid>
         </div>
       </box>
