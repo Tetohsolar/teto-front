@@ -29,13 +29,15 @@ export default function CustomerDataForm() {
   const [estado, setEstado] = useState('')
   const [cidades, setCidades] = useState([])
   const [cidade, setCidade] = useState('')
+  const [longitute, setLogintude] = useState('')
+  const [latitude, setLatitude] = useState('')
   const [rua, setRua] = useState('')
   const [bairro, setBairro] = useState('')
   const [idAdd, setIdAdd] = useState('')
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('')
   const [lbDocument, setLbDocument] = useState('CPF')
   const [maskDOC, setMaskDOC] = useState('999.999.999-99')
-  const { token, userName, afflitedId, idLogged, afflited } = useContext(AuthContext)
+  const { token, setSunIndex } = useContext(AuthContext)
   const [IdClient, setIdClient] = useState('')
   
   const handleChange = (event) => {
@@ -107,19 +109,44 @@ export default function CustomerDataForm() {
   async function handleEstado(e) {
     handleEstadoValue(e.target.value)
   }
+  
   const searchCep = async () => {
     try {
 
       await api.get('/sunindex/cep/' + cepData).then((response) => {
         handleEstadoValue(response.data.state).then(setCidade(response.data.city))
           .then(setRua(response.data.street)).then(setBairro(response.data.neighborhood))
-      });
+      }).then(searchLatLong());
 
     } catch (err) {
       console.log(err)
 
     }
   };
+
+  const searchLatLong = async () => {
+    try {
+
+      let long = 0
+      let lat = 0
+      await api.get('/sunindex/getbycep/' + cepData).then((response) => {
+        long = response.lon
+        lat = response.lat
+      });
+
+      const response = await  fetch('https://developer.nrel.gov/api/pvwatts/v8.json?api_key=gMkc2FocnfJ99EMRUZfgs52ZmG6ElrjFf7qs0FLb&lat=-3.6895&lon=-40.3485&azimuth=0&system_capacity=0.86&tilt=7&array_type=1&module_type=1&losses=0');
+      const ret = await response.json();
+      setSunIndex(ret.outputs.ac_annual)
+    
+    } catch (err) {
+      console.log(err)
+
+    }
+  };
+
+
+  
+
   async function handleFindClient(e) {
     e.preventDefault();
 

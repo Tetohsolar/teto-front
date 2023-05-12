@@ -17,6 +17,7 @@ function AuthProvider({ children }) {
   const [userName, setUserName] = useState('')
   const [afflitedId, setafflitedId] = useState('')
   const [afflited, setAfflited] = useState(null)
+  const [sunIndex, setSunIndex] = useState(0)
 
 
 
@@ -153,6 +154,8 @@ function AuthProvider({ children }) {
         userName,
         afflitedId,
         afflited,
+        setSunIndex,
+        sunIndex
       }}>
       {children}
     </AuthContext.Provider>

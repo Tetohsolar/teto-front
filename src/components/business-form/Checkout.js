@@ -17,7 +17,10 @@ const steps = [
   "Resumo financeiro",
 ];
 
+
 function getStepContent(step) {
+ 
+ 
   switch (step) {
     case 0:
       return <CustomerDataForm />;
@@ -34,6 +37,9 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const [client, setClient] = React.useState("");
+  const [sunIndex, setSunIndex] = React.useState("");
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);

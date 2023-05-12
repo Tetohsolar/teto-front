@@ -17,9 +17,9 @@ import NumberFormatCustom from "../communs/DecimalMaskedTextField";
 
 
 
-export default function GeneratorDataForm() {
+export default function GeneratorDataForm(props) {
 
-  const { token, userName, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
+  const { token, sunIndex, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
   const [potenciaSistema, setPotenciaSistema] = React.useState(0)
   const [potenciaModulo, setPotenciaModulo] = React.useState('465')
   const [nPlacas, setNplacas] = React.useState(0)
@@ -57,10 +57,6 @@ export default function GeneratorDataForm() {
   const [bandeira, setBandeira] = useState('')
   const [potenciaS, setPotenciaS] = React.useState('')
   const [modalidades, setModalidades] = useState([""])
-
-
-
-
 
   const [idSelected, setIdSelected] = React.useState('')
 
@@ -107,7 +103,12 @@ export default function GeneratorDataForm() {
 
     buscaTelhados()
     buscaSistema()
+    let potConsiderada = sunIndex * (1-(perdas/100))
+    setFatorSolar(sunIndex)
+    setPotenciaConsiderada(potConsiderada)
 
+
+    console.log("fator solar ta vindo", sunIndex)
 
   }, [])
 
