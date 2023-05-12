@@ -546,6 +546,7 @@ export default function GeneratorDataForm() {
 
             { grupo==="A"?
             <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
               <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
