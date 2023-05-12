@@ -38,7 +38,7 @@ export default function GeneratorDataForm() {
   const [usuario, setUsuario] = useState('')
   const [fatorSolar, setFatorSolar] = useState('')
   const [perdas, setPerdas] = useState(afflited.lost)
-  const [modalidade, setModalidade] = useState('Convencional')
+  const [modalidade, setModalidade] = useState('')
   const [consumoMedio, setConsumoMedio] = useState('')
   const [demandaFP, setDemandaFP] = useState(0)
   const [energia_FP, setEnergia_FP] = useState(0)
@@ -46,7 +46,7 @@ export default function GeneratorDataForm() {
   const [energiaPonta, setEnergia_ponta] = useState(0)
   const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
   const [tipoL, setTipoL] = useState('')
-  const [telhado, setTelhado] = useState(0)
+  const [telhado, setTelhado] = useState('')
   const [telhados, setTelhados] = useState([])
   const [tipoSistema, setTipoSistema] = useState('')
   const [tipoSistemas, setTipoSistemas] = useState([])
@@ -282,7 +282,13 @@ export default function GeneratorDataForm() {
       setGrupo("B")
       setModalidade("Outros")
     }
-    if (value === "A3" || value === "A4") {
+
+    if (value === "A3" ) {
+      setGrupo("A")
+      setModalidades(['Horos. Azul'])
+    }
+
+    if (value === "A4" ) {
       setGrupo("A")
       setModalidades(['Horos. Azul', 'Horos. Verde'])
     }
@@ -290,18 +296,20 @@ export default function GeneratorDataForm() {
   }
 
   function calculaGeracaoTotal() {
+    
     const campoParaSomar = 'suggestedGeneration'; // Campo do JSON que será somado
     const soma = dados.reduce((acumulador, item) => acumulador + parseFloat(item[campoParaSomar]), 0);
-    let sugg = parseFloat(geracaoSugeridaParcial) + parseFloat(soma);
+    let sugg = parseFloat(geracaoDesejada) + parseFloat(soma);
     setGeracaoTotal(sugg)
     setGeracaoSugerida(sugg)
     setGeracaoDesejada(sugg)
-    let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * potenciaModulo))
+    console.log(sugg)
+    //let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * potenciaModulo))
 
-    setNplacas(placas)
-    let potSistema = (placas * potenciaModulo) / 1000;
-    var numeroArredondado = Math.round(potSistema * 100) / 100;
-    setPotenciaSistema(numeroArredondado)
+    //setNplacas(placas)
+    //let potSistema = (placas * potenciaModulo) / 1000;
+    //var numeroArredondado = Math.round(potSistema * 100) / 100;
+    //setPotenciaSistema(numeroArredondado)
 
   }
   async function buscaTelhados() {
@@ -363,7 +371,7 @@ export default function GeneratorDataForm() {
 
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Perca"} variant="outlined" decimal={2} value={perdas} onChange={(e) => setPerdas(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); }} onKeyUp={calculaPotenciaConsidedara} />
+              <NumberFormatCustom label={"Perdas"} variant="outlined" decimal={2} value={perdas} onChange={(e) => setPerdas(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
 
@@ -603,7 +611,7 @@ export default function GeneratorDataForm() {
               <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} onBlur={calculaGeracaoTotal} ></NumberFormatCustom>
 
             </Grid>
 
