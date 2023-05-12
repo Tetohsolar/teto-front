@@ -28,9 +28,7 @@ export default function FinancialSummaryForm() {
 
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
-            </Grid>
+            
 
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Preço do kit(R$)"} variant="outlined" decimal={2} value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} ></NumberFormatCustom>
