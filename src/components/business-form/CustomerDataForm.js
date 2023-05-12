@@ -137,7 +137,7 @@ export default function CustomerDataForm() {
 
       }).then((response) => {
         handleEstadoValue(response.data.Addresses[0].state)
-        console.log(response)
+        
         setName(response.data.fantasy)
         setEmail(response.data.email)
         setPhone(response.data.phone)
@@ -149,6 +149,7 @@ export default function CustomerDataForm() {
         setRua(response.data.Addresses[0].street)
         setBairro(response.data.Addresses[0].neighborhood)
         setNumero(response.data.Addresses[0].number)
+        
         setIdClient(response.data.id)
         setIdAdd(response.data.Addresses[0].id)
 
@@ -239,7 +240,7 @@ export default function CustomerDataForm() {
           <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro'  variant="outlined" value={bairro || ''} onChange={(e) => setBairro(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={4}>
-             <MaskedTextField type="number" label={"Número"}   type='number' variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></MaskedTextField>
+             <TextField type="number" label={"Número"}  variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></TextField>
           </Grid>
           <Grid item xs={12} sm={4}>
           <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />

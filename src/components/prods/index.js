@@ -5,7 +5,8 @@ import MyModal from '../communs/ModalDelete';
 import '../prods/products-table.scss';
 
 
-const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, handleAfterDel, marcas, produtos, onBlurType, onBlurBrand, carregaPotencia }) => {
+const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, handleAfterDel, marcas, produtos, onBlurType, onBlurBrand, carregaPotencia, category }) => {
+    
     return (
 
         <table className="table caption-top table-sm table-products">
@@ -16,6 +17,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                     <th scope="col">Modelo</th>
                     <th scope="col">Potência</th>
                     <th scope="col">Qtde</th>
+                    <th scope="col">Preço(R$)</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -29,9 +31,11 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                     onBlurType(item)
                                 }} value={item.type} onChange={e => { handleEdit(item.id, 'type', e.target.value); }}>
                                     <option value="">Selecione</option>
-                                    <option value="P">Painéis</option>
-                                    <option value="I">Inversor</option>
-                                    <option value="M">MicroInversor</option>
+                                    {category ? category.map((opcao, indice) => (
+                                        <option key={indice} value={opcao.id}>
+                                            {opcao.name}
+                                        </option>
+                                    )) : ""}
                                 </select>
                             </td>
                             <td>
@@ -56,7 +60,7 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                 }} >
                                     <option value="">Selecione</option>
                                     {item.products ? item.products.map((opcao, indice) => (
-                                        <option key={indice} value={opcao.description}>
+                                        <option key={indice} value={opcao.codef}>
                                             {opcao.description}
                                         </option>
                                     )) : ""}
@@ -71,14 +75,18 @@ const TabelaProdutoEditavel = ({ dados, setIdSelected, handleEdit, handleAdd, ha
                                 />
                             </td>
                             <td>
-
                                 <input
                                     type="number" className='form-control tamanhoTabela alinhaDireita '
                                     value={item.qtd}
                                     onChange={e => handleEdit(item.id, 'qtd', e.target.value)}
-
                                 />
-
+                            </td>
+                            <td>
+                                <input
+                                    type="number" className='form-control tamanhoTabela alinhaDireita ' readOnly
+                                    value={item.price}
+                                    onChange={e => handleEdit(item.id, 'price', e.target.value)}
+                                />
                             </td>
 
                             <td>

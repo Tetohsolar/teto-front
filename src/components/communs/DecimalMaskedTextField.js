@@ -3,7 +3,7 @@ import React from "react";
 import { NumericFormat } from "react-number-format";
 
 function NumberFormatCustom(props) {
-  const { inputRef, onChange, value, label,decimal, readOnly, ...other } = props;
+  const { inputRef, onChange, value, label,decimal, readOnly, onBlur, onKeyUp, ...other } = props;
 
   return (
     <div className="number">
@@ -19,6 +19,8 @@ function NumberFormatCustom(props) {
                     decimalScale={decimal}
                     autoComplete="off"
                     disabled={readOnly}
+                    onBlur={onBlur}
+                    onKeyUp={onKeyUp}
                     />
 
                 </FormControl>
