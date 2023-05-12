@@ -366,20 +366,11 @@ export default function GeneratorDataForm(props) {
           </Typography>
           <Grid container spacing={3}>
 
-
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Fator solar"} variant="outlined" decimal={2} value={fatorSolar} onChange={(e) => setFatorSolar(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); calculaDemana() }} onKeyUp={calculaPotenciaConsidedara} />
-
-            </Grid>
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Perdas"} variant="outlined" decimal={2} value={perdas} onChange={(e) => setPerdas(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); }} onKeyUp={calculaPotenciaConsidedara} />
 
             </Grid>
 
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Potência considerada"} variant="outlined" decimal={2} value={potenciaConsiderada} onChange={(e) => setPotenciaConsiderada(e.target.value)} />
-
-            </Grid>
 
             <Grid item xs={12} sm={3}>
               <FormControl fullWidth>
@@ -617,9 +608,6 @@ export default function GeneratorDataForm(props) {
 
             </Grid>
 
-            <Grid item xs={12} sm={4}>
-              <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
-            </Grid>
 
           </Grid>
         </div>
