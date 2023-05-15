@@ -2,11 +2,11 @@ import { useEffect, useState, useContext } from 'react'
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext'
 import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
-import {useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import TabelaProdutoEditavel from '../../../components/prods';
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EditBussinessProduct = () => {
 
@@ -110,7 +110,6 @@ const EditBussinessProduct = () => {
             "pageSize": 100
         }
 
-        console.log(filtro)
         await api.post('/products/byparam', filtro, {
             headers: {
                 'Authorization': `Basic ${token}`
@@ -128,7 +127,6 @@ const EditBussinessProduct = () => {
     }
     async function carregaPotencia(item) {
 
-        console.log(item.model)
         const filtro = {
             codef: item.model.trim()
         }
@@ -166,7 +164,6 @@ const EditBussinessProduct = () => {
             "pageSize": 100
         }
 
-        console.log(filtro)
         await api.post('/products/byparam', filtro, {
             headers: {
                 'Authorization': `Basic ${token}`
@@ -187,25 +184,26 @@ const EditBussinessProduct = () => {
         e.preventDefault();
 
         const data = {
-          products:dadosProdutos   
+            products: dadosProdutos
         }
         const t = JSON.stringify(data);
         const saida = JSON.parse(t);
         console.log(saida)
-    
+
         await api.patch('/business/update/products/' + businessId, saida, {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
-    
+            headers: {
+                'Authorization': `Basic ${token}`
+            }
+
         }).then((response) => {
             navigate("/business/view/" + businessId)
-    
-        }).catch((response) => {console.log(response)
+
+        }).catch((response) => {
+            console.log(response)
             //toast.error(response.data.message)
             //throw new Error()
-          })
-    
+        })
+
     }
     async function loadbId() {
 
@@ -216,12 +214,13 @@ const EditBussinessProduct = () => {
 
         }).then((response) => {
 
-            if (response.data.products.length>0){
-            setDadosProdutos(response.data.products)
-            for (let i = 0; i<response.data.products.length; i++) {
-                onBlurMarca(response.data.products[i]);
-                onBlurProdutoMarca(response.data.products[i] );
-            }}
+            if (response.data.products.length > 0) {
+                setDadosProdutos(response.data.products)
+                for (let i = 0; i < response.data.products.length; i++) {
+                    onBlurMarca(response.data.products[i]);
+                    onBlurProdutoMarca(response.data.products[i]);
+                }
+            }
 
         }).catch((error) => { console.log(error) })
 
@@ -239,8 +238,8 @@ const EditBussinessProduct = () => {
                         <div className='p-3 bg-white border rounded-1'>
 
                             <div className="row g-3 p2" >
-                                
-                            <div class="card-body">
+
+                                <div class="card-body">
                                     <div className="row d-flex justify-content-start">
                                         <div className="table-responsive">
 

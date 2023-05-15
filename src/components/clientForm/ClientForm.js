@@ -182,7 +182,7 @@ const ClientForm = (props) => {
         return false;
       }
     }
-    console.log(cep)
+   
 
     if (cep) {
       let cepnomask = cep.replace('_', '');

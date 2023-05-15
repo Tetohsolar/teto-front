@@ -286,13 +286,11 @@ const EditPersonalData = (prop) => {
                       mask='(99)99999-9999'
                       value={fone || prop.client.phone}>
                     </InputMask>
-
                   </div>
                   <div className="col-md-3">
                     <label htmlFor="inputWhatsapp" className="form-label">
                       Whatsapp:
                     </label>
-
                     <InputMask
                       className="form-control"
                       onChange={(e) => setWhatsapp(e.target.value)} id="inputWhatsapp"
@@ -307,7 +305,6 @@ const EditPersonalData = (prop) => {
                       Informações Adicionais:
                     </label>
                     <textarea class="form-control" id="inputInformAdicio" rows="3" value={inf_Adicionais} onChange={(e) => setInf_Adicionais(e.target.value)}  >
-
                     </textarea>
                   </div>
                 </div>

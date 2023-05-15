@@ -64,7 +64,7 @@ const AfflitedDataTable = (props) => {
   }, [])
 
   async function list(name) {
-    //console.log(token);
+   
     const filtro = {
       fantasy: "%" + name + "%",
       corporatename: "%",

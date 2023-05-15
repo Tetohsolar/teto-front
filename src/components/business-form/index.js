@@ -532,7 +532,7 @@ const BusinessForm = (props) => {
     }
 
   }
-  //chama para trocar assunto
+
   function handleTipoPessoa(e) {
 
     handleTipoPessoaValue(e.target.value)

@@ -26,7 +26,6 @@ const ProductsDataTable = (props) => {
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
   const [brands, setBrands]= useState([])
-  //Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -79,8 +78,6 @@ const ProductsDataTable = (props) => {
 
     }
   }
-
-
 
   function onPageChanged(data) {
     const filtro = {
@@ -186,7 +183,6 @@ const ProductsDataTable = (props) => {
               <TextField id="name" maxLength={50} className="form-control " label="Descrição" variant="outlined" value={name || ''} onChange={(e) => setName(e.target.value)} onKeyUp={(e) => { list(name) }} />
 
             </div>
-
 
             <div className="col-md-3 categoria">
 

@@ -211,7 +211,7 @@ const AfflitedForm = (props) => {
       })
       return false;
     }
-    console.log(phone)
+   
 
     let phonenomask = phone.replace('_', "");
 
