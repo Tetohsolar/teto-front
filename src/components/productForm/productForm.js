@@ -3,12 +3,10 @@ import './productform.scss';
 import { useState, useContext, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { redirect, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import api from '../../api';
-import { NumericFormat } from 'react-number-format';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import InputMask from "react-input-mask";
 import DecimalMaskedTextField from '../communs/DecimalMaskedTextField';
 
 
@@ -92,9 +90,7 @@ const ProductForm = (props) => {
         setDescricao(response.data.description)
         
         setCategoria(response.data.TypeSystemId)
-        // loadBrand(response.data.category, response.data.brand)
-
-
+       
         setMarca(response.data.brand)
         setDescricaoTec(response.data.descriptionTec)
         setDescricaoAmigavel(response.data.descriptionFriendly)

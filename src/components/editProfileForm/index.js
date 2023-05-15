@@ -5,7 +5,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
-import InputMask from 'react-input-mask';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import MaskedTextField from '../communs/MaskedTextField';
 

@@ -5,7 +5,6 @@ import InputMask from 'react-input-mask';
 import { ToastContainer, toast } from 'react-toastify'
 
 
-
 export default function NewBusiness(prop) {
 
   const [tipoPessoa, setTipoPessoa] = useState('')
@@ -62,8 +61,6 @@ export default function NewBusiness(prop) {
   const [listaInversor, setListaInversor] = useState([])
   const { token, userName } = useContext(AuthContext)
 
-  //USESTATES DO PRODUTO
-
   const [marcas, setMarcas] = useState([])
   const [produtos, setProdutos] = useState([])
   const [updateLista, setUpdateLista] = useState()
@@ -78,8 +75,6 @@ export default function NewBusiness(prop) {
 
       }).then((response) => {
         setProdutos(response.data)
-        console.log(response.data)
-
 
       }).catch((error) => {
         toast.error(error.response.data.message)
@@ -91,7 +86,6 @@ export default function NewBusiness(prop) {
     }
   }
 
-  //busca por tipo de produto
   async function loadBrandByProduct(type) {
     try {
       const filtro = {
@@ -118,7 +112,7 @@ export default function NewBusiness(prop) {
     }
   }
 
-  //load inversor and microinversor
+
   async function loadBrand() {
 
     if (tipoSistema) {
@@ -138,7 +132,6 @@ export default function NewBusiness(prop) {
     await loadBrandByProduct(tipo)
   }
 
-
   async function findInversores() {
 
     const filtro = {
@@ -147,7 +140,6 @@ export default function NewBusiness(prop) {
       "page": 0,
       "pageSize": 100
     }
-
 
     await api.post('/products/byparam', filtro, {
       headers: {
@@ -158,7 +150,6 @@ export default function NewBusiness(prop) {
       console.log(response.data.tutorials)
 
     })
-
 
   };
 
@@ -195,23 +186,20 @@ export default function NewBusiness(prop) {
       "pageSize": 100
     }
 
-
     await api.post('/products/byparam', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
       }
     }).then((response) => {
       setModeloPlaca(response.data.tutorials)
-      console.log(modeloPlaca)
 
     })
-
 
   };
 
 
   function findAllProductsByBrand(e) {
-    console.log(e)
+
     setTipoSistema(e)
 
     if (e === "Inversor") {
@@ -240,7 +228,6 @@ export default function NewBusiness(prop) {
         }
 
       }).then((response) => {
-        console.log(response)
         setNomeFantasia(response.data.fantasy)
         setNome(response.data.fantasy)
         setEmail(response.data.email)
@@ -265,7 +252,6 @@ export default function NewBusiness(prop) {
     }
   }
 
-
   async function buscaGeracaoSugerida() {
     setEnergiaPontaTratada(0)
     await api.post('/taxkhw/byparam', {
@@ -282,21 +268,17 @@ export default function NewBusiness(prop) {
     ).then((response) => {
       setEnergiaPontaTratada(response.data.Taxkwh.toFixed(6))
 
-
     })
 
   }
 
-  //calculos Geração Média e Geração sugerida no Grupo A
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
 
     if (modalidade === "HA" && subgrupo === "A3" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
-      //Geração sugerida
 
-      // console.log(`EFP: ${energia_FP},EP ${energiaPonta}, ${energiaPontaTratada}`)
       const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
     }
@@ -304,7 +286,7 @@ export default function NewBusiness(prop) {
     else if (modalidade === "HV" && subgrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
-      //GeracaoSugerida
+
       let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
 
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
@@ -314,10 +296,9 @@ export default function NewBusiness(prop) {
       const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
 
-      //GeracaoSugerida
+
       let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-
 
     }
     else {
@@ -383,7 +364,7 @@ export default function NewBusiness(prop) {
         return false;
       }
     }
-    console.log(cep)
+
 
     if (cep) {
       let cepnomask = cep.replace('_', '');
@@ -396,14 +377,12 @@ export default function NewBusiness(prop) {
       }
     }
 
-
     return true;
   }
 
   async function saveNewClient() {
 
     if (validaCampos(nomeFantasia, fone, cep, whatsapp)) {
-
 
       const data = {
         fantasy: nomeFantasia,
@@ -425,9 +404,6 @@ export default function NewBusiness(prop) {
           }
         ]
       }
-      console.log(data)
-
-
 
       await api.post('/client/create', data
         , {
@@ -469,11 +445,8 @@ export default function NewBusiness(prop) {
         qtde: qtdeMicroInve
       }
 
-
-
       produtos.push(micro)
       setProdutos(produtos)
-
 
     }
 

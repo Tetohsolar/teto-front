@@ -103,14 +103,11 @@ const Home = () => {
             setData(data)
             console.log(data)
           }
-          //setData(response.data)
         }
       ).catch(erro => {
         setData(data)
         console.log("erro")
       })
-    //setData(data)
-
 
   }
 
@@ -120,7 +117,6 @@ const Home = () => {
         name: "4/2022",
         amt: 0,
       }
-
 
     ];
 
@@ -140,7 +136,6 @@ const Home = () => {
 
       }
     }
-
 
     await api.post('business/lastsix', filtro,
       {
@@ -177,13 +172,13 @@ const Home = () => {
             setData(data)
             console.log(data)
           }
-          //setData(response.data)
+    
         }
       ).catch(erro => {
         setData(data)
         console.log("erro")
       })
-    //setData(data)
+
 
   }
 

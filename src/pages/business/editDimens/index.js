@@ -7,7 +7,6 @@ import api from '../../../api';
 import { AuthContext } from '../../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import { InputLabel, MenuItem, Select, TextField, FormControl } from '@mui/material';
-
 import NumberFormatCustom from '../../../components/communs/DecimalMaskedTextField';
 
 
@@ -113,14 +112,11 @@ const EditDimensionamento = () => {
 
         const result = parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
 
-
         { result >= 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-
 
       } catch (error) {
         console.log(error)
       }
-
 
     }
 
@@ -128,7 +124,7 @@ const EditDimensionamento = () => {
       try {
         const valor = parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
         setConsumoMedio(valor)
-        //setGeracaoDesejada(valor)
+       
         let result = parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
 
         { result >= 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
@@ -146,7 +142,6 @@ const EditDimensionamento = () => {
         const valor = parseFloat(inputDemFP.current.value) + parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
         setConsumoMedio(valor)
 
-        //GeracaoSugerida
         let result = parseFloat(inputDemFP.current.value) + parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
         { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
         setGeracaoSugeridaParcial(result)
@@ -211,10 +206,7 @@ const EditDimensionamento = () => {
       type: tipoSistema
 
     }
-    // const t = JSON.stringify(data);
-    // const saida = JSON.parse(t);
-    console.log(data)
-
+    
     await api.patch('/business/update/' + businessId, data, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -241,8 +233,6 @@ const EditDimensionamento = () => {
   return (
     <div>
 
-
-
       <Navbar />
       <div className={sidebarWrapper ? "d-flex wrapper toggled" : "d-flex wrapper"}>
         <Sidebar activeButtonProfile="active" />
@@ -252,7 +242,6 @@ const EditDimensionamento = () => {
             <ToastContainer />
             <h5 className="card-content-title fw-semibold">{"Editar Negocio"}</h5>
             <hr className="my-4" />
-
             <form >
 
               <div className="row" >
@@ -298,8 +287,6 @@ const EditDimensionamento = () => {
                   </FormControl>
 
                 </div>
-
-
                 <br></br>
 
                 <div className="col-md-3">

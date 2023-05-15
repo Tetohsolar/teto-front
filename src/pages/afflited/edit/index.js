@@ -3,7 +3,6 @@ import Navbar from '../../../components/navbar/Navbar';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { SidebarWrapperContext } from '../../../context/SidebarWrapperContext';
 import '../../pages.scss';
-
 import AfflitedForm from '../../../components/affitedForm/AfflitedForm';
 import { AuthContext } from '../../../context/AuthContext';
 

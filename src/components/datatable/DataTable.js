@@ -5,7 +5,7 @@ import api from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import MyModal from './ModalDelete'
 import Pagination from '../pagination/Pagination';
-import { VscNewFile, VscSearch } from 'react-icons/vsc';
+import { VscSearch } from 'react-icons/vsc';
 import { BsFillPencilFill, BsFillTrash3Fill } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
 import { TextField } from '@mui/material';
