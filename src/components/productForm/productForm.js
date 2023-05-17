@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import api from '../../api';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import DecimalMaskedTextField from '../communs/DecimalMaskedTextField';
+import { BsPlusLg } from "react-icons/bs";
+
 
 
 const ProductForm = (props) => {
@@ -282,9 +284,15 @@ const ProductForm = (props) => {
                   return (<MenuItem key={i} value={option.name}>{option.name}</MenuItem>)
                 })
               }
+              
              
             </Select>
           </FormControl>
+
+          
+        </div>
+        <div className="col-md-1">
+        <button  type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center"> <BsPlusLg/> </button>
         </div>
 
 
