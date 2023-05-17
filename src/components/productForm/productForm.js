@@ -9,6 +9,7 @@ import api from '../../api';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import DecimalMaskedTextField from '../communs/DecimalMaskedTextField';
 import { BsPlusLg } from "react-icons/bs";
+import EditBrand from '../modalBrand';
 
 
 
@@ -292,7 +293,9 @@ const ProductForm = (props) => {
           
         </div>
         <div className="col-md-1">
-        <button  type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center"> <BsPlusLg/> </button>
+        <button  type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center"
+        data-bs-toggle="modal" data-bs-target="#modalBrand"> <BsPlusLg/> </button>
+        <EditBrand  businessId={Id} uc="" reloadBrands={loadBrandByProduct} />
         </div>
 
 
