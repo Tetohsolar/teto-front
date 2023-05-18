@@ -5,19 +5,20 @@ import { ToastContainer, toast } from 'react-toastify'
 import api from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import { Navigate, useNavigate} from 'react-router-dom';
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 
-const EditBrand = (prop) => {
+const EditCategory = (prop) => {
 
   const [descricao, setDescricao] = useState('')
+  const [type, setType] = useState('')
   
   const navigate = useNavigate();
   const { token } = useContext(AuthContext)
   async function salvar (e) {
     const data = {
       
-   name: descricao, enabled:'S'
+   name: "Nova 2", enabled:'S', application:"OnGrid"
     };
 
     if (descricao===""){
@@ -25,7 +26,7 @@ const EditBrand = (prop) => {
       
       return
     }
-    await api.post('/brands/create' , data
+    await api.post('typesystem/create' , data
       , {
         headers: {
           'Authorization': `Basic ${token}`
@@ -65,14 +66,31 @@ const EditBrand = (prop) => {
 
                 <div className="container-fluid">
                   <div className="row d-flex flex-row align-items-end ">
-                    <div className="col-md-10 ">
-                      <label htmlFor="inputCodigo" className="form-label">
-                        Nome:
-                      </label>
-                      <div className="col-md-10">
+                    
+                      <div className="col-md-5">
                       <TextField id="inputCodigo*" maxLength={50} className="form-control" label="Descrição*" variant="outlined" value={descricao || ''} onChange={(e) => setDescricao(e.target.value)} />
                        </div>
-                    </div>
+                       <br></br>
+                       <div className="col-md-5">
+                       <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Tipo:</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                label="Categoria"
+                onChange={(e) => { setType(e.target.value) }}
+
+              >
+                <MenuItem value={'OnGrid'}>OnGrid</MenuItem>
+                <MenuItem value={'OffGrid'}>OffGrid</MenuItem>
+
+              </Select>
+            </FormControl>
+
+                       </div>
+                  
+                    
                    
                     
                   </div>
@@ -99,4 +117,4 @@ const EditBrand = (prop) => {
   )
 };
 
-export default EditBrand;
+export default EditCategory;
