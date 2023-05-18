@@ -18,7 +18,7 @@ const EditCategory = (prop) => {
   async function salvar (e) {
     const data = {
       
-   name: "Nova 2", enabled:'S', application:"OnGrid"
+   name: descricao, enabled:'S', application:type
     };
 
     if (descricao===""){
