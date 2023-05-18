@@ -10,6 +10,7 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 import DecimalMaskedTextField from '../communs/DecimalMaskedTextField';
 import { BsPlusLg } from "react-icons/bs";
 import EditBrand from '../modalBrand';
+import EditCategory from '../modalCategory';
 
 
 
@@ -234,7 +235,7 @@ const ProductForm = (props) => {
       <p>Cadastre novos produtos para seus clientes.</p>
 
       <form className="row g-3" onSubmit={handleSave}>
-        <div className="col-md-5">
+        <div className="col-md-4">
 
           <TextField id="inputCodigo*" maxLength={50} className="form-control" label="Código*" variant="outlined" value={codigo || ''} onChange={(e) => setCodigo(e.target.value)} />
 
@@ -263,6 +264,11 @@ const ProductForm = (props) => {
               }
             </Select>
           </FormControl>
+        </div>
+        <div className="col-md-1">
+        <button  type="button" className="btn btn-light btn-sm text-danger d-flex align-items-center"
+        data-bs-toggle="modal" data-bs-target="#modalBrand"> <BsPlusLg/> </button>
+        <EditCategory  businessId={Id} uc="" reloadBrands={loadCategorys} />
         </div>
 
         <div className="col-md-3">
