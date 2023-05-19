@@ -61,8 +61,8 @@ export default function CustomerDataForm(prop) {
       setDoc(prop.dados.doc)
       setPhone(prop.dados.phone)
       setZap(prop.dados.zap)
-      setEstado(prop.dados.estado)
-      handleEstadoValue(prop.dados.estado)
+      setEstado(prop.dados.state)
+      handleEstadoValue(prop.dados.state)
       setCidade(prop.dados.city)
       setCepData(prop.dados.cep)
       setRua(prop.dados.street)
@@ -141,7 +141,7 @@ export default function CustomerDataForm(prop) {
 
   async function handleEstado(e) {
     handleEstadoValue(e.target.value)
-    prop.dados.estado = e.target.value
+    prop.dados.state = e.target.value
   }
   
   const searchCep = async () => {

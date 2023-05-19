@@ -87,9 +87,9 @@ export default function ShareForm(props) {
 
   React.useEffect(() => {
 
-    console.log("fator solar ta vindo", props.dados)
+    console.log("fator solar ta vindo", props.dados.possuirateio)
 
-    if (props.dados.possuirateio!==undefined &&props.dados.possuirateio!=="S" ){
+    if (props.dados.possuirateio!==undefined &&props.dados.possuirateio==="S" ){
       setRat("S")
       setCip(props.dados.rcip)
       setBandeira(props.dados.rflag)
