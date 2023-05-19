@@ -9,27 +9,33 @@ import CustomerDataForm from "./CustomerDataForm";
 import GeneratorDataForm from "./GeneratorDataForm";
 import SystemTypeForm from "./TypeSystemform";
 import FinancialSummaryForm from "./FinancialSummaryForm";
+import ShareForm from "./ShareForm";
 
 const steps = [
   "Dados do cliente",
   "Dados da geradora",
+  "Rateios",
   "Tipo de sistema",
   "Resumo financeiro",
+  
 ];
 
 
-function getStepContent(step) {
- 
- 
+function getStepContent(step, data) {
   switch (step) {
-    case 0:
-      return <CustomerDataForm />;
+    case 0:  {
+      return <CustomerDataForm  dados={data}/>;
+    
+    }
     case 1:
-      return <GeneratorDataForm />;
+      return <GeneratorDataForm  dados={data}/>;
     case 2:
-      return <SystemTypeForm />;
+      return <ShareForm />;
     case 3:
+      return <SystemTypeForm />;
+      case 4:
       return <FinancialSummaryForm />;
+
     default:
       throw new Error("Unknown step");
   }
@@ -40,6 +46,19 @@ export default function Checkout() {
 
   const [client, setClient] = React.useState("");
   const [sunIndex, setSunIndex] = React.useState("");
+
+  const [data, setData] = React.useState({});
+
+  const updateData = (newData) => {
+    setData({ ...data, ...newData });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    // Aqui você pode realizar validações, atualizar o contexto, etc.
+    updateData({ [name]: value });
+  };
+
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -64,7 +83,7 @@ export default function Checkout() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {getStepContent(activeStep)}
+          {getStepContent(activeStep, data)}
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             {activeStep !== 0 && (
               <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

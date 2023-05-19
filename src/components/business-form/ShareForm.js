@@ -17,7 +17,7 @@ import NumberFormatCustom from "../communs/DecimalMaskedTextField";
 
 
 
-export default function GeneratorDataForm(props) {
+export default function ShareForm(props) {
 
   const { token, sunIndex, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
   const [potenciaSistema, setPotenciaSistema] = React.useState(0)
@@ -106,8 +106,10 @@ export default function GeneratorDataForm(props) {
     let potConsiderada = sunIndex * (1-(perdas/100))
     setFatorSolar(sunIndex)
     setPotenciaConsiderada(potConsiderada)
+
+
     console.log("fator solar ta vindo", sunIndex)
-    console.log( props.dados)
+
   }, [])
 
 
@@ -354,100 +356,12 @@ export default function GeneratorDataForm(props) {
 
   return (
     <React.Fragment>
-      <box>
-        <div class="card w-100">
-          <div class="card-header">
-            Informações principais
-          </div>
-          <Typography variant="h6" gutterBottom>
-
-          </Typography>
-          <Grid container spacing={3}>
-
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Perdas"} variant="outlined" decimal={2} value={perdas} onChange={(e) => setPerdas(e.target.value)} onBlur={() => { calculaPotenciaConsidedara(); }} onKeyUp={calculaPotenciaConsidedara} />
-
-            </Grid>
-
-
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth>
-                <InputLabel id="tipoLigacao">Tipo de Ligação</InputLabel>
-                <Select
-                  labelId="tipoLigacao"
-                  id="tipoLigacao"
-                  value={tipoL}
-                  label="Telhado"
-                  onChange={(e) => setTipoL(e.target.value)}
-
-                >
-                  <MenuItem value={'Monofásico'}>Monofásico</MenuItem>
-                  <MenuItem value={'Bifásico'}>Bifásico</MenuItem>
-                  <MenuItem value={'Trifásico'}>Trifásico</MenuItem>
-
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth>
-                <InputLabel id="tipoTelhado">Tipo de Telhado</InputLabel>
-                <Select
-                  labelId="tipoTelhado"
-                  id="tipoTelhado"
-                  value={telhado}
-                  label="Categoria"
-                  onChange={(e) => setTelhado(e.target.value)}
-
-                >
-                  {
-                    telhados.length > 0 &&
-                    telhados.map((option, i) => {
-                      return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
-                    })
-                  }
-
-                </Select>
-              </FormControl>
-
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControl fullWidth>
-                <InputLabel id="tipoSistema">Tipo de sistema</InputLabel>
-                <Select
-                  labelId="tipoSistema"
-                  id="tipoSistema"
-                  value={tipoSistema}
-                  label="Sistema"
-                  onChange={(e) => setTipoSistema(e.target.value)}
-
-                >
-                  <MenuItem key={-1} value={''}></MenuItem>
-                  {
-                    tipoSistemas.length > 0 &&
-                    tipoSistemas.map((option, i) => {
-                      return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
-                    })
-                  }
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
-
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
-
-            </Grid>
-
-          </Grid>
-        </div>
-      </box>
+ 
       <br></br>
       <box>
         <div class="card w-100">
           <div class="card-header">
-            Informações da geradora
+            Informações do Rateio
           </div>
           <Typography variant="h6" gutterBottom>
 
@@ -536,6 +450,7 @@ export default function GeneratorDataForm(props) {
 
             { grupo==="A"?
             <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
               <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
@@ -546,25 +461,12 @@ export default function GeneratorDataForm(props) {
             </Grid>
             :""}
 
-          
-           <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} onBlur={calculaGeracaoTotal} ></NumberFormatCustom>
-
-            </Grid>
-
-
-          
-
           </Grid>
         </div>
       </box>
                   
 
-     
-
+      
     </React.Fragment>
   );
 }
