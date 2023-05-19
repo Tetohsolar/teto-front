@@ -4,16 +4,19 @@ import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import NumberFormatCustom from "../communs/DecimalMaskedTextField";
 import { useState } from "react";
+import { useEffect } from "react";
 
-export default function FinancialSummaryForm() {
+export default function FinancialSummaryForm(props) {
 
   const [potenciaS, setPotenciaS] = React.useState('')
   const [precoKit, setPrecoKit] = React.useState('')
   const [custo_total, setCustoTotal] = useState(0)
   const [valorTotalProjeto, setValorTotalProjeto] = useState(0)
 
-
-
+  React.useEffect(() => {
+    console.log(props.dados)
+  
+  });
 
 
 

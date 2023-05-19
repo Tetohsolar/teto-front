@@ -96,7 +96,12 @@ export default function SystemTypeform(props) {
   React.useEffect(() => {
 
     loadCategorys()
-    loadbId(businessId)
+    //loadbId(businessId)
+
+    if (props.dados.produtos){
+      setDadosProdutos(props.dados.produtos)
+    }
+
     
   }, [])
 
@@ -167,6 +172,7 @@ export default function SystemTypeform(props) {
         novoDados[index]["qtd"] = placas;}
         return novoDados;
       });
+      props.dados.produtos = dadosProdutos
     })
 
   }
