@@ -180,6 +180,7 @@ export default function CustomerDataForm(prop) {
 
       const response = await  fetch('https://developer.nrel.gov/api/pvwatts/v8.json?api_key=gMkc2FocnfJ99EMRUZfgs52ZmG6ElrjFf7qs0FLb&lat=-3.6895&lon=-40.3485&azimuth=0&system_capacity=0.86&tilt=7&array_type=1&module_type=1&losses=0');
       const ret = await response.json();
+      console.log("passou aqui"+ ret)
       setSunIndex(ret.outputs.ac_annual)
     
     } catch (err) {

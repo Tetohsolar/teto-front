@@ -363,16 +363,20 @@ function handleSubGrup(value) {
                 </Select>
               </FormControl>
           </Grid>
+          
           <Grid item xs={12} sm={3}>
+        
               <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => {setCip(e.target.value); props.dados.rcip = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
             <Grid item xs={12} sm={3}>
+            
               <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.rflag = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
 
-            <Grid item xs={14} sm={2}>
+            <Grid item xs={12} sm={3}>
+            
               <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                 <Select
@@ -390,7 +394,7 @@ function handleSubGrup(value) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth>
                 <InputLabel id="inputGrupo">Grupo</InputLabel>
                 <Select
@@ -409,7 +413,7 @@ function handleSubGrup(value) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={12} sm={3}>
               <FormControl fullWidth>
 
                 <InputLabel id="tipoLigacao">Modalidade</InputLabel>
@@ -474,7 +478,7 @@ function handleSubGrup(value) {
               <NumberFormatCustom  readOnly label={"Geração sugerida (KWh)"} variant="outlined"   decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => {setGeracaoDesejada(e.target.value); props.dados.rsuggestedGeneration= e.target.value}} ></NumberFormatCustom>
 
             </Grid>
 

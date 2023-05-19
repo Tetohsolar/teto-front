@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Category } from "@mui/icons-material";
 
-export default function SystemTypeform() {
+export default function SystemTypeform(props) {
   const { token } = React.useContext(AuthContext)
   const [item, setItem] = React.useState("");
 
@@ -62,6 +62,7 @@ export default function SystemTypeform() {
       id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: [], preco:0
     }
   ]);
+  
   const handleEditProds = async (id, campo, valor) => {
     setDadosProdutos(prevDados => {
       const novoDados = [...prevDados];
@@ -120,7 +121,7 @@ export default function SystemTypeform() {
 
   }
   async function carregaPotencia(item) {
-    console.log("modelo"+item.model)
+    console.log(item)
 
     if (item.model===""){
       
@@ -133,10 +134,11 @@ export default function SystemTypeform() {
       });
     return
     }
-    console.log("passou do if")
+   
     const filtro = {
       codef: item.model.trim()
     }
+   
     await api.post('/products/getpowerbycod/', filtro, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -148,6 +150,21 @@ export default function SystemTypeform() {
         const index = novoDados.findIndex(it => it.id === item.id);
         novoDados[index]["power"] = response.data.power;
         novoDados[index]["price"] = response.data.price;
+        if (parseInt(item.type)===3) {
+        let sugg =  parseFloat(props.dados.suggestedGeneration);
+      
+        if (parseFloat(props.dados.rsuggestedGeneration)){
+          sugg = sugg + parseFloat(props.dados.rsuggestedGeneration) 
+        } 
+
+       
+        let potenciaConsiderada = props.dados.consideredpower
+
+        console.log(potenciaConsiderada)
+
+        let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * response.data.power))
+        console.log("PASSA AQUI " +placas)
+        novoDados[index]["qtd"] = placas;}
         return novoDados;
       });
     })
@@ -211,32 +228,26 @@ export default function SystemTypeform() {
   return (
     <React.Fragment>
       <box>
-        <Typography variant="h6" gutterBottom>
-          Itens do Kit
-        </Typography>
-        
-        <Paper variant="outlined" sx={{ p: { xs: 10, md: 3 }, mt: 5 }}>
-          <div className="row">
-            <div className="mb-3 mb-sm-0">
-              <div className="card border-light-subtle">
-                <div className="card-body">
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} sm={3}>
+       
+        <div class="card">
+                <div class="card-header">
+                  Produtos que compõe o kit
+                </div>
+
+        <div className="card-body">
+                <div className="row d-flex justify-content-start">
+                    <div className="table-responsive">
+                  
                       <TabelaProdutoEditavel token={token} dados={dadosProdutos} category={listCategory} handleEdit={handleEditProds}
                         handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
                         handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
                         onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
                       />
-                    </Grid>
-
-                  </Grid>
+                    </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          
-
-        </Paper>
+        </div>
+      
       </box>
     </React.Fragment>
   );
