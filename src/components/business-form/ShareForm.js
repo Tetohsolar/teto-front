@@ -20,36 +20,22 @@ import NumberFormatCustom from "../communs/DecimalMaskedTextField";
 export default function ShareForm(props) {
 
   const { token, sunIndex, afflitedId, idLogged, afflited } = React.useContext(AuthContext)
-  const [potenciaSistema, setPotenciaSistema] = React.useState(0)
-  const [potenciaModulo, setPotenciaModulo] = React.useState('465')
-  const [nPlacas, setNplacas] = React.useState(0)
   const [potenciaConsiderada, setPotenciaConsiderada] = React.useState('')
   const [geracaoDesejada, setGeracaoDesejada] = React.useState('')
   const [geracaoSugerida, setGeracaoSugerida] = React.useState('')
   const [geracaoTotal, setGeracaoTotal] = React.useState(0.0)
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = React.useState('')
   const [idRateio, setIdRateio] = React.useState(1)
-  const [lbFantasia, setLbFantasia] = useState('Nome')
-  const [exibeCorporateName, setExibeCorporateName] = useState('')
-  const [lbDocument, setLbDocument] = useState('CPF')
-  const [tipoPessoa, setTipoPessoa] = useState('F')
-  const [maskDOC, setMaskDOC] = useState('999.999.999-99')
-  const [name, setName] = useState('')
-  const [usuario, setUsuario] = useState('')
-  const [fatorSolar, setFatorSolar] = useState('')
-  const [perdas, setPerdas] = useState(afflited.lost)
+  
   const [modalidade, setModalidade] = useState('')
+  const [rat, setRat] = useState('S')
   const [consumoMedio, setConsumoMedio] = useState('')
-  const [demandaFP, setDemandaFP] = useState(0)
-  const [energia_FP, setEnergia_FP] = useState(0)
-  const [demPonta, setDem_ponta] = useState(0)
-  const [energiaPonta, setEnergia_ponta] = useState(0)
-  const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
-  const [tipoL, setTipoL] = useState('')
-  const [telhado, setTelhado] = useState('')
-  const [telhados, setTelhados] = useState([])
-  const [tipoSistema, setTipoSistema] = useState('')
-  const [tipoSistemas, setTipoSistemas] = useState([])
+  const [demandaFP, setDemandaFP] = useState('')
+  const [energia_FP, setEnergia_FP] = useState('')
+  const [demPonta, setDem_ponta] = useState('')
+  const [energiaPonta, setEnergia_ponta] = useState('')
+  const [energiaPontaTratada, setEnergiaPontaTratada] = useState('')
+  
   const [subGrupo, setSubGrupo] = useState('')
   const [grupo, setGrupo] = useState('')
   const [geracaoSu, setGeracaoSu] = useState('')
@@ -101,62 +87,36 @@ export default function ShareForm(props) {
 
   React.useEffect(() => {
 
-    buscaTelhados()
-    buscaSistema()
-    let potConsiderada = sunIndex * (1-(perdas/100))
-    setFatorSolar(sunIndex)
-    setPotenciaConsiderada(potConsiderada)
+    console.log("fator solar ta vindo", props.dados)
 
+    if (props.dados.possuirateio!==undefined &&props.dados.possuirateio!=="S" ){
+      setRat("S")
+      setCip(props.dados.rcip)
+      setBandeira(props.dados.rflag)
+      setSubGrupo(props.dados.subgroupr)
+      handleSubGrup(props.dados.subgroupr)
+      setGrupo(props.dados.rgroup)
+      setModalidade(props.dados.rmodality)
+      setConsumoMedio(props.dados.ravgconsumption)
+      setGeracaoSugerida(props.dados.rsuggestedGeneration)
+      setGeracaoDesejada(props.dados.rsuggestedDesired)
+      setDemandaFP(props.dados.rdemadaFp)
+      setDem_ponta(props.dados.rdemandaP)
+      setEnergia_FP(props.dados.renergiaFP)
+      setEnergia_ponta(props.dados.renergiaP)
 
-    console.log("fator solar ta vindo", sunIndex)
+    }else{
+      setRat("N")
+    }
 
   }, [])
 
-
-  function handleTipoPessoa(e) {
-
-    handleTipoPessoaValue(e.target.value)
-
-  }
-  function handleTipoPessoaValue(e) {
-
-    if (e === "F" || e === "") {
-      setLbFantasia("Nome*");
-      setExibeCorporateName("");
-      setLbDocument("CPF*")
-      setTipoPessoa("F")
-      setMaskDOC("999.999.999-99")
-
-    } else {
-      setLbFantasia("Fantasia*");
-      setExibeCorporateName("J")
-      setLbDocument("CNPJ*")
-      setTipoPessoa("J")
-      setMaskDOC("99.999.999/9999-99")
-
-    }
-
-  }
-
-  function calculaPotenciaConsidedara() {
-
-    let remofot = fatorSolar.replace(".", "");
-
-    let f = parseFloat(remofot) * (1 - (perdas / 100))
-    if (isNaN(f)) {
-      setPotenciaConsiderada(0)
-    } else {
-      setPotenciaConsiderada(Math.ceil(f))
-    }
-    let potSistema = 0;
-
-  }
+ 
   function calculaDemana() {
     handleGrupoAConsMedio()
-    /*calculaGeracaoTotal()*/
-    
-
   }
+
+
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
     
@@ -164,6 +124,10 @@ export default function ShareForm(props) {
       
       setGeracaoSugerida(consumoMedio)
       setGeracaoSugeridaParcial(consumoMedio)
+      props.dados.rsuggestedDesired = consumoMedio
+      props.dados.rsuggestedGeneration = consumoMedio
+      setGeracaoDesejada(consumoMedio)
+
       return
     }
 
@@ -175,6 +139,11 @@ export default function ShareForm(props) {
       const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
       setGeracaoSugeridaParcial(result)
+      setGeracaoSugerida(result)
+      setGeracaoDesejada(result)
+      props.dados.rsuggestedDesired = result
+      props.dados.rsuggestedGeneration = result
+      
     }
 
     else if (modalidade === "Horos. Verde" && subGrupo === "A4" && energia_FP !== null && energiaPonta !== null) {
@@ -185,16 +154,25 @@ export default function ShareForm(props) {
 
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
       setGeracaoSugeridaParcial(result)
+      setGeracaoDesejada(result)
+      props.dados.rsuggestedDesired = result
+      props.dados.rsuggestedGeneration = result
     }
 
     else if (modalidade === "Horos. Azul" && subGrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
+      setGeracaoDesejada(valor)
 
       //GeracaoSugerida
       let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
       setGeracaoSugeridaParcial(result)
+      setGeracaoDesejada(result)
+
+      props.dados.rsuggestedDesired = result
+      props.dados.rsuggestedGeneration = result
+      
 
     }
     else {
@@ -265,36 +243,65 @@ export default function ShareForm(props) {
     }
   }
 
-  function handleSubGrup(value) {
-    if (value === "B1") {
-      setGrupo("B")
-      setModalidades(['Convencional'])
-      setModalidade("Convencional")
+  function limparDemandas() {
+    props.dados.ravgconsumption = "";
+    props.dados.rdemadaFp="";
+    props.dados.rdemandaP="";
+    props.dados.renergiaFP="";
+    props.dados.rsuggestedDesired="";
+    props.dados.rsuggestedGeneration="";
+    
+    setConsumoMedio("")
+    setEnergia_FP("")
+    setEnergia_ponta("")
+    setDem_ponta("")
+    setDemandaFP("")
+    setGeracaoDesejada("")
+    setGeracaoSugeridaParcial("")
+    setGeracaoSugerida("")
+   
+}
 
-    }
-
-    if (value === "B2") {
-      setGrupo("B")
-      setModalidades(['Rural'])
-      setModalidade("Rural")
-    }
-    if (value === "B3") {
-      setModalidades(['Outros'])
-      setGrupo("B")
-      setModalidade("Outros")
-    }
-
-    if (value === "A3" ) {
-      setGrupo("A")
-      setModalidades(['Horos. Azul'])
-    }
-
-    if (value === "A4" ) {
-      setGrupo("A")
-      setModalidades(['Horos. Azul', 'Horos. Verde'])
-    }
-
+function handleSubGrup(value) {
+  if (value === "B1") {
+    setGrupo("B")
+    setModalidades(['Convencional'])
+    setModalidade("Convencional")
+    props.dados.rmodality = "Convencional"
+    props.dados.rgroup = "B"
   }
+
+  if (value === "B2") {
+    setGrupo("B")
+    setModalidades(['Rural'])
+    setModalidade("Rural")
+    props.dados.rmodality = "Rural"
+    props.dados.rgroup = "B"
+  }
+  if (value === "B3") {
+    setModalidades(['Outros'])
+    setGrupo("B")
+    setModalidade("Outros")
+    props.dados.rmodality = "Outros"
+    props.dados.rgroup = "B"
+    
+  }
+
+  if (value === "A3" ) {
+    setGrupo("A")
+    setModalidades(['Horos. Azul'])
+    setModalidade("Horos. Azul")
+    props.dados.rmodality = "Horos. Azul"
+    props.dados.rgroup = "A"
+  }
+
+  if (value === "A4" ) {
+    setGrupo("A")
+    setModalidades(['Horos. Azul', 'Horos. Verde'])
+    props.dados.rgroup = "A"
+  }
+
+}
 
   function calculaGeracaoTotal() {
     
@@ -313,36 +320,7 @@ export default function ShareForm(props) {
     //setPotenciaSistema(numeroArredondado)
 
   }
-  async function buscaTelhados() {
-
-
-    await api.get('/roofs/all',
-
-      {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
-      }
-    ).then((response) => {
-      setTelhados(response.data.roofs)
-    })
-
-  }
-  async function buscaSistema() {
-
-
-    await api.get('/typesystem/all',
-
-      {
-        headers: {
-          'Authorization': `Basic ${token}`
-        }
-      }
-    ).then((response) => {
-      setTipoSistemas(response.data.types)
-    })
-
-  }
+ 
 
 
   const [item, setItem] = React.useState("");
@@ -368,6 +346,32 @@ export default function ShareForm(props) {
           </Typography>
 
           <Grid container spacing={3}>
+
+          <Grid item xs={12} sm={3}>
+            <br></br>
+          <FormControl fullWidth>
+                <InputLabel id="inputSubgrupo"> Tem Rateio?</InputLabel>
+                <Select
+                  labelId="inputSubgrupo"
+                  id="inputSubgrupo"
+                  value={rat}
+                  label="inputSubgrupo"
+                  onChange={(e) => { setRat(e.target.value); props.dados.possuirateio = e.target.value;}}
+                >
+                  <MenuItem value={'N'}>Não</MenuItem>
+                  <MenuItem value={'S'}>Sim</MenuItem>
+                </Select>
+              </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => {setCip(e.target.value); props.dados.rcip = e.target.value}} ></NumberFormatCustom>
+
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.rflag = e.target.value}} ></NumberFormatCustom>
+
+            </Grid>
+
             <Grid item xs={14} sm={2}>
               <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
@@ -376,10 +380,8 @@ export default function ShareForm(props) {
                   id="inputSubgrupo"
                   value={subGrupo}
                   label="inputSubgrupo"
-                  onChange={(e) => { setSubGrupo(e.target.value); handleSubGrup(e.target.value) }}
-
+                  onChange={(e) => { setSubGrupo(e.target.value); handleSubGrup(e.target.value) ; props.dados.subgroupr = e.target.value; limparDemandas(); }}
                 >
-
                   <MenuItem value={'B1'}>B1</MenuItem>
                   <MenuItem value={'B2'}>B2</MenuItem>
                   <MenuItem value={'B3'}>B3</MenuItem>
@@ -416,7 +418,7 @@ export default function ShareForm(props) {
                   id="modalidade"
                   value={modalidade}
                   label="modalidade"
-                  onChange={(e) => { setModalidade(e.target.value); }}
+                  onChange={(e) => { setModalidade(e.target.value);   props.dados.rmodality = e.target.value }}
 
                 >
 
@@ -432,34 +434,52 @@ export default function ShareForm(props) {
 
             </Grid>
 
-           { grupo==="A"?
+           { grupo==="A" && modalidade ==="Horos. Azul"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom  label={"Demanda FP(Kwh)"}  variant="outlined" value={demandaFP} onChange={(e) => setDemandaFP(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom  label={"Demanda FP(Kwh)"}  variant="outlined" value={demandaFP} onChange={(e) => {setDemandaFP(e.target.value) ; props.dados.rdemadaFp = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""
            }
-           { grupo==="A"?
+
+          { grupo==="A"&& modalidade ==="Horos. Azul"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Demanda P(Kwh)"}  variant="outlined" value={demPonta} onChange={(e) => setDem_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Demanda Ponta"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+            </Grid>
+            :""}
+
+           { grupo==="A"&& modalidade ==="Horos. Verde"?
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom type="number" label={"Demanda"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
             :""}
 
           { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Energia FP(Kwh)"}  variant="outlined" value={energia_FP} onChange={(e) => setEnergia_FP(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Energia FP(Kwh)"}  variant="outlined" value={energia_FP} onChange={(e) => {setEnergia_FP(e.target.value);  props.dados.renergiaFP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
             { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
-              <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => setEnergia_ponta(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => {setEnergia_ponta(e.target.value) ; props.dados.renergiaP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
 
             { grupo==="B"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Consumo Médio"}  variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom type="number" label={"Consumo Médio"}  variant="outlined" value={consumoMedio} onChange={(e) =>{ setConsumoMedio(e.target.value) ; props.dados.ravgconsumption = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
             :""}
+
+          
+           <Grid item xs={12} sm={3}>
+              <NumberFormatCustom  readOnly label={"Geração sugerida (KWh)"} variant="outlined"   decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
+
+            </Grid>
+
+
+          
 
           </Grid>
         </div>

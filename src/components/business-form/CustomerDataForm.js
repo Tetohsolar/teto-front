@@ -61,8 +61,8 @@ export default function CustomerDataForm(prop) {
       setDoc(prop.dados.doc)
       setPhone(prop.dados.phone)
       setZap(prop.dados.zap)
-      setEstado(prop.dados.state)
-      handleEstadoValue(prop.dados.state)
+      setEstado(prop.dados.estado)
+      handleEstadoValue(prop.dados.estado)
       setCidade(prop.dados.city)
       setCepData(prop.dados.cep)
       setRua(prop.dados.street)
@@ -249,7 +249,7 @@ export default function CustomerDataForm(prop) {
         
         setInformacoesAdicionais(response.data.addInformation)
         prop.dados.addInformation = response.data.addInformation
-
+        
         setEstado(response.data.Addresses[0].state)
         prop.dados.state = response.data.Addresses[0].state
         
@@ -346,7 +346,7 @@ export default function CustomerDataForm(prop) {
                 id="demo-simple-select"
                 value={cidade}
                 label="inputMarca"
-                onChange={(e) => setCidade(e.target.value)}
+                onChange={(e) => {setCidade(e.target.value); prop.dados.city=e.target.value }}
                 onBlur={(e)=>searchSunIndexByCityState()}
               >
                 {cidades != null && cidades ? cidades.map((option) => (<MenuItem key={option.nome} value={option.nome} >{option.nome}</MenuItem>)) : ""}
