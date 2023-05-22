@@ -8,8 +8,6 @@ export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
 
-  // const [users, setUsers] = useState([''])
-  // const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(false)
   const [token, setToken] = useState('')
   const [profilelogged, setProfileLogged] = useState('')
@@ -18,8 +16,6 @@ function AuthProvider({ children }) {
   const [afflitedId, setafflitedId] = useState('')
   const [afflited, setAfflited] = useState(null)
   const [sunIndex, setSunIndex] = useState(0)
-
-
 
   //add new User
   async function signIn(email, password) {
@@ -155,7 +151,7 @@ function AuthProvider({ children }) {
         afflitedId,
         afflited,
         setSunIndex,
-        sunIndex
+        sunIndex,
       }}>
       {children}
     </AuthContext.Provider>
