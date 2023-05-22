@@ -94,6 +94,7 @@ export default function GeneratorDataForm(props) {
   };
 
   React.useEffect(() => {
+    console.log(props.dados.sunIndex)
 
     buscaTelhados()
     buscaSistema()
@@ -124,6 +125,13 @@ export default function GeneratorDataForm(props) {
       setDem_ponta(props.dados.demandaP)
       setEnergia_FP(props.dados.energiaFP)
       setEnergia_ponta(props.dados.energiaP)
+      let potConsiderada = sunIndex * (1-(perdas/100))
+      props.dados.sunIndex = sunIndex
+      props.dados.consideredpower = potConsiderada
+      props.dados.lost = perdas
+      setFatorSolar(sunIndex)
+      setPotenciaConsiderada(potConsiderada)
+
     }
     console.log(props.dados)
   }, [])

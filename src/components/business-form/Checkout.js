@@ -19,22 +19,22 @@ const steps = [
   "Rateios",
   "Tipo de sistema",
   "Resumo financeiro",
-  
+
 ];
 
 
 function getStepContent(step, data) {
   switch (step) {
-    case 0:  
-      return <CustomerDataForm  dados={data}/>;
+    case 0:
+      return <CustomerDataForm dados={data} />;
     case 1:
-      return <GeneratorDataForm  dados={data}/>;
+      return <GeneratorDataForm dados={data} />;
     case 2:
-      return <ShareForm dados={data}/>;
+      return <ShareForm dados={data} />;
     case 3:
-      return <SystemTypeForm dados={data}/>;
+      return <SystemTypeForm dados={data} />;
     case 4:
-      return <FinancialSummaryForm dados={data}/>;
+      return <FinancialSummaryForm dados={data} />;
 
     default:
       throw new Error("Unknown step");
@@ -60,13 +60,13 @@ export default function Checkout() {
   };
 
 
-  const handleValidCustomer = ()=>{
-    if (data.name===undefined || data.name===""){
+  const handleValidCustomer = () => {
+    if (data.name === undefined || data.name === "") {
       toast.error("O Nome é obrigatório")
       return false;
     }
 
-    if (data.city===undefined || data.city===""){
+    if (data.city === undefined || data.city === "") {
       toast.error("A Cidade é obrigatório")
       return false;
     }
@@ -74,76 +74,76 @@ export default function Checkout() {
   }
 
 
-  const handleValidGerador = ()=>{
-    
+  const handleValidGerador = () => {
 
-    if (data.lost===undefined || data.lost===""){
+
+    if (data.lost === undefined || data.lost === "") {
       toast.error("A Perca  é obrigatório")
       return false;
     }
-    
-    if (data.typeConnection===undefined || String(data.typeConnection)===""){
+
+    if (data.typeConnection === undefined || String(data.typeConnection) === "") {
       toast.error("O Tipo de Conexão é obrigatório")
       return false;
     }
 
-    if (data.typeConnection===undefined || data.typeConnection===""){
+    if (data.typeConnection === undefined || data.typeConnection === "") {
       toast.error("O tipo de ligação  é obrigatório")
       return false;
     }
 
-    if (data.type===undefined || data.type===""){
+    if (data.type === undefined || data.type === "") {
       toast.error("O Tipo do Sistema  é obrigatório")
       return false;
     }
 
-    
-    if (data.cip===undefined || data.cip===""){
+
+    if (data.cip === undefined || data.cip === "") {
       toast.error("A CIP  é obrigatório")
       return false;
     }
 
-    if (data.flag===undefined || data.flag===""){
+    if (data.flag === undefined || data.flag === "") {
       toast.error("A Bandeira é obrigatório")
       return false;
     }
 
 
-    if (data.subgroup===undefined || data.subgroup===""){
+    if (data.subgroup === undefined || data.subgroup === "") {
       toast.error("O Sub-Grupo é obrigatório")
       return false;
     }
 
-    if (data.group===undefined || data.group===""){
+    if (data.group === undefined || data.group === "") {
       toast.error("O Grupo é obrigatório")
       return false;
     }
 
-    if (data.modality===undefined || data.modality===""){
+    if (data.modality === undefined || data.modality === "") {
       toast.error("A Modalidade  é obrigatório")
       return false;
     }
 
-    if (data.modality===undefined || data.modality===""){
+    if (data.modality === undefined || data.modality === "") {
       toast.error("A modalidade é obrigatória")
       return false;
     }
 
-    if (data.group==="B"){
-      if (data.avgconsumption===undefined || data.avgconsumption===""){
+    if (data.group === "B") {
+      if (data.avgconsumption === undefined || data.avgconsumption === "") {
         toast.error("O Consumo Médio é obrigatório")
         return false;
       }
     }
 
-    if (data.subgroup==="A3" ||data.subgroup==="A4"){
-      if (data.avgconsumption===undefined || data.avgconsumption===""){
+    if (data.subgroup === "A3" || data.subgroup === "A4") {
+      if (data.avgconsumption === undefined || data.avgconsumption === "") {
         toast.error("O Consumo Médio é obrigatório")
         return false;
       }
     }
 
-    if (data.suggestedDesired===undefined || data.suggestedDesired===""){
+    if (data.suggestedDesired === undefined || data.suggestedDesired === "") {
       toast.error("A Geração Desejada é obrigatório")
       return false;
     }
@@ -152,55 +152,55 @@ export default function Checkout() {
   }
 
 
-  
-  const handleValidShare = ()=>{
-    
-    if (data.cip===undefined || data.cip===""){
+
+  const handleValidShare = () => {
+
+    if (data.cip === undefined || data.cip === "") {
       toast.error("A CIP  é obrigatório")
       return false;
     }
 
-    if (data.flag===undefined || data.flag===""){
+    if (data.flag === undefined || data.flag === "") {
       toast.error("A Bandeira é obrigatório")
       return false;
     }
 
 
-    if (data.subgroup===undefined || data.subgroup===""){
+    if (data.subgroup === undefined || data.subgroup === "") {
       toast.error("O Sub-Grupo é obrigatório")
       return false;
     }
 
-    if (data.group===undefined || data.group===""){
+    if (data.group === undefined || data.group === "") {
       toast.error("O Grupo é obrigatório")
       return false;
     }
 
-    if (data.modality===undefined || data.modality===""){
+    if (data.modality === undefined || data.modality === "") {
       toast.error("A Modalidade  é obrigatório")
       return false;
     }
 
-    if (data.modality===undefined || data.modality===""){
+    if (data.modality === undefined || data.modality === "") {
       toast.error("A modalidade é obrigatória")
       return false;
     }
 
-    if (data.group==="B"){
-      if (data.avgconsumption===undefined || data.avgconsumption===""){
+    if (data.group === "B") {
+      if (data.avgconsumption === undefined || data.avgconsumption === "") {
         toast.error("O Consumo Médio é obrigatório")
         return false;
       }
     }
 
-    if (data.subgroup==="A3" ||data.subgroup==="A4"){
-      if (data.avgconsumption===undefined || data.avgconsumption===""){
+    if (data.subgroup === "A3" || data.subgroup === "A4") {
+      if (data.avgconsumption === undefined || data.avgconsumption === "") {
         toast.error("O Consumo Médio é obrigatório")
         return false;
       }
     }
 
-    if (data.suggestedDesired===undefined || data.suggestedDesired===""){
+    if (data.suggestedDesired === undefined || data.suggestedDesired === "") {
       toast.error("A Geração Desejada é obrigatório")
       return false;
     }
@@ -210,26 +210,25 @@ export default function Checkout() {
 
 
   const handleNext = () => {
-    console.log(activeStep)
-    if (activeStep===0){
-       if (handleValidCustomer()){
+    console.log("passo " + activeStep)
+    if (activeStep === 0) {
+      if (handleValidCustomer()) {
         setActiveStep(activeStep + 1);
         return
 
-       }
-    }
+      }
+    }else
 
-    if (activeStep===1){
-      if (handleValidGerador()){
-       setActiveStep(activeStep + 1);
-       return
+    if (activeStep === 1) {
+      if (handleValidGerador()) {
+        setActiveStep(activeStep + 1);
+        return
 
       }
-   }
-    
-    
+    }
+
     else {
-    setActiveStep(activeStep + 1);
+      setActiveStep(activeStep + 1);
     }
   };
 

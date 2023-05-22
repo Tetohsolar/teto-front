@@ -182,6 +182,7 @@ export default function CustomerDataForm(prop) {
       const ret = await response.json();
       setSunIndex(ret.outputs.ac_annual)
       prop.dados.sunIndex=ret.outputs.ac_annual
+      console.log("aqui coco", long, lat)
     
     } catch (err) {
       console.log(err)
@@ -195,9 +196,10 @@ export default function CustomerDataForm(prop) {
 
       let long = 0
       let lat = 0
+      console.log(prop.dados.city,prop.dados.state)
 
       await api.post('/sunindex/get',
-        { "city": "Fortaleza", "state":"CE" }, {
+        { "city": prop.dados.city, "state":prop.dados.state }, {
         headers: {
           'Authorization': `Basic ${token}`
         }
@@ -206,13 +208,14 @@ export default function CustomerDataForm(prop) {
         long = response.data.lon
         lat = response.data.lat
       
-      }).catch(console.log("eror"))
-
+      }).catch( (e)=>{ console.log(e)})
 
       console.log("passou long e lat", long +"" + lat)
-      const response = await  fetch('https://developer.nrel.gov/api/pvwatts/v8.json?api_key=gMkc2FocnfJ99EMRUZfgs52ZmG6ElrjFf7qs0FLb&lat=-3.6895&lon=-40.3485&azimuth=0&system_capacity=0.86&tilt=7&array_type=1&module_type=1&losses=0');
+      const response = await  fetch('https://developer.nrel.gov/api/pvwatts/v8.json?api_key=gMkc2FocnfJ99EMRUZfgs52ZmG6ElrjFf7qs0FLb&lat='+lat+'&lon='+long+'&azimuth=0&system_capacity=0.86&tilt=7&array_type=1&module_type=1&losses=0');
       const ret = await response.json();
       setSunIndex(ret.outputs.ac_annual)
+      prop.dados.sunIndex = ret.outputs.ac_annual
+      console.log("SUM INDEX" + ret.outputs.ac_annual)
     
     } catch (err) {
       console.log(err)

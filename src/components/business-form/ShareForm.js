@@ -87,8 +87,7 @@ export default function ShareForm(props) {
 
   React.useEffect(() => {
 
-    console.log("fator solar ta vindo", props.dados.possuirateio)
-
+    console.log(props.dados)
     if (props.dados.possuirateio!==undefined &&props.dados.possuirateio==="S" ){
       setRat("S")
       setCip(props.dados.rcip)
@@ -341,14 +340,17 @@ function handleSubGrup(value) {
           <div class="card-header">
             Informações do Rateio
           </div>
+          
+          <Grid container spacing={3}>
+
+         
+
+          <Grid item xs={12} sm={3}>
+
           <Typography variant="h6" gutterBottom>
 
           </Typography>
 
-          <Grid container spacing={3}>
-
-          <Grid item xs={12} sm={3}>
-            <br></br>
           <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Tem Rateio?</InputLabel>
                 <Select
@@ -364,19 +366,27 @@ function handleSubGrup(value) {
               </FormControl>
           </Grid>
           
+          
           <Grid item xs={12} sm={3}>
         
+          <Typography variant="h6" gutterBottom>
+
+</Typography>
               <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => {setCip(e.target.value); props.dados.rcip = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
             <Grid item xs={12} sm={3}>
-            
+            <Typography variant="h6" gutterBottom>
+
+          </Typography>
               <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.rflag = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
 
             <Grid item xs={12} sm={3}>
-            
+            <Typography variant="h6" gutterBottom>
+
+          </Typography>
               <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                 <Select

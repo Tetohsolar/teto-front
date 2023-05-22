@@ -21,6 +21,38 @@ import { useState } from "react";
 import { Category } from "@mui/icons-material";
 
 export default function SystemTypeform(props) {
+
+  const searchSunIndexByCityState = async () => {
+    try {
+      
+
+      let long = 0
+      let lat = 0
+
+      await api.post('/sunindex/get',
+        { "city": props.dados.city, "state":props.dados.state }, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        long = response.data.lon
+        lat = response.data.lat
+      
+      }).catch(console.log("eror"))
+
+
+      console.log("passou long e lat", long +"" + lat)
+      const response = await  fetch('https://developer.nrel.gov/api/pvwatts/v8.json?api_key=gMkc2FocnfJ99EMRUZfgs52ZmG6ElrjFf7qs0FLb&lat=-3.6895&lon=-40.3485&azimuth=0&system_capacity=0.86&tilt=7&array_type=1&module_type=1&losses=0');
+      const ret = await response.json();
+     // setSunIndex(ret.outputs.ac_annual)
+      props.dados.sunIndex = ret.outputs.ac_annual
+    
+    } catch (err) {
+      console.log(err)
+
+    }
+  };
   const { token } = React.useContext(AuthContext)
   const [item, setItem] = React.useState("");
 
@@ -149,6 +181,7 @@ export default function SystemTypeform(props) {
         'Authorization': `Basic ${token}`
       }
     }).then((response) => {
+      console.log("aqui calculado")
 
       setDadosProdutos(prevDados => {
         const novoDados = [...prevDados];
