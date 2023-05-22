@@ -1002,7 +1002,7 @@ const BusinessForm = (props) => {
       {/* MUI STEP-BY-STEP */}
       <Checkout />
       {/* END MUI STEP-BY-STEP */}
-    
+
       <form id="old-form" className="row g-3 mt-5" onSubmit={handleChangePage}>
 
         <Tabs >
@@ -1194,7 +1194,7 @@ const BusinessForm = (props) => {
 
                   <div className="row p-2 d-flex flex-column">
 
-                  <div className="col-md-2 w-100">
+                    <div className="col-md-2 w-100">
                       <label htmlFor="inputGrupo" className="form-label">
                         Grupo:
                       </label>
@@ -1222,12 +1222,12 @@ const BusinessForm = (props) => {
                       <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
                         className="form-control number" value={demPonta || ''} onChange={(e) => setDem_ponta(e.target.value)} onBlur={calculaDemana} />
                     </div>
-                   
+
 
                   </div>
                   <div className="row p-2  d-flex flex-column">
 
-                  <div className="col-md-3   w-100">
+                    <div className="col-md-3   w-100">
                       <label htmlFor="inputSubgrupo" className="form-label">
                         Sub-Grupo:
                       </label>
@@ -1264,7 +1264,7 @@ const BusinessForm = (props) => {
                   </div>
 
                   <div className="row p-2  d-flex flex-column" >
-                  <div className="col-md-3 w-50">
+                    <div className="col-md-3 w-50">
                       <label htmlFor="modalidade" className="form-label">
                         Modalidade:
                       </label>
@@ -1280,41 +1280,41 @@ const BusinessForm = (props) => {
                     </div>
 
                     <div class="row">
-  <div class="col-md-6">
-    <label htmlFor="inputConsumoMedio" className="form-label">
-      Consumo Médio(KWh):
-    </label>
-    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-      className="form-control number" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
-  </div>
+                      <div class="col-md-6">
+                        <label htmlFor="inputConsumoMedio" className="form-label">
+                          Consumo Médio(KWh):
+                        </label>
+                        <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                          className="form-control number" value={consumoMedio || ''} onChange={(e) => setConsumoMedio(e.target.value)} />
+                      </div>
 
-  <div class="col-md-6">
-    <label htmlFor="inputGeracaoSugerida" className="form-label">
-      Geração Sugerida(KWh):
-    </label>
-    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-      className="form-control number" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
-  </div>
-</div>
+                      <div class="col-md-6">
+                        <label htmlFor="inputGeracaoSugerida" className="form-label">
+                          Geração Sugerida(KWh):
+                        </label>
+                        <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                          className="form-control number" value={geracaoSugeridaParcial || ''} onChange={(e) => setGeracaoSugeridaParcial(e.target.value)} />
+                      </div>
+                    </div>
 
-<div class="row">
-  <div class="col-md-6">
-    <label htmlFor="inputCIP" className="form-label ">
-      CIP(R$):
-    </label>
-    <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
-      className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
-  </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label htmlFor="inputCIP" className="form-label ">
+                          CIP(R$):
+                        </label>
+                        <NumericFormat decimalScale={5} placeholder="" decimalSeparator=","
+                          className="form-control number" value={cip || ''} onChange={(e) => setCip(e.target.value)} />
+                      </div>
 
-  <div class="col-md-6">
-    <label htmlFor="inputbandeira" className="form-label">
-      Bandeira(R$):
-    </label>
-    <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
-      className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
-  </div>
-</div>
-                </div>
+                      <div class="col-md-6">
+                        <label htmlFor="inputbandeira" className="form-label">
+                          Bandeira(R$):
+                        </label>
+                        <NumericFormat decimalScale={0} placeholder="" decimalSeparator=","
+                          className="form-control number" value={bandeira || ''} onChange={(e) => setbandeira(e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <br />
