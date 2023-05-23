@@ -94,6 +94,7 @@ export default function GeneratorDataForm(props) {
   };
 
   React.useEffect(() => {
+    console.log(afflited)
     console.log(props.dados.sunIndex)
 
     buscaTelhados()
