@@ -88,6 +88,7 @@ const ViewBusiness = () => {
   const [prof4, setProf4] = useState('')
   const [profitR4, setProfitR4] = useState('')
   const [margtR4, setMargtR4] = useState('')
+  const [numero, setNumero]= useState('')
 
   const formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -142,6 +143,7 @@ const ViewBusiness = () => {
       setCep(response.data.postcode)
       setEstado(response.data.state)
       setCidade(response.data.city)
+      setNumero(response.data.number)
     })
 
   }
@@ -176,7 +178,6 @@ const ViewBusiness = () => {
       setStatus(response.data.situation)
       setNumberP(response.data.number)
       setDonoN(response.data['User.name'])
-      //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
       setModificadoD(format(new Date(response.data.updatedAt), 'dd/MM/yyyy'))
       setTipoPessoa(response.data['Client.tipo'])
       setDocumento(response.data['Client.document'])
@@ -404,6 +405,14 @@ const ViewBusiness = () => {
                       </td>
                       <td>
                         <label> {rua} </label>
+                      </td>
+                    </tr>
+                    <tr className='linhabaixo tamanho-tr'>
+                      Número
+                      <td>
+                      </td>
+                      <td>
+                        <label> {numero} </label>
                       </td>
                     </tr>
                     <tr className='linhabaixo tamanho-tr'>
