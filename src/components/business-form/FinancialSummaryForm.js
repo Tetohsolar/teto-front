@@ -7,6 +7,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 export default function FinancialSummaryForm(props) {
   const { token, afflitedId, idLogged, afflited } = useContext(AuthContext)
@@ -18,6 +22,7 @@ export default function FinancialSummaryForm(props) {
   const [comicaoValue, setComissaoValue] = React.useState('')
   const [systempower, setSystemPower] = React.useState('')
   const [hasEdit, setHasEdit] = React.useState(false)
+  const [syncIndex, setSyncIndex] = useState(0)
   
   function handleKit(e){
     let custo = 0

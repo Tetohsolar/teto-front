@@ -1,8 +1,7 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState,  createContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../api'
-import objectHash from 'object-hash';
 
 export const AuthContext = createContext({})
 

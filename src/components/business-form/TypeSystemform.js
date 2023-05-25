@@ -163,17 +163,16 @@ export default function SystemTypeform(props) {
           if (parseFloat(props.dados.rsuggestedGeneration)) {
             sugg = sugg + parseFloat(String(props.dados.rsuggestedGeneration).replace(".", ""))
           }
-
+            
           let potenciaConsiderada = props.dados.consideredpower
-
-
+  
           let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * response.data.power))
           console.log("PASSA AQUI " + placas)
           novoDados[index]["qtd"] = placas;
 
           props.dados.nplacas = placas
           props.dados.potenciaSistema = (placas * response.data.power) / 1000
-
+          props.dados.panelpower = novoDados[index]["power"]
           setPotenciaSistema(props.dados.potenciaSistema)
           setNplacas(props.dados.nplacas)
 
