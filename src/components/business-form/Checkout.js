@@ -281,10 +281,10 @@ export default function Checkout() {
 
     const clientData = {
       id: dados.IdClient,
-      fantasy: dados.name,
-      corporatename: dados.corporateName,
+      fantasy: dados.name?dados.name:"",
+      corporatename: dados.corporateName?dados.corporateName:"",
       phone: dados.phone,
-      document: dados.doc,
+      document: dados.doc?dados.doc:"",
       email: dados.email,
       tipo: dados.tipoPessoa,
       zap: dados.zap,
