@@ -98,6 +98,10 @@ const ViewBusiness = () => {
     style: "decimal",
     maximumFractionDigits: 2
   });
+  const numeroFormatado5 = Intl.NumberFormat("pt-BR", {
+    style: "decimal",
+    maximumFractionDigits: 5
+  });
 
   useEffect(() => {
 
@@ -186,7 +190,7 @@ const ViewBusiness = () => {
       setEmail(response.data['Client.email'])
       setInfAdc(response.data['Client.addInformation'])
       setFatorS(response.data.sunIndex)
-      setTelhado(response.data.roof)
+      setTelhado(response.data['Roof.name'])
       setTipoL(response.data.typeConnection)
       setModalidade(response.data.modality)
       setGrupo(response.data.group)
@@ -195,7 +199,7 @@ const ViewBusiness = () => {
       setEnergiaFp(response.data.energiaFp)
       setDemandaP(response.data.demandaP)
       setEnergiaP(response.data.energiaP)
-      setTipoSistema(response.data.type)
+      setTipoSistema(response.data['TypeSystem.name'])
       setPainelP(response.data.panelpower)
       setNumeroP(response.data.numberborder)
       setMedia(response.data.avgmonth)
@@ -205,12 +209,9 @@ const ViewBusiness = () => {
       setConsumo(response.data.avgconsumption)
       setGeracaoSu(response.data.suggestedGeneration)
       setPrecoKit(response.data.kitprice)
-      setProjeto(response.data.project)
-      setImposto(response.data.tax)
-      setMontagem(response.data.assembled)
       setComissaoVe(response.data.sellercomission)
       setMargem(response.data.margin)
-      setTotalLu(response.data.amountcost)
+      setTotalLu(response.data.amount-response.data.kitprice)
       setMargemCa(response.data.marginCalculate)
       setValorTotal(response.data.amount)
       setValorComissao(response.data.valuesellercomission)
@@ -567,7 +568,7 @@ const ViewBusiness = () => {
                       <td>
                       </td>
                       <td className='alinhaDireita'>
-                        <label>{formatter.format(bandeira)} </label>
+                        <label>{numeroFormatado5.format(bandeira)} </label>
                       </td>
                     </tr>
                    

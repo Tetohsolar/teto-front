@@ -13,7 +13,7 @@ function NumberFormatCustom(props) {
                     variant="outlined"
                     label={label}
                     decimalSeparator={","}
-                    thousandSeparator={"."}
+                    thousandSeparator={""}
                     isNumericString
                     onChange={onChange}
                     decimalScale={decimal}
