@@ -186,7 +186,7 @@ export default function CustomerDataForm(prop) {
      // const ret = await response.json();
       setSunIndex(sunIndex)
       prop.dados.sunIndex=sunIndex
-      //console.log("aqui SunIndex", sunIndex)
+      console.log("aqui SunIndex", sunIndex)
     
     } catch (err) {
       console.log(err)
@@ -247,6 +247,7 @@ export default function CustomerDataForm(prop) {
         handleEstadoValue(response.data.Addresses[0].state)
         
         setName(response.data.fantasy)
+        
         prop.dados.name = response.data.fantasy
         setEmail(response.data.email)
         prop.dados.email = response.data.email;
@@ -274,15 +275,20 @@ export default function CustomerDataForm(prop) {
         setNumero(response.data.Addresses[0].number)
         prop.dados.number = response.data.Addresses[0].number
         setIdClient(response.data.id)
-        prop.dados.number = response.data.id
+        prop.dados.IdClient = response.data.id
+       // prop.dados.number = response.data.number
         setIdAdd(response.data.Addresses[0].id)
         prop.dados.idAdd = response.data.Addresses[0].id
 
-        searchSunIndex()
+        
       }).catch((error) => {
         setIdClient(null)
         toast.error(error.response.data.message)
       });
+
+      if (cepData){
+        await searchSunIndex()
+      }
 
     } catch (err) {
       console.log(err)
@@ -363,14 +369,14 @@ export default function CustomerDataForm(prop) {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <TextField id="Rua" maxLength={50} className="form-control " label='Rua'  variant="outlined" value={rua || ''} onChange={(e) => setRua(e.target.value)} />
+          <TextField id="Rua" maxLength={50} className="form-control " label='Rua'  variant="outlined" value={rua || ''} onChange={(e) => {setRua(e.target.value); prop.dados.street = e.target.value}} />
           </Grid>
 
           <Grid item xs={12} sm={4}>
-          <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro'  variant="outlined" value={bairro|| ''} onChange={(e) => setBairro(e.target.value)} />
+          <TextField id="Bairro" maxLength={50} className="form-control" label='Bairro'  variant="outlined" value={bairro|| ''} onChange={(e) => {setBairro(e.target.value); prop.dados.neighborhood = e.target.value }} />
           </Grid>
           <Grid item xs={12} sm={4}>
-             <TextField type="number" label={"Número"}  variant="outlined" value={num} onChange={(e) => setNumero(e.target.value)} ></TextField>
+             <TextField type="number" label={"Número"}  variant="outlined" value={num} onChange={(e) => {setNumero(e.target.value); prop.dados.number = e.target.value}} ></TextField>
           </Grid>
           <Grid item xs={12} sm={4}>
           <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />

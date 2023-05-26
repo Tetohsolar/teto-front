@@ -12,6 +12,10 @@ import FinancialSummaryForm from "./FinancialSummaryForm";
 import ShareForm from "./ShareForm";
 import { BsDatabaseDash } from "react-icons/bs";
 import { toast } from "react-toastify";
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const steps = [
   "Dados do cliente",
@@ -41,7 +45,11 @@ function getStepContent(step, data) {
   }
 }
 
+
+
 export default function Checkout() {
+  const { token, afflitedId, idLogged, afflited } = useContext(AuthContext)
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [client, setClient] = React.useState("");
@@ -210,31 +218,140 @@ export default function Checkout() {
 
 
   const handleNext = () => {
-    console.log("passo " + activeStep)
+    console.log("passo ")
     if (activeStep === 0) {
       if (handleValidCustomer()) {
         setActiveStep(activeStep + 1);
         return
 
       }
-    }else
+    } else
 
-    if (activeStep === 1) {
-      if (handleValidGerador()) {
-        setActiveStep(activeStep + 1);
-        return
+      if (activeStep === 1) {
+        if (handleValidGerador()) {
+          setActiveStep(activeStep + 1);
+          return
 
+        }
       }
-    }
 
-    else {
-      setActiveStep(activeStep + 1);
-    }
+      if (activeStep === 4) {
+        if (handleValidGerador()) {
+          saveBusiness(data)
+          return
+
+        }
+      }
+
+      else {
+        setActiveStep(activeStep + 1);
+      }
+
+
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+
+  const navigate = useNavigate();
+
+  async function saveBusiness(dados,  number, consumption,
+    panelpower, avgmonth, validate) {
+
+    
+    
+    let shares = []
+    
+    if (dados.possuirateio) {
+      const Sahres = 
+      {
+        id: 1, modality: dados.rmodality, group: dados.rgroup, subgroup: dados.subgroupr, 
+        demandaFP: dados.rdemadaFp===''?0: dados.rdemadaFp, 
+        energiaFP: dados.renergiaFP===''?0:dados.renergiaFP,
+        demandaP: dados.rdemandaP===''?0:  dados.rdemandaP, 
+        energiaP: dados.renergiaP===''?0:  dados.renergiaP, 
+        avgconsumption: dados.ravgconsumption, suggestedGeneration: dados.rsuggestedGeneration, 
+        CIP: dados.rcip,
+      }
+      shares[0] = Sahres; 
+    }
+    console.log(shares)
+
+    const clientData = {
+      id: dados.IdClient,
+      fantasy: dados.name?dados.name:"",
+      corporatename: dados.corporateName?dados.corporateName:"",
+      phone: dados.phone,
+      document: dados.doc?dados.doc:"",
+      email: dados.email,
+      tipo: dados.tipoPessoa,
+      zap: dados.zap,
+      addInformation: dados.addInformation,
+      AffiliatedId: afflitedId,
+      Addresses: [
+        {
+          id: dados.idAdd ? dados.idAdd : undefined,
+          street: dados.street?dados.street:"",
+          postcode: dados.cep?dados.cep:"", 
+          city: dados.city?dados.city:"",
+          state: dados.state?dados.state:"",
+          neighborhood: dados.neighborhood?dados.neighborhood:"",
+          number: dados.number?dados.number:"",
+        }
+      ]
+    }
+
+    if (dados.demadaFp ===''){
+      dados.demadaFp = 0
+    }
+    if (dados.energiaFp ===''){
+      dados.energiaFp = 0
+    }
+    if (dados.demandaP ===''){
+      dados.demandaP = 0
+    }
+    if (dados.energiaP ===''){
+      dados.energiaP = 0
+    }
+
+    const save = {
+      sunIndex: dados.sunIndex, number: number, roof: dados.roof, typeConnection: dados.typeConnection,
+      modality: dados.modality, group: dados.group, subgroup: dados.subgroup, demadaFp: dados.demadaFp,
+      energiaFp: dados.energiaFp, demandaP: dados.demandaP, energiaP: dados.energiaP,
+      avgconsumption: dados.avgconsumption, suggestedGeneration: dados.suggestedGeneration,
+      suggestedDesired: dados.suggestedDesired, situation: 'Aberta',
+      cip: dados.cip, flag: dados.flag, syncindex: dados.synIndex, lost: dados.lost,
+      consideredpower: dados.consideredpower, numberborder: dados.numberborder,
+      systempower: dados.systempower, consumption: consumption,
+      panelpower: dados.panelpower, avgmonth: avgmonth,
+      kitprice: dados.kitprice,
+      sellercomission: dados.sellercomission,  amountcost: dados.precoCusto, 
+      amount: dados.amount, valuesellercomission: dados.valuesellercomission,
+      profit: dados.profit, realProfit: dados.realProfit,
+      validate: validate, AffiliatedId: afflitedId, ClientId: dados.IdClient,
+      type: dados.type, UserId: idLogged, shares: shares, products: dados.produtos, ClientData: clientData
+    };
+
+    
+    await api.post('/business/create', save
+      , {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+
+        navigate("/business/view/" + response.data.business.id)
+      }).catch(
+        (response) => {
+          toast.error(response.response.data.message)
+          throw new Error()
+        }
+      )
+
+  }
 
   return (
     <Container component="main" sx={{ mb: 4 }}>

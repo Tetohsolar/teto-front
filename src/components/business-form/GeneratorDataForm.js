@@ -46,11 +46,10 @@ export default function GeneratorDataForm(props) {
   const [tipoSistemas, setTipoSistemas] = useState([])
   const [subGrupo, setSubGrupo] = useState('')
   const [grupo, setGrupo] = useState('')
-  const [geracaoSu, setGeracaoSu] = useState('')
   const [cip, setCip] = useState('')
   const [bandeira, setBandeira] = useState('')
-  const [potenciaS, setPotenciaS] = React.useState('')
   const [modalidades, setModalidades] = useState([""])
+  const [synIndex, setSyncIndex] = useState(0)
 
   const [idSelected, setIdSelected] = React.useState('')
 
@@ -132,6 +131,7 @@ export default function GeneratorDataForm(props) {
       props.dados.lost = perdas
       setFatorSolar(sunIndex)
       setPotenciaConsiderada(potConsiderada)
+      setSyncIndex(props.dados.synIndex)
 
     }
     console.log(props.dados)
@@ -485,6 +485,16 @@ export default function GeneratorDataForm(props) {
             <Grid item xs={12} sm={3}>
               <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.flag = e.target.value}} ></NumberFormatCustom>
 
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <NumberFormatCustom
+                id="commission"
+                name="commission"
+                label="Fator de Simultaneidade (%)"
+                value={synIndex} onChange={ (e)=>{setSyncIndex(e.target.value); props.dados.synIndex= e.target.value;}}
+                fullWidth
+                             />
             </Grid>
 
           </Grid>
