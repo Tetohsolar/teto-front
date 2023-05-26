@@ -69,9 +69,32 @@ export default function Checkout() {
 
 
   const handleValidCustomer = () => {
+    
+    
+    if (data.tipoPessoa==="F"){
     if (data.name === undefined || data.name === "") {
       toast.error("O Nome é obrigatório")
       return false;
+
+    }}
+
+    if (data.tipoPessoa==="J"){
+      
+      if (data.name === undefined || data.name === "") {
+        toast.error("O Campo Fantasia é obrigatório")
+        return false;
+  
+      }
+      if (data.corporateName === undefined || data.corporateName===""){
+        toast.error("O Campo Razão Social é obrigatório")
+        return false;
+      }
+
+      if (data.doc === undefined|| data.doc===""){
+        toast.error("O Campo CNPJ é obrigatório")
+        return false;
+      }
+
     }
 
     if (data.city === undefined || data.city === "") {
@@ -91,7 +114,7 @@ export default function Checkout() {
     }
 
     if (data.typeConnection === undefined || String(data.typeConnection) === "") {
-      toast.error("O Tipo de Conexão é obrigatório")
+      toast.error("O Tipo de Ligação é obrigatório")
       return false;
     }
 
@@ -235,17 +258,25 @@ export default function Checkout() {
         }
       }
 
+      if (activeStep === 2 ||activeStep === 3 ) {
+        
+          setActiveStep(activeStep + 1);
+          return
+
+      }
+
       if (activeStep === 4) {
         if (handleValidGerador()) {
           saveBusiness(data)
+          
           return
 
         }
       }
 
-      else {
+     /* else {
         setActiveStep(activeStep + 1);
-      }
+      }*/
 
 
   };
@@ -306,8 +337,8 @@ export default function Checkout() {
     if (dados.demadaFp ===''){
       dados.demadaFp = 0
     }
-    if (dados.energiaFp ===''){
-      dados.energiaFp = 0
+    if (dados.energiaFP ===''){
+      dados.energiaFP = 0
     }
     if (dados.demandaP ===''){
       dados.demandaP = 0
@@ -316,10 +347,31 @@ export default function Checkout() {
       dados.energiaP = 0
     }
 
+    if (dados.cip!==''){
+       dados.cip = String(dados.cip).replace(".","")
+       dados.cip = String(dados.cip).replace(",",".")
+       dados.cip = parseFloat(dados.cip)
+    }
+    if (dados.flag!==''){
+      dados.flag = String(dados.flag).replace(".","")
+      dados.flag = String(dados.flag).replace(",",".")
+      dados.flag = parseFloat(dados.flag)
+   }
+
+   if (dados.modality==='Horos. Azul'){
+       dados.modality="HA"
+   }
+   if (dados.modality==='Horos. Verde'){
+     dados.modality="HV"
+   }
+
+   console.log("dados do cliente")
+   console.log(dados)
+
     const save = {
       sunIndex: dados.sunIndex, number: number, roof: dados.roof, typeConnection: dados.typeConnection,
       modality: dados.modality, group: dados.group, subgroup: dados.subgroup, demadaFp: dados.demadaFp,
-      energiaFp: dados.energiaFp, demandaP: dados.demandaP, energiaP: dados.energiaP,
+      energiaFp: dados.energiaFP, demandaP: dados.demandaP, energiaP: dados.energiaP,
       avgconsumption: dados.avgconsumption, suggestedGeneration: dados.suggestedGeneration,
       suggestedDesired: dados.suggestedDesired, situation: 'Aberta',
       cip: dados.cip, flag: dados.flag, syncindex: dados.synIndex, lost: dados.lost,

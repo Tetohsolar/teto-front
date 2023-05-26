@@ -11,7 +11,7 @@ import { cnpjMask } from './cnpjmask'
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-import { Propane } from "@mui/icons-material";
+import { Propane, PropaneSharp } from "@mui/icons-material";
 export default function CustomerDataForm(prop) {
   
   const [type, setType] = React.useState("");
@@ -53,14 +53,15 @@ export default function CustomerDataForm(prop) {
 
   React.useEffect(() => {
 
-    prop.dados.tipoPessoa = tipoPessoa
-
+   // 
     if (prop.dados && prop.dados.name){
       setName(prop.dados.name)
       setTipoPessoa(prop.dados.tipoPessoa)
+      handleTipoPessoaValue(prop.dados.tipoPessoa)
       setDoc(prop.dados.doc)
       setPhone(prop.dados.phone)
       setZap(prop.dados.zap)
+      
       setEstado(prop.dados.state)
       handleEstadoValue(prop.dados.state)
       setCidade(prop.dados.city)
@@ -72,6 +73,10 @@ export default function CustomerDataForm(prop) {
       setInformacoesAdicionais(prop.dados.addInformation)
       setIdAdd(prop.dados.idAdd)
       setIdClient(prop.dados.IdClient)
+      setCorporateName(prop.dados.corporateName)
+    }else{
+      prop.dados.tipoPessoa = tipoPessoa
+
     }
 
   }, [])
@@ -149,6 +154,8 @@ export default function CustomerDataForm(prop) {
 
       await api.get('/sunindex/cep/' + cepData).then((response) => {
         handleEstadoValue(response.data.state).then( (e)=>{
+
+          prop.dados.state = response.data.state
           
           setCidade(response.data.city)
           prop.dados.city=response.data.city
@@ -338,7 +345,13 @@ export default function CustomerDataForm(prop) {
               variant="outlined" value={name || ''} onChange={(e) => { setName(e.target.value); prop.dados.name = e.target.value}} />
           </Grid>
           
-
+          { exibeCorporateName!==""?
+          <Grid item xs={12} sm={4} >
+            <div  id={exibeCorporateName === "" ? "divRazaoEscondida" : "divRazaoVisvel"} >
+                <TextField id="corporateName" maxLength={50} className="form-control" label='Razão Social' variant="outlined" value={corporateName || ''} onChange={(e) => { setCorporateName(e.target.value); prop.dados.corporateName = e.target.value}} />
+              </div>
+          </Grid>:""
+          }
           <Grid item xs={12} sm={4}>
            <MaskedTextField label={"Telefone"}  mask={'(99)9 9999-9999'} variant="outlined" value={phone} onChange={(e) => {setPhone(e.target.value); prop.dados.phone = e.target.value }} onBlur = {confirmPhoneNumber}  ></MaskedTextField>
           </Grid>
@@ -379,11 +392,11 @@ export default function CustomerDataForm(prop) {
              <TextField type="number" label={"Número"}  variant="outlined" value={num} onChange={(e) => {setNumero(e.target.value); prop.dados.number = e.target.value}} ></TextField>
           </Grid>
           <Grid item xs={12} sm={4}>
-          <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+          <TextField id="email" maxLength={50} className="form-control" label='E-mail' variant="outlined" value={email || ''} onChange={(e) => {setEmail(e.target.value); prop.dados.email=e.target.value}} />
           </Grid>
 
           <Grid item xs={12} sm={12}>
-          <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => setInformacoesAdicionais(e.target.value)} />
+          <TextField id="informacoesAdicionais" maxLength={50} className="form-control" label='Informações Adicionais' variant="outlined" value={informacoesAdicionais || ''} onChange={(e) => {setInformacoesAdicionais(e.target.value); prop.dados.addInformation=e.target.value}} />
           </Grid>
         </Grid>
       </box>

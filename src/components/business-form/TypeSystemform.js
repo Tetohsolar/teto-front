@@ -79,10 +79,17 @@ export default function SystemTypeform(props) {
 
   const { businessId } = useParams();
 
+  
+  
   React.useEffect(() => {
 
     loadCategorys()
     //loadbId(businessId)
+
+
+    if (props.dados.consideredpower===0){
+       searchSunIndexByCityState();
+    }
 
     if (props.dados.produtos) {
       setDadosProdutos(props.dados.produtos)
@@ -163,9 +170,11 @@ export default function SystemTypeform(props) {
           if (parseFloat(props.dados.rsuggestedGeneration)) {
             sugg = sugg + parseFloat(String(props.dados.rsuggestedGeneration).replace(".", ""))
           }
+          
             
           let potenciaConsiderada = props.dados.consideredpower
-  
+          console.log("potencia")
+          console.log(potenciaConsiderada)
           let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * response.data.power))
           console.log("PASSA AQUI " + placas)
           novoDados[index]["qtd"] = placas;
@@ -183,6 +192,45 @@ export default function SystemTypeform(props) {
     })
 
   }
+
+
+  const searchSunIndexByCityState = async () => {
+    try {
+      
+
+      let long = 0
+      let lat = 0
+      let sunIndex = 0
+     // console.log(props.dados.city,props.dados.state)
+
+      await api.post('/sunindex/get',
+        { "city": props.dados.city, "state":props.dados.state }, {
+        headers: {
+          'Authorization': `Basic ${token}`
+        }
+
+      }).then((response) => {
+        long = response.data.lon
+        lat = response.data.lat
+        sunIndex = response.data.anual
+      
+      }).catch( (e)=>{ console.log(e)})
+
+      props.dados.sunIndex = sunIndex
+
+      if (props.dados.lost){
+        let potConsiderada = sunIndex * (1-(props.dados.lost/100))
+        props.dados.sunIndex = sunIndex
+        props.dados.consideredpower = potConsiderada
+       // props.dados.lost = perdas
+        }
+
+     // console.log("SUM INDEX" + props.dados.lost)
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
   async function onBlurMarca(item) {
     console.log("yipo é " + item.type)
     let type = item.type
