@@ -141,6 +141,7 @@ export default function SingleBusinessReport() {
 
   async function loadbId(id) {
 
+   // console.log("aqui")
     await api.get('/business/get/' + id, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -150,7 +151,7 @@ export default function SingleBusinessReport() {
       setName(response.data["Client.fantasy"])
       setNumberP(response.data.number)
       //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
-      setTipoSistema(response.data.type)
+      setTipoSistema(response.data.TypeSystemId)
       setPotenciaS(response.data.systempower)
       setValor(formatter.format(response.data.amount))
       loadAdd(response.data.ClientId)
@@ -163,11 +164,12 @@ export default function SingleBusinessReport() {
       setAreaInversor(numeroFormatado.format(response.data.areainversor))
       setPesoSistema(numeroFormatado.format(response.data.pesosistema))
       setPorcAtendida(numeroFormatado.format(response.data.porctendida))
-      if (tipoSistema==="1")
+      //console.log("tipo do sistema", response.data)
+      if (response.data.TypeSystemId===1)
        {   
         setVpl(formatter.format(response.data.vplI))
         setTir(numeroFormatado.format(response.data.tirI))  
-      }else if (tipoSistema==="3"){
+      }else if (response.data.TypeSystemId===3){
             setVpl(formatter.format(response.data.vplM))
             setTir(numeroFormatado.format(response.data.tirM))
           }
@@ -557,7 +559,7 @@ export default function SingleBusinessReport() {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Caixa acumulado até 2045</td>
+                            <td>Caixa acumulado até 2029</td>
 
                             <td>
                               {tipoSistema === "Inversor"
