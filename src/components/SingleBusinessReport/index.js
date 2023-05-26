@@ -169,7 +169,7 @@ export default function SingleBusinessReport() {
        {   
         setVpl(formatter.format(response.data.vplI))
         setTir(numeroFormatado.format(response.data.tirI))  
-      }else if (response.data.TypeSystemId===3){
+      }else if (response.data.TypeSystemId===2){
             setVpl(formatter.format(response.data.vplM))
             setTir(numeroFormatado.format(response.data.tirM))
           }
