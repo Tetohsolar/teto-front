@@ -34469,7 +34469,7 @@
     "NAME": "Chiador",
     "CLASS": "Sede Municipal",
     "STATE": "MINAS GERAIS",
-    "ANNUAL": 1402
+    "ANNUAL": 1402,
     "JAN": 4337,
     "FEB": 5124,
     "MAR": 4068,
@@ -46523,7 +46523,7 @@
     "NAME": "Presidente Olegário",
     "CLASS": "Sede Municipal",
     "STATE": "MINAS GERAIS",
-    "ANNUAL": 1663
+    "ANNUAL": 1663,
     "JAN": 4323,
     "FEB": 5081,
     "MAR": 3971,
