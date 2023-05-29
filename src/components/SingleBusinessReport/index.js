@@ -254,7 +254,7 @@ export default function SingleBusinessReport() {
                     <thead>
                       <tr>
                         <th scope="col">Proposta</th>
-                        <th scope="col">{tipoSistema}</th>
+                        <th scope="col">{tipoSistema==="1"?"Inversor":"Microinversor"}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -409,7 +409,7 @@ export default function SingleBusinessReport() {
                           {produto.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td>{item.type === 'M' ? 'Microinversor' : item.type === 'P' ? 'Placa'
+                                <td>{String(item.type) === '2' ? 'Microinversor' : String(item.type) === '3' ? 'Placa'
                                 : 'Inversor'}</td>
                                 <td> {item.brand + "-" + item.model}</td>
                                 <td>{item.qtd}</td>
@@ -497,7 +497,9 @@ export default function SingleBusinessReport() {
                           {garantiasData.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td> <strong> {item.category + ': '}</strong>{item.name}</td>
+                                <td> 
+                                   <strong> {item.type===1?"Inversor:":item.type===3?"Placa:":"Microinversor:"} </strong>
+                                   {item.category + '-'} {item.name}</td>
                                 <td>{item.value}</td>
                               </tr>
                             );
@@ -562,7 +564,7 @@ export default function SingleBusinessReport() {
                             <td>Caixa acumulado até 2029</td>
 
                             <td>
-                              {tipoSistema === "Inversor"
+                              {String(tipoSistema) === "1"
                                 ? caixaAcumuladoInversor
                                 : caixaAcumuladoMicro}
                             </td>
@@ -835,7 +837,7 @@ export default function SingleBusinessReport() {
                       <div className="card-body py-4">
                         <h6 className="fw-bold">Sua economia anual</h6>
                         <p className="mb-0">
-                          {tipoSistema === "Inversor"
+                          {String(tipoSistema) === "1"
                             ? formatter.format(item.economiaIn)
                             : formatter.format(item.economiaM)}
                         </p>
