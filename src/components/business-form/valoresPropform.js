@@ -39,9 +39,9 @@ const ValoresProposta = () => {
   const navigate = useNavigate();
   const [cip, setCip] = useState('')
   const [bandeira, setBandeira] = useState('')
-  const [potenciaS,setPotenciaS]=useState('')
+  const [potenciaS, setPotenciaS] = useState('')
   const [media, setMedia] = useState('')
-  const[tipoSistemas,setTipoSistemas]=useState([])
+  const [tipoSistemas, setTipoSistemas] = useState([])
 
 
 
@@ -49,7 +49,7 @@ const ValoresProposta = () => {
 
 
   useEffect(() => {
-     buscaSistema()
+    buscaSistema()
 
     if (businessId) {
       loadbId(businessId)
@@ -85,7 +85,7 @@ const ValoresProposta = () => {
     }).then((response) => {
 
 
-      
+
       setConsumo(response.data.avgconsumption)
       setGeracaoSu(response.data.suggestedGeneration)
       setGeracaoDesejada(response.data.suggestedDesired)
@@ -93,7 +93,7 @@ const ValoresProposta = () => {
 
       setPrecoKit(response.data.kitprice)
       setComissaoVe(response.data.sellercomission)
-      
+
       if (response.data.amountcost) {
         setTotalLu(response.data.amountcost)
       }
@@ -104,22 +104,22 @@ const ValoresProposta = () => {
       setMedia(response.data.avgmonth)
       setCip(response.data.cip)
       setBandeira(response.data.flag)
-      
-      
 
-    
+
+
+
     }).catch((error) => { console.log(error) })
 
   }
 
-  function calculaTotalComplemento(e){
+  function calculaTotalComplemento(e) {
     let precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'))
     let compl = parseFloat(String(complemento).replace(/\./g, '').replace(',', '.'))
     let proj = parseFloat(String(projeto).replace(/\./g, '').replace(',', '.'))
     let imp = parseFloat(String(imposto).replace(/\./g, '').replace(',', '.'))
     let mont = parseFloat(String(montagem).replace(/\./g, '').replace(',', '.'))
-    let totalCusto = precoK+compl+proj+imp+mont;
-    setTotalCusto(totalCusto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })) 
+    let totalCusto = precoK + compl + proj + imp + mont;
+    setTotalCusto(totalCusto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
 
     const mgsV = parseFloat(String(margem).replace(/\./g, '').replace(',', '.'));
     const comsV = parseFloat(String(comissaoVe).replace(/\./g, '').replace(',', '.'));
@@ -127,30 +127,30 @@ const ValoresProposta = () => {
     var mar = (mgsV / 100) * precoK;
     var total = precoK + compl + imp + proj + mont
     var totalProjeto = 100 * (parseInt((total + mar) / 100))
-    
+
     var com = (comsV / 100) * totalProjeto
     var lucro = mar - com
     var lucroR = (lucro / parseFloat(totalProjeto)) * 100
 
     setMargemCa(mar.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-    if (isNaN(com)){
+    if (isNaN(com)) {
       setValorComissao("")
-    }else{
+    } else {
       setValorComissao(com.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     }
     setValorTotal(totalProjeto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     setLucroProjeto(lucro.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-    if (isNaN(lucroR)){
+    if (isNaN(lucroR)) {
       setLucroReal("")
-    }else{
-    setLucroReal(lucroR.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    } else {
+      setLucroReal(lucroR.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     }
   }
 
   function calculaCustos(e) {
     let precoK = parseFloat(String(precoKit).replace(/\./g, '').replace(',', '.'))
-    
-    
+
+
     let fator = afflited.complementCostI
     let tax = afflited.taxI
     if (tipoSistema === "MicroInversor") {
@@ -158,18 +158,18 @@ const ValoresProposta = () => {
       tax = afflited.taxM
     }
     var complement = precoK * (fator / 100)
-    
+
     var imp = precoK * (tax / 100)
     console.log(!isNaN(complement))
-    if (!isNaN(complement)){
+    if (!isNaN(complement)) {
       setComplemento(complement.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-    }else{
+    } else {
       setComplemento("")
     }
-    
-    if (!isNaN(imp)){
-    setImposto(imp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-    }else{
+
+    if (!isNaN(imp)) {
+      setImposto(imp.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    } else {
       setImposto("")
     }
     const projet = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
@@ -181,7 +181,7 @@ const ValoresProposta = () => {
 
     var mar = (mgsV / 100) * precoK;
     var totalProjeto = 100 * (parseInt((total + mar) / 100))
-    
+
     var com = (comsV / 100) * totalProjeto
     var lucro = mar - com
     var lucroR = (lucro / parseFloat(totalProjeto)) * 100
@@ -189,10 +189,10 @@ const ValoresProposta = () => {
     setMargemCa(mar.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     setValorComissao(com.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     setValorTotal(totalProjeto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
-    if (isNaN(lucro)){
+    if (isNaN(lucro)) {
       setLucroProjeto("")
-    }else{
-    setLucroProjeto(lucro.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    } else {
+      setLucroProjeto(lucro.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     }
     setLucroReal(lucroR.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
   }
@@ -200,19 +200,28 @@ const ValoresProposta = () => {
   async function salvar(e) {
 
     e.preventDefault();
-    const precoK = parseFloat(precoKit.replace(/\./g, '').replace(',', '.'));
-    const comp = parseFloat(complemento.replace(/\./g, '').replace(',', '.'));
-    const proje = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
-    const imp = parseFloat(imposto.replace(/\./g, '').replace(',', '.'));
-    const monta = parseFloat(montagem.replace(/\./g, '').replace(',', '.'));
-    const ct = parseFloat(totalCusto.replace(/\./g, '').replace(',', '.'));
-    const mg = parseFloat(margemCa.replace(/\./g, '').replace(',', '.'));
-    const vt = parseFloat(valorTotal.replace(/\./g, '').replace(',', '.'));
-    const vc = parseFloat(valorComissao.replace(/\./g, '').replace(',', '.'));
-    const lp = parseFloat(lucroProjeto.replace(/\./g, '').replace(',', '.'));
-    const lr = parseFloat(lucroReal.replace(/\./g, '').replace(',', '.'));
-    const mg1 = parseFloat(margem.replace(/\./g, '').replace(',', '.'));
-    const cmv = parseFloat(comissaoVe.replace(/\./g, '').replace(',', '.'));
+    // const precoK = parseFloat(precoKit.replace(/\./g, '').replace(',', '.'));
+    // const comp = parseFloat(complemento.replace(/\./g, '').replace(',', '.'));
+    // const proje = parseFloat(projeto.replace(/\./g, '').replace(',', '.'));
+    // const imp = parseFloat(imposto.replace(/\./g, '').replace(',', '.'));
+    // const ct = parseFloat(totalCusto.replace(/\./g, '').replace(',', '.'));
+    // const mg = parseFloat(margemCa.replace(/\./g, '').replace(',', '.'));
+    // const vt = parseFloat(valorTotal.replace(/\./g, '').replace(',', '.'));
+    // const vc = parseFloat(valorComissao.replace(/\./g, '').replace(',', '.'));
+    // const lp = parseFloat(lucroProjeto.replace(/\./g, '').replace(',', '.'));
+    // const lr = parseFloat(lucroReal.replace(/\./g, '').replace(',', '.'));
+    // const cmv = parseFloat(comissaoVe.replace(/\./g, '').replace(',', '.'));
+    const precoK = parseFloat(precoKit);
+    const comp = parseFloat(complemento);
+    const proje = parseFloat(projeto);
+    const imp = parseFloat(imposto);
+    const ct = parseFloat(totalCusto);
+    const mg = parseFloat(margemCa);
+    const vt = parseFloat(valorTotal);
+    const vc = parseFloat(valorComissao);
+    const lp = parseFloat(lucroProjeto);
+    const lr = parseFloat(lucroReal);
+    const cmv = parseFloat(comissaoVe);
 
     const data = {
       avgconsumption: consumo, suggestedGeneration: geracaoSu,
@@ -220,11 +229,16 @@ const ValoresProposta = () => {
       consumption: consumo,
       avgmonth: consumo,
       kitprice: precoK, complement: comp,
-      project: proje, tax: imp, assembled: monta,
-      sellercomission: cmv, margin: mg1,
-      amountcost: ct, marginCalculate: mg,
+      project: proje,
+      // tax: imp,
+      // assembled: monta,
+      sellercomission: cmv,
+      // margin: mg1,
+      amountcost: ct,
+      //  marginCalculate: mg,
       amount: vt, valuesellercomission: vc,
-      profit: lp, realProfit: lr,
+      // profit: lp, 
+      // realProfit: lr,
 
     };
 
@@ -268,83 +282,83 @@ const ValoresProposta = () => {
             <form className="row g-3" onSubmit={salvar} >
 
               <div className="col-md-3">
-               
-                <NumberFormatCustom label={"Consumo (KWh)"}  variant="outlined" decimal={2} value={consumo} onChange={(e) => setConsumo(e.target.value)} ></NumberFormatCustom>
-                
-              </div>
-              <div className="col-md-3">
-               
-                <NumberFormatCustom label={"Geração sugerida (KWh)"}  variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
-           
-              </div>
-              <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Geração desejada (KWh)"}  variant="outlined" decimal={2} value={geracaoDesejada } onChange={(e) => setGeracaoDesejada (e.target.value)} ></NumberFormatCustom>
-            
-              </div>
-              <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Preço do kit(R$)"}  variant="outlined" decimal={2} value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} ></NumberFormatCustom>
-              </div>
-              <div className="col-md-3">
-              
-                <NumberFormatCustom label={"Comissão do vendedor(%)"}  variant="outlined" decimal={2} value={comissaoVe} onChange={(e) => setComissaoVe (e.target.value)} ></NumberFormatCustom>
-               
-              </div>
-              <div className="col-md-3">
-                <NumberFormatCustom label={"Valor da Comissão (R$)"}  variant="outlined" decimal={2} value={valorComissao} onChange={(e) => setComissaoVe (e.target.value)} ></NumberFormatCustom>
-              </div>
-              <div className="col-md-3">
-                <NumberFormatCustom label={"Total de custo (R$)"}  variant="outlined" decimal={2} value={totalCusto} onChange={(e) => setTotalCusto (e.target.value)} ></NumberFormatCustom>
- 
-              </div>
-              <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Valor total do projeto (R$)"}  variant="outlined" decimal={2} value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} ></NumberFormatCustom>
-                
-              </div>
-              <div className="col-md-3">
-                
-              <FormControl fullWidth>
-                    <InputLabel id="tipoSistema">Tipo de sistema</InputLabel>
-                    <Select
-                      labelId="tipoSistema"
-                      id="tipoSistema"
-                      value={tipoSistema}
-                      label="Sistema"
-                      onChange={(e) => setTipoSistema(e.target.value)}
 
-                    >
-                      <MenuItem key={-1}value={''}></MenuItem>
-                      {
-                        tipoSistemas.length > 0 &&
-                        tipoSistemas.map((option, i) => {
-                          return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
-                        })
-                      }
-                </Select>
+                <NumberFormatCustom label={"Consumo (KWh)"} variant="outlined" decimal={2} value={consumo} onChange={(e) => setConsumo(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+
+                <NumberFormatCustom label={"Geração sugerida (KWh)"} variant="outlined" decimal={2} value={geracaoSu} onChange={(e) => setGeracaoSu(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+
+                <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+
+                <NumberFormatCustom label={"Preço do kit(R$)"} variant="outlined" decimal={2} value={precoKit} onChange={(e) => setPrecoKit(e.target.value)} ></NumberFormatCustom>
+              </div>
+              <div className="col-md-3">
+
+                <NumberFormatCustom label={"Comissão do vendedor(%)"} variant="outlined" decimal={2} value={comissaoVe} onChange={(e) => setComissaoVe(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+                <NumberFormatCustom label={"Valor da Comissão (R$)"} variant="outlined" decimal={2} value={valorComissao} onChange={(e) => setComissaoVe(e.target.value)} ></NumberFormatCustom>
+              </div>
+              <div className="col-md-3">
+                <NumberFormatCustom label={"Total de custo (R$)"} variant="outlined" decimal={2} value={totalCusto} onChange={(e) => setTotalCusto(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+
+                <NumberFormatCustom label={"Valor total do projeto (R$)"} variant="outlined" decimal={2} value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} ></NumberFormatCustom>
+
+              </div>
+              <div className="col-md-3">
+
+                <FormControl fullWidth>
+                  <InputLabel id="tipoSistema">Tipo de sistema</InputLabel>
+                  <Select
+                    labelId="tipoSistema"
+                    id="tipoSistema"
+                    value={tipoSistema}
+                    label="Sistema"
+                    onChange={(e) => setTipoSistema(e.target.value)}
+
+                  >
+                    <MenuItem key={-1} value={''}></MenuItem>
+                    {
+                      tipoSistemas.length > 0 &&
+                      tipoSistemas.map((option, i) => {
+                        return (<MenuItem key={i} value={option.id}>{option.name}</MenuItem>)
+                      })
+                    }
+                  </Select>
                 </FormControl>
               </div>
-             
+
               <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Média mensal (kWh)"}  variant="outlined" decimal={2} value={media} onChange={(e) => setMedia(e.target.value)} ></NumberFormatCustom>
-                
+
+                <NumberFormatCustom label={"Média mensal (kWh)"} variant="outlined" decimal={2} value={media} onChange={(e) => setMedia(e.target.value)} ></NumberFormatCustom>
+
               </div>
               <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Potência do sistema"}  variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
-                
+
+                <NumberFormatCustom label={"Potência do sistema"} variant="outlined" decimal={2} value={potenciaS} onChange={(e) => setPotenciaS(e.target.value)} ></NumberFormatCustom>
+
               </div>
               <div className="col-md-3">
-                
-                <NumberFormatCustom label={"CIP"}  variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
-                
+
+                <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => setCip(e.target.value)} ></NumberFormatCustom>
+
               </div>
               <div className="col-md-3">
-                
-                <NumberFormatCustom label={"Bandeira"}  variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
-                
+
+                <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => setBandeira(e.target.value)} ></NumberFormatCustom>
+
               </div>
 
               <div className="customerCliente">

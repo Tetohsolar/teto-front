@@ -216,6 +216,8 @@ const EditBussinessProduct = () => {
 
             if (response.data.products.length > 0) {
                 setDadosProdutos(response.data.products)
+                console.log(response.data.products)
+
                 for (let i = 0; i < response.data.products.length; i++) {
                     onBlurMarca(response.data.products[i]);
                     onBlurProdutoMarca(response.data.products[i]);
