@@ -18,11 +18,39 @@ const EditBussinessProduct = () => {
     const { sidebarWrapper } = useContext(SidebarWrapperContext);
     const pageTitle = "Atualização dos Produtos do Projeto";
     const [potenciaModulo, setPotenciaModulo] = useState('465')
+    const [listCategory, setListCategory] = useState([])
     const [dadosProdutos, setDadosProdutos] = useState([
         {
             id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
         }
     ]);
+
+
+
+
+
+
+    async function loadCategorys(type) {
+        try {
+
+            await api.get('/typesystem/all', {
+                headers: {
+                    'Authorization': `Basic ${token}`
+                }
+            }).then((response) => {
+                console.log(response.data.types)
+                setListCategory(response.data.types)
+
+            }).catch((error) => {
+                // toast.error(error.response.data.message)
+            });
+
+
+        } catch (err) {
+            console.log(err)
+
+        }
+    }
 
     const handleEditProds = async (id, campo, valor) => {
         setDadosProdutos(prevDados => {
@@ -42,6 +70,8 @@ const EditBussinessProduct = () => {
         setIdProd(idN)
         setDadosProdutos(prevDados => [...prevDados, novoItem]);
     };
+
+
     const handleAfterDelProd = () => {
 
         const quantidadeItens = dadosProdutos.length;
@@ -70,7 +100,7 @@ const EditBussinessProduct = () => {
                 "type": type
             }
 
-            console.log(filtro)
+
             await api.post('/brands/all', filtro, {
                 headers: {
                     'Authorization': `Basic ${token}`
@@ -213,6 +243,7 @@ const EditBussinessProduct = () => {
             }
 
         }).then((response) => {
+            loadCategorys()
 
             if (response.data.products.length > 0) {
                 setDadosProdutos(response.data.products)
@@ -239,14 +270,14 @@ const EditBussinessProduct = () => {
 
                             <div className="row g-3 p2" >
 
-                                <div class="card-body">
+                                <div className="card-body">
                                     <div className="row d-flex justify-content-start">
                                         <div className="table-responsive">
 
                                             <TabelaProdutoEditavel token={token} dados={dadosProdutos} handleEdit={handleEditProds}
                                                 handleAdd={handleAddProd} setIdSelected={setIdSelectedProd}
                                                 handleAfterDel={handleAfterDelProd} marcas={marcas} produtos={modeloInversor} onBlurType={onBlurMarca}
-                                                onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia}
+                                                onBlurBrand={onBlurProdutoMarca} carregaPotencia={carregaPotencia} category={listCategory}
                                             />
                                         </div>
                                     </div>

@@ -124,7 +124,7 @@ const EditDimensionamento = () => {
       try {
         const valor = parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
         setConsumoMedio(valor)
-       
+
         let result = parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
 
         { result >= 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
@@ -206,7 +206,7 @@ const EditDimensionamento = () => {
       type: tipoSistema
 
     }
-    
+
     await api.patch('/business/update/' + businessId, data, {
       headers: {
         'Authorization': `Basic ${token}`
@@ -314,7 +314,7 @@ const EditDimensionamento = () => {
                 <div className="col-md-3">
 
                   <br></br>
-                  <NumberFormatCustom type="number" label={"Fator Solar"} type='number' variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Fator Solar"} variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
 
                 </div>
               </div>
@@ -393,21 +393,21 @@ const EditDimensionamento = () => {
                 <div className="col-md-3">
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Consumo Médio"} type='number' variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
                 <div className="col-md-3">
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Demanda FP"} type='number' variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Demanda FP"} variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
                 <div className="col-md-3">
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Demanda Ponta"} type='number' variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Demanda Ponta"} variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
 
                 </div>
               </div>
@@ -417,21 +417,21 @@ const EditDimensionamento = () => {
 
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Energia FP"} type='number' variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Energia FP"} variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
                 <div className="col-md-3">
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Energia Ponta"} type='number' variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Energia Ponta"} variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
                 <div className="col-md-3">
                   <br></br>
 
-                  <NumberFormatCustom type="number" label={"Geração Sugerida"} type='number' variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+                  <NumberFormatCustom type="number" label={"Geração Sugerida"} variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
