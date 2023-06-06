@@ -224,6 +224,8 @@ const ViewBusiness = () => {
       setGeracaoDesejada(response.data.suggestedDesired)
       setCip(response.data.cip)
       setBandeira(response.data.flag)
+      setMedia(response.data.mediaMensal)
+      
       setTotal2(response.data.total2);
       setMarg2(response.data.marg2)
       setComiss2(response.data.comiss2)
@@ -236,6 +238,7 @@ const ViewBusiness = () => {
       setProf4(response.data.prof4)
       setProfitR4(response.data.profitR4)
       setMargtR4(response.data.margtR4)
+      
 
     }).catch((error) => { console.log(error) })
 
@@ -764,7 +767,7 @@ const ViewBusiness = () => {
                                 <tr key={item.id}>
 
 
-                                  <td>{item.type === 'P' ? "Placa" : item.type === "M" ? "MicroInversor" : "Inversor"}</td>
+                                  <td>{String(item.type) === '3' ? "Placa" : String(item.type) === '2' ? "MicroInversor" : "Inversor"}</td>
                                   <td>{item.brand}</td>
                                   <td>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
