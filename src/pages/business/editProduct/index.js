@@ -19,9 +19,10 @@ const EditBussinessProduct = () => {
     const pageTitle = "Atualização dos Produtos do Projeto";
     const [potenciaModulo, setPotenciaModulo] = useState('465')
     const [listCategory, setListCategory] = useState([])
+    const [brands, setBrands] = useState('')
     const [dadosProdutos, setDadosProdutos] = useState([
         {
-            id: 1, type: "", brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
+            id: 1, type: 3, brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
         }
     ]);
 
@@ -65,7 +66,7 @@ const EditBussinessProduct = () => {
 
         let novoItem =
         {
-            id: idN, type: "Placa", brand: '', model: '', power: potenciaModulo, qtd: 1
+            id: idN, type: 3, brand: '', model: '', power: potenciaModulo, qtd: 1
         }
         setIdProd(idN)
         setDadosProdutos(prevDados => [...prevDados, novoItem]);
@@ -107,6 +108,7 @@ const EditBussinessProduct = () => {
 
                 }
             }).then((response) => {
+
                 setDadosProdutos(prevDados => {
                     const novoDados = [...prevDados];
                     const index = novoDados.findIndex(it => it.id === item.id);
@@ -123,19 +125,11 @@ const EditBussinessProduct = () => {
     }
     async function onBlurProdutoMarca(item) {
 
-        let category = "Nenhum"
-        if (item.type === "P") {
-            category = "Placa"
-        }
-        else if (item.type === "I") {
-            category = "Inversor"
-        } else if (item.type === "M") {
-            category = "Microinversor"
-        }
+
 
         const filtro = {
             brand: item.brand,
-            category: category,
+            category: item.TypeSystemId,
             "page": 0,
             "pageSize": 100
         }
@@ -145,7 +139,7 @@ const EditBussinessProduct = () => {
                 'Authorization': `Basic ${token}`
             }
         }).then((response) => {
-
+            console.log(response)
             setDadosProdutos(prevDados => {
                 const novoDados = [...prevDados];
                 const index = novoDados.findIndex(it => it.id === item.id);
@@ -169,7 +163,10 @@ const EditBussinessProduct = () => {
             setDadosProdutos(prevDados => {
                 const novoDados = [...prevDados];
                 const index = novoDados.findIndex(it => it.id === item.id);
-                novoDados[index]["power"] = response.data.power;
+                novoDados[index]['power'] = response.data.power;
+                novoDados[index]['price'] = response.data.price
+                
+                console.log(novoDados)
                 return novoDados;
             });
         })
@@ -177,23 +174,14 @@ const EditBussinessProduct = () => {
     }
     async function onBlurProdutoMarca(item) {
 
-        let category = "Nenhum"
-        if (item.type === "P") {
-            category = "Placa"
-        }
-        else if (item.type === "I") {
-            category = "Inversor"
-        } else if (item.type === "M") {
-            category = "Microinversor"
-        }
 
         const filtro = {
             brand: item.brand,
-            category: category,
+            category: item.TypeSystemId,
             "page": 0,
             "pageSize": 100
         }
-
+        console.log(filtro)
         await api.post('/products/byparam', filtro, {
             headers: {
                 'Authorization': `Basic ${token}`
@@ -236,26 +224,61 @@ const EditBussinessProduct = () => {
 
     }
     async function loadbId() {
-
+        console.log('Entrou!!')
         await api.get('/business/get/' + businessId, {
             headers: {
                 'Authorization': `Basic ${token}`
             }
 
         }).then((response) => {
+            console.log('Entrou!!')
+
             loadCategorys()
+
 
             if (response.data.products.length > 0) {
                 setDadosProdutos(response.data.products)
                 for (let i = 0; i < response.data.products.length; i++) {
                     onBlurMarca(response.data.products[i]);
                     onBlurProdutoMarca(response.data.products[i]);
+                    carregaPotencia(response.data.products[i])
                 }
             }
 
         }).catch((error) => { console.log(error) })
 
     }
+
+
+
+
+    // async function loadModelByBrand(type) {
+    //     if (type === '') {
+    //         return false
+    //     }
+    //     try {
+    //         const filtro = {
+    //             "type": `%${type}%`
+    //         }
+
+
+    //         await api.post('/products/byparam', filtro, {
+    //             headers: {
+    //                 'Authorization': `Basic ${token}`
+    //             }
+    //         }).then((response) => {
+    //             setBrands(response.data.brand)
+
+    //         }).catch((error) => {
+    //             // toast.error(error.response.data.message)
+    //         });
+
+
+    //     } catch (err) {
+    //         console.log(err)
+
+    //     }
+    // }
     return (
         <div>
             <Navbar />
