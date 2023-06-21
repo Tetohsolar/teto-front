@@ -223,6 +223,7 @@ const EditDimensionamento = () => {
       setModalidades(['Horos. Azul', 'Horos. Verde'])
       //props.dados.group = "A"
     }
+    
 
   }
 
@@ -374,6 +375,8 @@ const EditDimensionamento = () => {
                       value={subgrupo}
                       label="inputSubgrupo"
                       onChange={(e) => { setSubGrupo(e.target.value); handleSubGrup(e.target.value) }}
+                      onBlur={(e)=>{handleGrupoAConsMedio();}}
+                    
                     >
 
                       <MenuItem value={'B1'}>B1</MenuItem>
@@ -442,7 +445,7 @@ const EditDimensionamento = () => {
                   <div className="col-md-3">
                     <br></br>
 
-                    <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+                    <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" onBlur={(e)=>{handleGrupoAConsMedio()}} value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
 
                   </div>
                   : ""}
