@@ -91,75 +91,6 @@ const EditDimensionamento = () => {
 
   }
 
-  /*function handleGrupoAConsMedio(e) {
-    buscaGeracaoSugerida()
-
-    if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
-      try {
-
-        setGeracaoSugerida(`${e} KWh`)
-        return
-      }
-      catch (error) {
-        console.log(error)
-      }
-
-    }
-
-    if (modalidade === "HA" && subgrupo === "A3" && energiaFp !== null && energiaP !== null) {
-      try {
-        buscaGeracaoSugerida()
-        let consMedio = parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
-        setConsumoMedio(consMedio)
-
-        const result = parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
-
-        { result >= 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-
-      } catch (error) {
-        console.log(error)
-      }
-
-    }
-
-    else if (modalidade === "HV" && subgrupo === "A4" && energiaFp !== null && energiaP !== null) {
-      try {
-        const valor = parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
-        setConsumoMedio(valor)
-
-        let result = parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
-
-        { result >= 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-        setGeracaoSugeridaParcial(result)
-
-      } catch (error) {
-        console.log(error)
-      }
-
-    }
-
-    else if (modalidade === "HA" && subgrupo === "A4" && demandaFp !== null && energiaFp !== null && energiaP !== null) {
-
-      try {
-        const valor = parseFloat(inputDemFP.current.value) + parseFloat(inputEnergiaFP.current.value) + parseFloat(inputEnergiaP.current.value)
-        setConsumoMedio(valor)
-
-        let result = parseFloat(inputDemFP.current.value) + parseFloat(inputEnergiaFP.current.value) + Math.round(parseFloat(inputEnergiaP.current.value) / parseFloat(energiaPontaTratada))
-        { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-        setGeracaoSugeridaParcial(result)
-
-      } catch (error) {
-        console.log(error)
-      }
-
-    }
-    else {
-      setConsumoMedio('')
-      setGeracaoSugerida('')
-    }
-
-  }
-*/
   function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
     
@@ -177,7 +108,7 @@ const EditDimensionamento = () => {
     if (modalidade === "Horos. Azul" && subgrupo === "A3" && energiaFp !== null && energiaP !== null) {
       const valor = parseFloat(energiaFp) + parseFloat(energiaP)
      // props.dados.avgconsumption = valor;
-      setConsumoMedio(energiaP)
+      setConsumoMedio(energiaP+energiaFp)
       //setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
@@ -248,6 +179,7 @@ const EditDimensionamento = () => {
       setTipoSistema(response.data.type)
       setGeracaoSugerida(response.data.suggestedGeneration)
       setConsumoMedio(response.data.avgconsumption)
+      setGeracaoDesejada(response.data.suggestedDesired)
 
     }).catch((error) => { console.log(error) })
 
@@ -320,7 +252,8 @@ const EditDimensionamento = () => {
       energiaP: energiaP,
       type: tipoSistema,
       suggestedGeneration:geracaoSugerida,
-      suggestedDesired:geracaoDesejada
+      suggestedDesired:geracaoDesejada,
+      avgconsumption:consumoMedio,
     }
 
     await api.patch('/business/update/' + businessId, data, {
