@@ -34,6 +34,7 @@ const EditDimensionamento = () => {
   const [telhados, setTelhados] = useState([])
 
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
+  const [geracaoDesejada, setGeracaoDesejada] = useState('')
   const { token } = useContext(AuthContext)
   const navigate = useNavigate();
   const inputDemFP = useRef();
@@ -41,6 +42,7 @@ const EditDimensionamento = () => {
   const inputEnergiaFP = useRef();
   const inputEnergiaP = useRef();
   const { businessId } = useParams();
+  const [modalidades, setModalidades] = useState([""])
 
 
   useEffect(() => {
@@ -89,7 +91,7 @@ const EditDimensionamento = () => {
 
   }
 
-  function handleGrupoAConsMedio(e) {
+  /*function handleGrupoAConsMedio(e) {
     buscaGeracaoSugerida()
 
     if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
@@ -157,6 +159,69 @@ const EditDimensionamento = () => {
     }
 
   }
+*/
+  function handleGrupoAConsMedio(e) {
+    buscaGeracaoSugerida()
+    
+    if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
+      setGeracaoSugerida(consumoMedio)
+    //  props.dados.avgconsumption = consumoMedio;
+      setGeracaoSugeridaParcial(consumoMedio)
+     // props.dados.suggestedGeneration = consumoMedio;
+      setGeracaoDesejada(consumoMedio)
+     // props.dados.suggestedDesired = consumoMedio;
+      return
+    }
+
+    
+    if (modalidade === "Horos. Azul" && subgrupo === "A3" && energiaFp !== null && energiaP !== null) {
+      const valor = parseFloat(energiaFp) + parseFloat(energiaP)
+     // props.dados.avgconsumption = valor;
+      setConsumoMedio(energiaP)
+      //setGeracaoDesejada(energiaPonta)
+      const result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+      setGeracaoDesejada(result)
+      //props.dados.suggestedGeneration = result;
+      //props.dados.suggestedDesired = result;
+    }
+
+    else if (modalidade === "Horos. Verde" && subgrupo === "A4" && energiaFp !== null && energiaP !== null) {
+      const valor = parseFloat(energiaFp) + parseFloat(energiaP)
+      
+      setConsumoMedio(valor)
+      //props.dados.avgconsumption = valor;
+      //setGeracaoDesejada(valor)
+      let result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
+
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+      setGeracaoDesejada(result)
+     // props.dados.suggestedGeneration = result;
+      //props.dados.suggestedDesired = result;
+    }
+
+    else if (modalidade === "Horos. Azul" && subgrupo === "A4" && demandaFp !== null && energiaFp !== null && energiaP !== null) {
+      const valor = parseFloat(demandaFp) + parseFloat(energiaFp) + parseFloat(energiaP)
+      setConsumoMedio(valor)
+      //props.dados.avgconsumption = valor;
+      //GeracaoSugerida
+      let result = parseFloat(demandaFp) + parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
+      { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
+      setGeracaoSugeridaParcial(result)
+      setGeracaoDesejada(result)
+      //props.dados.suggestedGeneration = result;
+     // props.dados.suggestedDesired = result;
+
+    }
+    else {
+      setConsumoMedio('')
+      setGeracaoSugerida('')
+      setGeracaoSugerida("")
+    }
+
+  }
 
   async function loadbId() {
 
@@ -169,12 +234,13 @@ const EditDimensionamento = () => {
 
       setName(response.data["Client.fantasy"])
       setDonoN(response.data['User.name'])
-      setFatorS(response.data.sunIndex)
+      //  setFatorS(response.data.sunIndex)
       setTelhado(response.data.RoofId)
       setTipoL(response.data.typeConnection)
       setModalidade(response.data.modality)
       setGrupo(response.data.group)
       setSubGrupo(response.data.subgroup)
+      handleSubGrup(response.data.subgroup)
       setDemandaFp(response.data.demadaFp)
       setEnergiaFp(response.data.energiaFp)
       setDemandaP(response.data.demandaP)
@@ -187,24 +253,74 @@ const EditDimensionamento = () => {
 
   }
 
+  function handleSubGrup(value) {
+    if (value === "B1") {
+      setGrupo("B")
+      setModalidades(['Convencional'])
+      setModalidade("Convencional")
+      //props.dados.modality = "Convencional"
+      //props.dados.group = "B"
+    }
+
+    if (value === "B2") {
+      setGrupo("B")
+      setModalidades(['Rural'])
+      setModalidade("Rural")
+      //props.dados.modality = "Rural"
+      //props.dados.group = "B"
+    }
+    if (value === "B3") {
+      setModalidades(['Outros'])
+      setGrupo("B")
+      setModalidade("Outros")
+      //props.dados.modality = "Outros"
+      //props.dados.group = "B"
+
+    }
+
+    if (value === "A3") {
+      setGrupo("A")
+      setModalidades(['Horos. Azul'])
+      setModalidade("Horos. Azul")
+      //props.dados.modality = "Horos. Azul"
+      //props.dados.group = "A"
+    }
+
+    if (value === "A4") {
+      setGrupo("A")
+      setModalidades(['Horos. Azul', 'Horos. Verde'])
+      //props.dados.group = "A"
+    }
+
+  }
+
+
   async function updateDimensionamento(e) {
     e.preventDefault();
+    let mod = modalidade
 
+    if (modalidade==='Horos. Azul'){
+        mod="HA"
+  }
+  if (modalidade==='Horos. Verde'){
+       mod="HV"
+  }
     const data = {
       name,
       donoN,
       sunIndex: fatorS,
       roof: telhado,
       typeConnection: tipoL,
-      modality: modalidade,
+      modality: mod,
       group: grupo,
       subgroup: subgrupo,
       demadaFp: demandaFp,
       demandaP: demandaP,
       energiaFp: energiaFp,
       energiaP: energiaP,
-      type: tipoSistema
-
+      type: tipoSistema,
+      suggestedGeneration:geracaoSugerida,
+      suggestedDesired:geracaoDesejada
     }
 
     await api.patch('/business/update/' + businessId, data, {
@@ -261,6 +377,8 @@ const EditDimensionamento = () => {
 
                 </div>
               </div>
+
+
               <div className="row g-3 p2" >
                 <div className="col-md-3">
                   <br></br>
@@ -314,14 +432,6 @@ const EditDimensionamento = () => {
                 <div className="col-md-3">
 
                   <br></br>
-                  <NumberFormatCustom type="number" label={"Fator Solar"} variant="outlined" value={fatorS} onChange={(e) => setFatorS(e.target.value)} ></NumberFormatCustom>
-
-                </div>
-              </div>
-              <div className="row " >
-                <div className="col-md-3">
-
-                  <br></br>
 
                   <FormControl fullWidth>
                     <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
@@ -330,7 +440,7 @@ const EditDimensionamento = () => {
                       id="inputSubgrupo"
                       value={subgrupo}
                       label="inputSubgrupo"
-                      onChange={(e) => setSubGrupo(e.target.value)}
+                      onChange={(e) => { setSubGrupo(e.target.value); handleSubGrup(e.target.value) }}
                     >
 
                       <MenuItem value={'B1'}>B1</MenuItem>
@@ -343,6 +453,10 @@ const EditDimensionamento = () => {
 
                 </div>
 
+
+              </div>
+              <div className="row " >
+
                 <div className="col-md-3">
                   <br></br>
                   <FormControl fullWidth>
@@ -353,6 +467,7 @@ const EditDimensionamento = () => {
                       value={grupo}
                       label="inputGrupo"
                       onChange={(e) => setGrupo(e.target.value)}
+                      readOnly
                     >
 
                       <MenuItem value={'A'}>Grupo A</MenuItem>
@@ -376,11 +491,12 @@ const EditDimensionamento = () => {
                       onChange={(e) => { setModalidade(e.target.value); }}
 
                     >
-                      <MenuItem value={'Convencional'}>Convencional</MenuItem>
-                      <MenuItem value={'Rural'}>Rural</MenuItem>
-                      <MenuItem value={'outros'}>Outros</MenuItem>
-                      <MenuItem value={'HA'}>Horos. Azul</MenuItem>
-                      <MenuItem value={'HV'}>Horos.Verde</MenuItem>
+                      {
+                        modalidades.length > 0 &&
+                        modalidades.map((option, i) => {
+                          return (<MenuItem key={i} value={option}>{option}</MenuItem>)
+                        })
+                      }
 
                     </Select>
                   </FormControl>
@@ -388,50 +504,87 @@ const EditDimensionamento = () => {
                   <br></br>
 
                 </div>
+
+                {grupo === "B" ?
+                  <div className="col-md-3">
+                    <br></br>
+
+                    <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
+
+                  </div>
+                  : ""}
+
+                {grupo === "A" && modalidade === "Horos. Azul" ?
+                  <div className="col-md-3">
+                    <br></br>
+
+                    <NumberFormatCustom type="number" label={"Demanda FP(Kwh)"} variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} onBlur={(e)=>{handleGrupoAConsMedio()}} ></NumberFormatCustom>
+
+                  </div> : ""
+                }
               </div>
               <div className="row" >
-                <div className="col-md-3">
-                  <br></br>
 
-                  <NumberFormatCustom type="number" label={"Consumo Médio"} variant="outlined" value={consumoMedio} onChange={(e) => setConsumoMedio(e.target.value)} ></NumberFormatCustom>
 
-                </div>
 
-                <div className="col-md-3">
-                  <br></br>
 
-                  <NumberFormatCustom type="number" label={"Demanda FP"} variant="outlined" value={demandaFp} onChange={(e) => setDemandaFp(e.target.value)} ></NumberFormatCustom>
 
-                </div>
+                {grupo === "A" && modalidade === "Horos. Azul" ?
+                  <div className="col-md-3">
+                    <br></br>
 
-                <div className="col-md-3">
-                  <br></br>
+                    <NumberFormatCustom type="number" label={"Demanda Ponta"} variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} onBlur={(e)=>{handleGrupoAConsMedio()}}></NumberFormatCustom>
 
-                  <NumberFormatCustom type="number" label={"Demanda Ponta"} variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} ></NumberFormatCustom>
+                  </div>
+                  : ""}
 
-                </div>
+                {grupo === "A" && modalidade === "Horos. Verde" ?
+                  <div className="col-md-3">
+                    <br></br>
+
+                    <NumberFormatCustom type="number" label={"Demanda"} variant="outlined" value={demandaP} onChange={(e) => setDemandaP(e.target.value)} onBlur={(e)=>{handleGrupoAConsMedio()}} ></NumberFormatCustom>
+
+                  </div>
+                  : ""}
+
+                {grupo === "A" ?
+                  <div className="col-md-3">
+
+                    <br></br>
+
+                    <NumberFormatCustom type="number" label={"Energia FP"} variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} onBlur={(e)=>{handleGrupoAConsMedio()}} ></NumberFormatCustom>
+
+                  </div> : ""}
+
+
+                  {grupo === "A" ?
+                  <div className="col-md-3">
+                    <br></br>
+
+                    <NumberFormatCustom type="number" label={"Energia Ponta"} variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} onBlur={(e)=>{handleGrupoAConsMedio()}} ></NumberFormatCustom>
+
+                  </div> : ""}
+
+
               </div>
 
+
+
               <div className="row " >
-                <div className="col-md-3">
 
-                  <br></br>
+             
 
-                  <NumberFormatCustom type="number" label={"Energia FP"} variant="outlined" value={energiaFp} onChange={(e) => setEnergiaFp(e.target.value)} ></NumberFormatCustom>
-
-                </div>
-
-                <div className="col-md-3">
-                  <br></br>
-
-                  <NumberFormatCustom type="number" label={"Energia Ponta"} variant="outlined" value={energiaP} onChange={(e) => setEnergiaP(e.target.value)} ></NumberFormatCustom>
-
-                </div>
-
+                
                 <div className="col-md-3">
                   <br></br>
 
                   <NumberFormatCustom type="number" label={"Geração Sugerida"} variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" label={"Geração Desejada"} variant="outlined" value={geracaoDesejada} onChange={(e) => setGeracaoDesejada(e.target.value)} ></NumberFormatCustom>
 
                 </div>
 
