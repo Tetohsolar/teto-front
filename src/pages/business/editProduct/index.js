@@ -20,16 +20,14 @@ const EditBussinessProduct = () => {
     const [potenciaModulo, setPotenciaModulo] = useState('465')
     const [listCategory, setListCategory] = useState([])
     const [brands, setBrands] = useState('')
+    const [potenciaSistema, setPotenciaSistema] = useState('')
+    const [fatorS, setfatorS] = useState(0)
+    const [suggestedDesired, setSuggestedDesired] = useState(0)
     const [dadosProdutos, setDadosProdutos] = useState([
         {
             id: 1, type: 3, brand: marcas, model: "", power: potenciaModulo, qtd: 1, brands: [], products: []
         }
     ]);
-
-
-
-
-
 
     async function loadCategorys(type) {
         try {
@@ -61,6 +59,7 @@ const EditBussinessProduct = () => {
             return novoDados;
         });
     };
+
     const handleAddProd = () => {
         let idN = idProd + 1
 
@@ -71,7 +70,6 @@ const EditBussinessProduct = () => {
         setIdProd(idN)
         setDadosProdutos(prevDados => [...prevDados, novoItem]);
     };
-
 
     const handleAfterDelProd = () => {
 
@@ -125,8 +123,6 @@ const EditBussinessProduct = () => {
     }
     async function onBlurProdutoMarca(item) {
 
-
-
         const filtro = {
             brand: item.brand,
             category: item.TypeSystemId,
@@ -164,7 +160,24 @@ const EditBussinessProduct = () => {
                 const novoDados = [...prevDados];
                 const index = novoDados.findIndex(it => it.id === item.id);
                 novoDados[index]['power'] = response.data.power;
-                novoDados[index]['price'] = response.data.price
+                novoDados[index]['price'] = response.data.price;
+
+                if (parseInt(item.type) === 3) {
+                    let sugg = parseFloat(String(suggestedDesired).replace(".", ''));
+                    let potenciaConsiderada = fatorS
+                    console.log("potencia")
+                    console.log(potenciaConsiderada)
+                    let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * response.data.power))
+                    console.log("PASSA AQUI " + placas)
+                    novoDados[index]["qtd"] = placas;
+                    //props.dados.nplacas = placas
+                    //props.dados.potenciaSistema = (placas * response.data.power) / 1000
+                    //props.dados.panelpower = novoDados[index]["power"]
+                    //setPotenciaSistema(props.dados.potenciaSistema)
+                    //setNplacas(props.dados.nplacas)
+          
+                  }
+
                 
                 console.log(novoDados)
                 return novoDados;
@@ -172,6 +185,7 @@ const EditBussinessProduct = () => {
         })
 
     }
+    
     async function onBlurProdutoMarca(item) {
 
 
@@ -240,45 +254,17 @@ const EditBussinessProduct = () => {
                 setDadosProdutos(response.data.products)
                 for (let i = 0; i < response.data.products.length; i++) {
                     onBlurMarca(response.data.products[i]);
-                    onBlurProdutoMarca(response.data.products[i]);
-                    carregaPotencia(response.data.products[i])
+                     onBlurProdutoMarca(response.data.products[i]);
+                   // carregaPotencia(response.data.products[i])
                 }
             }
+            setfatorS(response.data.consideredpower)
+            setSuggestedDesired(response.data.suggestedDesired)
 
         }).catch((error) => { console.log(error) })
 
     }
 
-
-
-
-    // async function loadModelByBrand(type) {
-    //     if (type === '') {
-    //         return false
-    //     }
-    //     try {
-    //         const filtro = {
-    //             "type": `%${type}%`
-    //         }
-
-
-    //         await api.post('/products/byparam', filtro, {
-    //             headers: {
-    //                 'Authorization': `Basic ${token}`
-    //             }
-    //         }).then((response) => {
-    //             setBrands(response.data.brand)
-
-    //         }).catch((error) => {
-    //             // toast.error(error.response.data.message)
-    //         });
-
-
-    //     } catch (err) {
-    //         console.log(err)
-
-    //     }
-    // }
     return (
         <div>
             <Navbar />

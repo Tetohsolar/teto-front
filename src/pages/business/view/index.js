@@ -755,7 +755,7 @@ const ViewBusiness = () => {
                               <th scope="col" >Modelo</th>
                               <th scope="col" className='alinhaDireita' >Potência</th>
                               <th scope="col" className='alinhaDireita'>Quantidade</th>
-
+                              <th scope="col" className='alinhaDireita'>Preço(R$)</th>
                               <th scope="col"></th>
                             </tr>
                           </thead>
@@ -772,7 +772,7 @@ const ViewBusiness = () => {
                                   <td>{item.model}</td>
                                   <td className='alinhaDireita'>{item.power}</td>
                                   <td className='alinhaDireita'>{item.qtd}</td>
-
+                                  <td className='alinhaDireita'>{formatter.format(item.price)}</td>
                                   <td>
                                     <div className="d-flex gap-2 justify-content-end">
 
