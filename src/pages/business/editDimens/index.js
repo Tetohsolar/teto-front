@@ -108,7 +108,7 @@ const EditDimensionamento = () => {
     if (modalidade === "Horos. Azul" && subgrupo === "A3" && energiaFp !== null && energiaP !== null) {
       const valor = parseFloat(energiaFp) + parseFloat(energiaP)
      // props.dados.avgconsumption = valor;
-      setConsumoMedio(energiaP+energiaFp)
+      setConsumoMedio(valor)
       //setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
@@ -257,7 +257,7 @@ const EditDimensionamento = () => {
       avgconsumption:consumoMedio,
     }
 
-    await api.patch('/business/update/' + businessId, data, {
+    await api.patch('/business/update/dim/' + businessId, data, {
       headers: {
         'Authorization': `Basic ${token}`
       }
