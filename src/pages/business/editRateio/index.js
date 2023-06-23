@@ -86,6 +86,7 @@ const EditBussinessShare = () => {
         if ((valor==="A3" ||valor==="A4")){
           novoDados[index]['group'] = "A";
         } else{
+          novoDados[index]['group'] = "B";
           novoDados[index]['demandaFP'] = "0";
           novoDados[index]['energiaFP'] = "0";
           novoDados[index]['demandaP'] = "0";
