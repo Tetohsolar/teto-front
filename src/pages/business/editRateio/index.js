@@ -80,7 +80,29 @@ const EditBussinessShare = () => {
       if (campo !== "CIP" || campo !== "avgconsumption" || campo !== "suggestedGeneration") {
         calculaDemandaRateios(novoDados[index], valor)
       }
+      
       novoDados[index][campo] = valor;
+      if (campo ==="subgroup" ){
+        if ((valor==="A3" ||valor==="A4")){
+          novoDados[index]['group'] = "A";
+        } else{
+          novoDados[index]['demandaFP'] = "0";
+          novoDados[index]['energiaFP'] = "0";
+          novoDados[index]['demandaP'] = "0";
+          novoDados[index]['energiaP'] = "0";
+
+          if(valor==="B1"){
+            novoDados[index]['modality'] = "Convencional";
+          }
+          if(valor==="B2"){
+            novoDados[index]['modality'] = "Rural";
+          }
+          if(valor==="B3"){
+            novoDados[index]['modality'] = "Outros";
+          }
+        }
+        
+      }
       return novoDados;
     });
   };

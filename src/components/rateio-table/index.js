@@ -29,17 +29,17 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                         return (
                             <tr key={item.id}>
                                 <td>
-                                    <select className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
-                                        <option value="">Selecione</option>
-                                        <option value="A3">A3</option>
-                                        <option value="A4">A4</option>
+                                    <select  className="form-select" id="inputGrupo" value={item.subgroup} onChange={(e) => { handleEdit(item.id, 'subgroup', e.target.value) }} >
                                         <option value="B1">B1</option>
                                         <option value="B2">B2</option>
                                         <option value="B3">B3</option>
+                                        <option value="A3">A3</option>
+                                        <option value="A4">A4</option>
+                                        
                                     </select>
                                 </td>
                                 <td>
-                                    <select className="form-select tamanhoTabela" id="inputGrupo" value={item.group} onChange={(e) => { handleEdit(item.id, 'group', e.target.value) }} >
+                                    <select disabled className="form-select tamanhoTabela" id="inputGrupo" value={item.group} onChange={(e) => { handleEdit(item.id, 'group', e.target.value) }} >
                                         <option value="A">A </option>
                                         <option value="B">B </option>
                                     </select>
@@ -50,6 +50,7 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                                         <option value="HA">Horos. Azul</option>
                                         <option value="HV">Horos. Verde</option>
                                         <option value="Rural">Rural</option>
+                                        <option value="Outros">Outros</option>
                                     </select>
                                 </td>
                                 <td>
