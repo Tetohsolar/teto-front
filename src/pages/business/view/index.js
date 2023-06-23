@@ -622,14 +622,7 @@ const ViewBusiness = () => {
                         <label> {donoN} </label>
                       </td>
                     </tr>
-                    <tr className='linhabaixo tamanho-tr'>
-                      Fator Solar:
-                      <td>
-                      </td>
-                      <td className='alinhaDireita'>
-                        <label> {fatorS} </label>
-                      </td>
-                    </tr>
+                    
                     <tr className='linhabaixo tamanho-tr'>
                       Tipo de Telhado:
                       <td>
@@ -671,6 +664,7 @@ const ViewBusiness = () => {
                         <label> {subgrupo} </label>
                       </td>
                     </tr>
+                    {grupo==="A"?
                     <tr className='linhabaixo tamanho-tr'>
                       Demanda fora ponta (kWh):
                       <td>
@@ -679,6 +673,8 @@ const ViewBusiness = () => {
                         <label> {demandaFp} </label>
                       </td>
                     </tr>
+                    :""}
+                    {grupo==="A"?
                     <tr className='linhabaixo tamanho-tr'>
                       Energia fora ponta (kWh):
                       <td>
@@ -686,7 +682,9 @@ const ViewBusiness = () => {
                       <td className='alinhaDireita'>
                         <label> {energiaFp} </label>
                       </td>
-                    </tr>
+                    </tr>:""
+                    }
+                    {grupo==="A"?
                     <tr className='linhabaixo tamanho-tr'>
                       Demanda ponta (kWh):
                       <td>
@@ -694,7 +692,9 @@ const ViewBusiness = () => {
                       <td className='alinhaDireita'>
                         <label> {demandaP} </label>
                       </td>
-                    </tr>
+                    </tr>:""
+                    }
+                    {grupo==="A"?   
                     <tr className='linhabaixo tamanho-tr'>
                       Energia ponta (Kwh):
                       <td>
@@ -702,7 +702,7 @@ const ViewBusiness = () => {
                       <td className='alinhaDireita'>
                         <label> {energiaP} </label>
                       </td>
-                    </tr>
+                    </tr>:""}
 
                   </table>
 
