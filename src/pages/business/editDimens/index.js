@@ -31,6 +31,7 @@ const EditDimensionamento = () => {
   const [energiaPontaTratada, setEnergiaPontaTratada] = useState(0)
   const [consumoMedio, setConsumoMedio] = useState('')
   const [geracaoSugerida, setGeracaoSugerida] = useState('')
+  const [geracaoSugeridaRateios, setGeracaoSugeridaRateios] = useState('')
   const [telhados, setTelhados] = useState([])
 
   const [geracaoSugeridaParcial, setGeracaoSugeridaParcial] = useState('')
@@ -95,11 +96,11 @@ const EditDimensionamento = () => {
     buscaGeracaoSugerida()
     
     if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
-      setGeracaoSugerida(consumoMedio)
+      setGeracaoSugerida(consumoMedio+geracaoSugeridaRateios)
     //  props.dados.avgconsumption = consumoMedio;
-      setGeracaoSugeridaParcial(consumoMedio)
+      setGeracaoSugeridaParcial(consumoMedio+geracaoSugeridaRateios)
      // props.dados.suggestedGeneration = consumoMedio;
-      setGeracaoDesejada(consumoMedio)
+      setGeracaoDesejada(consumoMedio+geracaoSugeridaRateios)
      // props.dados.suggestedDesired = consumoMedio;
       return
     }
@@ -112,8 +113,8 @@ const EditDimensionamento = () => {
       //setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+geracaoSugeridaRateios)
+      setGeracaoDesejada(result+geracaoSugeridaRateios)
       //props.dados.suggestedGeneration = result;
       //props.dados.suggestedDesired = result;
     }
@@ -127,8 +128,8 @@ const EditDimensionamento = () => {
       let result = parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
 
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+geracaoSugeridaRateios)
+      setGeracaoDesejada(result+geracaoSugeridaRateios)
      // props.dados.suggestedGeneration = result;
       //props.dados.suggestedDesired = result;
     }
@@ -140,8 +141,8 @@ const EditDimensionamento = () => {
       //GeracaoSugerida
       let result = parseFloat(demandaFp) + parseFloat(energiaFp) + Math.round(parseFloat(energiaP) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+geracaoSugeridaRateios)
+      setGeracaoDesejada(result+geracaoSugeridaRateios)
       //props.dados.suggestedGeneration = result;
      // props.dados.suggestedDesired = result;
 
@@ -177,9 +178,10 @@ const EditDimensionamento = () => {
       setDemandaP(response.data.demandaP)
       setEnergiaP(response.data.energiaP)
       setTipoSistema(response.data.type)
-      setGeracaoSugerida(response.data.suggestedGeneration)
+      setGeracaoSugerida(response.data.margin)
       setConsumoMedio(response.data.avgconsumption)
-      setGeracaoDesejada(response.data.suggestedDesired)
+      setGeracaoDesejada(parseFloat(response.data.margin)+parseFloat(response.data.totalRateios))
+      setGeracaoSugeridaRateios(response.data.totalRateios)
 
     }).catch((error) => { console.log(error) })
 
@@ -515,6 +517,13 @@ const EditDimensionamento = () => {
                   <br></br>
 
                   <NumberFormatCustom type="number" label={"Geração Sugerida"} variant="outlined" value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
+
+                </div>
+
+                <div className="col-md-3">
+                  <br></br>
+
+                  <NumberFormatCustom type="number" readOnly label={"Geração Sugerida Rateios"} variant="outlined" value={geracaoSugeridaRateios} onChange={(e) => setGeracaoSugeridaRateios(e.target.value)} ></NumberFormatCustom>
 
                 </div>
                 <div className="col-md-3">

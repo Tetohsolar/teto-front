@@ -107,8 +107,10 @@ const ValoresProposta = () => {
   }
   function calculaCustos(e) {
 
-    let preco = parseFloat(String(totalCusto).replace(/\./g, '').replace(',', '.'))
-    let precoComissao =  parseFloat(String(valorComissao).replace(/\./g, '').replace(',', '.'))
+    let preco =  parseFloat(String(totalCusto).replace(/\./g, '').replace(',', '.'))
+    
+    let precoComissao =  parseFloat(valorComissao.replace(',','.'))
+    console.log("preco"+precoComissao)
     let total = preco + precoComissao
     setValorTotal(total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
     let comissao = (precoComissao / total)*100
@@ -171,11 +173,11 @@ const ValoresProposta = () => {
   async function salvar(e) {
 
     e.preventDefault();
-    const ct = parseFloat(String(totalCusto).replace(/\./g, '').replace(',', '.'));
-    const vt = parseFloat(String(valorTotal).replace(/\./g, '').replace(',', '.'));
-    const vc = parseFloat(String(valorComissao).replace(/\./g, '').replace(',', '.'));
+    const ct = parseFloat(totalCusto);
+    const vt = parseFloat(parseFloat(String(valorTotal).replace(/\./g, '').replace(',', '.')));
+    const vc = parseFloat(String(valorComissao).replace(',','.'));
     const cmv = parseFloat(comissaoVe);
-    const cipl = parseFloat(String(cip).replace(/\./g, '').replace(',', '.'));
+    const cipl = parseFloat(cip);
     const bandeiral = parseFloat(String(bandeira).replace(/\./g, '').replace(',', '.'));
 
 
