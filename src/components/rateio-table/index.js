@@ -120,11 +120,14 @@ const TabelaRateioBusiness = ({ dados, setIdSelected, handleEdit, handleAdd, han
                                     />
                                 </td>
                                 <td className='alinhaDireita'>
+                                    
                                     <input
                                         type="text" className='form-control tamanhoTabela alinhaDireita '
                                         value={item.CIP}
                                         onChange={e => handleEdit(item.id, 'CIP', e.target.value)}
                                     />
+                                
+                                
                                 </td>
                                 <td>
 
