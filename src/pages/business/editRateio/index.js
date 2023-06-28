@@ -57,7 +57,10 @@ const EditBussinessShare = () => {
 
   ]);
   async function calculaDemandaRateios(item) {
-    if (item.modality === "Convencional" || item.modalidade === "Rural" || item.modalidade === "Outros") {
+
+    //console.log(item.modality)
+   // return
+    if (item.modality === "Convencional" || item.modality === "Rural" || item.modality === "Outros") {
       item.suggestedGeneration = item.avgconsumption;
       item.energiaFP = 0;
       item.energiaP = 0;
@@ -176,6 +179,8 @@ const EditBussinessShare = () => {
         setDados(data)
 
       } else {
+        //console.log(response.data.shares)
+        //return;
         setDados(response.data.shares)
 
       }
