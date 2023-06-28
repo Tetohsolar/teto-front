@@ -296,6 +296,14 @@ export default function Checkout() {
     let shares = []
     
     if (dados.possuirateio) {
+
+      if (dados.rmodality==='Horos. Azul'){
+        dados.rmodality="HA"
+    }
+    if (dados.rmodality==='Horos. Verde'){
+      dados.rmodality="HV"
+    }
+
       const Sahres = 
       {
         id: 1, modality: dados.rmodality, group: dados.rgroup, subgroup: dados.subgroupr, 
@@ -304,7 +312,7 @@ export default function Checkout() {
         demandaP: dados.rdemandaP===''?0:  dados.rdemandaP, 
         energiaP: dados.renergiaP===''?0:  dados.renergiaP, 
         avgconsumption: dados.ravgconsumption, suggestedGeneration: dados.rsuggestedGeneration, 
-        CIP: dados.rcip,
+        CIP: parseFloat(String(dados.rcip).replace(",",'.')),
       }
       shares[0] = Sahres; 
     }
@@ -365,15 +373,27 @@ export default function Checkout() {
      dados.modality="HV"
    }
 
-   console.log("dados do cliente")
-   console.log(dados)
+   let suggestedDesired = 0
+   let suggGera = 0
+   if (dados.possuirateio!==undefined &&dados.possuirateio==="S" ){
+    suggestedDesired = parseFloat(dados['rsuggestedDesired'])
+    suggGera =  parseFloat(dados['rsuggestedGeneration'])  + parseFloat(dados['suggestedGeneration']) 
+  } else {
+     suggGera = dados.suggestedGeneration
+     suggestedDesired = parseFloat(dados['suggestedDesired'])
+     //console.log("no else"+suggestedDesired, suggGera)
+    }
+//   console.log("dados do cliente")
+  console.log(suggGera , suggestedDesired)
+   
+  // return 
 
     const save = {
       sunIndex: dados.sunIndex, number: number, roof: dados.roof, typeConnection: dados.typeConnection,
       modality: dados.modality, group: dados.group, subgroup: dados.subgroup, demadaFp: dados.demadaFp,
       energiaFp: dados.energiaFP, demandaP: dados.demandaP, energiaP: dados.energiaP,
-      avgconsumption: dados.avgconsumption, suggestedGeneration: dados.suggestedGeneration,
-      suggestedDesired: dados.suggestedDesired, situation: 'Aberta',
+      avgconsumption: dados.avgconsumption, suggestedGeneration: suggGera,
+      suggestedDesired: suggestedDesired, situation: 'Aberta',
       cip: dados.cip, flag: dados.flag, syncindex: dados.synIndex, lost: dados.lost,
       consideredpower: dados.consideredpower, numberborder: dados.numberborder,
       systempower: dados.systempower, consumption: consumption,

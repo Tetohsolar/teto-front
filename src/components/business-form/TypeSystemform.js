@@ -62,7 +62,7 @@ export default function SystemTypeform(props) {
 
     let novoItem =
     {
-      id: idN, type: "1", brand: '', model: '', power: potenciaModulo, qtd: 1, preco: 0
+      id: idN, type: "", brand: '', model: '', power: potenciaModulo, qtd: 1, preco: 0
     }
     setIdProd(idN)
     setDadosProdutos(prevDados => [...prevDados, novoItem]);
@@ -84,29 +84,52 @@ export default function SystemTypeform(props) {
   React.useEffect(() => {
 
     loadCategorys()
+
+    let sugg = parseFloat(String(props.dados.rsuggestedDesired).replace(".", ''))
+
     //loadbId(businessId)
+    if (props.dados.rsuggestedDesired===undefined ||props.dados.rsuggestedDesired==="" ){
+      props.dados.rsuggestedDesired = props.dados.suggestedDesired
+    }
 
-
+    if (props.dados.possuirateio!==undefined &&props.dados.possuirateio==="S" ){
+  
+      sugg = parseFloat(props.dados.rsuggestedDesired)+parseFloat(props.dados.suggestedDesired)
+     
+    } else {
+      props.dados.rsuggestedDesired = props.dados.suggestedDesired
+    }
+     
+    console.log("MACAO",props.dados.rsuggestedDesired)
+    console.log("MACAO",props.dados.suggestedDesired)
+     
     if (props.dados.consideredpower===0){
        searchSunIndexByCityState();
     }
 
     if (props.dados.produtos) {
-      setDadosProdutos(props.dados.produtos)
+      
       let arrayJson= props.dados.produtos
       let Nplaca = 0
       let power = 0
+     
+      let potenciaConsiderada = props.dados.consideredpower
+      
+     //let placas = Math.floor((sugg * 12000)/())
 
       for (let j = 0; j < arrayJson.length; j++) {
         if (arrayJson[j].type === '3') {
-          Nplaca = Nplaca + arrayJson[j].qtd
           power = arrayJson[j].power
+          let placas = Math.floor((sugg * 12000) / (potenciaConsiderada * power))
+          Nplaca = placas
+          arrayJson[j].qtd =placas
         }
       }
 
+      setDadosProdutos(props.dados.produtos)
       props.dados.systempower = (Nplaca * power) / 1000
       setPotenciaSistema(props.dados.systempower)
-      setNplacas(nPlacas)
+      setNplacas(Nplaca)
       props.dados.Nplaca = Nplaca
     }
 
@@ -165,13 +188,8 @@ export default function SystemTypeform(props) {
         novoDados[index]["power"] = response.data.power;
         novoDados[index]["price"] = response.data.price;
         if (parseInt(item.type) === 3) {
-          let sugg = parseFloat(String(props.dados.suggestedGeneration).replace(".", ''));
+          let sugg = parseFloat(String(props.dados.rsuggestedDesired).replace(".", ''));
 
-          if (parseFloat(props.dados.rsuggestedGeneration)) {
-            sugg = sugg + parseFloat(String(props.dados.rsuggestedGeneration).replace(".", ""))
-          }
-          
-            
           let potenciaConsiderada = props.dados.consideredpower
           console.log("potencia")
           console.log(potenciaConsiderada)

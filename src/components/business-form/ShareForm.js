@@ -43,6 +43,7 @@ export default function ShareForm(props) {
   const [bandeira, setBandeira] = useState('')
   const [potenciaS, setPotenciaS] = React.useState('')
   const [modalidades, setModalidades] = useState([""])
+  const [readData, setReadData] = useState(true)
 
   const [idSelected, setIdSelected] = React.useState('')
 
@@ -97,19 +98,53 @@ export default function ShareForm(props) {
       setGrupo(props.dados.rgroup)
       setModalidade(props.dados.rmodality)
       setConsumoMedio(props.dados.ravgconsumption)
-      setGeracaoSugerida(props.dados.rsuggestedGeneration)
-      setGeracaoDesejada(props.dados.rsuggestedDesired)
+      setGeracaoSugerida(parseFloat(props.dados.rsuggestedGeneration)+parseFloat(props.dados.suggestedDesired))
+      setGeracaoDesejada(parseFloat(props.dados.rsuggestedGeneration)+parseFloat(props.dados.suggestedDesired))
       setDemandaFP(props.dados.rdemadaFp)
       setDem_ponta(props.dados.rdemandaP)
       setEnergia_FP(props.dados.renergiaFP)
       setEnergia_ponta(props.dados.renergiaP)
+      setReadData(false)
+      hanleLeftHasShare('S')
 
     }else{
+      hanleLeftHasShare('N')
       setRat("N")
+      setReadData(true)
     }
 
   }, [])
 
+  function hanleLeftHasShare(ratv){
+
+      console.log(ratv)
+      if (ratv==="N") {
+      props.dados.rcip = 0
+      props.dados.rflag = 0
+      props.dados.subgroupr= 0
+      props.dados.subgroupr = 0
+      props.dados.rgroup = 0
+      props.dados.rmodality = 0
+      props.dados.ravgconsumption = 0
+      //setGeracaoSugerida(parseFloat(props.dados.rsuggestedGeneration)+parseFloat(props.dados.suggestedDesired))
+      //setGeracaoDesejada(parseFloat(props.dados.rsuggestedGeneration)+parseFloat(props.dados.suggestedDesired))
+      props.dados.rdemadaFp=0
+      props.dados.rdemandaP=0
+      props.dados.renergiaFP=0
+      props.dados.renergiaP=0
+
+      limparDemandas()
+      setBandeira("")
+      setCip("")
+      setReadData(true)
+
+
+    } else{
+      
+      setReadData(false)
+      console.log(readData)
+    } 
+  }
  
   function calculaDemana() {
     handleGrupoAConsMedio()
@@ -121,11 +156,11 @@ export default function ShareForm(props) {
     
     if (modalidade === "Convencional" || modalidade === "Rural" || modalidade === "Outros") {
       
-      setGeracaoSugerida(consumoMedio)
-      setGeracaoSugeridaParcial(consumoMedio)
+      setGeracaoSugerida(parseFloat(consumoMedio) +parseFloat(props.dados.suggestedDesired) )
+      setGeracaoSugeridaParcial(parseFloat(consumoMedio)+parseFloat(props.dados.suggestedDesired))
       props.dados.rsuggestedDesired = consumoMedio
       props.dados.rsuggestedGeneration = consumoMedio
-      setGeracaoDesejada(consumoMedio)
+      setGeracaoDesejada(parseFloat(consumoMedio)+parseFloat(props.dados.suggestedDesired))
 
       return
     }
@@ -137,9 +172,9 @@ export default function ShareForm(props) {
       //setGeracaoDesejada(energiaPonta)
       const result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoSugerida(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+parseFloat(props.dados.suggestedDesired))
+      setGeracaoSugerida(result+parseFloat(props.dados.suggestedDesired))
+      setGeracaoDesejada(result+parseFloat(props.dados.suggestedDesired))
       props.dados.rsuggestedDesired = result
       props.dados.rsuggestedGeneration = result
       
@@ -152,8 +187,8 @@ export default function ShareForm(props) {
       let result = parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
 
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+parseFloat(props.dados.suggestedDesired))
+      setGeracaoDesejada(result+props.parseFloat(dados.suggestedDesired))
       props.dados.rsuggestedDesired = result
       props.dados.rsuggestedGeneration = result
     }
@@ -161,13 +196,13 @@ export default function ShareForm(props) {
     else if (modalidade === "Horos. Azul" && subGrupo === "A4" && demandaFP !== null && energia_FP !== null && energiaPonta !== null) {
       const valor = parseFloat(demandaFP) + parseFloat(energia_FP) + parseFloat(energiaPonta)
       setConsumoMedio(valor)
-      setGeracaoDesejada(valor)
+      setGeracaoDesejada(valor+parseFloat(props.dados.suggestedDesired))
 
       //GeracaoSugerida
       let result = parseFloat(demandaFP) + parseFloat(energia_FP) + Math.round(parseFloat(energiaPonta) / parseFloat(energiaPontaTratada))
       { result > 0 ? setGeracaoSugerida(result) : setGeracaoSugerida('') }
-      setGeracaoSugeridaParcial(result)
-      setGeracaoDesejada(result)
+      setGeracaoSugeridaParcial(result+parseFloat(props.dados.suggestedDesired))
+      setGeracaoDesejada(result+parseFloat(props.dados.suggestedDesired))
 
       props.dados.rsuggestedDesired = result
       props.dados.rsuggestedGeneration = result
@@ -358,7 +393,8 @@ function handleSubGrup(value) {
                   id="inputSubgrupo"
                   value={rat}
                   label="inputSubgrupo"
-                  onChange={(e) => { setRat(e.target.value); props.dados.possuirateio = e.target.value;}}
+                  onChange={(e) => { setRat(e.target.value); props.dados.possuirateio = e.target.value; hanleLeftHasShare(e.target.value)} }
+                  
                 >
                   <MenuItem value={'N'}>Não</MenuItem>
                   <MenuItem value={'S'}>Sim</MenuItem>
@@ -372,14 +408,14 @@ function handleSubGrup(value) {
           <Typography variant="h6" gutterBottom>
 
 </Typography>
-              <NumberFormatCustom label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => {setCip(e.target.value); props.dados.rcip = e.target.value}} ></NumberFormatCustom>
+              <NumberFormatCustom  readOnly={readData} label={"CIP"} variant="outlined" decimal={2} value={cip} onChange={(e) => {setCip(e.target.value); props.dados.rcip = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
             <Grid item xs={12} sm={3}>
             <Typography variant="h6" gutterBottom>
 
           </Typography>
-              <NumberFormatCustom label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.rflag = e.target.value}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} label={"Bandeira"} variant="outlined" decimal={5} value={bandeira} onChange={(e) => {setBandeira(e.target.value); props.dados.rflag = e.target.value}} ></NumberFormatCustom>
 
             </Grid>
 
@@ -390,6 +426,7 @@ function handleSubGrup(value) {
               <FormControl fullWidth>
                 <InputLabel id="inputSubgrupo"> Subgrupo</InputLabel>
                 <Select
+                  readOnly={readData}
                   labelId="inputSubgrupo"
                   id="inputSubgrupo"
                   value={subGrupo}
@@ -429,6 +466,7 @@ function handleSubGrup(value) {
                 <InputLabel id="tipoLigacao">Modalidade</InputLabel>
                 <Select
                   labelId="tipoLigacao"
+                  readOnly={readData}
                   id="modalidade"
                   value={modalidade}
                   label="modalidade"
@@ -450,36 +488,36 @@ function handleSubGrup(value) {
 
            { grupo==="A" && modalidade ==="Horos. Azul"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom  label={"Demanda FP(Kwh)"}  variant="outlined" value={demandaFP} onChange={(e) => {setDemandaFP(e.target.value) ; props.dados.rdemadaFp = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} label={"Demanda FP(Kwh)"}  variant="outlined" value={demandaFP} onChange={(e) => {setDemandaFP(e.target.value) ; props.dados.rdemadaFp = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""
            }
 
           { grupo==="A"&& modalidade ==="Horos. Azul"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Demanda Ponta"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom  readOnly={readData} type="number" label={"Demanda Ponta"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
             :""}
 
            { grupo==="A"&& modalidade ==="Horos. Verde"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Demanda"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} type="number" label={"Demanda"}  variant="outlined" value={demPonta} onChange={(e) => {setDem_ponta(e.target.value); ; props.dados.rdemandaP = e.target.value } } onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
             :""}
 
           { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Energia FP(Kwh)"}  variant="outlined" value={energia_FP} onChange={(e) => {setEnergia_FP(e.target.value);  props.dados.renergiaFP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} type="number" label={"Energia FP(Kwh)"}  variant="outlined" value={energia_FP} onChange={(e) => {setEnergia_FP(e.target.value);  props.dados.renergiaFP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
             { grupo==="A"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => {setEnergia_ponta(e.target.value) ; props.dados.renergiaP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} type="number" label={"Energia Ponta(Kwh)"}  variant="outlined" value={energiaPonta} onChange={(e) => {setEnergia_ponta(e.target.value) ; props.dados.renergiaP = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>:""}
 
 
             { grupo==="B"?
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom type="number" label={"Consumo Médio"}  variant="outlined" value={consumoMedio} onChange={(e) =>{ setConsumoMedio(e.target.value) ; props.dados.ravgconsumption = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} type="number" label={"Consumo Médio"}  variant="outlined" value={consumoMedio} onChange={(e) =>{ setConsumoMedio(e.target.value) ; props.dados.ravgconsumption = e.target.value }} onBlur={(e)=>{calculaDemana()}} ></NumberFormatCustom>
             </Grid>
             :""}
 
@@ -488,7 +526,7 @@ function handleSubGrup(value) {
               <NumberFormatCustom  readOnly label={"Geração sugerida (KWh)"} variant="outlined"   decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => {setGeracaoDesejada(e.target.value); props.dados.rsuggestedGeneration= e.target.value}} ></NumberFormatCustom>
+              <NumberFormatCustom readOnly={readData} label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => {setGeracaoDesejada(e.target.value); props.dados.rsuggestedDesired= e.target.value}} ></NumberFormatCustom>
 
             </Grid>
 

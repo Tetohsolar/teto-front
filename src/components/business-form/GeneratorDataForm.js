@@ -613,7 +613,7 @@ export default function GeneratorDataForm(props) {
               <NumberFormatCustom  readOnly label={"Geração sugerida (KWh)"} variant="outlined"   decimal={2} value={geracaoSugerida} onChange={(e) => setGeracaoSugerida(e.target.value)} ></NumberFormatCustom>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => {setGeracaoDesejada(e.target.value); props.dados.suggestedDesired= e.target.value} } onBlur={calculaGeracaoTotal} ></NumberFormatCustom>
+              <NumberFormatCustom label={"Geração desejada (KWh)"} variant="outlined" decimal={2} value={geracaoDesejada} onChange={(e) => {setGeracaoDesejada(e.target.value); props.dados.suggestedDesired= e.target.value;  } } onBlur={calculaGeracaoTotal} ></NumberFormatCustom>
 
             </Grid>
 
