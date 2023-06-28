@@ -246,9 +246,6 @@ export default function Checkout() {
       return false;
     }
 
-
-
-    
     return true
   }
 
