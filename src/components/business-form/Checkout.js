@@ -295,7 +295,7 @@ export default function Checkout() {
     
     let shares = []
     
-    if (dados.possuirateio) {
+    if (dados.possuirateio!==undefined && dados.possuirateio === "S") {
 
       if (dados.rmodality==='Horos. Azul'){
         dados.rmodality="HA"
@@ -314,6 +314,8 @@ export default function Checkout() {
         avgconsumption: dados.ravgconsumption, suggestedGeneration: dados.rsuggestedGeneration, 
         CIP: parseFloat(String(dados.rcip).replace(",",'.')),
       }
+
+
       shares[0] = Sahres; 
     }
     console.log(shares)
@@ -384,9 +386,9 @@ export default function Checkout() {
      //console.log("no else"+suggestedDesired, suggGera)
     }
 //   console.log("dados do cliente")
-  console.log(suggGera , suggestedDesired)
+  // console.log(suggGera , suggestedDesired)
    
-  // return 
+   //return 
 
     const save = {
       sunIndex: dados.sunIndex, number: number, roof: dados.roof, typeConnection: dados.typeConnection,
