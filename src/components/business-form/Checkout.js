@@ -239,6 +239,18 @@ export default function Checkout() {
     return true
   }
 
+  function validadeProdutcts(){
+    if (data.produtos === undefined || data.produtos.length === 0) {
+      toast.error("A lista de produtos é obrigatório")
+      console.log(data.produtos)
+      return false;
+    }
+
+
+
+    
+    return true
+  }
 
   const handleNext = () => {
     console.log("passo ")
@@ -250,6 +262,7 @@ export default function Checkout() {
       }
     } else
 
+     
       if (activeStep === 1) {
         if (handleValidGerador()) {
           setActiveStep(activeStep + 1);
@@ -258,13 +271,19 @@ export default function Checkout() {
         }
       }
 
-      if (activeStep === 2 ||activeStep === 3 ) {
-        
+      if (activeStep===3){
+        if (validadeProdutcts()){
           setActiveStep(activeStep + 1);
-          return
-
+        }
+        return
       }
 
+      if (activeStep === 2  ) {
+        
+        setActiveStep(activeStep + 1);
+        return
+
+    }
       if (activeStep === 4) {
         if (handleValidGerador()) {
           saveBusiness(data)
