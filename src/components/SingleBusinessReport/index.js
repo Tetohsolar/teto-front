@@ -97,6 +97,7 @@ export default function SingleBusinessReport() {
   const componentRef = useRef();
 
   const [name, setName] = useState('')
+  const [telhado, setTelhado] = useState('')
   const [numberP, setNumberP] = useState('')
   const { token } = useContext(AuthContext)
   const [tipoSistema, setTipoSistema] = useState('')
@@ -116,7 +117,7 @@ export default function SingleBusinessReport() {
   const [tir, setTir] = useState([])
   const [caixaAcumuladoInversor, setCaixaAcumuladoInversor] = useState([])
   const [caixaAcumuladoMicro, setCaixaAcumuladoMicro] = useState([])
-  const [garantiasData,setGarantiasData] = useState([])
+  const [garantiasData, setGarantiasData] = useState([])
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -141,13 +142,15 @@ export default function SingleBusinessReport() {
 
   async function loadbId(id) {
 
-   // console.log("aqui")
+    // console.log("aqui")
     await api.get('/business/get/' + id, {
       headers: {
         'Authorization': `Basic ${token}`
       }
 
     }).then((response) => {
+      console.log(response.data)
+      setTelhado(response.data["Roof.name"])
       setName(response.data["Client.fantasy"])
       setNumberP(response.data.number)
       //formatt(new Date(response.data.updatedAt),'dd/MM/yyyy')
@@ -165,18 +168,17 @@ export default function SingleBusinessReport() {
       setPesoSistema(numeroFormatado.format(response.data.pesosistema))
       setPorcAtendida(numeroFormatado.format(response.data.porctendida))
       //console.log("tipo do sistema", response.data)
-      if (response.data.TypeSystemId===1)
-       {   
+      if (response.data.TypeSystemId === 1) {
         setVpl(formatter.format(response.data.vplI))
-        setTir(numeroFormatado.format(response.data.tirI))  
-      }else if (response.data.TypeSystemId===2){
-            setVpl(formatter.format(response.data.vplM))
-            setTir(numeroFormatado.format(response.data.tirM))
-          }
+        setTir(numeroFormatado.format(response.data.tirI))
+      } else if (response.data.TypeSystemId === 2) {
+        setVpl(formatter.format(response.data.vplM))
+        setTir(numeroFormatado.format(response.data.tirM))
+      }
       setPayback(response.data.payback)
-      
-      setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI -response.data.amount ))
-      setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM-response.data.amount))
+
+      setCaixaAcumuladoInversor(formatter.format(response.data.caixaAcumuladoI - response.data.amount))
+      setCaixaAcumuladoMicro(formatter.format(response.data.caixaAcumuladoM - response.data.amount))
       setGarantiasData(response.data.guarantee)
       //  setcaixaAcumulado1(response.data.caixaAcumuladoI)
       // caixaAcumulado()
@@ -205,6 +207,7 @@ export default function SingleBusinessReport() {
     }).then((response) => {
 
       setCidade(response.data.city)
+
 
     })
 
@@ -254,7 +257,7 @@ export default function SingleBusinessReport() {
                     <thead>
                       <tr>
                         <th scope="col">Proposta</th>
-                        <th scope="col">{tipoSistema==="1"?"Inversor":"Microinversor"}</th>
+                        <th scope="col">{tipoSistema === "1" ? "Inversor" : "Microinversor"}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -294,7 +297,7 @@ export default function SingleBusinessReport() {
               <div className="col-lg-6 mb-3 mb-lg-0">
                 <div className="card border-light">
                   <div className="card-body py-4">
-                    <div className="d-flex align-items-start gap-3 mb-4">
+                    <div className="d-flex align-items-start gap-2 mb-4">
                       <BsFillStarFill className="fs-4 report-icon-star text-warning" />
                       <div>
                         <h6 className="fw-bold">Sustentabilidade</h6>
@@ -400,7 +403,7 @@ export default function SingleBusinessReport() {
                       <table class="table">
                         <thead>
                           <tr>
-                          <th scope="col"></th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                             <th scope="col">Quantidade</th>
                           </tr>
@@ -410,13 +413,15 @@ export default function SingleBusinessReport() {
                             return (
                               <tr key={item.id}>
                                 <td>{String(item.type) === '2' ? 'Microinversor' : String(item.type) === '3' ? 'Placa'
-                                : 'Inversor'}</td>
+                                  : 'Inversor'}</td>
                                 <td> {item.brand + "-" + item.model}</td>
                                 <td>{item.qtd}</td>
-                                
+
                               </tr>
                             );
                           })}
+                          <tr><td colSpan="2"><b>Estrutura completa de fixação em telhado {telhado}.</b> </td><td>1</td></tr>
+                          <tr><td colSpan="2"><b>Dispositivos de proteção, cabos, quadros e aterramento.</b> </td><td>1</td></tr>
                         </tbody>
                       </table>
                     </div>
@@ -497,9 +502,9 @@ export default function SingleBusinessReport() {
                           {garantiasData.map((item) => {
                             return (
                               <tr key={item.id}>
-                                <td> 
-                                   <strong> {item.type===1?"Inversor:":item.type===3?"Placa:":"Microinversor:"} </strong>
-                                   {item.category + '-'} {item.name}</td>
+                                <td>
+                                  <strong> {item.type === 1 ? "Inversor:" : item.type === 3 ? "Placa:" : "Microinversor:"} </strong>
+                                  {item.category + '-'} {item.name}</td>
                                 <td>{item.value}</td>
                               </tr>
                             );
@@ -526,7 +531,7 @@ export default function SingleBusinessReport() {
                     Estimativa de Geração {tipoSistema} x Consumo
                   </div>
                   <div className="card-body">
-                    <AnnualVariation data={data}/>
+                    <AnnualVariation data={data} />
                   </div>
                 </div>
               </div>
